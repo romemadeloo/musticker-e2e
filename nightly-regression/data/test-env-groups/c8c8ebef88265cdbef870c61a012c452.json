@@ -1,1 +1,1 @@
-{"id":"c8c8ebef88265cdbef870c61a012c452","fullName":"pricing/price-interpolation.spec.ts:219:7","name":"MS-PRC-INT-square-sticker highest grid row 546000 (728x750) prices from the CSV","status":"failed","testResultsByEnv":{"default":"f5a2ebfb7e0db3cf25b0c6aa5c237509"}}
+{"id":"c8c8ebef88265cdbef870c61a012c452","fullName":"pricing/price-interpolation.spec.ts:219:7","name":"MS-PRC-INT-square-sticker highest grid row 546000 (728x750) prices from the CSV","status":"passed","testResultsByEnv":{"default":"29edd8b0c57f2a4c1607e5e9d11d8342"}}

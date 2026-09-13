@@ -1,1 +1,1 @@
-{"id":"2b02b3c594a7372280b11ce1c2021fd2","fullName":"pricing/price-interpolation.spec.ts:160:7","name":"MS-PRC-INT-rectangle-sticker quantity 85000 interpolates between rungs 70000 and 100000","status":"passed","testResultsByEnv":{"default":"21062d965516f43a016041fcd0acda70"}}
+{"id":"2b02b3c594a7372280b11ce1c2021fd2","fullName":"pricing/price-interpolation.spec.ts:160:7","name":"MS-PRC-INT-rectangle-sticker quantity 85000 interpolates between rungs 70000 and 100000","status":"passed","testResultsByEnv":{"default":"7d7ccd0f23a334599c038e731b5f5819"}}
