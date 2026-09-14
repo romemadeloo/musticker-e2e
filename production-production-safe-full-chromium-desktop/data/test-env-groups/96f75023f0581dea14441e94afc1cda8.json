@@ -1,1 +1,1 @@
-{"id":"96f75023f0581dea14441e94afc1cda8","fullName":"pricing/price-interpolation.spec.ts:103:7","name":"MS-PRC-INT-clear-roll area 312 (13x24) interpolates between 225 and 400","status":"failed","testResultsByEnv":{"default":"971283f59a3be9be7c3baa84d125f21e"}}
+{"id":"96f75023f0581dea14441e94afc1cda8","fullName":"pricing/price-interpolation.spec.ts:103:7","name":"MS-PRC-INT-clear-roll area 312 (13x24) interpolates between 225 and 400","status":"passed","testResultsByEnv":{"default":"40a9d5a593b43c31ab3a5ddac880ab4b"}}

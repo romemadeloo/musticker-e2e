@@ -1,1 +1,1 @@
-{"id":"eade870eb8897efb4fbc99209f0a8a7c","fullName":"pricing/price-table.spec.ts:59:7","name":"MS-PRC-oval-roll area 30625 (175x175) matches roll-stickers/oval-roll.csv","status":"failed","testResultsByEnv":{"default":"a778536b45f12946bf31f16cf3c86651"}}
+{"id":"eade870eb8897efb4fbc99209f0a8a7c","fullName":"pricing/price-table.spec.ts:59:7","name":"MS-PRC-oval-roll area 30625 (175x175) matches roll-stickers/oval-roll.csv","status":"passed","testResultsByEnv":{"default":"5e8ff6ff6d2438a7a067ad3205ba856b"}}

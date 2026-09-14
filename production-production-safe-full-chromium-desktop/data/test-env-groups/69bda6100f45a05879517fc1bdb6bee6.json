@@ -1,1 +1,1 @@
-{"id":"69bda6100f45a05879517fc1bdb6bee6","fullName":"pricing/price-interpolation.spec.ts:103:7","name":"MS-PRC-INT-paper-roll area 312 (13x24) interpolates between 225 and 400","status":"failed","testResultsByEnv":{"default":"0a7222f5294bab3355b0f50d2c323a46"}}
+{"id":"69bda6100f45a05879517fc1bdb6bee6","fullName":"pricing/price-interpolation.spec.ts:103:7","name":"MS-PRC-INT-paper-roll area 312 (13x24) interpolates between 225 and 400","status":"passed","testResultsByEnv":{"default":"a82d6b6339e04923bf9f1e9e21b6c0a2"}}

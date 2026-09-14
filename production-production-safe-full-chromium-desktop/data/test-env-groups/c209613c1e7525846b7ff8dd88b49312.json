@@ -1,1 +1,1 @@
-{"id":"c209613c1e7525846b7ff8dd88b49312","fullName":"pricing/price-table.spec.ts:59:7","name":"MS-PRC-paper-roll area 21025 (145x145) matches roll-stickers/paper-roll.csv","status":"failed","testResultsByEnv":{"default":"85214955339b6bcc612da51f85162975"}}
+{"id":"c209613c1e7525846b7ff8dd88b49312","fullName":"pricing/price-table.spec.ts:59:7","name":"MS-PRC-paper-roll area 21025 (145x145) matches roll-stickers/paper-roll.csv","status":"passed","testResultsByEnv":{"default":"ccb66a1ff1ea08931179ad5f09447568"}}

@@ -1,1 +1,1 @@
-{"id":"e73349043262e6307b75b192f523322c","fullName":"pricing/price-table.spec.ts:59:7","name":"MS-PRC-die-cut-roll area 55225 (235x235) matches roll-stickers/die-cut-roll.csv","status":"failed","testResultsByEnv":{"default":"b060e4817d8796f37322a2555c77f706"}}
+{"id":"e73349043262e6307b75b192f523322c","fullName":"pricing/price-table.spec.ts:59:7","name":"MS-PRC-die-cut-roll area 55225 (235x235) matches roll-stickers/die-cut-roll.csv","status":"passed","testResultsByEnv":{"default":"32b7d0fbd4e77674a71210d59a8278d7"}}
