@@ -1,1 +1,1 @@
-{"id":"f76e45feaf5ad00ceb65fc83b330687b","fullName":"smoke/storefront-smoke.spec.ts:80:3","name":"MS-V2-021 Korean locale control is stable","status":"passed","testResultsByEnv":{"default":"5b6459aa3178462d6829747fb4b694eb"}}
+{"id":"f76e45feaf5ad00ceb65fc83b330687b","fullName":"smoke/storefront-smoke.spec.ts:80:3","name":"MS-V2-021 Korean locale control is stable","status":"passed","testResultsByEnv":{"default":"b0aa82b5198ab0a77384b033b22b4a4b"}}

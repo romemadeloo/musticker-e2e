@@ -1,1 +1,1 @@
-{"id":"459f93f43f201f2b909d717a913fe19a","fullName":"auth/registration.spec.ts:74:3","name":"MS-V2-083 registration is blocked until the terms checkbox is agreed @validation","status":"passed","testResultsByEnv":{"default":"b644b03549d9d8fe4923e5c68c4de5ec"}}
+{"id":"459f93f43f201f2b909d717a913fe19a","fullName":"auth/registration.spec.ts:74:3","name":"MS-V2-083 registration is blocked until the terms checkbox is agreed @validation","status":"passed","testResultsByEnv":{"default":"67a28778c43c6351b8bcef3db0f4876a"}}
