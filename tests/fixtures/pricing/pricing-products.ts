@@ -16,8 +16,9 @@
 //     development-1         45/46/47/49/50   "... Pricing (8/21/2026)"       match the CSVs
 //     development-static-2  5/23/25/30/31    "Die Cut", "Clear - ..."        differ
 //
-//   the roll and lettering tables -- left out of that regeneration, one generation everywhere
-//     all three servers     8/11/15/16/17    "Roll", "Vinyl Lettering"       match the CSVs
+//   the roll and lettering tables -- production's roll tables were regenerated on 2026-09-10
+//     production            8/11/53/54/55    "... roll - 9/10/2026"          match the CSVs
+//     development-1/static2 8/11/15/16/17    "Roll", "Vinyl Lettering"       match the CSVs
 //
 //   sticker-sheet -- same rates everywhere, but the id moved
 //     production            33               "Sticker Sheet (7/13/2026)"     match the CSV
@@ -86,16 +87,19 @@ export type PricingProduct = {
 // data, so those two share one export. development-static-2 lags on the older rates.
 const CSV_SOURCES = ['production', 'development-1'] as const satisfies readonly EnvironmentName[];
 
-// The roll, lettering and sticker-sheet tables were left out of the sticker regeneration and are
-// identical on all three servers. Verified on 2026-08-25 two ways: production and development-1
-// return byte-identical exports of every one of these tables, and the stored rows served by all
-// three servers match the committed CSVs cell for cell at the bottom, middle and top of each grid.
-// development-static-2 has no /exportation endpoint (404), which is why it was checked by quotation.
+// The lettering and sticker-sheet tables were left out of the sticker regeneration and are identical
+// on all three servers. Production's roll tables were regenerated on 2026-09-10, adding high-volume
+// quantity rungs while keeping the old row values comparable for the original rungs; the refreshed
+// roll CSVs are therefore a production-only baseline until the development servers carry the same
+// generation. development-static-2 has no /exportation endpoint (404), which is why it was checked
+// by quotation.
 const CSV_SOURCES_ALL = [
   'production',
   'development-1',
   'development-static-2'
 ] as const satisfies readonly EnvironmentName[];
+
+const CSV_SOURCES_PRODUCTION = ['production'] as const satisfies readonly EnvironmentName[];
 
 const registry: readonly PricingProductRegistryEntry[] = [
   {
@@ -204,71 +208,72 @@ const registry: readonly PricingProductRegistryEntry[] = [
     csv: 'stickers/sticker-sheet-pvc.csv',
     csvSources: CSV_SOURCES_ALL
   },
-  // /kr/roll-stickers. Six of the eight share table 15; only clear-roll and paper-roll have their
-  // own. The ids are the same on all three servers.
+  // /kr/roll-stickers. Six of the eight share one table; only clear-roll and paper-roll have their
+  // own. Production carries the 2026-09-10 generation, while development still carries the earlier
+  // ids recorded below.
   {
     slug: 'die-cut-roll',
-    pricingName: /^Roll\b/,
-    pricingIds: { production: 15, 'development-1': 15, 'development-static-2': 15 },
+    pricingName: /^(?:diecut\/kisscut roll|Roll)\b/i,
+    pricingIds: { production: 53, 'development-1': 15, 'development-static-2': 15 },
     normalizedNr: 100,
     csv: 'roll-stickers/die-cut-roll.csv',
-    csvSources: CSV_SOURCES_ALL
+    csvSources: CSV_SOURCES_PRODUCTION
   },
   {
     slug: 'circle-roll',
-    pricingName: /^Roll\b/,
-    pricingIds: { production: 15, 'development-1': 15, 'development-static-2': 15 },
+    pricingName: /^(?:diecut\/kisscut roll|Roll)\b/i,
+    pricingIds: { production: 53, 'development-1': 15, 'development-static-2': 15 },
     normalizedNr: 100,
     csv: 'roll-stickers/circle-roll.csv',
-    csvSources: CSV_SOURCES_ALL
+    csvSources: CSV_SOURCES_PRODUCTION
   },
   {
     slug: 'square-roll',
-    pricingName: /^Roll\b/,
-    pricingIds: { production: 15, 'development-1': 15, 'development-static-2': 15 },
+    pricingName: /^(?:diecut\/kisscut roll|Roll)\b/i,
+    pricingIds: { production: 53, 'development-1': 15, 'development-static-2': 15 },
     normalizedNr: 100,
     csv: 'roll-stickers/square-roll.csv',
-    csvSources: CSV_SOURCES_ALL
+    csvSources: CSV_SOURCES_PRODUCTION
   },
   {
     slug: 'rectangle-roll',
-    pricingName: /^Roll\b/,
-    pricingIds: { production: 15, 'development-1': 15, 'development-static-2': 15 },
+    pricingName: /^(?:diecut\/kisscut roll|Roll)\b/i,
+    pricingIds: { production: 53, 'development-1': 15, 'development-static-2': 15 },
     normalizedNr: 100,
     csv: 'roll-stickers/rectangle-roll.csv',
-    csvSources: CSV_SOURCES_ALL
+    csvSources: CSV_SOURCES_PRODUCTION
   },
   {
     slug: 'rounded-roll',
-    pricingName: /^Roll\b/,
-    pricingIds: { production: 15, 'development-1': 15, 'development-static-2': 15 },
+    pricingName: /^(?:diecut\/kisscut roll|Roll)\b/i,
+    pricingIds: { production: 53, 'development-1': 15, 'development-static-2': 15 },
     normalizedNr: 100,
     csv: 'roll-stickers/rounded-roll.csv',
-    csvSources: CSV_SOURCES_ALL
+    csvSources: CSV_SOURCES_PRODUCTION
   },
   {
     slug: 'oval-roll',
-    pricingName: /^Roll\b/,
-    pricingIds: { production: 15, 'development-1': 15, 'development-static-2': 15 },
+    pricingName: /^(?:diecut\/kisscut roll|Roll)\b/i,
+    pricingIds: { production: 53, 'development-1': 15, 'development-static-2': 15 },
     normalizedNr: 100,
     csv: 'roll-stickers/oval-roll.csv',
-    csvSources: CSV_SOURCES_ALL
+    csvSources: CSV_SOURCES_PRODUCTION
   },
   {
     slug: 'clear-roll',
-    pricingName: /^Clear Roll\b/,
-    pricingIds: { production: 16, 'development-1': 16, 'development-static-2': 16 },
+    pricingName: /^Clear Roll\b/i,
+    pricingIds: { production: 54, 'development-1': 16, 'development-static-2': 16 },
     normalizedNr: 100,
     csv: 'roll-stickers/clear-roll.csv',
-    csvSources: CSV_SOURCES_ALL
+    csvSources: CSV_SOURCES_PRODUCTION
   },
   {
     slug: 'paper-roll',
-    pricingName: /^Paper Roll\b/,
-    pricingIds: { production: 17, 'development-1': 17, 'development-static-2': 17 },
+    pricingName: /^Paper Roll\b/i,
+    pricingIds: { production: 55, 'development-1': 17, 'development-static-2': 17 },
     normalizedNr: 100,
     csv: 'roll-stickers/paper-roll.csv',
-    csvSources: CSV_SOURCES_ALL
+    csvSources: CSV_SOURCES_PRODUCTION
   }
   // The six /kr/sheet-stickers products are NOT registered, even though their CSVs are committed in
   // sheet-stickers/. They are priced by a different mechanism that these three specs cannot express,

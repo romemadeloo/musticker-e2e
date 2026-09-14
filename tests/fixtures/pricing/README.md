@@ -67,11 +67,13 @@ check can actually prove:
 - `price-table.spec.ts` and `price-interpolation.spec.ts` compare rates against the CSV, and run
   **only** on the environments in `csvSources`. Elsewhere they skip with the reason spelled out.
 
-production and development-1 were promoted from the same price data — verified cell by cell, 1339
-passed on each — so both are listed in `csvSources` and both get full coverage. development-static-2
-still holds the older rates, so there the tables are identity-checked and the cells skipped. An
-environment with no recorded ids skips everything rather than guessing; to switch one on, probe it
-and add its ids.
+production and development-1 were promoted from the same sticker price data — verified cell by
+cell, 1339 passed on each — so both are listed in `csvSources` for the sticker tables and both get
+full coverage there. Production's roll tables were promoted again on 2026-09-10, adding high-volume
+quantity rungs; the roll CSVs are now production-only baselines until development carries the same
+generation. development-static-2 still holds older sticker rates, so there the tables are
+identity-checked and the cells skipped. An environment with no recorded ids skips everything rather
+than guessing; to switch one on, probe it and add its ids.
 
 Because the naming has drifted a long way between generations (the clear table has been
 `Clear - Die Cut / Kiss Cut`, then `Clear Die Cut / Kiss Cut Pricing ... v.2`, now `Clear Sticker`),
@@ -105,9 +107,9 @@ here until registry entries exist:
 | `vinyl-lettering` | 8 | `Vinyl Lettering` |
 | `transfer-sticker` | 11 | `Transfer` |
 | `sticker-sheet` | 33 / 34 / 35 / 36 | `Sticker Sheet (7/13/2026)`, then `... PVC(Matte) / Transparent / Hologram 07/22/2026` |
-| `die-cut-roll`, `circle-roll`, `square-roll`, `rectangle-roll`, `rounded-roll`, `oval-roll` | 15 | `Roll` |
-| `clear-roll` | 16 | `Clear Roll` |
-| `paper-roll` | 17 | `Paper Roll` |
+| `die-cut-roll`, `circle-roll`, `square-roll`, `rectangle-roll`, `rounded-roll`, `oval-roll` | 53 | `diecut/kisscut roll - 9/10/2026` |
+| `clear-roll` | 54 | `clear roll - 9/10/2026` |
+| `paper-roll` | 55 | `paper roll - 9/10/2026` |
 | `die-cut-sheet` | 39 / 38 / 37 | `Die Cut Sheet PVC(Matte) / Transparent / Hologram 07/22/2026` |
 | `circle-sheet`, `oval-sheet`, `square-sheet`, `rectangle-sheet`, `rounded-sheet` | 40 / 41 / 42 | `Simple Sheet - PVC / Transparent / Hologram (08/17/2026)` |
 
@@ -122,9 +124,10 @@ as a single id 33: the product resolves four tables, and enabling it needs the m
 
 Two more things to know before wiring these up. The six roll products share one table and the five
 simple-sheet shapes share one per material, so those CSVs are duplicates by design, the same way the
-five shape stickers already are. And the simple-sheet tables use a 21-rung quantity ladder that
-starts at 1 and tops out at 117,000 -- every other table here uses the 14-rung ladder from 10, or the
-8-rung lettering ladder.
+five shape stickers already are. Production's roll tables now use a 19-rung ladder from 10 through
+100,000; development roll tables still use the earlier 14-rung ladder from 10 through 10,000. The
+simple-sheet tables use a 21-rung quantity ladder that starts at 1 and tops out at 117,000, and the
+lettering ladder uses 8 rungs.
 
 ## One table, several products
 
