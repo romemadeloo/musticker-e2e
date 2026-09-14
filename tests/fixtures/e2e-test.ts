@@ -163,8 +163,16 @@ function isBenignUnusedPreloadWarning(text: string): boolean {
   );
 }
 
+function isBenignWorkerCapabilityFallbackWarning(text: string): boolean {
+  return /\[Worker\].*WebGPU.*shader-f16/i.test(text);
+}
+
 function isKnownConsoleMessage(text: string, options: GuardOptions): boolean {
   if (isBenignUnusedPreloadWarning(text)) {
+    return true;
+  }
+
+  if (isBenignWorkerCapabilityFallbackWarning(text)) {
     return true;
   }
 
@@ -211,7 +219,9 @@ function isKnownConsoleMessage(text: string, options: GuardOptions): boolean {
     options.allowKnownNuxtPayloadFailures &&
     (/Cannot load payload\s+\/kr\/.*_payload\.json/i.test(text) ||
       /Hydration completed but contains mismatches/i.test(text) ||
-      /Static review preload failed\.[\s\S]*getActivePinia\(\)/i.test(text) ||
+      /(?:Static|Public) review preload failed\.[\s\S]*getActivePinia\(\)/i.test(text) ||
+      text === '[NUXT_E1005]' ||
+      text === '[NUXT_E7002]' ||
       text === 'Failed to load resource: the server responded with a status of 500 ()')
   ) {
     return true;

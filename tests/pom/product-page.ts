@@ -36,9 +36,18 @@ export class ProductV2Page {
   async addToCart(): Promise<void> {
     await this.nextStepButton().click();
 
-    const addToCartButton = this.page.getByRole('dialog').getByRole('button', { name: ko.addToCart });
-    await expect(addToCartButton).toBeVisible();
-    await addToCartButton.click();
+    const dialog = this.page.getByRole('dialog').first();
+    await expect(dialog).toBeVisible();
+
+    const addToCartButton = dialog.getByRole('button', { name: ko.addToCart });
+    if (await addToCartButton.isVisible().catch(() => false)) {
+      await addToCartButton.click();
+      return;
+    }
+
+    const sendFileLaterButton = dialog.getByRole('button', { name: ko.sendFileLater });
+    await expect(sendFileLaterButton).toBeVisible();
+    await sendFileLaterButton.click();
   }
 
   async selectSize(sizeName: string): Promise<void> {
