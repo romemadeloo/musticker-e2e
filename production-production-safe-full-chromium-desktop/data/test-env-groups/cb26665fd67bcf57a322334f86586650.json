@@ -1,1 +1,1 @@
-{"id":"cb26665fd67bcf57a322334f86586650","fullName":"purchasing/money-path.spec.ts:77:3","name":"MS-V2-098 an order below the free-shipping threshold is charged shipping","status":"failed","testResultsByEnv":{"default":"bcc2907c5e3c32de99d4f46111a4c323"}}
+{"id":"cb26665fd67bcf57a322334f86586650","fullName":"purchasing/money-path.spec.ts:77:3","name":"MS-V2-098 an order below the free-shipping threshold is charged shipping","status":"passed","testResultsByEnv":{"default":"1c09521a972c3b05c6b78b9f51b4a0ad"}}
