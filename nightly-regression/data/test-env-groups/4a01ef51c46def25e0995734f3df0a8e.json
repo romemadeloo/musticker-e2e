@@ -1,1 +1,1 @@
-{"id":"4a01ef51c46def25e0995734f3df0a8e","fullName":"pricing/price-table.spec.ts:59:7","name":"MS-PRC-clear-roll area 2500 (50x50) matches roll-stickers/clear-roll.csv","status":"failed","testResultsByEnv":{"default":"8f13e237ce5839a9a1df2a109c052149"}}
+{"id":"4a01ef51c46def25e0995734f3df0a8e","fullName":"pricing/price-table.spec.ts:59:7","name":"MS-PRC-clear-roll area 2500 (50x50) matches roll-stickers/clear-roll.csv","status":"passed","testResultsByEnv":{"default":"3a82edb9e0ced63bfbce451bb7248788"}}

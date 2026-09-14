@@ -1,1 +1,1 @@
-{"id":"a39ce4375141b8dcce39d3318b5ab78f","fullName":"pricing/price-table.spec.ts:59:7","name":"MS-PRC-paper-roll area 900 (30x30) matches roll-stickers/paper-roll.csv","status":"failed","testResultsByEnv":{"default":"e2f50baf88bb72df1aff5010b06fb8d6"}}
+{"id":"a39ce4375141b8dcce39d3318b5ab78f","fullName":"pricing/price-table.spec.ts:59:7","name":"MS-PRC-paper-roll area 900 (30x30) matches roll-stickers/paper-roll.csv","status":"passed","testResultsByEnv":{"default":"895c0d8536579a29984d0852935a03aa"}}

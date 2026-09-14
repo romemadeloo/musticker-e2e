@@ -1,1 +1,1 @@
-{"id":"6a0e779b73aaf5cc973684bfff80ae24","fullName":"pricing/price-table.spec.ts:59:7","name":"MS-PRC-rectangle-roll area 900 (30x30) matches roll-stickers/rectangle-roll.csv","status":"failed","testResultsByEnv":{"default":"2d675ef1066bc0938e54752bbe4793f5"}}
+{"id":"6a0e779b73aaf5cc973684bfff80ae24","fullName":"pricing/price-table.spec.ts:59:7","name":"MS-PRC-rectangle-roll area 900 (30x30) matches roll-stickers/rectangle-roll.csv","status":"passed","testResultsByEnv":{"default":"3a5bcf052d6dc40629adf3f39029a5e7"}}

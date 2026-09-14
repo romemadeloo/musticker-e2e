@@ -1,1 +1,1 @@
-{"id":"c17024161d062bc0124addaf3bbcfeb5","fullName":"pricing/price-table.spec.ts:59:7","name":"MS-PRC-die-cut-roll area 1600 (40x40) matches roll-stickers/die-cut-roll.csv","status":"failed","testResultsByEnv":{"default":"019916a7215713f916b5e231950526c4"}}
+{"id":"c17024161d062bc0124addaf3bbcfeb5","fullName":"pricing/price-table.spec.ts:59:7","name":"MS-PRC-die-cut-roll area 1600 (40x40) matches roll-stickers/die-cut-roll.csv","status":"passed","testResultsByEnv":{"default":"65a1d8adb3d39905cf96141271d5f0e6"}}

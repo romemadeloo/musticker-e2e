@@ -1,1 +1,1 @@
-{"id":"7a1a9a0163f959b30d1968343bce78fd","fullName":"pricing/price-table.spec.ts:59:7","name":"MS-PRC-oval-roll area 52900 (230x230) matches roll-stickers/oval-roll.csv","status":"failed","testResultsByEnv":{"default":"03a60b47e2ae369ae9c9a897f78697ce"}}
+{"id":"7a1a9a0163f959b30d1968343bce78fd","fullName":"pricing/price-table.spec.ts:59:7","name":"MS-PRC-oval-roll area 52900 (230x230) matches roll-stickers/oval-roll.csv","status":"passed","testResultsByEnv":{"default":"7803247e2f940f8c9532ace1ef577499"}}

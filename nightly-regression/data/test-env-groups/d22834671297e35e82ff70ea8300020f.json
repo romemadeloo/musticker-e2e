@@ -1,1 +1,1 @@
-{"id":"d22834671297e35e82ff70ea8300020f","fullName":"pricing/price-interpolation.spec.ts:103:7","name":"MS-PRC-INT-oval-roll area 56112 (168x334) interpolates between 55225 and 57000","status":"failed","testResultsByEnv":{"default":"6b285e001a4cf92875ec26156c1877eb"}}
+{"id":"d22834671297e35e82ff70ea8300020f","fullName":"pricing/price-interpolation.spec.ts:103:7","name":"MS-PRC-INT-oval-roll area 56112 (168x334) interpolates between 55225 and 57000","status":"passed","testResultsByEnv":{"default":"c81b2ab14935171e7a9fec5fed0f963d"}}

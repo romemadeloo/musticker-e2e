@@ -1,1 +1,1 @@
-{"id":"66f34cfa2da1cc9ae6658d175b1f768d","fullName":"purchasing/sheet-sticker-size-rules.spec.ts:45:5","name":"MS-V2-073 직사각형 시트 스티커 rejects a custom size that fits only one sticker per sheet","status":"passed","testResultsByEnv":{"default":"4dd112e9fc2fdf28687073b10155775b"}}
+{"id":"66f34cfa2da1cc9ae6658d175b1f768d","fullName":"purchasing/sheet-sticker-size-rules.spec.ts:45:5","name":"MS-V2-073 직사각형 시트 스티커 rejects a custom size that fits only one sticker per sheet","status":"passed","testResultsByEnv":{"default":"d5dadd229f6150427f52e48ae6ff0b67"}}

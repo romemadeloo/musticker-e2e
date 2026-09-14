@@ -1,1 +1,1 @@
-{"id":"62aa670ad3b042fa21740c9c16df3105","fullName":"pricing/price-interpolation.spec.ts:103:7","name":"MS-PRC-INT-die-cut-roll area 16262 (94x173) interpolates between 15625 and 16900","status":"failed","testResultsByEnv":{"default":"52721977d9f6e002e7b85935e8a22d96"}}
+{"id":"62aa670ad3b042fa21740c9c16df3105","fullName":"pricing/price-interpolation.spec.ts:103:7","name":"MS-PRC-INT-die-cut-roll area 16262 (94x173) interpolates between 15625 and 16900","status":"passed","testResultsByEnv":{"default":"4b42859cff09c8583a50e01b0f01d20b"}}
