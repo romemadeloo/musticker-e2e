@@ -1,1 +1,1 @@
-{"id":"18b831de7be76a98bbd7e231952f41cc","fullName":"purchasing/sheet-sticker-size-rules.spec.ts:160:3","name":"MS-V2-077 circle sheet sticker: the A5 배치 가이드 modal rejects a one-per-sheet custom size","status":"passed","testResultsByEnv":{"default":"6beb5e6a11f16722797f0f63026e38b9"}}
+{"id":"18b831de7be76a98bbd7e231952f41cc","fullName":"purchasing/sheet-sticker-size-rules.spec.ts:160:3","name":"MS-V2-077 circle sheet sticker: the A5 배치 가이드 modal rejects a one-per-sheet custom size","status":"passed","testResultsByEnv":{"default":"8fb7c5a999aeeb44506e2669946591b2"}}
