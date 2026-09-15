@@ -168,6 +168,147 @@ runs:
 
         rm -rf "$PAGES_DIR/$REPORT_SLUG"
         npx allure generate .allure-artifact/allure-results
+
+        node <<'NODE'
+        const fs = require('node:fs');
+        const path = require('node:path');
+
+        const pagesDir = process.env.PAGES_DIR;
+        const reportSlug = process.env.REPORT_SLUG;
+        const reportDir = path.join(pagesDir, reportSlug);
+        const testResultsDir = path.join(reportDir, 'data', 'test-results');
+        const widgetsDir = path.join(reportDir, 'widgets');
+
+        const readJson = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
+        const writeJson = (file, data) => fs.writeFileSync(file, JSON.stringify(data), 'utf8');
+
+        if (!fs.existsSync(testResultsDir)) {
+          throw new Error(`Allure report is missing ${path.relative(process.cwd(), testResultsDir)}`);
+        }
+
+        const resultIds = new Set();
+        const resultIdByHistoryId = new Map();
+        const retryIds = new Set();
+
+        for (const entry of fs.readdirSync(testResultsDir, { withFileTypes: true })) {
+          if (!entry.isFile() || !entry.name.endsWith('.json')) {
+            continue;
+          }
+
+          const resultId = entry.name.slice(0, -'.json'.length);
+          const result = readJson(path.join(testResultsDir, entry.name));
+          resultIds.add(resultId);
+
+          if (typeof result.historyId === 'string' && typeof result.id === 'string') {
+            resultIdByHistoryId.set(result.historyId, result.id);
+          }
+
+          for (const retry of result.retries ?? []) {
+            if (typeof retry.id === 'string') {
+              retryIds.add(retry.id);
+            }
+          }
+        }
+
+        const widgetFiles = [];
+        const collectWidgetFiles = (dir) => {
+          if (!fs.existsSync(dir)) {
+            return;
+          }
+
+          for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+            const file = path.join(dir, entry.name);
+            if (entry.isDirectory()) {
+              collectWidgetFiles(file);
+            } else if (entry.isFile() && entry.name.endsWith('.json')) {
+              widgetFiles.push(file);
+            }
+          }
+        };
+
+        collectWidgetFiles(widgetsDir);
+
+        let normalizedTreeLeaves = 0;
+        for (const file of widgetFiles.filter((candidate) => path.basename(candidate) === 'tree.json')) {
+          const tree = readJson(file);
+          let changed = false;
+
+          for (const leaf of Object.values(tree.leavesById ?? {})) {
+            if (typeof leaf.id !== 'string' || resultIds.has(leaf.id)) {
+              continue;
+            }
+
+            const resultId = resultIdByHistoryId.get(leaf.id);
+            if (!resultId) {
+              continue;
+            }
+
+            leaf.id = resultId;
+            changed = true;
+            normalizedTreeLeaves += 1;
+          }
+
+          if (changed) {
+            writeJson(file, tree);
+          }
+        }
+
+        const linkedResultIds = new Set();
+        for (const file of widgetFiles) {
+          const basename = path.basename(file);
+          const widget = readJson(file);
+
+          if (basename === 'nav.json' && Array.isArray(widget)) {
+            for (const id of widget) {
+              linkedResultIds.add(id);
+            }
+          }
+
+          if (basename === 'search-index.json' && Array.isArray(widget)) {
+            for (const item of widget) {
+              if (typeof item.id === 'string') {
+                linkedResultIds.add(item.id);
+              }
+            }
+          }
+
+          if (basename === 'tree.json') {
+            for (const leaf of Object.values(widget.leavesById ?? {})) {
+              if (typeof leaf.id === 'string') {
+                linkedResultIds.add(leaf.id);
+              }
+            }
+          }
+
+          if (basename === 'categories.json' && widget.nodes) {
+            for (const node of Object.values(widget.nodes)) {
+              if (node.type === 'tr' && typeof node.id === 'string') {
+                linkedResultIds.add(node.id);
+              }
+            }
+          }
+        }
+
+        for (const retryId of retryIds) {
+          linkedResultIds.add(retryId);
+        }
+
+        const missing = [...linkedResultIds].filter((id) => !resultIds.has(id));
+        if (missing.length > 0) {
+          throw new Error(
+            [
+              `Allure report has ${missing.length} test result link(s) without matching JSON files.`,
+              ...missing.slice(0, 20).map((id) => `- data/test-results/${id}.json`)
+            ].join('\n')
+          );
+        }
+
+        console.log(`Allure report integrity check passed for ${resultIds.size} test result file(s).`);
+        if (normalizedTreeLeaves > 0) {
+          console.log(`Normalized ${normalizedTreeLeaves} tree leaf link(s) from historyId to result id.`);
+        }
+        NODE
+
         touch "$PAGES_DIR/.nojekyll"
 
     - name: Update Pages index
