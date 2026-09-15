@@ -1,1 +1,1 @@
-{"id":"4ed09fece7231b675c31a6e9ea8396bd","fullName":"discovery/catalog-crawl.spec.ts:13:5","name":"MS-V2-040 catalog page renders without error: ./roll-stickers/circle-roll","status":"passed","testResultsByEnv":{"default":"bb70dd3d5029d025db97255bf722f329"}}
+{"id":"4ed09fece7231b675c31a6e9ea8396bd","fullName":"discovery/catalog-crawl.spec.ts:13:5","name":"MS-V2-040 catalog page renders without error: ./roll-stickers/circle-roll","status":"failed","testResultsByEnv":{"default":"a3e7e43e384ffb4d48b1585b23d1c205"}}
