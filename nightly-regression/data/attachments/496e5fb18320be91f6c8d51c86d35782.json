@@ -1,0 +1,64 @@
+{
+  "url": "https://www.musticker.com/kr/stickers",
+  "violations": [
+    {
+      "id": "button-name",
+      "impact": "critical",
+      "help": "Buttons must have discernible text",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/button-name?application=playwright",
+      "nodes": [
+        {
+          "target": [
+            ".notice-bar__button[data-v-306d1626=\"\"]:nth-child(1)"
+          ],
+          "html": "<button class=\"notice-bar__button\" disabled=\"\" data-v-306d1626=\"\"><svg class=\"ui-icon\" style=\"width:24px;height:24px;color:#fff;\" viewBox=\"0 0 32 32\" aria-hidden=\"true\" fill=\"none\" data-v-306d1626=\"\"><!----><use href=\"/icons/sprite.svg?v=1788835890778#icon-light-angle-left\"></use></svg></button>"
+        },
+        {
+          "target": [
+            ".notice-bar__nav > .notice-bar__button[data-v-306d1626=\"\"]:nth-child(2)"
+          ],
+          "html": "<button class=\"notice-bar__button\" disabled=\"\" data-v-306d1626=\"\"><svg class=\"ui-icon\" style=\"width:24px;height:24px;color:#fff;\" viewBox=\"0 0 32 32\" aria-hidden=\"true\" fill=\"none\" data-v-306d1626=\"\"><!----><use href=\"/icons/sprite.svg?v=1788835890778#icon-light-angle-right\"></use></svg></button>"
+        },
+        {
+          "target": [
+            ".notice-bar__close"
+          ],
+          "html": "<button class=\"notice-bar__button notice-bar__close\" data-v-306d1626=\"\"><svg class=\"ui-icon\" style=\"width:24px;height:24px;color:#fff;\" viewBox=\"0 0 32 32\" aria-hidden=\"true\" fill=\"none\" data-v-306d1626=\"\"><!----><use href=\"/icons/sprite.svg?v=1788835890778#icon-regular-times\"></use></svg></button>"
+        },
+        {
+          "target": [
+            ".faq-section-card[data-v-a8dfaf65=\"\"]:nth-child(1) > .faq-section-card-button[data-size=\"32\"][data-tone=\"primary\"]"
+          ],
+          "html": "<button class=\"ui-button faq-section-card-button\" type=\"button\" data-variant=\"filled\" data-size=\"32\" data-tone=\"primary\" data-selected=\"false\" data-icon-only=\"true\" data-no-hover=\"false\" style=\"height:32px;width:32px;\" data-v-a8dfaf65=\"\">"
+        },
+        {
+          "target": [
+            ".faq-section-card[data-v-a8dfaf65=\"\"]:nth-child(2) > .faq-section-card-button[data-size=\"32\"][data-tone=\"primary\"]"
+          ],
+          "html": "<button class=\"ui-button faq-section-card-button\" type=\"button\" data-variant=\"filled\" data-size=\"32\" data-tone=\"primary\" data-selected=\"false\" data-icon-only=\"true\" data-no-hover=\"false\" style=\"background:#F1F1F1;border:1px solid #F1F1F1;height:32px;width:32px;\" data-v-a8dfaf65=\"\">"
+        },
+        {
+          "target": [
+            ".faq-section-card[data-v-a8dfaf65=\"\"]:nth-child(3) > .faq-section-card-button[data-size=\"32\"][data-tone=\"primary\"]"
+          ],
+          "html": "<button class=\"ui-button faq-section-card-button\" type=\"button\" data-variant=\"filled\" data-size=\"32\" data-tone=\"primary\" data-selected=\"false\" data-icon-only=\"true\" data-no-hover=\"false\" style=\"background:#F1F1F1;border:1px solid #F1F1F1;height:32px;width:32px;\" data-v-a8dfaf65=\"\">"
+        },
+        {
+          "target": [
+            ".faq-section-card[data-v-a8dfaf65=\"\"]:nth-child(4) > .faq-section-card-button[data-size=\"32\"][data-tone=\"primary\"]"
+          ],
+          "html": "<button class=\"ui-button faq-section-card-button\" type=\"button\" data-variant=\"filled\" data-size=\"32\" data-tone=\"primary\" data-selected=\"false\" data-icon-only=\"true\" data-no-hover=\"false\" style=\"background:#F1F1F1;border:1px solid #F1F1F1;height:32px;width:32px;\" data-v-a8dfaf65=\"\">"
+        },
+        {
+          "target": [
+            ".faq-section-card[data-v-a8dfaf65=\"\"]:nth-child(5) > .faq-section-card-button[data-size=\"32\"][data-tone=\"primary\"]"
+          ],
+          "html": "<button class=\"ui-button faq-section-card-button\" type=\"button\" data-variant=\"filled\" data-size=\"32\" data-tone=\"primary\" data-selected=\"false\" data-icon-only=\"true\" data-no-hover=\"false\" style=\"background:#F1F1F1;border:1px solid #F1F1F1;height:32px;width:32px;\" data-v-a8dfaf65=\"\">"
+        }
+      ]
+    }
+  ],
+  "incompleteRuleIds": [
+    "video-caption"
+  ]
+}

@@ -1,1 +1,1 @@
-{"id":"7083dc1a789445eb7c49f91f5471df24","fullName":"purchasing/sticker-catalog-configurator.spec.ts:41:5","name":"MS-V2-061 투명 롤 스티커 supports size and quantity selection through to cart","status":"failed","testResultsByEnv":{"default":"29b276c59dd4da4e91f2442aa0622bf3"}}
+{"id":"7083dc1a789445eb7c49f91f5471df24","fullName":"purchasing/sticker-catalog-configurator.spec.ts:41:5","name":"MS-V2-061 투명 롤 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"fe0b593743d81b5335cb0c962dff00cc"}}
