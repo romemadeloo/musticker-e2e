@@ -1,1 +1,1 @@
-{"id":"96b608d78583ed219a813178eb034cc6","fullName":"pricing/price-interpolation.spec.ts:160:7","name":"MS-PRC-INT-transfer-sticker quantity 250 interpolates between rungs 200 and 300","status":"passed","testResultsByEnv":{"default":"f95574d9d8627af1a9e2d5e02eabd726"}}
+{"id":"96b608d78583ed219a813178eb034cc6","fullName":"pricing/price-interpolation.spec.ts:160:7","name":"MS-PRC-INT-transfer-sticker quantity 250 interpolates between rungs 200 and 300","status":"passed","testResultsByEnv":{"default":"c30713012df5a925b920e403e257a63f"}}
