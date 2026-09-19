@@ -1,1 +1,1 @@
-{"id":"cd136aa854f35b386832416b0fb2b262","fullName":"purchasing/product-config.spec.ts:31:3","name":"MS-V2-010 die-cut roll sticker supports size and quantity selection","status":"passed","testResultsByEnv":{"default":"f1a5303427599ac38665a313a8fc9536"}}
+{"id":"cd136aa854f35b386832416b0fb2b262","fullName":"purchasing/product-config.spec.ts:31:3","name":"MS-V2-010 die-cut roll sticker supports size and quantity selection","status":"failed","testResultsByEnv":{"default":"a8bb151b9e805a244d46208dd296ab40"}}
