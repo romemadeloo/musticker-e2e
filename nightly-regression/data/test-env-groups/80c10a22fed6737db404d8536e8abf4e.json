@@ -1,1 +1,1 @@
-{"id":"80c10a22fed6737db404d8536e8abf4e","fullName":"purchasing/sticker-catalog-configurator.spec.ts:24:5","name":"MS-V2-060 원형 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"eefe465c08b9d15b4cd0115c768864d6"}}
+{"id":"80c10a22fed6737db404d8536e8abf4e","fullName":"purchasing/sticker-catalog-configurator.spec.ts:24:5","name":"MS-V2-060 원형 스티커 supports size and quantity selection through to cart","status":"failed","testResultsByEnv":{"default":"934cbb68f751031d8878f22adaf93f03"}}
