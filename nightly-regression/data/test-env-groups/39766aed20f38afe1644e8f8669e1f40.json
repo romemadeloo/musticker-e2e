@@ -1,1 +1,1 @@
-{"id":"39766aed20f38afe1644e8f8669e1f40","fullName":"purchasing/sheet-sticker-size-rules.spec.ts:134:3","name":"MS-V2-076 circle sheet sticker: both cart edit dialogs reject a one-per-sheet custom size","status":"passed","testResultsByEnv":{"default":"fdebe8c6c40735b25f6041618af9d8bc"}}
+{"id":"39766aed20f38afe1644e8f8669e1f40","fullName":"purchasing/sheet-sticker-size-rules.spec.ts:134:3","name":"MS-V2-076 circle sheet sticker: both cart edit dialogs reject a one-per-sheet custom size","status":"failed","testResultsByEnv":{"default":"51f9848d6e3910658615546119c894c2"}}
