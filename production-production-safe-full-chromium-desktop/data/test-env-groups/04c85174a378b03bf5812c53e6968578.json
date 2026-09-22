@@ -1,1 +1,1 @@
-{"id":"04c85174a378b03bf5812c53e6968578","fullName":"purchasing/sticker-catalog-configurator.spec.ts:41:5","name":"MS-V2-061 아트지 롤 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"c0bbb2f3f473db8e5d7b59df8b3a3089"}}
+{"id":"04c85174a378b03bf5812c53e6968578","fullName":"purchasing/sticker-catalog-configurator.spec.ts:41:5","name":"MS-V2-061 아트지 롤 스티커 supports size and quantity selection through to cart","status":"broken","testResultsByEnv":{"default":"7afed46b268413ef2d8bb0c8eaa234c7"}}

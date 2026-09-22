@@ -1,1 +1,1 @@
-{"id":"c520cab2d380e02b1d6defe45745c10d","fullName":"purchasing/sheet-sticker-configurator.spec.ts:41:5","name":"MS-V2-050 원형 시트 스티커 supports material, size, and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"d1e224a5bdd7f88b423701e66f29cfd0"}}
+{"id":"c520cab2d380e02b1d6defe45745c10d","fullName":"purchasing/sheet-sticker-configurator.spec.ts:41:5","name":"MS-V2-050 원형 시트 스티커 supports material, size, and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"f56658eb10126e64fd35d783467db79c"}}

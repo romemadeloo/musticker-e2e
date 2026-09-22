@@ -1,1 +1,1 @@
-{"id":"ff4388d6137d60b4605f91e2e86a8b3c","fullName":"discovery/catalog-crawl.spec.ts:13:5","name":"MS-V2-040 catalog page renders without error: ./stickers/rounded-sticker","status":"failed","testResultsByEnv":{"default":"81c1033daf180ae97c184761743b8b4f"}}
+{"id":"ff4388d6137d60b4605f91e2e86a8b3c","fullName":"discovery/catalog-crawl.spec.ts:13:5","name":"MS-V2-040 catalog page renders without error: ./stickers/rounded-sticker","status":"passed","testResultsByEnv":{"default":"40210da761c1968ea60bf1cdfc05cc57"}}
