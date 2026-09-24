@@ -1,0 +1,806 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: purchasing/sticker-catalog-configurator.spec.ts >> storefront v2 catalog: plain die-cut shape stickers >> MS-V2-060 원형 스티커 supports size and quantity selection through to cart
+- Location: tests/e2e/purchasing/sticker-catalog-configurator.spec.ts:24:5
+
+# Error details
+
+```
+Error: Unexpected browser console errors or warnings
+
+expect(received).toEqual(expected) // deep equality
+
+- Expected  - 1
++ Received  + 4
+
+- Array []
++ Array [
++   "[error] Access to font at 'https://static.musticker.com/fonts/lettering/segoe-ui.ttf' from origin 'https://www.musticker.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
++   "[error] Failed to load resource: net::ERR_FAILED",
++ ]
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e6]:
+        - paragraph [ref=e7]: 공지
+        - button "추석 연휴 배송 안내 “추석 연휴 기간 동안 택배사 휴무로 인해 배송이 일시 중단되며, 연휴 이후 순차적으로 배송됩니다.”" [ref=e8] [cursor=pointer]:
+          - paragraph [ref=e9]: 추석 연휴 배송 안내
+          - paragraph [ref=e10]: “추석 연휴 기간 동안 택배사 휴무로 인해 배송이 일시 중단되며, 연휴 이후 순차적으로 배송됩니다.”
+        - generic [ref=e11]:
+          - button [disabled] [ref=e12]:
+            - img [ref=e13]
+          - button [disabled] [ref=e15]:
+            - img [ref=e16]
+      - button [ref=e18] [cursor=pointer]:
+        - img [ref=e19]
+    - banner [ref=e21]:
+      - generic [ref=e22]:
+        - generic [ref=e23]:
+          - link "Musticker" [ref=e24] [cursor=pointer]:
+            - /url: /kr
+            - img "musticker logo" [ref=e25]
+          - generic [ref=e26]:
+            - button "공지사항 열기" [ref=e28] [cursor=pointer]:
+              - img [ref=e30]
+            - button "layout.header.search" [ref=e32] [cursor=pointer]:
+              - img [ref=e33]
+            - generic [ref=e35]:
+              - button "장바구니" [ref=e36] [cursor=pointer]:
+                - img [ref=e37]
+              - generic: "1"
+            - button "계정" [ref=e40] [cursor=pointer]:
+              - img [ref=e42]
+        - navigation "Primary":
+          - link "스티커" [ref=e44] [cursor=pointer]:
+            - /url: /kr/stickers
+          - link "롤스티커" [ref=e45] [cursor=pointer]:
+            - /url: /kr/roll-stickers
+          - link "판스티커" [ref=e46] [cursor=pointer]:
+            - /url: /kr/sheet-stickers
+    - main [ref=e47]:
+      - generic [ref=e48]:
+        - generic [ref=e50]:
+          - generic:
+            - navigation:
+              - link "자유형 조각스티커 자유형 조각스티커":
+                - /url: /kr/stickers/die-cut-sticker
+                - generic:
+                  - img "자유형 조각스티커"
+                - generic:
+                  - heading "자유형 조각스티커" [level=4]
+              - link "원형 스티커 원형 스티커":
+                - /url: /kr/stickers/circle-sticker
+                - generic:
+                  - img "원형 스티커"
+                - generic:
+                  - heading "원형 스티커" [level=4]
+              - link "직사각형 스티커 직사각형 스티커":
+                - /url: /kr/stickers/rectangle-sticker
+                - generic:
+                  - img "직사각형 스티커"
+                - generic:
+                  - heading "직사각형 스티커" [level=4]
+              - link "정사각형 스티커 정사각형 스티커":
+                - /url: /kr/stickers/square-sticker
+                - generic:
+                  - img "정사각형 스티커"
+                - generic:
+                  - heading "정사각형 스티커" [level=4]
+              - link "타원형 스티커 타원형 스티커":
+                - /url: /kr/stickers/oval-sticker
+                - generic:
+                  - img "타원형 스티커"
+                - generic:
+                  - heading "타원형 스티커" [level=4]
+              - link "둥근 사각 스티커 둥근 사각 스티커":
+                - /url: /kr/stickers/rounded-sticker
+                - generic:
+                  - img "둥근 사각 스티커"
+                - generic:
+                  - heading "둥근 사각 스티커" [level=4]
+              - link "도무송 스티커 도무송 스티커":
+                - /url: /kr/stickers/kiss-cut-sticker
+                - generic:
+                  - img "도무송 스티커"
+                - generic:
+                  - heading "도무송 스티커" [level=4]
+              - link "판스티커 판스티커":
+                - /url: /kr/stickers/sticker-sheet
+                - generic:
+                  - img "판스티커"
+                - generic:
+                  - heading "판스티커" [level=4]
+              - link "투명 스티커 투명 스티커":
+                - /url: /kr/stickers/clear-sticker
+                - generic:
+                  - img "투명 스티커"
+                - generic:
+                  - heading "투명 스티커" [level=4]
+              - link "홀로그램 스티커 홀로그램 스티커":
+                - /url: /kr/stickers/hologram-sticker
+                - generic:
+                  - img "홀로그램 스티커"
+                - generic:
+                  - heading "홀로그램 스티커" [level=4]
+              - link "풀 컬러 레터링 스티커 풀 컬러 레터링 스티커":
+                - /url: /kr/stickers/transfer-sticker
+                - generic:
+                  - img "풀 컬러 레터링 스티커"
+                - generic:
+                  - heading "풀 컬러 레터링 스티커" [level=4]
+              - link "글자 커팅 스티커 글자 커팅 스티커":
+                - /url: /kr/stickers/vinyl-lettering
+                - generic:
+                  - img "글자 커팅 스티커"
+                - generic:
+                  - heading "글자 커팅 스티커" [level=4]
+          - generic [ref=e53]:
+            - generic [ref=e56]:
+              - generic [ref=e57]:
+                - heading "원형 스티커" [level=1] [ref=e58]
+                - paragraph [ref=e59]: 도톰한 프리미엄 소재와 매끄러운 곡선 커팅으로 완성한 깔끔한 원형 스티커
+              - img "원형 스티커 preview poster" [ref=e61]
+              - generic [ref=e63]:
+                - button "소형 40x40 product.sizes.small40x40.label 작고 귀여운 크기로 휴대폰 케이스나 헬멧에 딱!" [ref=e64] [cursor=pointer]:
+                  - heading "소형 40x40" [level=4] [ref=e65]
+                  - img "product.sizes.small40x40.label" [ref=e66]
+                  - paragraph [ref=e67]: 작고 귀여운 크기로 휴대폰 케이스나 헬멧에 딱!
+                - button "중형 60x60 product.sizes.medium60x60.label 텀블러·노트북에 잘 어울려요. 가장 인기 있는 사이즈예요." [ref=e68] [cursor=pointer]:
+                  - heading "중형 60x60" [level=4] [ref=e69]
+                  - img "product.sizes.medium60x60.label" [ref=e70]
+                  - paragraph [ref=e71]: 텀블러·노트북에 잘 어울려요. 가장 인기 있는 사이즈예요.
+                - button "대형 80x80 product.sizes.large80x80.label 보드나 캐리어에 붙이면 눈에 잘 띄는 크기예요." [ref=e72] [cursor=pointer]:
+                  - heading "대형 80x80" [level=4] [ref=e73]
+                  - img "product.sizes.large80x80.label" [ref=e74]
+                  - paragraph [ref=e75]: 보드나 캐리어에 붙이면 눈에 잘 띄는 크기예요.
+                - button "초대형 100x100 product.sizes.extraLarge100x100.label 차·아이스박스·공구함에도 딱 맞는 넉넉한 크기예요." [ref=e76] [cursor=pointer]:
+                  - heading "초대형 100x100" [level=4] [ref=e77]
+                  - img "product.sizes.extraLarge100x100.label" [ref=e78]
+                  - paragraph [ref=e79]: 차·아이스박스·공구함에도 딱 맞는 넉넉한 크기예요.
+            - complementary [ref=e82]:
+              - generic [ref=e83]:
+                - generic [ref=e84]:
+                  - heading "사이즈를 선택하세요" [level=3] [ref=e85]
+                  - generic [ref=e86]: (단위:mm)
+                - generic [ref=e87]:
+                  - button "소형 40x40" [ref=e88] [cursor=pointer]:
+                    - generic [ref=e89]: 소형
+                    - generic [ref=e90]: 40x40
+                  - button "중형 60x60" [ref=e91] [cursor=pointer]:
+                    - generic [ref=e92]: 중형
+                    - generic [ref=e93]: 60x60
+                  - button "대형 80x80" [ref=e94] [cursor=pointer]:
+                    - generic [ref=e95]: 대형
+                    - generic [ref=e96]: 80x80
+                  - button "초대형 100x100" [ref=e97] [cursor=pointer]:
+                    - generic [ref=e98]: 초대형
+                    - generic [ref=e99]: 100x100
+                  - 'button "원하는 크기 입력 주문 가능 크기: 10-1500mm" [ref=e100] [cursor=pointer]':
+                    - generic [ref=e101]:
+                      - img [ref=e102]
+                      - paragraph [ref=e104]: 원하는 크기 입력
+                    - generic [ref=e105]: "주문 가능 크기: 10-1500mm"
+              - generic [ref=e106]:
+                - heading "수량을 선택하세요" [level=3] [ref=e107]
+                - generic [ref=e108]:
+                  - button "10개 0원" [ref=e109] [cursor=pointer]:
+                    - generic [ref=e110]: 10개
+                    - generic [ref=e111]: 0원
+                  - button "20개 0원" [ref=e112] [cursor=pointer]:
+                    - generic [ref=e113]: 20개
+                    - generic [ref=e114]: 0원
+                  - button "30개 0원" [ref=e115] [cursor=pointer]:
+                    - generic [ref=e116]: 30개
+                    - generic [ref=e117]: 0원
+                  - button "50개 0원" [ref=e118] [cursor=pointer]:
+                    - generic [ref=e119]: 50개
+                    - generic [ref=e120]: 0원
+                  - button "100개 0원" [ref=e121] [cursor=pointer]:
+                    - generic [ref=e122]: 100개
+                    - generic [ref=e123]: 0원
+                  - button "300개 0원" [ref=e124] [cursor=pointer]:
+                    - generic [ref=e125]: 300개
+                    - generic [ref=e126]: 0원
+                  - button "500개 0원" [ref=e127] [cursor=pointer]:
+                    - generic [ref=e128]: 500개
+                    - generic [ref=e129]: 0원
+                  - button "1,000개 0원" [ref=e130] [cursor=pointer]:
+                    - generic [ref=e131]: 1,000개
+                    - generic [ref=e132]: 0원
+                  - 'button "원하는 수량 입력 주문 가능 수량: 10-100,000개" [ref=e133] [cursor=pointer]':
+                    - generic [ref=e134]:
+                      - img [ref=e135]
+                      - paragraph [ref=e137]: 원하는 수량 입력
+                    - generic [ref=e138]: "주문 가능 수량: 10-100,000개"
+              - generic [ref=e141]:
+                - generic [ref=e142]:
+                  - paragraph [ref=e143]:
+                    - generic [ref=e144]: 0원
+                  - paragraph [ref=e145]:
+                    - strong [ref=e146]: 0원
+                - paragraph [ref=e147]: (1매당 0원)
+              - button "다음 단계" [active] [ref=e149] [cursor=pointer]:
+                - generic [ref=e150]: 다음 단계
+              - list [ref=e152]:
+                - listitem [ref=e153]: 5만원 이상 무료배송
+                - listitem [ref=e154]: 12시 이전 시안 확정 시 당일배송
+                - listitem [ref=e155]: "발송 예정일: 09.28 (월) · CJ 대한통운"
+                - listitem [ref=e156]: 시안 승인 후 평균 1~3일 내 배송됩니다. (주말·공휴일 제외)
+        - generic [ref=e158]:
+          - article [ref=e159]:
+            - img "오늘제작, 내일발송" [ref=e160]
+            - heading "오늘제작, 내일발송" [level=4] [ref=e161]
+            - paragraph [ref=e162]: 디자인 승인 즉시 제작이 시작됩니다 평균 1~2일 안에 당신의 손에 도착하죠
+          - article [ref=e163]:
+            - img "빠른 시안 피드백" [ref=e164]
+            - heading "빠른 시안 피드백" [level=4] [ref=e165]
+            - paragraph [ref=e166]: 결제 후 곧바로 시안을 받아보세요 마음이 ‘예스’ 할 때까지 수정 가능합니다
+          - article [ref=e167]:
+            - img "뛰어난 내구성과 내수성" [ref=e168]
+            - heading "뛰어난 내구성과 내수성" [level=4] [ref=e169]
+            - paragraph [ref=e170]: 두꺼운 프리미엄 재질로 색상, 접착력 그대로 오래갑니다
+        - generic [ref=e172]:
+          - article [ref=e173]:
+            - generic [ref=e176]:
+              - heading "색감은 생생하게, 내구성은 완벽하게" [level=3] [ref=e177]
+              - paragraph [ref=e178]: 고품질 인쇄와 두꺼운 소재로 구현한 화려하고 선명한 색감. 비, 햇빛, 고온에도 쉽게 흐려지지 않는 뛰어난 내구성. 붙이는 순간부터 오래도록 변하지 않는 품질을 느껴보세요.
+          - article [ref=e179]:
+            - generic [ref=e182]:
+              - heading "쉽게 붙이고, 깔끔하게 제거" [level=3] [ref=e183]
+              - paragraph [ref=e184]: 매끄럽게 부착되고, 흔적 없이 깔끔하게 떨어집니다. 접착은 강력하지만, 표면은 안전하게 보호합니다. 필요할 땐 단번에 제거되고, 남는 건 깔끔함뿐입니다.
+          - article [ref=e185]:
+            - generic [ref=e188]:
+              - heading "디자인에 맞게 정확하게 컷팅" [level=3] [ref=e189]
+              - paragraph [ref=e190]: 로고, 일러스트, 사진을 업로드하면 칼선에 맞춰 정밀하게 스티커로 제작됩니다. 복잡한 패턴도 머스티커의 고유한 절단 기술로 완벽하게 표현됩니다.
+        - generic [ref=e192]:
+          - generic [ref=e193]:
+            - generic [ref=e194]:
+              - generic [ref=e195]: 좋아요 😀
+              - img "5 out of 5" [ref=e196]:
+                - img [ref=e197]
+                - img [ref=e199]
+                - img [ref=e201]
+                - img [ref=e203]
+                - img [ref=e205]
+              - generic [ref=e207]: "5.0"
+            - heading "234개 사진 후기가 보장해요" [level=2] [ref=e208]
+            - paragraph [ref=e209]: 직접 사용한 고객들의 생생한 리뷰를 확인해보세요. 리얼 사용 이미지와 함께 실제 만족도를 보여드립니다.
+            - generic [ref=e210]:
+              - button "이전 리뷰" [disabled] [ref=e211] [cursor=pointer]:
+                - img [ref=e212]
+                - generic [ref=e214]: 이전 리뷰
+              - button "다음 리뷰" [ref=e215] [cursor=pointer]:
+                - img [ref=e216]
+                - generic [ref=e218]: 다음 리뷰
+          - generic [ref=e220]:
+            - article [ref=e222]:
+              - generic [ref=e223]:
+                - img "홍승일" [ref=e225]
+                - paragraph [ref=e227]: 제품 깔끔하게 잘 나왔고 바로 다음날 배송이 되어서 너무 만족스러웠습니다
+              - generic [ref=e228]:
+                - generic [ref=e229]:
+                  - generic [ref=e230]: 홍
+                  - generic [ref=e231]:
+                    - strong [ref=e232]: 홍승일
+                    - generic [ref=e233]: 2026-09-15
+                - generic [ref=e234]:
+                  - img [ref=e235]
+                  - img [ref=e237]
+                  - img [ref=e239]
+                  - img [ref=e241]
+                  - img [ref=e243]
+            - article [ref=e246]:
+              - generic [ref=e247]:
+                - img "이지영" [ref=e249]
+                - paragraph [ref=e251]: 첫 스티커 제작이었는데, 굉장히 만족합니다. 다음에 제작 의뢰할 때에는 더 잘할 수 있을 것 같아요!
+              - generic [ref=e252]:
+                - generic [ref=e253]:
+                  - generic [ref=e254]: 이
+                  - generic [ref=e255]:
+                    - strong [ref=e256]: 이지영
+                    - generic [ref=e257]: 2026-09-14
+                - generic [ref=e258]:
+                  - img [ref=e259]
+                  - img [ref=e261]
+                  - img [ref=e263]
+                  - img [ref=e265]
+                  - img [ref=e267]
+            - article [ref=e270]:
+              - generic [ref=e271]:
+                - img "권민정" [ref=e273]
+                - paragraph [ref=e275]: 급하게 필요해서 주문했던 스티커인데 친절하게 잘 응대해주시고 스티커도 너무 이쁘게 나와서 맘에 쏙 들었어요. 다음에 또 이용할께요.
+              - generic [ref=e276]:
+                - generic [ref=e277]:
+                  - generic [ref=e278]: 권
+                  - generic [ref=e279]:
+                    - strong [ref=e280]: 권민정
+                    - generic [ref=e281]: 2026-09-11
+                - generic [ref=e282]:
+                  - img [ref=e283]
+                  - img [ref=e285]
+                  - img [ref=e287]
+                  - img [ref=e289]
+                  - img [ref=e291]
+            - article [ref=e294]:
+              - generic [ref=e295]:
+                - img "허준회" [ref=e297]
+                - paragraph [ref=e299]: 대만족
+              - generic [ref=e300]:
+                - generic [ref=e301]:
+                  - generic [ref=e302]: 허
+                  - generic [ref=e303]:
+                    - strong [ref=e304]: 허준회
+                    - generic [ref=e305]: 2026-09-11
+                - generic [ref=e306]:
+                  - img [ref=e307]
+                  - img [ref=e309]
+                  - img [ref=e311]
+                  - img [ref=e313]
+                  - img [ref=e315]
+            - article [ref=e318]:
+              - generic [ref=e319]:
+                - img "이승범" [ref=e321]
+                - paragraph [ref=e323]: 예쁘게 튼튼하게 잘 만들어주셔써요 !!
+              - generic [ref=e324]:
+                - generic [ref=e325]:
+                  - generic [ref=e326]: 이
+                  - generic [ref=e327]:
+                    - strong [ref=e328]: 이승범
+                    - generic [ref=e329]: 2026-09-10
+                - generic [ref=e330]:
+                  - img [ref=e331]
+                  - img [ref=e333]
+                  - img [ref=e335]
+                  - img [ref=e337]
+                  - img [ref=e339]
+            - article [ref=e342]:
+              - generic [ref=e343]:
+                - img "이지유" [ref=e345]
+                - paragraph [ref=e347]: 원하는 디자인으로 잘 제작해주고 제작 및 배송도 빨라서 좋았습니다.
+              - generic [ref=e348]:
+                - generic [ref=e349]:
+                  - generic [ref=e350]: 이
+                  - generic [ref=e351]:
+                    - strong [ref=e352]: 이지유
+                    - generic [ref=e353]: 2026-09-10
+                - generic [ref=e354]:
+                  - img [ref=e355]
+                  - img [ref=e357]
+                  - img [ref=e359]
+                  - img [ref=e361]
+                  - img [ref=e363]
+            - article [ref=e366]:
+              - generic [ref=e367]:
+                - img "김민수" [ref=e369]
+                - paragraph [ref=e371]: 퀼리티 짱!
+              - generic [ref=e372]:
+                - generic [ref=e373]:
+                  - generic [ref=e374]: 김
+                  - generic [ref=e375]:
+                    - strong [ref=e376]: 김민수
+                    - generic [ref=e377]: 2026-09-09
+                - generic [ref=e378]:
+                  - img [ref=e379]
+                  - img [ref=e381]
+                  - img [ref=e383]
+                  - img [ref=e385]
+                  - img [ref=e387]
+            - article [ref=e390]:
+              - generic [ref=e391]:
+                - img "우상엽" [ref=e393]
+                - paragraph [ref=e395]: 좋아요 퀄리티도 좋고.
+              - generic [ref=e396]:
+                - generic [ref=e397]:
+                  - generic [ref=e398]: 우
+                  - generic [ref=e399]:
+                    - strong [ref=e400]: 우상엽
+                    - generic [ref=e401]: 2026-09-09
+                - generic [ref=e402]:
+                  - img [ref=e403]
+                  - img [ref=e405]
+                  - img [ref=e407]
+                  - img [ref=e409]
+                  - img [ref=e411]
+            - article [ref=e414]:
+              - generic [ref=e415]:
+                - img "강동U1 센터" [ref=e417]
+                - paragraph [ref=e419]: 작고 앙증맞아요. 감사합니다.
+              - generic [ref=e420]:
+                - generic [ref=e421]:
+                  - generic [ref=e422]: 강
+                  - generic [ref=e423]:
+                    - strong [ref=e424]: 강동U1 센터
+                    - generic [ref=e425]: 2026-09-09
+                - generic [ref=e426]:
+                  - img [ref=e427]
+                  - img [ref=e429]
+                  - img [ref=e431]
+                  - img [ref=e433]
+                  - img [ref=e435]
+            - article [ref=e438]:
+              - generic [ref=e439]:
+                - img "tkop****" [ref=e441]
+                - paragraph [ref=e443]: 빨리오고 너무 이쁘게 만들어주셔서 감사합니다 그리고 서비스도 20장 더 주셔서 감사합니다
+              - generic [ref=e444]:
+                - generic [ref=e445]:
+                  - img "tkop**** avatar" [ref=e446]
+                  - generic [ref=e447]:
+                    - strong [ref=e448]: tkop****
+                    - generic [ref=e449]: 2026-03-25
+                - generic [ref=e450]:
+                  - img [ref=e451]
+                  - img [ref=e453]
+                  - img [ref=e455]
+                  - img [ref=e457]
+                  - img [ref=e459]
+            - article [ref=e462]:
+              - generic [ref=e463]:
+                - img "oozz******" [ref=e465]
+                - paragraph [ref=e467]: 잘나와서 만족합니다 잘쓰겠습니다
+              - generic [ref=e468]:
+                - generic [ref=e469]:
+                  - img "oozz****** avatar" [ref=e470]
+                  - generic [ref=e471]:
+                    - strong [ref=e472]: oozz******
+                    - generic [ref=e473]: 2026-03-22
+                - generic [ref=e474]:
+                  - img [ref=e475]
+                  - img [ref=e477]
+                  - img [ref=e479]
+                  - img [ref=e481]
+                  - img [ref=e483]
+            - article [ref=e486]:
+              - generic [ref=e487]:
+                - img "aktm********" [ref=e489]
+                - paragraph [ref=e491]: 만족하면서 사용중입니다
+              - generic [ref=e492]:
+                - generic [ref=e493]:
+                  - img "aktm******** avatar" [ref=e494]
+                  - generic [ref=e495]:
+                    - strong [ref=e496]: aktm********
+                    - generic [ref=e497]: 2026-03-04
+                - generic [ref=e498]:
+                  - img [ref=e499]
+                  - img [ref=e501]
+                  - img [ref=e503]
+                  - img [ref=e505]
+                  - img [ref=e507]
+            - article [ref=e510]:
+              - generic [ref=e511]:
+                - img "aktm********" [ref=e513]
+                - paragraph [ref=e515]: 잘 받았어요 잘쓸게요.
+              - generic [ref=e516]:
+                - generic [ref=e517]:
+                  - img "aktm******** avatar" [ref=e518]
+                  - generic [ref=e519]:
+                    - strong [ref=e520]: aktm********
+                    - generic [ref=e521]: 2026-01-31
+                - generic [ref=e522]:
+                  - img [ref=e523]
+                  - img [ref=e525]
+                  - img [ref=e527]
+                  - img [ref=e529]
+                  - img [ref=e531]
+            - article [ref=e534]:
+              - generic [ref=e535]:
+                - img "aktm********" [ref=e537]
+                - paragraph [ref=e539]: 아주 잘쓰고있습니다.
+              - generic [ref=e540]:
+                - generic [ref=e541]:
+                  - img "aktm******** avatar" [ref=e542]
+                  - generic [ref=e543]:
+                    - strong [ref=e544]: aktm********
+                    - generic [ref=e545]: 2026-01-06
+                - generic [ref=e546]:
+                  - img [ref=e547]
+                  - img [ref=e549]
+                  - img [ref=e551]
+                  - img [ref=e553]
+                  - img [ref=e555]
+            - article [ref=e558]:
+              - generic [ref=e559]:
+                - img "aktm********" [ref=e561]
+                - paragraph [ref=e563]: 아주 잘쓰고있습니다.
+              - generic [ref=e564]:
+                - generic [ref=e565]:
+                  - img "aktm******** avatar" [ref=e566]
+                  - generic [ref=e567]:
+                    - strong [ref=e568]: aktm********
+                    - generic [ref=e569]: 2026-01-06
+                - generic [ref=e570]:
+                  - img [ref=e571]
+                  - img [ref=e573]
+                  - img [ref=e575]
+                  - img [ref=e577]
+                  - img [ref=e579]
+            - article [ref=e582]:
+              - generic [ref=e583]:
+                - img "jiwn****" [ref=e585]
+                - paragraph [ref=e587]: 아 정말 너무 좋아연ㅎㅎ
+              - generic [ref=e588]:
+                - generic [ref=e589]:
+                  - img "jiwn**** avatar" [ref=e590]
+                  - generic [ref=e591]:
+                    - strong [ref=e592]: jiwn****
+                    - generic [ref=e593]: 2025-12-29
+                - generic [ref=e594]:
+                  - img [ref=e595]
+                  - img [ref=e597]
+                  - img [ref=e599]
+                  - img [ref=e601]
+                  - img [ref=e603]
+        - generic [ref=e606]:
+          - generic [ref=e607]:
+            - img "text" [ref=e608]
+            - generic [ref=e609]:
+              - heading "원형 스티커 FAQ" [level=2] [ref=e610]
+              - paragraph [ref=e611]:
+                - text: 멤버십, 주문, 디자인 파일 업로드, 인쇄, 결제, 반품·환불에 대한 자세한 내용은 자주 묻는
+                - link "질문(FAQ) 페이지에서 확인해 주세요" [ref=e612] [cursor=pointer]:
+                  - /url: https://www.musticker.com/faq
+                - text: .
+          - generic [ref=e613]:
+            - generic [ref=e614]:
+              - generic [ref=e615] [cursor=pointer]:
+                - heading "원형 스티커에는 어떤 디자인이 잘 어울리나요?" [level=3] [ref=e616]
+                - paragraph [ref=e619]: 원형 스티커는 원형 로고, 아이콘, 심플한 그래픽과 잘 어울립니다. 디자인을 중앙에 배치하면 더욱 균형감 있고 깔끔한 느낌을 연출할 수 있습니다.
+              - button [ref=e620] [cursor=pointer]:
+                - img [ref=e621]
+            - generic [ref=e623]:
+              - generic [ref=e624] [cursor=pointer]:
+                - heading "원형 스티커는 주로 어디에 사용되나요?" [level=3] [ref=e625]
+                - paragraph [ref=e626]: 원형 스티커는 제품 라벨, 패키지 씰, 홍보용 스티커 등 다양한 용도로 많이 사용됩니다. 심플한 디자인부터 디테일한 그래픽까지 모두 잘 어울립니다.
+              - button [ref=e627] [cursor=pointer]:
+                - img [ref=e628]
+            - generic [ref=e630]:
+              - generic [ref=e631] [cursor=pointer]:
+                - heading "원형 스티커는 어떤 사이즈가 가장 많이 사용되나요?" [level=3] [ref=e632]
+                - paragraph [ref=e633]: 사용 목적에 따라 적합한 사이즈가 달라집니다. 중형 사이즈는 제품 포장과 홍보용으로 많이 사용되며, 용도에 맞게 다양한 사이즈로 제작할 수 있습니다.
+              - button [ref=e634] [cursor=pointer]:
+                - img [ref=e635]
+            - generic [ref=e637]:
+              - generic [ref=e638] [cursor=pointer]:
+                - heading "원형 스티커는 심플한 디자인에도 잘 어울리나요?" [level=3] [ref=e639]
+                - paragraph [ref=e640]: 네. 원형 스티커는 심플한 디자인과 여백을 살린 레이아웃에 잘 어울립니다. 브랜드 로고, 제품 패키지, 홍보용 스티커 등 다양한 용도로 활용할 수 있습니다.
+              - button [ref=e641] [cursor=pointer]:
+                - img [ref=e642]
+            - generic [ref=e644]:
+              - generic [ref=e645] [cursor=pointer]:
+                - heading "원형 스티커는 실외에서도 사용할 수 있나요?" [level=3] [ref=e646]
+                - paragraph [ref=e647]: 네. 머스티커의 원형 스티커는 방수 기능이 있고 내구성이 뛰어나 실내외에서 사용할 수 있으며, 습기와 햇빛, 일상적인 마모에도 강합니다. 깨끗한 표면에 부착하면 더욱 오래 사용할 수 있습니다. 다만 날카로운 물체나 강한 마찰에는 긁힘이 생길 수 있으니 주의해 주세요.
+              - button [ref=e648] [cursor=pointer]:
+                - img [ref=e649]
+          - generic [ref=e651]:
+            - generic [ref=e652]:
+              - heading "궁금한 점이 더 있으신가요?" [level=4] [ref=e653]
+              - paragraph [ref=e654]: 원하시는 답변을 찾지 못하셨다면 언제든지 문의해 주세요.
+            - button "문의하기" [ref=e655] [cursor=pointer]:
+              - generic [ref=e656]: 문의하기
+      - navigation "네이버 톡톡으로 문의하기" [ref=e657]:
+        - link "카카오채널로 문의하기" [ref=e658] [cursor=pointer]:
+          - /url: https://pf.kakao.com/_nJxnTX/chat
+          - generic:
+            - generic:
+              - generic:
+                - img
+              - paragraph: 카카오채널로 문의하기
+          - img [ref=e660]
+        - link "네이버 톡톡 으로 문의하기" [ref=e661] [cursor=pointer]:
+          - /url: https://talk.naver.com/ct/w2luxqo
+          - generic:
+            - generic:
+              - generic:
+                - img
+              - paragraph: 네이버 톡톡 으로 문의하기
+          - img [ref=e663]
+        - button "이메일로 문의하기" [ref=e664] [cursor=pointer]:
+          - generic:
+            - generic:
+              - generic:
+                - img
+              - paragraph: 이메일로 문의하기
+          - img [ref=e666]
+    - contentinfo [ref=e667]:
+      - generic [ref=e668]:
+        - generic [ref=e669]:
+          - heading "MUSTICKER / 머스티커" [level=2] [ref=e670]
+          - paragraph [ref=e671]: "상호명: (주)글로픽스"
+          - paragraph [ref=e672]: "사업자등록번호 : 877-88-03313 통신판매업신고 : 2026-부산해운대-0792호"
+          - paragraph [ref=e673]: "대표이사 : 여일석 주소 : 부산광역시 해운대구 해운대해변로 203 오션타워 1014호"
+          - paragraph [ref=e674]: "호스팅사업자 : 아마존웹서비시즈(Amazon Web Services)"
+          - paragraph [ref=e675]:
+            - generic [ref=e676]: ⓒ 2026. All rights reserved.
+            - generic [ref=e677]: "판매: sales@musticker.com"
+            - link "이용약관" [ref=e678] [cursor=pointer]:
+              - /url: /kr/terms-of-use
+            - link "개인정보처리방침" [ref=e679] [cursor=pointer]:
+              - /url: /kr/privacy-policy
+            - button "사업자정보확인" [ref=e680] [cursor=pointer]
+            - link "오픈소스 라이선스" [ref=e681] [cursor=pointer]:
+              - /url: /kr/open-source-licenses
+            - link "회사소개" [ref=e682] [cursor=pointer]:
+              - /url: /kr/about
+        - generic [ref=e683]:
+          - paragraph [ref=e684]: 1899-5529
+          - paragraph [ref=e686]: 오전 9시 ~ 오후 6시(토요일, 공휴일 휴무)
+          - generic [ref=e687]:
+            - button "1:1문의하기" [ref=e688] [cursor=pointer]
+            - link "자주 묻는 질문" [ref=e689] [cursor=pointer]:
+              - /url: /kr/faq
+          - generic [ref=e690]:
+            - generic [ref=e691]: "Follow us at:"
+            - generic [ref=e692]:
+              - link "instagram icon" [ref=e693] [cursor=pointer]:
+                - /url: https://www.instagram.com/musticker_official/
+                - img "instagram icon"
+              - link "youtube icon" [ref=e694] [cursor=pointer]:
+                - /url: https://www.youtube.com/@MustickerOfficial
+                - img "youtube icon"
+  - dialog [ref=e696]:
+    - banner [ref=e697]:
+      - heading "장바구니 미리보기 (1)" [level=3] [ref=e698]
+      - button "쇼핑 계속하기" [ref=e699] [cursor=pointer]:
+        - generic [ref=e700]:
+          - paragraph [ref=e701]: 쇼핑 계속하기
+          - img [ref=e702]
+    - article [ref=e706]:
+      - generic [ref=e707]:
+        - img "illustrations/products/stickers/circle.svg" [ref=e709]
+        - generic [ref=e710]:
+          - heading "원형 스티커" [level=4] [ref=e711]
+          - paragraph [ref=e712]: "사이즈: 60x60mm"
+          - paragraph [ref=e713]: "수량: 100개"
+      - generic [ref=e714]:
+        - strong [ref=e715]: 21,000원
+        - generic [ref=e716]:
+          - button "상품 수정" [ref=e717] [cursor=pointer]:
+            - img [ref=e718]
+            - generic [ref=e719]: 상품 수정
+          - button "상품 삭제" [ref=e720] [cursor=pointer]:
+            - img [ref=e721]
+            - generic [ref=e722]: 상품 삭제
+    - contentinfo [ref=e723]:
+      - generic [ref=e724]:
+        - paragraph [ref=e725]:
+          - generic [ref=e726]: 합계
+          - strong [ref=e727]: 21,000원
+        - generic [ref=e728]:
+          - paragraph [ref=e729]: 참고
+          - paragraph [ref=e730]: 배송비 및 할인 내역은 결제 시 적용됩니다.
+      - generic [ref=e731]:
+        - button "장바구니 보기" [ref=e732] [cursor=pointer]:
+          - generic [ref=e733]: 장바구니 보기
+        - button "주문하기" [ref=e734] [cursor=pointer]:
+          - generic [ref=e735]:
+            - img [ref=e736]
+            - text: 주문하기
+```
+
+# Test source
+
+```ts
+  366 |         allowTransientApiCorsFailures &&
+  367 |         pendingTransientApiNetworkFailures > 0 &&
+  368 |         text === 'Failed to load resource: net::ERR_FAILED'
+  369 |       ) {
+  370 |         return;
+  371 |       }
+  372 | 
+  373 |       if (allowTransientApiCorsFailures && isTransientApiFetchFailure(text)) {
+  374 |         pendingTransientApiNetworkFailures = Math.max(0, pendingTransientApiNetworkFailures - 1);
+  375 |         return;
+  376 |       }
+  377 | 
+  378 |       if (allowTransientCartCreateFailures && isCartCreateCorsFailure(text)) {
+  379 |         pendingCartCreateNetworkFailures += 1;
+  380 |         return;
+  381 |       }
+  382 | 
+  383 |       if (
+  384 |         allowTransientCartCreateFailures &&
+  385 |         pendingCartCreateNetworkFailures > 0 &&
+  386 |         text === 'Failed to load resource: net::ERR_FAILED'
+  387 |       ) {
+  388 |         return;
+  389 |       }
+  390 | 
+  391 |       if (allowTransientCartCreateFailures && isCartCreateFetchFailure(text)) {
+  392 |         pendingCartCreateNetworkFailures = Math.max(0, pendingCartCreateNetworkFailures - 1);
+  393 |         return;
+  394 |       }
+  395 | 
+  396 |       if (allowKnownPriceWarnings && isSupersededPricingRequest(text)) {
+  397 |         hadSupersededPricingRequest = true;
+  398 |         return;
+  399 |       }
+  400 | 
+  401 |       if (allowKnownPriceWarnings && hadSupersededPricingRequest && text === 'Unable to retrieve prices.') {
+  402 |         hadSupersededPricingRequest = false;
+  403 |         return;
+  404 |       }
+  405 | 
+  406 |       if (isKnownConsoleMessage(text, guardOptions)) {
+  407 |         return;
+  408 |       }
+  409 | 
+  410 |       consoleFailures.push(`[${message.type()}] ${text}`);
+  411 |     });
+  412 | 
+  413 |     page.on('response', (response) => {
+  414 |       const status = response.status();
+  415 |       if (status < 400) {
+  416 |         return;
+  417 |       }
+  418 | 
+  419 |       const url = response.url();
+  420 |       if (allowGuestUserMe401 && isExpectedGuestUserMe401(status, url)) {
+  421 |         return;
+  422 |       }
+  423 | 
+  424 |       if (allowExpectedAuthFailures && isExpectedAuthFailure(status, url)) {
+  425 |         return;
+  426 |       }
+  427 | 
+  428 |       if (allowKnownNuxtPayloadFailures && isKnownNuxtPayloadFailure(status, url)) {
+  429 |         return;
+  430 |       }
+  431 | 
+  432 |       if (allowTransientProductPageFailures && isTransientProductPageServerFailure(status, url)) {
+  433 |         pendingTransientProductPageFailures += 1;
+  434 |         return;
+  435 |       }
+  436 | 
+  437 |       if (allowExpectedNotFound && isExpectedStorefrontNotFound(status, url)) {
+  438 |         pendingExpectedNotFoundResponses += 1;
+  439 |         return;
+  440 |       }
+  441 | 
+  442 |       if (allowGuestCheckoutBootstrap401 && isExpectedGuestCheckoutBootstrap401(status, url)) {
+  443 |         return;
+  444 |       }
+  445 | 
+  446 |       if (allowPostLogout401 && isPostLogoutMemberDataUnauthorized(status, url)) {
+  447 |         return;
+  448 |       }
+  449 | 
+  450 |       responseFailures.push(`${status} ${url}`);
+  451 |     });
+  452 | 
+  453 |     await applyInternalOriginHeader(page);
+  454 |     await use(page);
+  455 | 
+  456 |     // gotoStorefront() retries past WAF 403s, but the listeners above have already recorded each
+  457 |     // blocked attempt by the time it does. Forgive exactly as many as it navigated past -- a 403
+  458 |     // that nothing retried still fails the run.
+  459 |     const throttleBlocks = retriedThrottleBlockCount(page);
+  460 | 
+  461 |     expect
+  462 |       .soft(
+  463 |         dropForgiven(consoleFailures, throttleBlocks, isThrottleBlockConsoleFailure),
+  464 |         'Unexpected browser console errors or warnings'
+  465 |       )
+> 466 |       .toEqual([]);
+      |        ^ Error: Unexpected browser console errors or warnings
+  467 |     expect
+  468 |       .soft(
+  469 |         dropForgiven(responseFailures, throttleBlocks, isThrottleBlockResponseFailure),
+  470 |         'Unexpected failed HTTP responses'
+  471 |       )
+  472 |       .toEqual([]);
+  473 |   }
+  474 | });
+  475 | 
+  476 | export { expect };
+  477 | 
+```

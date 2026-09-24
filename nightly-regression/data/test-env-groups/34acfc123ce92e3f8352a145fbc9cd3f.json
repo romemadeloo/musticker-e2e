@@ -1,1 +1,1 @@
-{"id":"34acfc123ce92e3f8352a145fbc9cd3f","fullName":"purchasing/sheet-sticker-size-rules.spec.ts:89:5","name":"MS-V2-078 circle sheet sticker: 67x97 packs 2 per sheet and is orderable","status":"passed","testResultsByEnv":{"default":"cdf89819ecd5133ea7654ec6fecdf18f"}}
+{"id":"34acfc123ce92e3f8352a145fbc9cd3f","fullName":"purchasing/sheet-sticker-size-rules.spec.ts:89:5","name":"MS-V2-078 circle sheet sticker: 67x97 packs 2 per sheet and is orderable","status":"failed","testResultsByEnv":{"default":"bf06c2ca438ab19349f8ddabd3a99a55"}}

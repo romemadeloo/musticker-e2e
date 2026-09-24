@@ -1,1 +1,1 @@
-{"id":"5d4309ec7749257fef4d6421c4d98edb","fullName":"purchasing/sticker-catalog-configurator.spec.ts:24:5","name":"MS-V2-060 둥근 사각 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"d1599510548a58df6c6cd8f6675018d8"}}
+{"id":"5d4309ec7749257fef4d6421c4d98edb","fullName":"purchasing/sticker-catalog-configurator.spec.ts:24:5","name":"MS-V2-060 둥근 사각 스티커 supports size and quantity selection through to cart","status":"failed","testResultsByEnv":{"default":"b5d812aca5b0a60b32fbe5ba7670c07e"}}
