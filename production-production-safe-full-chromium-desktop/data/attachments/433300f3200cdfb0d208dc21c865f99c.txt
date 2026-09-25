@@ -1,2 +1,0 @@
-[self-heal] category heading ./roll-stickers: expected "롤스티커", found "앗! 문제가 발생했습니다."
-[self-heal] category heading ./sheet-stickers: expected "판스티커", found "앗! 문제가 발생했습니다."

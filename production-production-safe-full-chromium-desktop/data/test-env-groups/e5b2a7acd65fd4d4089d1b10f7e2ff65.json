@@ -1,0 +1,1 @@
+{"id":"e5b2a7acd65fd4d4089d1b10f7e2ff65","fullName":"storefront/security/throttle-detection.spec.ts:25:3","name":"MS-WAF-001 a subresource 403 storm is reported as throttling, not as missing content","status":"passed","testResultsByEnv":{"default":"f65c0fb7a0e1da90bf10de054ef4b392"}}

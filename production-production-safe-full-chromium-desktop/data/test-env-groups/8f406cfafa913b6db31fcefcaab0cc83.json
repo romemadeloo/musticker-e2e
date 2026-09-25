@@ -1,0 +1,1 @@
+{"id":"8f406cfafa913b6db31fcefcaab0cc83","fullName":"storefront/auth/login.spec.ts:52:3","name":"MS-V2-030 invalid credentials fail safely and keep the user anonymous @validation","status":"passed","testResultsByEnv":{"default":"14f589df0aeb67e7cd9cb1917ba3c81b"}}

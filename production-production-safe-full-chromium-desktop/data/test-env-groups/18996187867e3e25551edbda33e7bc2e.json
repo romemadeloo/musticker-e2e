@@ -1,0 +1,1 @@
+{"id":"18996187867e3e25551edbda33e7bc2e","fullName":"storefront/auth/registration.spec.ts:32:3","name":"MS-V2-080 blank register submit is blocked with required-field validation @validation","status":"passed","testResultsByEnv":{"default":"6ff222fc66c6a7c2bc01183a906dbedf"}}

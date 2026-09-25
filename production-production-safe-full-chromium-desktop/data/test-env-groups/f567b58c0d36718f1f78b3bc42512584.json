@@ -1,0 +1,1 @@
+{"id":"f567b58c0d36718f1f78b3bc42512584","fullName":"storefront/purchasing/checkout-page.spec.ts:16:3","name":"MS-V2-041 checkout page renders shipping, payment, and order summary without submitting","status":"passed","testResultsByEnv":{"default":"b9f2a9189a9b8edd9e659325a79004c3"}}

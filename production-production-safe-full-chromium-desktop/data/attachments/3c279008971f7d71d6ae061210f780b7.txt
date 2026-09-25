@@ -1,0 +1,1 @@
+[self-heal] product heading ./sheet-stickers/rounded-sheet: expected "둥근 사각형 시트 스티커", found "둥근 사각 판스티커"

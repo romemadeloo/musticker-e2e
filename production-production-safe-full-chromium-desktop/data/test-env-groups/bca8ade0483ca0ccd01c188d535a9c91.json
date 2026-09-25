@@ -1,0 +1,1 @@
+{"id":"bca8ade0483ca0ccd01c188d535a9c91","fullName":"storefront/security/throttle-detection.spec.ts:53:3","name":"MS-WAF-002 a clean page is returned untouched","status":"passed","testResultsByEnv":{"default":"3e7a902b7933bcb9702292bcb9eb3468"}}
