@@ -1,0 +1,1 @@
+{"id":"e49770a13bff82eef342110ce66ff656","fullName":"purchasing/sheet-sticker-size-rules.spec.ts:45:5","name":"MS-V2-073 원형 판스티커 rejects a custom size that fits only one sticker per sheet","status":"passed","testResultsByEnv":{"default":"52cb2b59eb8afb7e6486052eb8c2e5dc"}}

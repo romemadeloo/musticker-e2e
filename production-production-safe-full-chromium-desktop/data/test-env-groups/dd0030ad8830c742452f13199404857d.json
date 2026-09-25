@@ -1,1 +1,0 @@
-{"id":"dd0030ad8830c742452f13199404857d","fullName":"purchasing/sheet-sticker-size-rules.spec.ts:113:5","name":"MS-V2-075 타원형 시트 스티커 preset sizes match the shape family table and all fit at least two per sheet","status":"failed","testResultsByEnv":{"default":"c2bd5550f721ccb9b63e0c465ee59b0c"}}

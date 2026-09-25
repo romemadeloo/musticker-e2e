@@ -1,1 +1,1 @@
-{"id":"089437b4c50c6bad6aace3d7c1a20486","fullName":"purchasing/cart-lifecycle.spec.ts:115:3","name":"MS-V2-103 the cart page confirms a removal before acting on it","status":"failed","testResultsByEnv":{"default":"cb39a48277ba0382e05870fa3e9bf93a"}}
+{"id":"089437b4c50c6bad6aace3d7c1a20486","fullName":"purchasing/cart-lifecycle.spec.ts:115:3","name":"MS-V2-103 the cart page confirms a removal before acting on it","status":"passed","testResultsByEnv":{"default":"61074b7ff771d8bd24918dce28a6465c"}}

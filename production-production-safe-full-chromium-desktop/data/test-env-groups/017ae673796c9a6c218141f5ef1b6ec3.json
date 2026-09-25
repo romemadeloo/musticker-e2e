@@ -1,1 +1,1 @@
-{"id":"017ae673796c9a6c218141f5ef1b6ec3","fullName":"smoke/storefront-smoke.spec.ts:51:3","name":"MS-V2-005 account icon routes anonymous users to authentication","status":"passed","testResultsByEnv":{"default":"ed9e08cf79b81c8feebe781f5bec7ae1"}}
+{"id":"017ae673796c9a6c218141f5ef1b6ec3","fullName":"smoke/storefront-smoke.spec.ts:51:3","name":"MS-V2-005 account icon routes anonymous users to authentication","status":"failed","testResultsByEnv":{"default":"4721afb334c282a2277cc59224ba9b04"}}
