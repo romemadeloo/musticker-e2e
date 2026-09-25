@@ -1,1 +1,1 @@
-{"id":"ec82f76499a1e7126802160783d947dc","fullName":"discovery/category-discovery.spec.ts:24:3","name":"MS-V2-008 sheet sticker category lists expected product links","status":"passed","testResultsByEnv":{"default":"cf646296ef656b6ad4b642731b909e34"}}
+{"id":"ec82f76499a1e7126802160783d947dc","fullName":"discovery/category-discovery.spec.ts:24:3","name":"MS-V2-008 sheet sticker category lists expected product links","status":"failed","testResultsByEnv":{"default":"8ac2e53239d5a4423eb16323a4f59f22"}}
