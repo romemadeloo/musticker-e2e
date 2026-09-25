@@ -49,15 +49,21 @@ test.describe('internal-origin header scope', { tag: ['@security'] }, () => {
     }
   });
 
-  // Production and the development-* servers have separate WAFs and separate keys. Sending the
+  // Production and the development-*/static-* servers have separate WAFs and separate keys. Sending the
   // production key to a dev host would put a production credential on a less-guarded server, and
   // the run would look completely normal while doing it -- so the mapping is pinned here.
   test('MS-SEC-003 each environment resolves to its own key', () => {
     expect(internalOriginKeyVarFor('production')).toBe('INTERNAL_ORIGIN_KEY');
 
     for (const environment of [
-      'development-static',
-      'development-static-2',
+      'static-1',
+      'static-2',
+      'static-3',
+      'static-4',
+      'static-5',
+      'static-6',
+      'static-7',
+      'static-8',
       'development-1',
       'development-2',
       'development-3',

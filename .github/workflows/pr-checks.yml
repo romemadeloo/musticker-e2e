@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - production
-      - development-static
+      - 'static-*'
       - development-1
       - development-2
       - development-3
@@ -19,7 +19,10 @@ concurrency:
 
 env:
   ALLURE_RESULTS_DIR: allure-results
-  BASE_URL: ${{ vars.PRODUCTION_BASE_URL || 'https://www.musticker.com/kr' }}
+  # The branch the PR merges into names its server (tests/fixtures/environments.ts), the same way
+  # smoke.yml uses the pushed branch. This used to pin BASE_URL to production, so a PR into a dev
+  # branch was smoke-tested against a server it would never be deployed to.
+  E2E_ENVIRONMENT: ${{ github.base_ref }}
   # WAF exemption for the CI egress IP, issued by the site owner. Without it the storefront answers
   # bare 403s under full-suite load -- on documents and on their subresources. Absent or empty is
   # supported: tests/fixtures/internal-origin.ts becomes a no-op and the retry ladder in
@@ -31,6 +34,10 @@ env:
   DEV_INTERNAL_ORIGIN_KEY: ${{ secrets.DEV_INTERNAL_ORIGIN_KEY }}
   E2E_BROWSER_PROJECT: chromium-desktop
   RUN_PAYMENT_E2E: 'false'
+  AUTH_TEST_EMAIL: >-
+    ${{ github.base_ref == 'production' && secrets.AUTH_TEST_EMAIL || secrets.DEV_AUTH_TEST_EMAIL }}
+  AUTH_TEST_PASSWORD: >-
+    ${{ github.base_ref == 'production' && secrets.AUTH_TEST_PASSWORD || secrets.DEV_AUTH_TEST_PASSWORD }}
 
 jobs:
   lint-typecheck-smoke:
@@ -56,7 +63,7 @@ jobs:
         run: npm run typecheck
 
       - name: Run smoke tests
-        run: npm run test:prod:smoke
+        run: npm run test:env:smoke
 
       - name: Collect Playwright and Allure artifacts
         id: test_artifacts

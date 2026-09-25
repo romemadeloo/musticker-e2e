@@ -45,7 +45,7 @@ are added for them.
 The servers do not all carry the same generation of these tables, and **the id numbers collide
 across servers**. Probed live on 2026-08-24:
 
-| | production | development-1 | development-static-2 |
+| | production | development-1 | static-2 |
 |---|---|---|---|
 | die-cut | 43 `Die Cut Sticker (8/24/2026)` | 45 `Die Cut Pricing (8/21/2026)` | 5 `Die Cut` |
 | kiss-cut | 45 `Kiss Cut Sticker (8/24/2026)` | 47 `Kiss Cut Pricing (8/21/2026)` | 23 `Kiss Cut` |
@@ -55,9 +55,9 @@ across servers**. Probed live on 2026-08-24:
 
 > **Superseded for production on 2026-09-10** (commit `5a23135`, "price factor update"). Production
 > now serves die-cut, kiss-cut and the five shapes from **one** table, `48`, with clear on `49` and
-> hologram on `50`. development-static uses `51` (die-cut, kiss-cut and shapes) and `54`.
+> hologram on `50`. static-1 uses `51` (die-cut, kiss-cut and shapes) and `54`.
 > `pricingIds` in [pricing-products.ts](pricing-products.ts) is authoritative, and the ids above are
-> kept for history. development-static registers clear and hologram both as `54`, which is worth
+> kept for history. static-1 registers clear and hologram both as `54`, which is worth
 > re-probing: it may be a copy-paste slip.
 
 Read that table across, not down: id `45` is kiss-cut on production but die-cut on development-1,
@@ -78,7 +78,7 @@ production and development-1 were promoted from the same sticker price data — 
 cell, 1339 passed on each — so both are listed in `csvSources` for the sticker tables and both get
 full coverage there. Production's roll tables were promoted again on 2026-09-10, adding high-volume
 quantity rungs; the roll CSVs are now production-only baselines until development carries the same
-generation. development-static-2 still holds older sticker rates, so there the tables are
+generation. static-2 still holds older sticker rates, so there the tables are
 identity-checked and the cells skipped. An environment with no recorded ids skips everything rather
 than guessing; to switch one on, probe it and add its ids.
 

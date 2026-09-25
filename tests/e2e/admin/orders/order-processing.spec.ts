@@ -19,7 +19,7 @@ const proofFile = path.resolve('tests/fixtures/files/qa-proof.png');
  * reject it, the customer resubmits, staff pass it and send a proof, the customer approves the
  * proof, and staff take the order through production and shipping to delivered.
  *
- * Walked by hand on development-static on 2026-09-25 (AO-2609240008-dev, AO-2609250005-dev) before
+ * Walked by hand on static-1 on 2026-09-25 (AO-2609240008-dev, AO-2609250005-dev) before
  * this was written. Every stage is asserted three ways where it can be: the admin UI, the customer's
  * UI, and the admin API's activity log.
  *
@@ -31,7 +31,7 @@ const proofFile = path.resolve('tests/fixtures/files/qa-proof.png');
  * placed here instead and the seed variable goes away.
  *
  * Changes real (dev) data and emails the seeded member at each notification step, so it is gated on
- * RUN_ADMIN_DESTRUCTIVE_E2E and refuses every environment but development-static.
+ * RUN_ADMIN_DESTRUCTIVE_E2E and refuses every environment but static-1.
  */
 test.describe('storefront to admin order processing', { tag: ['@admin', '@e2e', '@destructive', '@slow', '@credentialed'] }, () => {
   test.use({
@@ -42,8 +42,8 @@ test.describe('storefront to admin order processing', { tag: ['@admin', '@e2e', 
 
   test.skip(!canRun, 'Changes and completes a real dev order. Set RUN_ADMIN_DESTRUCTIVE_E2E=true to run it.');
   test.skip(
-    activeEnvironment !== 'development-static',
-    `Order-processing changes run on development-static only (this run: ${activeEnvironment ?? 'unknown'}).`
+    activeEnvironment !== 'static-1',
+    `Order-processing changes run on static-1 only (this run: ${activeEnvironment ?? 'unknown'}).`
   );
   test.skip(!hasMemberCredentials(), SKIP_WITHOUT_MEMBER_CREDENTIALS);
 

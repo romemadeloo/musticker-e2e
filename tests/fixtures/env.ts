@@ -8,8 +8,8 @@ export const env = {
   API_BASE_URL: process.env.API_BASE_URL ?? selectedEnvironment?.apiBaseUrl,
   AUTH_TEST_EMAIL: process.env.AUTH_TEST_EMAIL,
   AUTH_TEST_PASSWORD: process.env.AUTH_TEST_PASSWORD,
-  // WAF exemption keys issued by the site owner -- production and the development-* servers sit
-  // behind separate WAFs with separate keys. Read these through internalOriginKey() rather than
+  // WAF exemption keys issued by the site owner -- production and the development-*/static-* servers
+  // sit behind separate WAFs with separate keys. Read these through internalOriginKey() rather than
   // directly; see the note there. Sent as the x-internal-origin header on first-party requests
   // only -- tests/fixtures/internal-origin.ts.
   // Trimmed because these arrive by copy-paste into a secrets UI, where a trailing newline or
@@ -46,7 +46,9 @@ export function internalOriginKeyVarFor(
     return 'INTERNAL_ORIGIN_KEY';
   }
 
-  return environment?.startsWith('development-') ? 'DEV_INTERNAL_ORIGIN_KEY' : undefined;
+  return environment?.startsWith('development-') || environment?.startsWith('static-')
+    ? 'DEV_INTERNAL_ORIGIN_KEY'
+    : undefined;
 }
 
 /**

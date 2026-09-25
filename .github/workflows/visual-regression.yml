@@ -30,7 +30,14 @@ on:
         type: choice
         options:
           - production
-          - development-static
+          - static-1
+          - static-2
+          - static-3
+          - static-4
+          - static-5
+          - static-6
+          - static-7
+          - static-8
           - development-1
           - development-2
           - development-3

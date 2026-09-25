@@ -52,7 +52,7 @@ somewhere unexpected.
 | `npm run test:destructive` | Guest checkout (MS-V2-025), registration, password rotation and cart merge |
 | `npm run test:destructive:auth` | Only the account-changing tests in `storefront/auth` |
 | `npm run admin:login` | Captures an admin panel session (a person enters the code). See [below](#admin-panel-runs) |
-| `npm run test:admin:destructive` | Storefront-to-admin order processing (MS-ADM-001) on development-static |
+| `npm run test:admin:destructive` | Storefront-to-admin order processing (MS-ADM-001) on static-1 |
 
 **Other:**
 
@@ -79,8 +79,14 @@ match the branch names exactly.
 | `E2E_ENVIRONMENT` | Storefront | API | Admin panel |
 | --- | --- | --- | --- |
 | `production` | https://www.musticker.com/kr | https://api.musticker.com/index.php | https://admin-panel.musticker.com (read-only for tests) |
-| `development-static` | https://dev-static-1.musticker.com/kr | https://dev-static-1-api.musticker.com/index.php | https://dev-static-1-admin-panel.musticker.com |
-| `development-static-2` | https://dev-static-2.musticker.com/kr | https://dev-static-2-api.musticker.com/index.php | none known |
+| `static-1` | https://dev-static-1.musticker.com/kr | https://dev-static-1-api.musticker.com/index.php | https://dev-static-1-admin-panel.musticker.com (the only panel order-changing specs may use) |
+| `static-2` | https://dev-static-2.musticker.com/kr | https://dev-static-2-api.musticker.com/index.php | https://dev-static-2-admin-panel.musticker.com |
+| `static-3` | https://dev-static-3.musticker.com/kr | https://dev-static-3-api.musticker.com/index.php | https://dev-static-3-admin-panel.musticker.com |
+| `static-4` | https://dev-static-4.musticker.com/kr | https://dev-static-4-api.musticker.com/index.php | https://dev-static-4-admin-panel.musticker.com |
+| `static-5` | https://dev-static-5.musticker.com/kr | https://dev-static-5-api.musticker.com/index.php | https://dev-static-5-admin-panel.musticker.com |
+| `static-6` | https://dev-static-6.musticker.com/kr | https://dev-static-6-api.musticker.com/index.php | https://dev-static-6-admin-panel.musticker.com |
+| `static-7` | https://dev-static-7.musticker.com/kr | https://dev-static-7-api.musticker.com/index.php | https://dev-static-7-admin-panel.musticker.com |
+| `static-8` | https://dev-static-8.musticker.com/kr | https://dev-static-8-api.musticker.com/index.php | https://dev-static-8-admin-panel.musticker.com |
 | `development-1` | https://dev.musticker.com/kr | https://dev-api.musticker.com/index.php | none known |
 | `development-2` | https://dev-2.musticker.com/kr | https://dev-2-api.musticker.com/index.php | none known |
 | `development-3` | https://dev-3.musticker.com/kr | https://dev-3-api.musticker.com/index.php | none known |
@@ -163,13 +169,13 @@ account allows **one active session**. So tests never sign in. A person captures
 and it lasts about a week:
 
 ```bash
-npx cross-env E2E_ENVIRONMENT=development-static npm run admin:login
+npx cross-env E2E_ENVIRONMENT=static-1 npm run admin:login
 ```
 
 1. A browser window opens on the admin login page. The form is pre-filled when `ADMIN_EMAIL` and
    `ADMIN_PASSWORD` are set; otherwise type them in yourself, with **Keep me signed in** ticked.
 2. Enter the verification code from the sales@ inbox.
-3. When the dashboard loads, the session is saved to `.auth/admin-development-static.json`.
+3. When the dashboard loads, the session is saved to `.auth/admin-static-1.json`.
 
 Signing in to the same admin panel anywhere else ends the saved session. Admin specs then skip
 with a message telling you to run `admin:login` again. If the panel shows **Active Session
@@ -204,7 +210,7 @@ real customers' details and this repository's CI artifacts are public.
 
 | Workflow | Trigger | Runs |
 | --- | --- | --- |
-| `pr-checks.yml` | Pull request to an environment branch | Lint, typecheck, production smoke |
+| `pr-checks.yml` | Pull request to an environment branch | Lint, typecheck, `@smoke` against the target branch's server |
 | `smoke.yml` | Push to an environment branch | `@smoke` against that branch's server |
 | `production-full-suite.yml` | Push to `production`, daily 20:00 UTC (05:00 KST), manual | Lint, typecheck, then production-safe tests in 8 shards |
 | `visual-regression.yml` | Daily 21:00 UTC (06:00 KST), manual | `@visual` inside the pinned Playwright container |

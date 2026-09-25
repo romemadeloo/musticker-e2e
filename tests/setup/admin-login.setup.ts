@@ -6,7 +6,7 @@ import { activeEnvironment, adminBaseUrl } from '../fixtures/env.js';
 /**
  * Captures an admin panel session for the admin specs to reuse (see tests/fixtures/admin-auth.ts):
  *
- *   E2E_ENVIRONMENT=development-static npm run admin:login
+ *   E2E_ENVIRONMENT=static-1 npm run admin:login
  *
  * A browser window opens on the panel's login page. With ADMIN_EMAIL and ADMIN_PASSWORD in .env the
  * form is filled and submitted for you; otherwise sign in yourself, with "Keep me signed in" ticked.

@@ -1,5 +1,5 @@
 // Copy and status codes for the order-processing flow, on both sides of it. Read live off
-// development-static on 2026-09-25 while walking AO-2609240008-dev and AO-2609250005-dev through
+// static-1 on 2026-09-25 while walking AO-2609240008-dev and AO-2609250005-dev through
 // the whole lifecycle.
 
 /**

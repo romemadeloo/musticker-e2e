@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - production
-      - development-static
+      - 'static-*'
       - development-1
       - development-2
       - development-3

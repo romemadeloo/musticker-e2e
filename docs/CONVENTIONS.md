@@ -82,7 +82,7 @@ test.describe('storefront v2 product configuration', { tag: ['@regression', '@pr
 - **Steps.** Long journeys use `test.step('who: what happens', …)`. The step names read as the
   workbook's Test Steps and show in the report.
 - **Comments explain why, not what.** Record what was verified, where and when ("verified on
-  development-static, 2026-09-25"), because that is what a later reader can't reconstruct.
+  static-1, 2026-09-25"), because that is what a later reader can't reconstruct.
 
 ## Locators and assertions
 
@@ -106,7 +106,7 @@ test.describe('storefront v2 product configuration', { tag: ['@regression', '@pr
   against production.
 - **Admin production** is limited to reading. The only order a test may open there is the
   designated test order. Every order-changing admin spec checks `activeEnvironment` and refuses
-  anything but `development-static`.
+  anything but `static-1`.
 - **Sessions.** Use `asMember` or `adminPage`. Don't drive a login form unless sign-in is what the
   test is about.
 - **Clean up** what you can before the test ends, and record what you can't (created accounts go

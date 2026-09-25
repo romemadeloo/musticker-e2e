@@ -7,7 +7,7 @@ import { AccountOrdersPage } from './account-orders-page.js';
 /**
  * The customer's side of order processing, in the `/kr/account/orders/<id>` detail pane: sending
  * the design file after checkout, answering a rejected file, and approving the final proof.
- * Verified live against development-static on 2026-09-25 with the seeded member.
+ * Verified live against static-1 on 2026-09-25 with the seeded member.
  *
  * Each item row carries one action button whose label follows the stage -- 디자인 파일 업로드
  * (nothing sent yet), 디자인 파일 재접수 (rejected), 디자인 파일 교체 (sent, not yet reviewed),

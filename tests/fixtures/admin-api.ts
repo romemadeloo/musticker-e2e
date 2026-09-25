@@ -9,7 +9,7 @@ import { adminBaseUrl, apiPath } from './env.js';
  * Built on the admin browser context's `request`, which shares that context's cookies, so no token
  * handling happens here. Every method is a GET: state changes in admin specs go through the UI,
  * because the UI is what is under test. Endpoints were read off the admin panel's own traffic on
- * development-static, 2026-09-25.
+ * static-1, 2026-09-25.
  */
 
 export type AdminStatus = { id: number; code?: string; name: string; translated?: string };
