@@ -86,8 +86,7 @@ can never reach third-party hosts such as analytics.
 ## Environments and URLs
 
 [tests/fixtures/environments.ts](../tests/fixtures/environments.ts) is the only place a server URL
-is written down: storefront and API per environment, plus `adminPanelUrls` for the environments
-that have an admin panel. [tests/fixtures/env.ts](../tests/fixtures/env.ts) resolves the active
+is written down: storefront, API and (where one is known) `adminPanel` per environment. [tests/fixtures/env.ts](../tests/fixtures/env.ts) resolves the active
 one and provides:
 
 - `appPath('./stickers')`: a storefront path under the locale prefix (`/kr`).

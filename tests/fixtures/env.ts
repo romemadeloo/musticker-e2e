@@ -1,5 +1,5 @@
-import { adminPanelUrls, environments, isEnvironmentName } from './environments.js';
-import type { EnvironmentName } from './environments.js';
+import { environments, isEnvironmentName } from './environments.js';
+import type { EnvironmentConfig, EnvironmentName } from './environments.js';
 
 const selectedEnvironment = resolveSelectedEnvironment();
 
@@ -83,7 +83,13 @@ export function adminBaseUrl(): string | undefined {
     return override.replace(/\/+$/, '');
   }
 
-  return activeEnvironment ? adminPanelUrls[activeEnvironment] : undefined;
+  if (!activeEnvironment) {
+    return undefined;
+  }
+
+  const environment: EnvironmentConfig = environments[activeEnvironment];
+
+  return environment.adminPanel;
 }
 
 export function appPath(relativePath = ''): string {
@@ -126,7 +132,7 @@ function resolveActiveEnvironmentName(): EnvironmentName | undefined {
   return names.find((name) => normalizeBaseUrl(environments[name].baseUrl) === target);
 }
 
-function resolveSelectedEnvironment(): { baseUrl: string; apiBaseUrl: string } | undefined {
+function resolveSelectedEnvironment(): EnvironmentConfig | undefined {
   const requested = process.env.E2E_ENVIRONMENT;
   if (!requested) {
     return undefined;
