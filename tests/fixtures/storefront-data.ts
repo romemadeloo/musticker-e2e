@@ -6,7 +6,7 @@ export const ko = {
   backToHome: '\ud648\uc73c\ub85c \ub3cc\uc544\uac00\uae30',
   stickers: '\uc2a4\ud2f0\ucee4',
   rollStickers: '\ub864\uc2a4\ud2f0\ucee4',
-  sheetStickers: '\uc2dc\ud2b8 \uc2a4\ud2f0\ucee4',
+  sheetStickers: '판스티커',
   fastOrder: '\ube60\ub978 \uc8fc\ubb38',
   orderNow: '\ubc14\ub85c \uc8fc\ubb38\ud558\uae30',
   inquiryCta: '\uc81c\uc791 \ubb38\uc758\ud558\uae30',
@@ -191,57 +191,67 @@ export const aboutPage = {
   statOrders: '\uc218\uc2ed\ub9cc \uac74'
 } as const;
 
+// Category-card names as the listing pages render them, re-captured from production on 2026-09-25
+// after the storefront renamed several products (자유형 스티커 -> 자유형 조각스티커, 키스컷 -> 도무송,
+// 아트지 롤 -> 종이 롤, and every 시트 스티커 -> 판스티커). A product page's H1 does not always match its
+// card -- see the per-product headings below.
 export const categoryLinks = {
   stickers: [
-    '\uc790\uc720\ud615 \uc2a4\ud2f0\ucee4',
-    '\uc6d0\ud615 \uc2a4\ud2f0\ucee4',
-    '\uc9c1\uc0ac\uac01\ud615 \uc2a4\ud2f0\ucee4',
-    '\uc815\uc0ac\uac01\ud615 \uc2a4\ud2f0\ucee4',
-    '\ud0c0\uc6d0\ud615 \uc2a4\ud2f0\ucee4',
-    '\ub465\uadfc \uc0ac\uac01 \uc2a4\ud2f0\ucee4',
-    '\ud0a4\uc2a4\ucef7 \uc2a4\ud2f0\ucee4',
-    '\ucee4\uc2a4\ud140 \uc2dc\ud2b8 \uc2a4\ud2f0\ucee4',
-    '\ud22c\uba85 \uc2a4\ud2f0\ucee4',
-    '\ud640\ub85c\uadf8\ub7a8 \uc2a4\ud2f0\ucee4',
-    '\ud480 \uceec\ub7ec \ub808\ud130\ub9c1 \uc2a4\ud2f0\ucee4',
-    '\ub808\ud130\ub9c1 \uc2a4\ud2f0\ucee4'
+    '자유형 조각스티커',
+    '원형 스티커',
+    '직사각형 스티커',
+    '정사각형 스티커',
+    '타원형 스티커',
+    '둥근 사각 스티커',
+    '도무송 스티커',
+    '판스티커',
+    '투명 스티커',
+    '홀로그램 스티커',
+    '풀 컬러 레터링 스티커',
+    '글자 커팅 스티커'
   ],
   rollStickers: [
-    '\uc790\uc720\ud615 \ub864 \uc2a4\ud2f0\ucee4',
-    '\ud22c\uba85 \ub864 \uc2a4\ud2f0\ucee4',
-    '\uc6d0\ud615 \ub864 \uc2a4\ud2f0\ucee4',
-    '\uc815\uc0ac\uac01\ud615 \ub864 \uc2a4\ud2f0\ucee4',
-    '\uc9c1\uc0ac\uac01\ud615 \ub864 \uc2a4\ud2f0\ucee4',
-    '\ub465\uadfc \uc0ac\uac01 \ub864 \uc2a4\ud2f0\ucee4',
-    '\ud0c0\uc6d0\ud615 \ub864 \uc2a4\ud2f0\ucee4',
-    '\uc544\ud2b8\uc9c0 \ub864 \uc2a4\ud2f0\ucee4'
+    '자유형 롤 스티커',
+    '투명 롤 스티커',
+    '원형 롤 스티커',
+    '정사각형 롤 스티커',
+    '직사각형 롤 스티커',
+    '둥근 사각 롤 스티커',
+    '타원형 롤 스티커',
+    '종이 롤 스티커'
   ],
   sheetStickers: [
-    '\uc790\uc720\ud615 \uc2dc\ud2b8 \uc2a4\ud2f0\ucee4',
-    '\uc6d0\ud615 \uc2dc\ud2b8 \uc2a4\ud2f0\ucee4',
-    '\ud0c0\uc6d0\ud615 \uc2dc\ud2b8 \uc2a4\ud2f0\ucee4',
-    '\uc815\uc0ac\uac01\ud615 \uc2dc\ud2b8 \uc2a4\ud2f0\ucee4',
-    '\uc9c1\uc0ac\uac01\ud615 \uc2dc\ud2b8 \uc2a4\ud2f0\ucee4',
-    '\ub465\uadfc \uc0ac\uac01 \uc2dc\ud2b8 \uc2a4\ud2f0\ucee4'
+    '자유형 판스티커',
+    '원형 판스티커',
+    '타원형 판스티커',
+    '정사각형 판스티커',
+    '직사각형 판스티커',
+    '둥근 사각 판스티커'
   ]
 } as const;
+
+// The cart names a line after the product's category card, which is not always the product page's
+// H1. Products where the two differ carry an explicit cartName.
+export function cartLineName(product: { readonly heading: string; readonly cartName?: string }): string {
+  return product.cartName ?? product.heading;
+}
 
 export const v2Products = {
   dieCutSticker: {
     path: './stickers/die-cut-sticker',
-    heading: '\uc790\uc720\ud615 \uc2a4\ud2f0\ucee4',
+    heading: categoryLinks.stickers[0],
     size: ko.medium75,
     quantity: 100
   },
   dieCutRoll: {
     path: './roll-stickers/die-cut-roll',
-    heading: '\uc790\uc720\ud615 \ub864 \uc2a4\ud2f0\ucee4',
+    heading: categoryLinks.rollStickers[0],
     size: ko.medium75,
     quantity: 300
   },
   dieCutSheet: {
     path: './sheet-stickers/die-cut-sheet',
-    heading: '\uc790\uc720\ud615 \uc2dc\ud2b8 \uc2a4\ud2f0\ucee4',
+    heading: categoryLinks.sheetStickers[0],
     material: ko.transparent,
     sheetSize: 'A5',
     quantity: 50
@@ -289,7 +299,7 @@ export const dieCutShapeStickers = [
   { path: './stickers/square-sticker', heading: '정사각형 스티커', size: ko.medium75, quantity: 100 },
   { path: './stickers/oval-sticker', heading: '타원형 스티커', size: '중형 75x50', quantity: 100 },
   { path: './stickers/rounded-sticker', heading: '둥근 사각 스티커', size: ko.medium75, quantity: 100 },
-  { path: './stickers/kiss-cut-sticker', heading: '키스컷 스티커', size: ko.medium75, quantity: 100 },
+  { path: './stickers/kiss-cut-sticker', heading: '도무송 스티커', size: ko.medium75, quantity: 100 },
   { path: './stickers/clear-sticker', heading: '투명 스티커', size: ko.medium75, quantity: 100 }
 ] as const;
 
@@ -301,16 +311,24 @@ export const dieCutRollStickers = [
   { path: './roll-stickers/circle-roll', heading: '원형 롤 스티커', size: '중형 60x60', quantity: 100 },
   { path: './roll-stickers/square-roll', heading: '정사각형 롤 스티커', size: ko.medium75, quantity: 100 },
   { path: './roll-stickers/rectangle-roll', heading: '직사각형 롤 스티커', size: '중형 75x50', quantity: 100 },
-  { path: './roll-stickers/rounded-roll', heading: '둥근 사각 롤 스티커', size: ko.medium75, quantity: 100 },
+  // The H1 reads 둥근 사각형 while the category card and the cart line still say 둥근 사각
+  // (production, 2026-09-25).
+  {
+    path: './roll-stickers/rounded-roll',
+    heading: '둥근 사각형 롤 스티커',
+    cartName: '둥근 사각 롤 스티커',
+    size: ko.medium75,
+    quantity: 100
+  },
   { path: './roll-stickers/oval-roll', heading: '타원형 롤 스티커', size: '중형 75x50', quantity: 100 },
-  { path: './roll-stickers/paper-roll', heading: '아트지 롤 스티커', size: ko.medium75, quantity: 100 }
+  { path: './roll-stickers/paper-roll', heading: '종이 롤 스티커', size: ko.medium75, quantity: 100 }
 ] as const;
 
 // Sheet-template flow (material + sheet size + quantity) like v2Products.dieCutSheet, but a
 // distinct product under ./stickers/. Verified live against development-3 on 2026-08-13.
 export const stickerSheetProduct = {
   path: './stickers/sticker-sheet',
-  heading: '커스텀 시트 스티커',
+  heading: '판스티커',
   material: ko.pvcMatte,
   sheetSize: 'A5',
   quantity: 10
@@ -321,18 +339,21 @@ export const stickerSheetProduct = {
 // text canvas, no design-file upload. Verified live against development-3 on 2026-08-13.
 export const vinylLetteringProduct = {
   path: './stickers/vinyl-lettering',
-  heading: '레터링 스티커',
+  heading: '글자 커팅 스티커',
   colorLabel: ko.black,
   text: 'MUSTICKER QA',
   quantity: 1
 } as const;
 
-// Despite the "레터링" name this behaves like a plain die-cut shape page (color swatch + size +
+// Despite the "글자 커팅" name this behaves like a plain die-cut shape page (color swatch + size +
 // quantity + design-file upload), not a live-text tool. Verified live against development-3 on
 // 2026-08-13.
 export const transferStickerProduct = {
   path: './stickers/transfer-sticker',
-  heading: '풀 컬러 레터링 스티커',
+  // The H1 was renamed but the category card and the cart line still read 풀 컬러 레터링 스티커
+  // (production, 2026-09-25).
+  heading: '풀 컬러 글자 커팅 스티커',
+  cartName: '풀 컬러 레터링 스티커',
   colorLabel: ko.fullColor,
   size: ko.medium75,
   quantity: 1
@@ -405,7 +426,10 @@ export const sheetStickerConfiguratorProducts = [
   },
   {
     path: './sheet-stickers/rounded-sheet',
-    heading: categoryLinks.sheetStickers[5],
+    // The only sheet product whose H1 kept the old wording: its card and cart line read 둥근 사각
+    // 판스티커 but the page itself says 둥근 사각형 시트 스티커 (production, 2026-09-25).
+    heading: '둥근 사각형 시트 스티커',
+    cartName: categoryLinks.sheetStickers[5],
     sizePresets: roundShapeSizePresets
   }
 ] as const;

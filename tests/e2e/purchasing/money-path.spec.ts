@@ -14,7 +14,7 @@ import { ProductV2Page } from '../../pom/product-page.js';
 //
 // Verified live against development-1 on 2026-08-27:
 //
-//   * The 30개 tier of 자유형 스티커 at 중형 75x75 quotes 18,700원, and 18,700원 is what the cart
+//   * The 30개 tier of 자유형 조각스티커 at 중형 75x75 quotes 18,700원, and 18,700원 is what the cart
 //     drawer line, the cart page total, and the checkout 소계 all then read.
 //   * 소계 18,700원 + 배송비 3,000원 - 할인 0원 = 합계 21,700원.
 //   * Shipping follows the 5만원 이상 무료배송 promise: 3,000원 at a 32,500원 subtotal, 0원 at 106,000원.

@@ -1,5 +1,5 @@
 import { test } from '../../fixtures/e2e-test.js';
-import { dieCutRollStickers, dieCutShapeStickers } from '../../fixtures/storefront-data.js';
+import { cartLineName, dieCutRollStickers, dieCutShapeStickers } from '../../fixtures/storefront-data.js';
 import { CartDrawer } from '../../pom/cart-drawer.js';
 import { ProductV2Page } from '../../pom/product-page.js';
 
@@ -33,7 +33,7 @@ test.describe('storefront v2 catalog: plain die-cut shape stickers', {
 
       const drawer = new CartDrawer(page);
       await drawer.expectVisible();
-      await drawer.expectLineItem({ productName: data.heading, quantity: data.quantity });
+      await drawer.expectLineItem({ productName: cartLineName(data), quantity: data.quantity });
     });
   }
 
@@ -50,7 +50,7 @@ test.describe('storefront v2 catalog: plain die-cut shape stickers', {
 
       const drawer = new CartDrawer(page);
       await drawer.expectVisible();
-      await drawer.expectLineItem({ productName: data.heading, quantity: data.quantity });
+      await drawer.expectLineItem({ productName: cartLineName(data), quantity: data.quantity });
     });
   }
 

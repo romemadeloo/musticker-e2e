@@ -1,5 +1,5 @@
 import { test } from '../../fixtures/e2e-test.js';
-import { stickerSheetProduct, transferStickerProduct, vinylLetteringProduct } from '../../fixtures/storefront-data.js';
+import { cartLineName, stickerSheetProduct, transferStickerProduct, vinylLetteringProduct } from '../../fixtures/storefront-data.js';
 import { CartDrawer } from '../../pom/cart-drawer.js';
 import { ProductV2Page } from '../../pom/product-page.js';
 
@@ -72,6 +72,6 @@ test.describe('storefront v2 catalog: sheet, lettering, and transfer stickers', 
 
     const drawer = new CartDrawer(page);
     await drawer.expectVisible();
-    await drawer.expectLineItem({ productName: data.heading, quantity: data.quantity });
+    await drawer.expectLineItem({ productName: cartLineName(data), quantity: data.quantity });
   });
 });

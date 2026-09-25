@@ -60,7 +60,7 @@ export class SearchDialog {
   private dieCutStickerResult(): Locator {
     return this.page
       .getByTestId('app-header-search-result-stickers:die-cut-sticker-button')
-      .or(this.dialog.getByRole('button', { name: /다이컷 스티커|자유형 스티커/ }).first())
+      .or(this.dialog.getByRole('button', { name: /다이컷 스티커|자유형 (조각)?스티커/ }).first())
       .first();
   }
 

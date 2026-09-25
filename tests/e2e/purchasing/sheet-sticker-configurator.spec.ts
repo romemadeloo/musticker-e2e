@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url';
 
 import { test } from '../../fixtures/e2e-test.js';
-import { ko, sheetStickerConfiguratorProducts } from '../../fixtures/storefront-data.js';
+import { cartLineName, ko, sheetStickerConfiguratorProducts } from '../../fixtures/storefront-data.js';
 import { CartDrawer } from '../../pom/cart-drawer.js';
 import { CartV2Page } from '../../pom/cart-page.js';
 import { ProductV2Page } from '../../pom/product-page.js';
@@ -57,7 +57,7 @@ test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rect
       const drawer = new CartDrawer(page);
       await drawer.expectVisible();
       await drawer.expectLineItem({
-        productName: data.heading,
+        productName: cartLineName(data),
         quantity: 20
       });
     });

@@ -167,13 +167,13 @@ Scanned pages:
 
 | Preconditions | Steps | Expected Result | Automation Notes |
 | --- | --- | --- | --- |
-| Anonymous session. | 1. Navigate to `/`.<br>2. Assert page title contains `머스티커`.<br>3. Assert hero heading `스티커ㅋㅋㅋ, 이유가 있구나` is visible.<br>4. Assert product category links `스티커`, `롤스티커`, and `시트 스티커` are visible.<br>5. Assert CTAs `빠른 주문`, `바로 주문하기`, and `제작 문의하기` are visible.<br>6. Assert reviews section with `사진 후기 225개` is visible.<br>7. Assert footer includes `MUSTICKER / 머스티커`, `1899-5529`, `sales@musticker.com`, `이용약관`, and `개인정보처리방침`. | Homepage renders complete public content without client error. | Use `HomePage` POM and `expect(page.getByRole('heading', { name: /스티커/ })).toBeVisible()`. |
+| Anonymous session. | 1. Navigate to `/`.<br>2. Assert page title contains `머스티커`.<br>3. Assert hero heading `스티커ㅋㅋㅋ, 이유가 있구나` is visible.<br>4. Assert product category links `스티커`, `롤스티커`, and `판스티커` are visible.<br>5. Assert CTAs `빠른 주문`, `바로 주문하기`, and `제작 문의하기` are visible.<br>6. Assert reviews section with `사진 후기 225개` is visible.<br>7. Assert footer includes `MUSTICKER / 머스티커`, `1899-5529`, `sales@musticker.com`, `이용약관`, and `개인정보처리방침`. | Homepage renders complete public content without client error. | Use `HomePage` POM and `expect(page.getByRole('heading', { name: /스티커/ })).toBeVisible()`. |
 
 ### MS-V2-002 - Header Product Navigation
 
 | Preconditions | Steps | Expected Result | Automation Notes |
 | --- | --- | --- | --- |
-| Anonymous session. | 1. Navigate to `/`.<br>2. Click `스티커`; assert URL includes `/stickers` and heading `스티커`.<br>3. Return to home.<br>4. Click `롤스티커`; assert URL includes `/roll-stickers` and heading `롤스티커`.<br>5. Return to home.<br>6. Click `시트 스티커`; assert URL includes `/sheet-stickers` and heading `시트 스티커`. | Header/category navigation routes to the correct category pages. | Use role links. Avoid asserting exact full URL when locale or query params may be present. |
+| Anonymous session. | 1. Navigate to `/`.<br>2. Click `스티커`; assert URL includes `/stickers` and heading `스티커`.<br>3. Return to home.<br>4. Click `롤스티커`; assert URL includes `/roll-stickers` and heading `롤스티커`.<br>5. Return to home.<br>6. Click `판스티커`; assert URL includes `/sheet-stickers` and heading `판스티커`. | Header/category navigation routes to the correct category pages. | Use role links. Avoid asserting exact full URL when locale or query params may be present. |
 
 ### MS-V2-003 - Header Search
 
@@ -197,25 +197,25 @@ Scanned pages:
 
 | Preconditions | Steps | Expected Result | Automation Notes |
 | --- | --- | --- | --- |
-| Anonymous session. | 1. Navigate to `/stickers`.<br>2. Assert heading `스티커`.<br>3. Assert product links are visible: `자유형 스티커`, `원형 스티커`, `직사각형 스티커`, `정사각형 스티커`, `타원형 스티커`, `둥근 사각 스티커`, `키스컷 스티커`, `커스텀 시트 스티커`, `투명 스티커`, `홀로그램 스티커`, `풀 컬러 레터링 스티커`, `레터링 스티커`.<br>4. Click representative product `자유형 스티커`.<br>5. Assert product page heading is visible. | Sticker category exposes all expected product routes. | Parameterize product link assertions from a fixture array. |
+| Anonymous session. | 1. Navigate to `/stickers`.<br>2. Assert heading `스티커`.<br>3. Assert product links are visible: `자유형 조각스티커`, `원형 스티커`, `직사각형 스티커`, `정사각형 스티커`, `타원형 스티커`, `둥근 사각 스티커`, `도무송 스티커`, `판스티커`, `투명 스티커`, `홀로그램 스티커`, `풀 컬러 레터링 스티커`, `글자 커팅 스티커`.<br>4. Click representative product `자유형 조각스티커`.<br>5. Assert product page heading is visible. | Sticker category exposes all expected product routes. | Parameterize product link assertions from a fixture array. |
 
 ### MS-V2-007 - Roll Sticker Category Product Discovery
 
 | Preconditions | Steps | Expected Result | Automation Notes |
 | --- | --- | --- | --- |
-| Anonymous session. | 1. Navigate to `/roll-stickers`.<br>2. Assert heading `롤스티커`.<br>3. Assert product links are visible: `자유형 롤 스티커`, `투명 롤 스티커`, `원형 롤 스티커`, `정사각형 롤 스티커`, `직사각형 롤 스티커`, `둥근 사각 롤 스티커`, `타원형 롤 스티커`, `아트지 롤 스티커`.<br>4. Click representative product `자유형 롤 스티커`.<br>5. Assert product page heading is visible. | Roll sticker category exposes all expected product routes. | Run across desktop and mobile projects. |
+| Anonymous session. | 1. Navigate to `/roll-stickers`.<br>2. Assert heading `롤스티커`.<br>3. Assert product links are visible: `자유형 롤 스티커`, `투명 롤 스티커`, `원형 롤 스티커`, `정사각형 롤 스티커`, `직사각형 롤 스티커`, `둥근 사각 롤 스티커`, `타원형 롤 스티커`, `종이 롤 스티커`.<br>4. Click representative product `자유형 롤 스티커`.<br>5. Assert product page heading is visible. | Roll sticker category exposes all expected product routes. | Run across desktop and mobile projects. |
 
 ### MS-V2-008 - Sheet Sticker Category Product Discovery
 
 | Preconditions | Steps | Expected Result | Automation Notes |
 | --- | --- | --- | --- |
-| Anonymous session. | 1. Navigate to `/sheet-stickers`.<br>2. Assert heading `시트 스티커`.<br>3. Assert product links are visible: `자유형 시트 스티커`, `원형 시트 스티커`, `타원형 시트 스티커`, `정사각형 시트 스티커`, `직사각형 시트 스티커`, `둥근 사각 시트 스티커`.<br>4. Click representative product `자유형 시트 스티커`.<br>5. Assert product page heading is visible. | Sheet sticker category exposes all expected product routes. | Use `getByRole('link', { name })`; do not use product card CSS. |
+| Anonymous session. | 1. Navigate to `/sheet-stickers`.<br>2. Assert heading `판스티커`.<br>3. Assert product links are visible: `자유형 판스티커`, `원형 판스티커`, `타원형 판스티커`, `정사각형 판스티커`, `직사각형 판스티커`, `둥근 사각 판스티커`.<br>4. Click representative product `자유형 판스티커`.<br>5. Assert product page heading is visible. | Sheet sticker category exposes all expected product routes. | Use `getByRole('link', { name })`; do not use product card CSS. |
 
 ### MS-V2-009 - Die-Cut Sticker Configuration
 
 | Preconditions | Steps | Expected Result | Automation Notes |
 | --- | --- | --- | --- |
-| Anonymous session. | 1. Navigate to `/stickers/die-cut-sticker`.<br>2. Assert heading `자유형 스티커`.<br>3. Select size `중형 75x75`.<br>4. Select quantity `100개`.<br>5. Assert price updates from the default price.<br>6. Assert per-unit price is visible.<br>7. Click `다음 단계`.<br>8. Assert the next step, upload modal, cart transition, or auth/checkout gate appears. | Product options update the order summary and allow progression. | Use web-first assertions on price text. Avoid exact price assertions unless backed by stable fixture pricing. |
+| Anonymous session. | 1. Navigate to `/stickers/die-cut-sticker`.<br>2. Assert heading `자유형 조각스티커`.<br>3. Select size `중형 75x75`.<br>4. Select quantity `100개`.<br>5. Assert price updates from the default price.<br>6. Assert per-unit price is visible.<br>7. Click `다음 단계`.<br>8. Assert the next step, upload modal, cart transition, or auth/checkout gate appears. | Product options update the order summary and allow progression. | Use web-first assertions on price text. Avoid exact price assertions unless backed by stable fixture pricing. |
 
 ### MS-V2-010 - Die-Cut Roll Sticker Configuration
 
@@ -227,7 +227,7 @@ Scanned pages:
 
 | Preconditions | Steps | Expected Result | Automation Notes |
 | --- | --- | --- | --- |
-| Anonymous session. | 1. Navigate to `/sheet-stickers/die-cut-sheet`.<br>2. Assert heading `자유형 시트 스티커`.<br>3. Select material `투명`.<br>4. Select sheet size `A5 148x210`.<br>5. Select quantity `50시트`.<br>6. Assert template download and layout guide controls are visible.<br>7. Click `다음 단계`. | Sheet-specific material, sheet size, and quantity controls work together. | Keep sheet configuration in a dedicated POM method because the option model differs from ordinary stickers. |
+| Anonymous session. | 1. Navigate to `/sheet-stickers/die-cut-sheet`.<br>2. Assert heading `자유형 판스티커`.<br>3. Select material `투명`.<br>4. Select sheet size `A5 148x210`.<br>5. Select quantity `50시트`.<br>6. Assert template download and layout guide controls are visible.<br>7. Click `다음 단계`. | Sheet-specific material, sheet size, and quantity controls work together. | Keep sheet configuration in a dedicated POM method because the option model differs from ordinary stickers. |
 
 ### MS-V2-012 - Custom Size and Quantity Validation
 
@@ -431,7 +431,7 @@ Scanned pages:
 
 | Preconditions | Steps | Expected Result | Automation Notes |
 | --- | --- | --- | --- |
-| Anonymous session. | 1. For each of the five shape variants (`./sheet-stickers/circle-sheet`, `oval-sheet`, `square-sheet`, `rectangle-sheet`, `rounded-sheet`), navigate to the product page and assert its heading (`원형 시트 스티커`, `타원형 시트 스티커`, `정사각형 시트 스티커`, `직사각형 시트 스티커`, `둥근 사각 시트 스티커`).<br>2. Select material `홀로그램`.<br>3. Select preset individual size `중형`.<br>4. Select quantity `20시트`.<br>5. Assert the price is visible and `다음 단계` is enabled.<br>6. Click `다음 단계` and assert the `디자인 파일 업로드` modal appears with the accepted-format note and a file-select button.<br>7. Click `장바구니 담기` without uploading a file.<br>8. Assert the cart preview drawer shows a line item for the product with quantity `20시트`. | All five shape variants support the material/individual-size/sheet-quantity configurator identically and add to cart without requiring a design file upload. | Verified live against development-3 (`dev-3.musticker.com`) on 2026-08-13. This is the individual-sticker sheet configurator (material + per-sticker size + sheet quantity), distinct from the die-cut sheet's A5-template flow in MS-V2-011; these five paths were previously only render-only smoke tested via MS-V2-040. Implemented as `ProductV2Page` + `CartDrawer` in `tests/e2e/purchasing/sheet-sticker-configurator.spec.ts`. |
+| Anonymous session. | 1. For each of the five shape variants (`./sheet-stickers/circle-sheet`, `oval-sheet`, `square-sheet`, `rectangle-sheet`, `rounded-sheet`), navigate to the product page and assert its heading (`원형 판스티커`, `타원형 판스티커`, `정사각형 판스티커`, `직사각형 판스티커`, `둥근 사각형 시트 스티커`).<br>2. Select material `홀로그램`.<br>3. Select preset individual size `중형`.<br>4. Select quantity `20시트`.<br>5. Assert the price is visible and `다음 단계` is enabled.<br>6. Click `다음 단계` and assert the `디자인 파일 업로드` modal appears with the accepted-format note and a file-select button.<br>7. Click `장바구니 담기` without uploading a file.<br>8. Assert the cart preview drawer shows a line item for the product with quantity `20시트`. | All five shape variants support the material/individual-size/sheet-quantity configurator identically and add to cart without requiring a design file upload. | Verified live against development-3 (`dev-3.musticker.com`) on 2026-08-13. This is the individual-sticker sheet configurator (material + per-sticker size + sheet quantity), distinct from the die-cut sheet's A5-template flow in MS-V2-011; these five paths were previously only render-only smoke tested via MS-V2-040. Implemented as `ProductV2Page` + `CartDrawer` in `tests/e2e/purchasing/sheet-sticker-configurator.spec.ts`. |
 
 ### MS-V2-051 - Custom Individual Size Recalculates The Price Ladder
 

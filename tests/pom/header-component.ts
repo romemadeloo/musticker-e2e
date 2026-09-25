@@ -60,7 +60,7 @@ export class HeaderComponent {
   }
 
   async goToSheetStickers(): Promise<void> {
-    await this.root.getByRole('link', { name: '시트 스티커', exact: true }).click();
+    await this.root.getByRole('link', { name: '판스티커', exact: true }).click();
     await expect(this.page).toHaveURL(/\/kr\/sheet-stickers\/?$/);
   }
 
