@@ -75,7 +75,7 @@ export async function seedMemberStorageState(): Promise<MemberStorageState> {
         [
           `Could not authenticate AUTH_TEST_EMAIL against ${loginUrl}.`,
           `HTTP ${response.status()}, success=${String(body.success)}, message=${body.message ?? '(none)'}.`,
-          'Check the credentials belong to the environment under test -- each development-* server',
+          'Check the credentials belong to the environment under test -- each static-* server',
           'has its own user database, so a production account will not log in on a dev host.'
         ].join('\n')
       );

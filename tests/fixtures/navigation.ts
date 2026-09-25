@@ -196,7 +196,7 @@ async function describeExhaustedRetries(
         'never reached the wire and the fault is ours: see applyInternalOriginHeader in ' +
         'tests/fixtures/internal-origin.ts.'
       : 'No x-internal-origin key was sent for this run, so the WAF exemption was never in play. ' +
-        'Check that INTERNAL_ORIGIN_KEY (production) or DEV_INTERNAL_ORIGIN_KEY (development-*) is ' +
+        'Check that INTERNAL_ORIGIN_KEY (production) or DEV_INTERNAL_ORIGIN_KEY (static-*) is ' +
         'set for this job; env.ts picks by target environment.',
     '',
     'Failing that, widen throttleRetryDelaysMs in tests/fixtures/navigation.ts if the block windows',

@@ -25,7 +25,6 @@
     "test:regression": "playwright test --grep @regression --grep-invert \"@visual\"",
     "test:pricing": "playwright test tests/e2e/storefront/pricing --workers=4 --retries=0",
     "test:pricing:static2": "cross-env E2E_ENVIRONMENT=static-2 playwright test tests/e2e/storefront/pricing --workers=8 --retries=0",
-    "test:pricing:dev1": "cross-env E2E_ENVIRONMENT=development-1 playwright test tests/e2e/storefront/pricing --workers=4 --retries=2",
     "test:pricing:prod": "cross-env E2E_ENVIRONMENT=production playwright test tests/e2e/storefront/pricing --workers=4 --retries=0",
     "test:visual": "cross-env RUN_VISUAL_E2E=true playwright test --grep @visual",
     "test:visual:update": "cross-env RUN_VISUAL_E2E=true playwright test --grep @visual --update-snapshots",

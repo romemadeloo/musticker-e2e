@@ -18,10 +18,6 @@ on:
           - static-6
           - static-7
           - static-8
-          - development-1
-          - development-2
-          - development-3
-          - development-4
       suite:
         description: Playwright suite to run.
         required: true
@@ -88,8 +84,8 @@ env:
   # every account-creating auth test, because their gate is this variable rather than RUN_PAYMENT_E2E.
   # Forced off against production, where those tests must never run whatever the dispatcher ticks.
   RUN_AUTH_DESTRUCTIVE_E2E: ${{ inputs.environment != 'production' && inputs.run_auth_destructive_e2e || false }}
-  # Each environment has its own user database, so production and the development-* servers need
-  # separate accounts. DEV_AUTH_TEST_* is shared across all of the development-* servers: they are
+  # Each environment has its own user database, so production and the static-* servers need
+  # separate accounts. DEV_AUTH_TEST_* is shared across all of the static-* servers: they are
   # refreshed from the same seed data, so one account exists on all of them. Leave either pair unset
   # and the @credentialed tests skip themselves, exactly as before.
   #
@@ -171,7 +167,7 @@ jobs:
 
               if [ "$E2E_ENVIRONMENT" = "production" ]; then
                 echo "The destructive suite must not run against production: it places real orders and" >&2
-                echo "registers real members. Pick a development-* environment." >&2
+                echo "registers real members. Pick a static-* environment." >&2
                 exit 1
               fi
 

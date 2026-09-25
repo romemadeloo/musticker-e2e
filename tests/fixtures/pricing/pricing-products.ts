@@ -13,34 +13,30 @@
 //
 //   the /kr/stickers sticker tables -- three generations in play
 //     production            43/44/45/46/47   "... Sticker (8/24/2026)"       match the CSVs
-//     development-1         45/46/47/49/50   "... Pricing (8/21/2026)"       match the CSVs
 //     static-2              5/23/25/30/31    "Die Cut", "Clear - ..."        differ
 //
 //   the roll and lettering tables -- production's roll tables were regenerated on 2026-09-10
 //     production            8/11/53/54/55    "... roll - 9/10/2026"          match the CSVs
-//     development-1/static2 8/11/15/16/17    "Roll", "Vinyl Lettering"       match the CSVs
+//     static-2              8/11/15/16/17    "Roll", "Vinyl Lettering"       match the CSVs
 //
 //   sticker-sheet -- same rates everywhere, but the id moved
 //     production            33               "Sticker Sheet (7/13/2026)"     match the CSV
-//     development-1         34               "Custom Sheet (7/10/2026) v3"   match the CSV
 //     static-2              34               "Custom Sheet (7/10/2026) v3"   match the CSV
 //
 // The collision is the reason a single shared id map would be actively wrong rather than merely
-// incomplete: id 45 is kiss-cut on production but die-cut on development-1, and 46/47 are
-// clear/hologram on production but the shapes/kiss-cut tables on development-1. sticker-sheet is the
-// same trap one category over -- id 34 is the no-material table on both development servers, but on
-// production it is the PVC table.
+// incomplete: id 34 is the no-material sticker-sheet table on static-2 but the PVC table on
+// production, and static-1's sticker ids (51, 54) mean nothing on either of the others.
 //
 // `csvSources` lists the environments a CSV is a valid baseline for. For the sticker tables that is
-// production and development-1, promoted from the same price data -- verified cell by cell -- while
-// static-2 still holds the older rates and is identity-checked only. The roll, lettering
-// and sticker-sheet tables are identical on all three servers, so they list all three.
+// production only, while static-2 still holds the older rates and is identity-checked only. The
+// lettering and sticker-sheet tables match on production and static-2, so they list both.
+// (development-1, retired on 2026-09-25, was the other verified sticker baseline.)
 //
-// The remaining development-* servers have no recorded ids yet; the pricing specs skip there with an
+// The remaining static-* servers have no recorded ids yet; the pricing specs skip there with an
 // explicit reason rather than guessing. Add an entry to `pricingIds` to switch a server on.
 //
 // `normalizedNr` is the rounding step in KRW that the API applies to the line total. It is 100
-// everywhere except sticker-sheet, which uses 10, and is stable across all three generations.
+// everywhere except sticker-sheet, which uses 10, and was stable across all three generations probed.
 //
 // hologram-sticker serves both 다이컷 and 키스컷 from one table (supply_id does not change the
 // quote), which is why its CSV is a merged die-cut/kiss-cut export.
@@ -83,21 +79,16 @@ export type PricingProduct = {
   ratesComparable: boolean;
 };
 
-// The /kr/stickers sticker tables: production and development-1 were promoted from the same price
-// data, so those two share one export. static-2 lags on the older rates.
-const CSV_SOURCES = ['production', 'development-1'] as const satisfies readonly EnvironmentName[];
+// The /kr/stickers sticker tables: the export is production's. static-2 lags on the older rates.
+const CSV_SOURCES = ['production'] as const satisfies readonly EnvironmentName[];
 
 // The lettering and sticker-sheet tables were left out of the sticker regeneration and are identical
-// on all three servers. Production's roll tables were regenerated on 2026-09-10, adding high-volume
+// on production and static-2. Production's roll tables were regenerated on 2026-09-10, adding high-volume
 // quantity rungs while keeping the old row values comparable for the original rungs; the refreshed
 // roll CSVs are therefore a production-only baseline until the development servers carry the same
 // generation. static-2 has no /exportation endpoint (404), which is why it was checked
 // by quotation.
-const CSV_SOURCES_ALL = [
-  'production',
-  'development-1',
-  'static-2'
-] as const satisfies readonly EnvironmentName[];
+const CSV_SOURCES_ALL = ['production', 'static-2'] as const satisfies readonly EnvironmentName[];
 
 const CSV_SOURCES_PRODUCTION = ['production'] as const satisfies readonly EnvironmentName[];
 
@@ -105,7 +96,7 @@ const registry: readonly PricingProductRegistryEntry[] = [
   {
     slug: 'die-cut-sticker',
     pricingName: /^diecut\/kisscut\b/,
-    pricingIds: { production: 48, 'development-1': 45, 'static-1': 51, 'static-2': 5 },
+    pricingIds: { production: 48, 'static-1': 51, 'static-2': 5 },
     normalizedNr: 100,
     csv: 'stickers/die-cut-sticker.csv',
     csvSources: CSV_SOURCES
@@ -113,7 +104,7 @@ const registry: readonly PricingProductRegistryEntry[] = [
   {
     slug: 'kiss-cut-sticker',
     pricingName: /^diecut\/kisscut\b/,
-    pricingIds: { production: 48, 'development-1': 47, 'static-1': 51, 'static-2': 23 },
+    pricingIds: { production: 48, 'static-1': 51, 'static-2': 23 },
     normalizedNr: 100,
     csv: 'stickers/kiss-cut-sticker.csv',
     csvSources: CSV_SOURCES
@@ -121,7 +112,7 @@ const registry: readonly PricingProductRegistryEntry[] = [
   {
     slug: 'circle-sticker',
     pricingName: /^diecut\/kisscut\b/,
-    pricingIds: { production: 48, 'development-1': 46, 'static-1': 51, 'static-2': 25 },
+    pricingIds: { production: 48, 'static-1': 51, 'static-2': 25 },
     normalizedNr: 100,
     csv: 'stickers/circle-sticker.csv',
     csvSources: CSV_SOURCES
@@ -129,7 +120,7 @@ const registry: readonly PricingProductRegistryEntry[] = [
   {
     slug: 'rectangle-sticker',
     pricingName: /^diecut\/kisscut\b/,
-    pricingIds: { production: 48, 'development-1': 46, 'static-1': 51, 'static-2': 25 },
+    pricingIds: { production: 48, 'static-1': 51, 'static-2': 25 },
     normalizedNr: 100,
     csv: 'stickers/rectangle-sticker.csv',
     csvSources: CSV_SOURCES
@@ -137,7 +128,7 @@ const registry: readonly PricingProductRegistryEntry[] = [
   {
     slug: 'square-sticker',
     pricingName: /^diecut\/kisscut\b/,
-    pricingIds: { production: 48, 'development-1': 46, 'static-1': 51, 'static-2': 25 },
+    pricingIds: { production: 48, 'static-1': 51, 'static-2': 25 },
     normalizedNr: 100,
     csv: 'stickers/square-sticker.csv',
     csvSources: CSV_SOURCES
@@ -145,7 +136,7 @@ const registry: readonly PricingProductRegistryEntry[] = [
   {
     slug: 'oval-sticker',
     pricingName: /^diecut\/kisscut\b/,
-    pricingIds: { production: 48, 'development-1': 46, 'static-1': 51, 'static-2': 25 },
+    pricingIds: { production: 48, 'static-1': 51, 'static-2': 25 },
     normalizedNr: 100,
     csv: 'stickers/oval-sticker.csv',
     csvSources: CSV_SOURCES
@@ -153,16 +144,16 @@ const registry: readonly PricingProductRegistryEntry[] = [
   {
     slug: 'rounded-sticker',
     pricingName: /^diecut\/kisscut\b/,
-    pricingIds: { production: 48, 'development-1': 46, 'static-1': 51, 'static-2': 25 },
+    pricingIds: { production: 48, 'static-1': 51, 'static-2': 25 },
     normalizedNr: 100,
     csv: 'stickers/rounded-sticker.csv',
     csvSources: CSV_SOURCES
   },
   {
-    // "Clear Sticker" on production, "Clear Die Cut / Kiss Cut Pricing ... v.2" on development-1.
+    // "Clear Sticker" on production; the dev servers have carried "Clear Die Cut / Kiss Cut Pricing ... v.2".
     slug: 'clear-sticker',
     pricingName: /^clear\b/,
-    pricingIds: { production: 49, 'development-1': 49, 'static-1': 54, 'static-2': 30 },
+    pricingIds: { production: 49, 'static-1': 54, 'static-2': 30 },
     normalizedNr: 100,
     csv: 'stickers/clear-sticker.csv',
     csvSources: CSV_SOURCES
@@ -170,7 +161,7 @@ const registry: readonly PricingProductRegistryEntry[] = [
   {
     slug: 'hologram-sticker',
     pricingName: /^hologram\b/,
-    pricingIds: { production: 50, 'development-1': 50, 'static-1': 54, 'static-2': 31 },
+    pricingIds: { production: 50, 'static-1': 54, 'static-2': 31 },
     normalizedNr: 100,
     csv: 'stickers/hologram-sticker.csv',
     csvSources: CSV_SOURCES
@@ -178,7 +169,7 @@ const registry: readonly PricingProductRegistryEntry[] = [
   {
     slug: 'vinyl-lettering',
     pricingName: /^Vinyl Lettering\b/,
-    pricingIds: { production: 8, 'development-1': 8, 'static-2': 8 },
+    pricingIds: { production: 8, 'static-2': 8 },
     normalizedNr: 100,
     csv: 'stickers/vinyl-lettering.csv',
     csvSources: CSV_SOURCES_ALL
@@ -186,7 +177,7 @@ const registry: readonly PricingProductRegistryEntry[] = [
   {
     slug: 'transfer-sticker',
     pricingName: /^Transfer\b/,
-    pricingIds: { production: 11, 'development-1': 11, 'static-2': 11 },
+    pricingIds: { production: 11, 'static-2': 11 },
     normalizedNr: 100,
     csv: 'stickers/transfer-sticker.csv',
     csvSources: CSV_SOURCES_ALL
@@ -203,7 +194,7 @@ const registry: readonly PricingProductRegistryEntry[] = [
     // servers, hence the two-branch name pattern.
     slug: 'sticker-sheet',
     pricingName: /^(?:Sticker|Custom) Sheet\b/,
-    pricingIds: { production: 33, 'development-1': 34, 'static-2': 34 },
+    pricingIds: { production: 33, 'static-2': 34 },
     normalizedNr: 10,
     csv: 'stickers/sticker-sheet-pvc.csv',
     csvSources: CSV_SOURCES_ALL
@@ -214,7 +205,7 @@ const registry: readonly PricingProductRegistryEntry[] = [
   {
     slug: 'die-cut-roll',
     pricingName: /^(?:diecut\/kisscut roll|Roll)\b/i,
-    pricingIds: { production: 53, 'development-1': 15, 'static-2': 15 },
+    pricingIds: { production: 53, 'static-2': 15 },
     normalizedNr: 100,
     csv: 'roll-stickers/die-cut-roll.csv',
     csvSources: CSV_SOURCES_PRODUCTION
@@ -222,7 +213,7 @@ const registry: readonly PricingProductRegistryEntry[] = [
   {
     slug: 'circle-roll',
     pricingName: /^(?:diecut\/kisscut roll|Roll)\b/i,
-    pricingIds: { production: 53, 'development-1': 15, 'static-2': 15 },
+    pricingIds: { production: 53, 'static-2': 15 },
     normalizedNr: 100,
     csv: 'roll-stickers/circle-roll.csv',
     csvSources: CSV_SOURCES_PRODUCTION
@@ -230,7 +221,7 @@ const registry: readonly PricingProductRegistryEntry[] = [
   {
     slug: 'square-roll',
     pricingName: /^(?:diecut\/kisscut roll|Roll)\b/i,
-    pricingIds: { production: 53, 'development-1': 15, 'static-2': 15 },
+    pricingIds: { production: 53, 'static-2': 15 },
     normalizedNr: 100,
     csv: 'roll-stickers/square-roll.csv',
     csvSources: CSV_SOURCES_PRODUCTION
@@ -238,7 +229,7 @@ const registry: readonly PricingProductRegistryEntry[] = [
   {
     slug: 'rectangle-roll',
     pricingName: /^(?:diecut\/kisscut roll|Roll)\b/i,
-    pricingIds: { production: 53, 'development-1': 15, 'static-2': 15 },
+    pricingIds: { production: 53, 'static-2': 15 },
     normalizedNr: 100,
     csv: 'roll-stickers/rectangle-roll.csv',
     csvSources: CSV_SOURCES_PRODUCTION
@@ -246,7 +237,7 @@ const registry: readonly PricingProductRegistryEntry[] = [
   {
     slug: 'rounded-roll',
     pricingName: /^(?:diecut\/kisscut roll|Roll)\b/i,
-    pricingIds: { production: 53, 'development-1': 15, 'static-2': 15 },
+    pricingIds: { production: 53, 'static-2': 15 },
     normalizedNr: 100,
     csv: 'roll-stickers/rounded-roll.csv',
     csvSources: CSV_SOURCES_PRODUCTION
@@ -254,7 +245,7 @@ const registry: readonly PricingProductRegistryEntry[] = [
   {
     slug: 'oval-roll',
     pricingName: /^(?:diecut\/kisscut roll|Roll)\b/i,
-    pricingIds: { production: 53, 'development-1': 15, 'static-2': 15 },
+    pricingIds: { production: 53, 'static-2': 15 },
     normalizedNr: 100,
     csv: 'roll-stickers/oval-roll.csv',
     csvSources: CSV_SOURCES_PRODUCTION
@@ -262,7 +253,7 @@ const registry: readonly PricingProductRegistryEntry[] = [
   {
     slug: 'clear-roll',
     pricingName: /^Clear Roll\b/i,
-    pricingIds: { production: 54, 'development-1': 16, 'static-2': 16 },
+    pricingIds: { production: 54, 'static-2': 16 },
     normalizedNr: 100,
     csv: 'roll-stickers/clear-roll.csv',
     csvSources: CSV_SOURCES_PRODUCTION
@@ -270,7 +261,7 @@ const registry: readonly PricingProductRegistryEntry[] = [
   {
     slug: 'paper-roll',
     pricingName: /^Paper Roll\b/i,
-    pricingIds: { production: 55, 'development-1': 17, 'static-2': 17 },
+    pricingIds: { production: 55, 'static-2': 17 },
     normalizedNr: 100,
     csv: 'roll-stickers/paper-roll.csv',
     csvSources: CSV_SOURCES_PRODUCTION

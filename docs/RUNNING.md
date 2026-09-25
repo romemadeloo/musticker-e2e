@@ -41,7 +41,7 @@ somewhere unexpected.
 | `npm run test:prod:mobile` | `@mobile` on the Pixel 7 project against production |
 | `npm run test:env:smoke` / `:full` / `:auth` / `:mobile` | The same four, against whichever server `E2E_ENVIRONMENT` selects |
 | `npm run test:smoke` / `:regression` / `:purchasing` / `:validation` / `:auth` / `:api` / `:a11y` | One tag, against the configured environment |
-| `npm run test:pricing` | The price-table suite (2,286 tests, 4 workers). `:prod`, `:dev1` and `:static2` pin a server |
+| `npm run test:pricing` | The price-table suite (2,286 tests, 4 workers). `:prod` and `:static2` pin a server |
 | `npm run test:ci` | What CI runs on every PR: everything except `@slow @destructive @payment @visual` |
 | `npm run test:flake` | Smoke tests three times each with no retries, to surface flaky tests |
 
@@ -87,10 +87,6 @@ match the branch names exactly.
 | `static-6` | https://dev-static-6.musticker.com/kr | https://dev-static-6-api.musticker.com/index.php | https://dev-static-6-admin-panel.musticker.com |
 | `static-7` | https://dev-static-7.musticker.com/kr | https://dev-static-7-api.musticker.com/index.php | https://dev-static-7-admin-panel.musticker.com |
 | `static-8` | https://dev-static-8.musticker.com/kr | https://dev-static-8-api.musticker.com/index.php | https://dev-static-8-admin-panel.musticker.com |
-| `development-1` | https://dev.musticker.com/kr | https://dev-api.musticker.com/index.php | none known |
-| `development-2` | https://dev-2.musticker.com/kr | https://dev-2-api.musticker.com/index.php | none known |
-| `development-3` | https://dev-3.musticker.com/kr | https://dev-3-api.musticker.com/index.php | none known |
-| `development-4` | https://dev-4.musticker.com/kr | https://dev-4-api.musticker.com/index.php | none known |
 
 Each development server has its **own user database**. The seeded member in `.env` has to exist on
 the server you point at.

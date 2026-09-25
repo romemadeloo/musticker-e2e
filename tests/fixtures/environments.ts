@@ -1,6 +1,8 @@
-// Named storefront/API/admin-panel origins for musticker's production and development/staging
-// servers. Branch names match these keys 1:1 (see .github/workflows/smoke.yml), so CI can select an
+// Named storefront/API/admin-panel origins for musticker's production and dev-static servers. Branch names match these keys 1:1 (see .github/workflows/smoke.yml), so CI can select an
 // environment with E2E_ENVIRONMENT=${{ github.ref_name }} instead of per-branch conditionals.
+// The development-1..4 servers (dev., dev-2..4.) were retired from the suite on 2026-09-25 in favour
+// of static-1..8; comments elsewhere that say "verified on development-N" record where a fact was
+// observed at the time.
 export type EnvironmentConfig = {
   baseUrl: string;
   apiBaseUrl: string;
@@ -60,24 +62,6 @@ export const environments = {
     baseUrl: 'https://dev-static-8.musticker.com/kr',
     apiBaseUrl: 'https://dev-static-8-api.musticker.com/index.php',
     adminPanel: 'https://dev-static-8-admin-panel.musticker.com'
-  },
-  'development-1': {
-    // dev.musticker.com did not resolve (DNS) on 2026-08-11, but both hosts answered on
-    // 2026-08-24 and the pricing suite now runs here -- see tests/fixtures/pricing/.
-    baseUrl: 'https://dev.musticker.com/kr',
-    apiBaseUrl: 'https://dev-api.musticker.com/index.php'
-  },
-  'development-2': {
-    baseUrl: 'https://dev-2.musticker.com/kr',
-    apiBaseUrl: 'https://dev-2-api.musticker.com/index.php'
-  },
-  'development-3': {
-    baseUrl: 'https://dev-3.musticker.com/kr',
-    apiBaseUrl: 'https://dev-3-api.musticker.com/index.php'
-  },
-  'development-4': {
-    baseUrl: 'https://dev-4.musticker.com/kr',
-    apiBaseUrl: 'https://dev-4-api.musticker.com/index.php'
   }
 } as const satisfies Record<string, EnvironmentConfig>;
 

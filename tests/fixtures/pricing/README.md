@@ -32,7 +32,7 @@ CSV per material, suffixed `-pvc` (1), `-transparent` (2) or `-hologram` (3).
 2. Save it under `<category>/<slug>.csv` and point the product's `csv` field at it in
    [pricing-products.ts](./pricing-products.ts), and list the environments it is a valid baseline for
    in `csvSources`. Nothing else needs editing; the specs generate one test per row automatically.
-3. Run it: `npm run test:pricing:dev1` (or `test:pricing:static2`, `test:pricing:prod`).
+3. Run it: `npm run test:pricing:prod` (or `test:pricing:static2`).
 
 Until a CSV is committed its product's tests report as skipped rather than failing, so products can
 be rolled out one export at a time. Every storefront product now has a CSV, but only the nine
@@ -43,7 +43,8 @@ are added for them.
 ## Table ids and rates are per environment
 
 The servers do not all carry the same generation of these tables, and **the id numbers collide
-across servers**. Probed live on 2026-08-24:
+across servers**. Probed live on 2026-08-24 (development-1 has since been retired from the suite, on
+2026-09-25; its column is kept for history):
 
 | | production | development-1 | static-2 |
 |---|---|---|---|
@@ -74,9 +75,8 @@ check can actually prove:
 - `price-table.spec.ts` and `price-interpolation.spec.ts` compare rates against the CSV, and run
   **only** on the environments in `csvSources`. Elsewhere they skip with the reason spelled out.
 
-production and development-1 were promoted from the same sticker price data — verified cell by
-cell, 1339 passed on each — so both are listed in `csvSources` for the sticker tables and both get
-full coverage there. Production's roll tables were promoted again on 2026-09-10, adding high-volume
+production is the sticker-table baseline in `csvSources` and gets full coverage there
+(development-1 was promoted from the same data and verified cell by cell before it was retired). Production's roll tables were promoted again on 2026-09-10, adding high-volume
 quantity rungs; the roll CSVs are now production-only baselines until development carries the same
 generation. static-2 still holds older sticker rates, so there the tables are
 identity-checked and the cells skipped. An environment with no recorded ids skips everything rather
@@ -90,8 +90,8 @@ assertion.
 `normalizedNr` was checked on all three generations and is stable, so it is not per environment.
 
 The development servers return **HTTP 502** under sustained concurrency, which surfaces as a failed
-row rather than a pricing mismatch — `test:pricing:dev1` uses 4 workers and 2 retries for that
-reason. If a run shows failures, check whether they are all `HTTP 502` before suspecting the tables.
+row rather than a pricing mismatch — against a dev server, run with `--workers=4 --retries=2` for
+that reason. If a run shows failures, check whether they are all `HTTP 502` before suspecting the tables.
 
 Row counts, quantity ladders and rate precision all differ per table and are read from the CSV — the
 lettering products use an eight-rung ladder starting at 1, the rest use fourteen rungs starting at
@@ -139,8 +139,8 @@ lettering ladder uses 8 rungs.
 ## One table, several products
 
 The server does not price one table per product: five shape products (`circle`, `rectangle`,
-`square`, `oval`, `rounded`) all share one table — `pricing_id 44` on production, `46` on
-development-1 — and the die-cut and shared shape tables hold identical rates. Products on a shared
+`square`, `oval`, `rounded`) all share one table — `pricing_id 44` on production (before
+the 2026-09-10 merge into `48`), `25` on static-2 — and the die-cut and shared shape tables hold identical rates. Products on a shared
 table must therefore hold matching CSVs; `product-table-mapping.spec.ts` asserts both that they
 return identical stored rows and that their CSVs agree with each other. It groups by the id resolved
 for the environment under test, so the grouping follows whichever generation that server carries.

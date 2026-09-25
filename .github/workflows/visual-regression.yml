@@ -38,10 +38,6 @@ on:
           - static-6
           - static-7
           - static-8
-          - development-1
-          - development-2
-          - development-3
-          - development-4
       update_baselines:
         description: >-
           Capture new baselines instead of comparing against the committed ones, and upload them for
