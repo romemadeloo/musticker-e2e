@@ -1,8 +1,20 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
+import { locateOrHeal } from '../fixtures/self-heal.js';
+import { ko } from '../fixtures/storefront-data.js';
 import { CartDrawer } from './cart-drawer.js';
 import { SearchDialog } from './search-dialog.js';
+
+export type CategoryPath = './stickers' | './roll-stickers' | './sheet-stickers';
+
+function categoryHref(path: CategoryPath): string {
+  return `/${path.replace(/^\.\//, '')}`;
+}
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
 export class HeaderComponent {
   readonly page: Page;
@@ -50,18 +62,31 @@ export class HeaderComponent {
   }
 
   async goToStickers(): Promise<void> {
-    await this.root.getByRole('link', { name: '스티커', exact: true }).click();
-    await expect(this.page).toHaveURL(/\/kr\/stickers\/?$/);
+    await this.goToCategory(ko.stickers, './stickers');
   }
 
   async goToRollStickers(): Promise<void> {
-    await this.root.getByRole('link', { name: '롤스티커', exact: true }).click();
-    await expect(this.page).toHaveURL(/\/kr\/roll-stickers\/?$/);
+    await this.goToCategory(ko.rollStickers, './roll-stickers');
   }
 
   async goToSheetStickers(): Promise<void> {
-    await this.root.getByRole('link', { name: '판스티커', exact: true }).click();
-    await expect(this.page).toHaveURL(/\/kr\/sheet-stickers\/?$/);
+    await this.goToCategory(ko.sheetStickers, './sheet-stickers');
+  }
+
+  async goToCategory(linkName: string, path: CategoryPath): Promise<void> {
+    await (await this.categoryLink(linkName, path)).click();
+    await expect(this.page).toHaveURL(new RegExp(`/kr${escapeRegExp(categoryHref(path))}/?$`));
+  }
+
+  // The nav link by its label, or -- after a relabel, like 시트 스티커 -> 판스티커 -- by its href.
+  async categoryLink(linkName: string, path: CategoryPath): Promise<Locator> {
+    return locateOrHeal({
+      preferred: this.root.getByRole('link', { name: linkName, exact: true }),
+      stable: this.root.locator(`a[href$="${categoryHref(path)}"]`).filter({ visible: true }),
+      target: `header nav link ${path}`,
+      expected: linkName,
+      describeActual: (link) => link.innerText()
+    });
   }
 
   async openSearch(): Promise<SearchDialog> {

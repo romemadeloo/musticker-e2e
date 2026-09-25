@@ -4,6 +4,7 @@ import { expect } from '@playwright/test';
 import { appPath } from '../fixtures/env.js';
 import { parseWon } from '../fixtures/money.js';
 import { gotoStorefront } from '../fixtures/navigation.js';
+import { expectHeadingOrHeal } from '../fixtures/self-heal.js';
 import { ko } from '../fixtures/storefront-data.js';
 
 const wonAmountPattern = /[\d,]+\uc6d0/u;
@@ -20,10 +21,13 @@ export class ProductV2Page {
       .first();
   }
 
-  async goto(path: string, heading: string): Promise<void> {
+  /** Returns the heading the page actually shows, which differs from `heading` only after a heal. */
+  async goto(path: string, heading: string): Promise<string> {
     await gotoStorefront(this.page, appPath(path));
-    await expect(this.page.getByRole('heading', { name: heading, exact: true }).first()).toBeVisible();
+    const shownHeading = await expectHeadingOrHeal(this.page, heading, `product heading ${path}`);
+    // Also what keeps a healed heading honest: whatever the H1 says, this must be a product page.
     await expect(this.optionsPanel).toBeVisible();
+    return shownHeading;
   }
 
   async expectCatalogEntryRenders(path: string): Promise<void> {

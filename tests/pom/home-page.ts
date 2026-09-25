@@ -5,6 +5,7 @@ import { appPath } from '../fixtures/env.js';
 import { gotoStorefront } from '../fixtures/navigation.js';
 import { ko } from '../fixtures/storefront-data.js';
 import { HeaderComponent } from './header-component.js';
+import type { CategoryPath } from './header-component.js';
 
 export class HomeV2Page {
   readonly page: Page;
@@ -23,9 +24,9 @@ export class HomeV2Page {
   async expectCriticalContent(): Promise<void> {
     await expect(this.page).toHaveTitle(/\uba38\uc2a4\ud2f0\ucee4/);
     await expect(this.page.getByRole('heading', { name: ko.homeHero })).toBeVisible();
-    await expect(this.page.getByRole('link', { name: ko.stickers, exact: true }).first()).toBeVisible();
-    await expect(this.page.getByRole('link', { name: ko.rollStickers, exact: true }).first()).toBeVisible();
-    await expect(this.page.getByRole('link', { name: ko.sheetStickers, exact: true }).first()).toBeVisible();
+    await expect(await this.header.categoryLink(ko.stickers, './stickers')).toBeVisible();
+    await expect(await this.header.categoryLink(ko.rollStickers, './roll-stickers')).toBeVisible();
+    await expect(await this.header.categoryLink(ko.sheetStickers, './sheet-stickers')).toBeVisible();
     await expect(this.page.getByRole('button', { name: ko.fastOrder })).toBeVisible();
     await expect(this.page.getByRole('button', { name: ko.orderNow })).toBeVisible();
     await expect(this.page.getByRole('button', { name: ko.inquiryCta })).toBeVisible();
@@ -58,9 +59,8 @@ export class HomeV2Page {
     await this.page.keyboard.press('Escape').catch(() => undefined);
   }
 
-  async goToCategory(linkName: string, expectedPath: RegExp): Promise<void> {
-    await this.page.getByRole('link', { name: linkName, exact: true }).first().click();
-    await expect(this.page).toHaveURL(expectedPath);
+  async goToCategory(linkName: string, path: CategoryPath): Promise<void> {
+    await this.header.goToCategory(linkName, path);
   }
 
   async openAccountEntry(): Promise<void> {

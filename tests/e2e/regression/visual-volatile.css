@@ -1,0 +1,18 @@
+/*
+ * Injected into every visual snapshot (toHaveScreenshot stylePath). Removes chrome whose presence is
+ * editorial, not a property of the page under test.
+ */
+
+/*
+ * Time-boxed announcements such as the 2026-09 추석 연휴 배송 안내 bar. It is 48px tall and sits above
+ * the header, so while one is up every snapshot shifts down and fails on height alone. display:none
+ * rather than visibility:hidden so it also gives the space back.
+ */
+[data-testid='announcement-notice-bar'] {
+  display: none !important;
+}
+
+/* Floating KakaoTalk / Naver TalkTalk buttons: fixed-position, and they sit over the content. */
+[data-testid='floating-button'] {
+  visibility: hidden !important;
+}

@@ -1,6 +1,7 @@
 import { test, expect } from '../../fixtures/e2e-test.js';
 import { appPath } from '../../fixtures/env.js';
 import { gotoStorefront } from '../../fixtures/navigation.js';
+import { expectHeadingOrHeal } from '../../fixtures/self-heal.js';
 import { ko } from '../../fixtures/storefront-data.js';
 import { HomeV2Page } from '../../pom/home-page.js';
 
@@ -18,16 +19,16 @@ test.describe('storefront v2 smoke', { tag: ['@smoke', '@production'] }, () => {
     const home = new HomeV2Page(page);
 
     await home.goto();
-    await home.goToCategory(ko.stickers, /\/kr\/stickers\/?$/);
-    await expect(page.getByRole('heading', { name: ko.stickers, exact: true }).first()).toBeVisible();
+    await home.goToCategory(ko.stickers, './stickers');
+    await expectHeadingOrHeal(page, ko.stickers, 'category heading ./stickers');
 
     await home.goto();
-    await home.goToCategory(ko.rollStickers, /\/kr\/roll-stickers\/?$/);
-    await expect(page.getByRole('heading', { name: ko.rollStickers, exact: true }).first()).toBeVisible();
+    await home.goToCategory(ko.rollStickers, './roll-stickers');
+    await expectHeadingOrHeal(page, ko.rollStickers, 'category heading ./roll-stickers');
 
     await home.goto();
-    await home.goToCategory(ko.sheetStickers, /\/kr\/sheet-stickers\/?$/);
-    await expect(page.getByRole('heading', { name: ko.sheetStickers, exact: true }).first()).toBeVisible();
+    await home.goToCategory(ko.sheetStickers, './sheet-stickers');
+    await expectHeadingOrHeal(page, ko.sheetStickers, 'category heading ./sheet-stickers');
   });
 
   test('MS-V2-003 header search opens and finds hologram sticker content', async ({ page }) => {

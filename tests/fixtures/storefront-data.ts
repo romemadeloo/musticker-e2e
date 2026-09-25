@@ -230,6 +230,59 @@ export const categoryLinks = {
   ]
 } as const;
 
+// The page behind each card in categoryLinks, index for index. A card's href carries this slug and
+// survives renames, so the category tests fall back to it when a name changes (see self-heal.ts).
+const categoryProductPaths = {
+  stickers: [
+    './stickers/die-cut-sticker',
+    './stickers/circle-sticker',
+    './stickers/rectangle-sticker',
+    './stickers/square-sticker',
+    './stickers/oval-sticker',
+    './stickers/rounded-sticker',
+    './stickers/kiss-cut-sticker',
+    './stickers/sticker-sheet',
+    './stickers/clear-sticker',
+    './stickers/hologram-sticker',
+    './stickers/transfer-sticker',
+    './stickers/vinyl-lettering'
+  ],
+  rollStickers: [
+    './roll-stickers/die-cut-roll',
+    './roll-stickers/clear-roll',
+    './roll-stickers/circle-roll',
+    './roll-stickers/square-roll',
+    './roll-stickers/rectangle-roll',
+    './roll-stickers/rounded-roll',
+    './roll-stickers/oval-roll',
+    './roll-stickers/paper-roll'
+  ],
+  sheetStickers: [
+    './sheet-stickers/die-cut-sheet',
+    './sheet-stickers/circle-sheet',
+    './sheet-stickers/oval-sheet',
+    './sheet-stickers/square-sheet',
+    './sheet-stickers/rectangle-sheet',
+    './sheet-stickers/rounded-sheet'
+  ]
+} as const;
+
+export type CategoryProduct = { readonly name: string; readonly path: string };
+
+function pairCategory(names: readonly string[], paths: readonly string[]): readonly CategoryProduct[] {
+  if (names.length !== paths.length) {
+    throw new Error(`categoryLinks and categoryProductPaths disagree: ${names.length} names, ${paths.length} paths.`);
+  }
+
+  return names.map((name, index) => ({ name, path: paths[index] ?? '' }));
+}
+
+export const categoryProducts = {
+  stickers: pairCategory(categoryLinks.stickers, categoryProductPaths.stickers),
+  rollStickers: pairCategory(categoryLinks.rollStickers, categoryProductPaths.rollStickers),
+  sheetStickers: pairCategory(categoryLinks.sheetStickers, categoryProductPaths.sheetStickers)
+} as const;
+
 // The cart names a line after the product's category card, which is not always the product page's
 // H1. Products where the two differ carry an explicit cartName.
 export function cartLineName(product: { readonly heading: string; readonly cartName?: string }): string {

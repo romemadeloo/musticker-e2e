@@ -3,6 +3,7 @@ import { expect } from '@playwright/test';
 
 import { ko } from '../fixtures/storefront-data.js';
 import { firstLocatorWithCount, firstVisibleLocator } from '../fixtures/resilient-locator.js';
+import { recordHeal, selfHealEnabled } from '../fixtures/self-heal.js';
 import { enterCartDialogCustomSize } from './cart-size-dialog.js';
 import type { CartLineItem, ProductConfig } from '../fixtures/types.js';
 
@@ -54,11 +55,13 @@ export class CartDrawer {
   }
 
   async expectLineItem(config: ProductConfig | CartLineItem): Promise<void> {
-    const item = this.lineItem(config);
+    const { item, healed } = await this.resolveLineItem(config);
     const price = lineItemPrice(config);
 
     await expect(item).toBeVisible();
-    await expect(item).toContainText(config.productName);
+    if (!healed) {
+      await expect(item).toContainText(config.productName);
+    }
 
     if (config.widthMm && config.heightMm) {
       await expect(item).toContainText(new RegExp(`(?:Size|사이즈):\\s*${config.widthMm}x${config.heightMm}`, 'i'));
@@ -328,12 +331,45 @@ export class CartDrawer {
     await expect(this.page).toHaveURL(/\/kr\/cart\/?$/);
   }
 
+  // A line is found by its product name. When the name was changed (the cart shows the category-card
+  // name, which is renamed independently of the page H1), the line is instead the one and only line
+  // carrying the configured size, quantity, and price. An ambiguous cart is never healed.
+  private async resolveLineItem(config: ProductConfig | CartLineItem): Promise<{ item: Locator; healed: boolean }> {
+    const named = this.lineItem(config);
+
+    if (!selfHealEnabled()) {
+      return { item: named, healed: false };
+    }
+
+    const byOptions = this.lineItemsMatchingOptions(this.lineItemArticles(), config);
+    const appeared = await expect(named.or(byOptions.first()).first())
+      .toBeVisible()
+      .then(() => true)
+      .catch(() => false);
+
+    if (!appeared || (await named.isVisible().catch(() => false)) || (await byOptions.count()) !== 1) {
+      return { item: named, healed: false };
+    }
+
+    const item = byOptions.first();
+    await recordHeal({
+      target: 'cart line name',
+      expected: config.productName,
+      actual: parseProductName(await item.innerText())
+    });
+    return { item, healed: true };
+  }
+
   private lineItem(product: string | ProductConfig | CartLineItem): Locator {
     if (typeof product === 'string') {
       return this.lineItems(product).first();
     }
 
-    let items = this.lineItems(product.productName);
+    return this.lineItemsMatchingOptions(this.lineItems(product.productName), product).first();
+  }
+
+  private lineItemsMatchingOptions(lineItems: Locator, product: ProductConfig | CartLineItem): Locator {
+    let items = lineItems;
     const price = lineItemPrice(product);
 
     if (product.widthMm && product.heightMm) {
@@ -350,7 +386,7 @@ export class CartDrawer {
       items = items.filter({ hasText: price });
     }
 
-    return items.first();
+    return items;
   }
 
   private lineItems(productName: string): Locator {

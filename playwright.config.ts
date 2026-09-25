@@ -23,6 +23,12 @@ function reportersWithAllure(reporters: ReporterDescription[]): ReporterDescript
   return [...reporters, ['allure-playwright', { resultsDir: process.env.ALLURE_RESULTS_DIR }]];
 }
 
+// Lists every locator that fell back to a stable identifier because storefront copy changed (see
+// tests/fixtures/self-heal.ts). Per-process and append-only on GitHub, so it survives sharding.
+function reportersWithSelfHealSummary(reporters: ReporterDescription[]): ReporterDescription[] {
+  return [...reporters, ['./tests/reporters/self-heal-reporter.ts']];
+}
+
 // A sharded run cannot produce a meaningful HTML report per shard -- each one only knows about its
 // own slice. `blob` emits a merge-able intermediate instead, which `npx playwright merge-reports`
 // turns back into one HTML report covering every shard (see .github/actions/merge-shard-reports).
@@ -132,7 +138,9 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 1,
   workers: resolveWorkers(),
-  reporter: reportersForShardedRun(reportersWithAllure(process.env.CI ? ciReporters : localReporters)),
+  reporter: reportersForShardedRun(
+    reportersWithSelfHealSummary(reportersWithAllure(process.env.CI ? ciReporters : localReporters))
+  ),
   // Deletes the throwaway members MS-V2-087/088/094 register. A no-op for every other run.
   globalTeardown: './tests/setup/global-teardown.ts',
   use: {

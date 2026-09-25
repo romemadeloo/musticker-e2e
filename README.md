@@ -68,6 +68,8 @@ or set `BASE_URL`/`API_BASE_URL` directly (these always take precedence over `E2
 - `API_BASE_URL`: API origin/path override for direct API checks. Falls back to `E2E_ENVIRONMENT`'s API URL, then to a `BASE_URL`-derived guess (only correct for hostnames starting with `dev.`).
 - `E2E_BROWSER_PROJECT`: `chromium-desktop`, `firefox-desktop`, `webkit-desktop`, `chromium-mobile`, or `all-desktop`.
 - `RUN_VISUAL_E2E=true`: enables visual snapshot tests. See [Visual baselines](#visual-baselines).
+- `SELF_HEAL=off`: turns off copy self-healing, so a renamed product fails instead of being healed.
+  Use it to confirm a fixture update is complete. See [Self-healing locators](#self-healing-locators).
 - `RUN_PAYMENT_E2E=true`: enables the destructive checkout test (`MS-V2-025`). Dev environments only.
 - `RUN_AUTH_DESTRUCTIVE_E2E=true`: enables the tests that create or mutate real member state --
   registration OTP completion (`MS-V2-087`/`088`), the password rotation (`MS-V2-094`), and the
@@ -158,6 +160,28 @@ container's version has drifted from the installed `@playwright/test`. To switch
 
 Until then the scheduled run fails with `snapshot doesn't exist`, which is the honest outcome —
 accepting whatever a run captured would report coverage that cannot detect anything.
+
+Baselines never update themselves. What changes on its own is kept out of the pixels instead:
+[`visual-volatile.css`](tests/e2e/regression/visual-volatile.css) hides time-boxed announcement bars
+and the floating chat buttons, the review carousels are masked, and the spec scrolls the page and
+waits for lazy sections, reviews, fonts, and images before capturing. A diff that remains is a real
+change: review it in the Playwright report, then recapture with the steps above.
+
+## Self-healing locators
+
+Storefront copy changes without notice; the 2026-09-24 product rename turned 57 nightly tests red in
+one run without breaking a single page. Where a step identifies a product page, category card, nav
+link, or cart line by its text, [`self-heal.ts`](tests/fixtures/self-heal.ts) falls back to a stable
+identifier when that text is gone — the page's H1 (still gated on the product options panel), the
+card's href slug, the nav link's href, or the only cart line with the configured size, quantity, and
+price. The test keeps running and records the drift.
+
+Every heal is listed at the end of the run, in `test-results/self-heal-report.md`, and in the GitHub
+job summary, together with the text the storefront now shows. That list is the to-do: update
+[`storefront-data.ts`](tests/fixtures/storefront-data.ts), then confirm with `SELF_HEAL=off`.
+
+A heal never accepts something the stable identifier does not vouch for: a 404, a card with a
+different slug, or a cart with more than one candidate line still fails.
 
 ## Sharding
 
