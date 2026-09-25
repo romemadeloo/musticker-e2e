@@ -82,14 +82,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v5
+      - name: Set up Node.js, dependencies and Playwright
+        uses: ./.github/actions/setup-playwright
         with:
-          cache: npm
-          node-version: 22
-
-      - name: Install dependencies
-        run: npm ci
+          browser_project: none
 
       - name: Lint
         run: npm run lint
@@ -145,38 +141,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v5
+      - name: Set up Node.js, dependencies and Playwright
+        uses: ./.github/actions/setup-playwright
         with:
-          cache: npm
-          node-version: 22
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install selected Playwright browsers
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          case "$E2E_BROWSER_PROJECT" in
-            chromium-desktop|chromium-mobile)
-              npx playwright install --with-deps chromium
-              ;;
-            firefox-desktop)
-              npx playwright install --with-deps firefox
-              ;;
-            webkit-desktop)
-              npx playwright install --with-deps webkit
-              ;;
-            all-desktop)
-              npx playwright install --with-deps chromium firefox webkit
-              ;;
-            *)
-              echo "Unsupported browser project: $E2E_BROWSER_PROJECT" >&2
-              exit 1
-              ;;
-          esac
+          browser_project: ${{ env.E2E_BROWSER_PROJECT }}
 
       - name: Run production suite shard
         shell: bash

@@ -1,0 +1,73 @@
+name: Set up Playwright
+description: >-
+  Install Node.js and npm dependencies, then the Playwright browsers a browser project needs, with
+  the browser binaries cached between runs. Runs after actions/checkout, which a local action needs.
+
+inputs:
+  browser_project:
+    description: >-
+      The E2E_BROWSER_PROJECT the job will run (chromium-desktop, firefox-desktop, webkit-desktop,
+      chromium-mobile, all-desktop), or none to skip browser installation -- for lint-only jobs and
+      for jobs inside the Playwright container, which ships its browsers.
+    required: false
+    default: chromium-desktop
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v5
+      with:
+        cache: npm
+        node-version: 22
+
+    - name: Install dependencies
+      shell: bash
+      run: npm ci
+
+    - name: Resolve browsers
+      id: browsers
+      if: ${{ inputs.browser_project != 'none' }}
+      shell: bash
+      env:
+        BROWSER_PROJECT: ${{ inputs.browser_project }}
+      run: |
+        set -euo pipefail
+
+        case "$BROWSER_PROJECT" in
+          chromium-desktop|chromium-mobile) browsers='chromium' ;;
+          firefox-desktop) browsers='firefox' ;;
+          webkit-desktop) browsers='webkit' ;;
+          all-desktop) browsers='chromium firefox webkit' ;;
+          *)
+            echo "Unsupported browser project: $BROWSER_PROJECT" >&2
+            exit 1
+            ;;
+        esac
+
+        # The installed library version, not the package.json range: browser builds are tied to the
+        # exact release, so a lockfile bump must miss the cache rather than restore stale binaries.
+        version="$(node -p "require('@playwright/test/package.json').version")"
+
+        echo "list=$browsers" >> "$GITHUB_OUTPUT"
+        echo "key=playwright-${{ runner.os }}-$version-${browsers// /-}" >> "$GITHUB_OUTPUT"
+
+    - name: Restore Playwright browsers
+      id: browser_cache
+      if: ${{ inputs.browser_project != 'none' }}
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: ${{ steps.browsers.outputs.key }}
+
+    - name: Install Playwright browsers
+      if: ${{ inputs.browser_project != 'none' && steps.browser_cache.outputs.cache-hit != 'true' }}
+      shell: bash
+      run: npx playwright install --with-deps ${{ steps.browsers.outputs.list }}
+
+    # The cache holds the browser binaries only. The OS libraries they link against live outside it
+    # and a fresh runner has none of them, so a cache hit still installs those.
+    - name: Install browser system dependencies
+      if: ${{ inputs.browser_project != 'none' && steps.browser_cache.outputs.cache-hit == 'true' }}
+      shell: bash
+      run: npx playwright install-deps ${{ steps.browsers.outputs.list }}

@@ -107,39 +107,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v5
+      - name: Set up Node.js, dependencies and Playwright
+        uses: ./.github/actions/setup-playwright
         with:
-          cache: npm
-          node-version: 22
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install selected Playwright browsers
-        shell: bash
-        run: |
-          case "${{ inputs.browser_project }}" in
-            chromium-desktop)
-              npx playwright install --with-deps chromium
-              ;;
-            firefox-desktop)
-              npx playwright install --with-deps firefox
-              ;;
-            webkit-desktop)
-              npx playwright install --with-deps webkit
-              ;;
-            chromium-mobile)
-              npx playwright install --with-deps chromium
-              ;;
-            all-desktop)
-              npx playwright install --with-deps chromium firefox webkit
-              ;;
-            *)
-              echo "Unsupported browser project: ${{ inputs.browser_project }}" >&2
-              exit 1
-              ;;
-          esac
+          browser_project: ${{ inputs.browser_project }}
 
       - name: Run selected suite
         shell: bash
