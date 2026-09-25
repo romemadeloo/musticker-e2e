@@ -1,1 +1,1 @@
-{"id":"5e811b7d16b818e05332a4f8604428af","fullName":"storefront/pricing/price-interpolation.spec.ts:160:7","name":"MS-PRC-INT-die-cut-sticker quantity 15 interpolates between rungs 10 and 20","status":"passed","testResultsByEnv":{"default":"dcddb523c1baef40c075ac1122df0324"}}
+{"id":"5e811b7d16b818e05332a4f8604428af","fullName":"storefront/pricing/price-interpolation.spec.ts:160:7","name":"MS-PRC-INT-die-cut-sticker quantity 15 interpolates between rungs 10 and 20","status":"passed","testResultsByEnv":{"default":"777293da4275a9cfd6304d6fd41c2a0b"}}

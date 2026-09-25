@@ -1,1 +1,1 @@
-{"id":"bbc7c5d059c081d1a8b81141a649994c","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-V2-040 catalog page renders without error: ./roll-stickers/rectangle-roll","status":"passed","testResultsByEnv":{"default":"8e02e80b77153602d59e59edd2cbfab8"}}
+{"id":"bbc7c5d059c081d1a8b81141a649994c","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-V2-040 catalog page renders without error: ./roll-stickers/rectangle-roll","status":"passed","testResultsByEnv":{"default":"f60c68fb0cf857c554bce1242f88ed72"}}

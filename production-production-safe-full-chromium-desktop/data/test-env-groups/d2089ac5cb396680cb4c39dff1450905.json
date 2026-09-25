@@ -1,1 +1,1 @@
-{"id":"d2089ac5cb396680cb4c39dff1450905","fullName":"storefront/smoke/storefront-smoke.spec.ts:60:3","name":"MS-V2-020 footer legal and support links are reachable","status":"passed","testResultsByEnv":{"default":"307625da2b67b1973154ea0b3ae7e612"}}
+{"id":"d2089ac5cb396680cb4c39dff1450905","fullName":"storefront/smoke/storefront-smoke.spec.ts:60:3","name":"MS-V2-020 footer legal and support links are reachable","status":"failed","testResultsByEnv":{"default":"7744b9acfa38bc6b810474b569c7d587"}}

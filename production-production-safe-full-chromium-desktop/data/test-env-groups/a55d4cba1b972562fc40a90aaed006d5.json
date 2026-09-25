@@ -1,1 +1,1 @@
-{"id":"a55d4cba1b972562fc40a90aaed006d5","fullName":"storefront/account/order-history.spec.ts:36:3","name":"MS-V2-107 order history lists the member's orders with a number and a date each @smoke","status":"failed","testResultsByEnv":{"default":"6a2c87d20f4f3ad12d9a9cfc9f5b2d03"}}
+{"id":"a55d4cba1b972562fc40a90aaed006d5","fullName":"storefront/account/order-history.spec.ts:36:3","name":"MS-V2-107 order history lists the member's orders with a number and a date each @smoke","status":"passed","testResultsByEnv":{"default":"54b97d62b21eab5f652e6ef2cf375d1a"}}

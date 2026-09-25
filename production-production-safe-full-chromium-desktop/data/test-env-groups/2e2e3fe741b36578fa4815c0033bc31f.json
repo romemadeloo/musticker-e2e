@@ -1,1 +1,1 @@
-{"id":"2e2e3fe741b36578fa4815c0033bc31f","fullName":"storefront/purchasing/cart-lifecycle.spec.ts:70:3","name":"MS-V2-101 two distinct products become two lines whose prices sum to the cart total","status":"passed","testResultsByEnv":{"default":"20199a71030683982ae94486d896d04e"}}
+{"id":"2e2e3fe741b36578fa4815c0033bc31f","fullName":"storefront/purchasing/cart-lifecycle.spec.ts:70:3","name":"MS-V2-101 two distinct products become two lines whose prices sum to the cart total","status":"passed","testResultsByEnv":{"default":"58857ec84e1190e44a0e2e765b35a918"}}

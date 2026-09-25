@@ -1,1 +1,1 @@
-{"id":"74864e1882288c94ecc71d841c73c52b","fullName":"storefront/auth/registration.spec.ts:43:3","name":"MS-V2-081 malformed email is rejected before any account is requested @validation","status":"passed","testResultsByEnv":{"default":"fadccfa0b3d1244109cae2f6eb922058"}}
+{"id":"74864e1882288c94ecc71d841c73c52b","fullName":"storefront/auth/registration.spec.ts:43:3","name":"MS-V2-081 malformed email is rejected before any account is requested @validation","status":"passed","testResultsByEnv":{"default":"e50532d0ab4a3aabeab1f11865aefce3"}}
