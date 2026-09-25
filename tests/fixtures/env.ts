@@ -22,7 +22,7 @@ export const env = {
 // Which named environment this run is pointed at, for fixtures that hold per-environment data (the
 // pricing registry, whose table ids differ per server). E2E_ENVIRONMENT is authoritative when set;
 // otherwise BASE_URL is matched back against the registry, because the production-facing scripts
-// (test:prod:*, test:regression, and the nightly/full-suite workflows) set BASE_URL instead.
+// (test:prod:*, test:regression, and the full-suite workflow) set BASE_URL instead.
 //
 // Undefined means "pointed somewhere not in the registry" -- an ad-hoc BASE_URL, say. Callers must
 // treat that as unknown rather than assuming production: env-specific expectations cannot be

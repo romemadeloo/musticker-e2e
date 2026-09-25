@@ -8,7 +8,7 @@ description: Combine the blob reports and Allure results of a sharded Playwright
 
 inputs:
   shard_artifact_pattern:
-    description: Artifact name pattern the shards uploaded, for example nightly-regression-shard-*.
+    description: Artifact name pattern the shards uploaded, for example production-suite-shard-*.
     required: true
   artifact_name:
     description: Name for the combined artifact. Pass this same value to publish-allure-report.

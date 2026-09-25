@@ -122,7 +122,7 @@ Tags select what runs. Every test carries at least one.
 | Tag | Meaning |
 | --- | --- |
 | `@smoke` | The critical storefront paths. Fast; runs on every push |
-| `@regression` | Broader coverage; runs nightly |
+| `@regression` | Broader coverage; runs in the production full suite |
 | `@production` | Explicitly verified safe and valid against production |
 | `@purchasing` | Product configuration, cart, and checkout up to (not including) payment |
 | `@pricing` | Price-table checks against the pricing API |
@@ -207,7 +207,6 @@ real customers' details and this repository's CI artifacts are public.
 | `pr-checks.yml` | Pull request to an environment branch | Lint, typecheck, production smoke |
 | `smoke.yml` | Push to an environment branch | `@smoke` against that branch's server |
 | `production-full-suite.yml` | Push to `production`, daily 20:00 UTC (05:00 KST), manual | Lint, typecheck, then production-safe tests in 8 shards |
-| `nightly-regression.yml` | Daily 18:00 UTC (03:00 KST), manual | `@regression` in 4 shards |
 | `visual-regression.yml` | Daily 21:00 UTC (06:00 KST), manual | `@visual` inside the pinned Playwright container |
 | `manual-playwright.yml` | Manual | Any suite, environment and browser. Refuses destructive runs against production |
 | `deploy-allure-storage.yml` | Manual | Infrastructure for the Allure report server |
@@ -219,7 +218,7 @@ The workflows use these secrets: `INTERNAL_ORIGIN_KEY`, `DEV_INTERNAL_ORIGIN_KEY
 
 Admin specs do not run in CI yet. That waits on a way to get the verification code without a person.
 
-**Sharding.** The production and nightly suites are split across runners, and a merge job
+**Sharding.** The production suite is split across runners, and a merge job
 recombines the reports. Against production, `production-full-suite.yml` uses `PW_WORKERS=1` with
 twice the shards. Production's firewall rate-limits per IP address, so eight runners with one
 browser each stay under its limit where four runners with two browsers each would not.
