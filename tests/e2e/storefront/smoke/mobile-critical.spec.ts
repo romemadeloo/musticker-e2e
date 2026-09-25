@@ -1,10 +1,10 @@
-import { test } from '../../fixtures/e2e-test.js';
-import { appPath } from '../../fixtures/env.js';
-import { gotoStorefront } from '../../fixtures/navigation.js';
-import { ko, v2Products } from '../../fixtures/storefront-data.js';
-import { HeaderComponent } from '../../pom/header-component.js';
-import { InquiryV2Form } from '../../pom/inquiry-form.js';
-import { ProductV2Page } from '../../pom/product-page.js';
+import { test } from '../../../fixtures/e2e-test.js';
+import { appPath } from '../../../fixtures/env.js';
+import { gotoStorefront } from '../../../fixtures/navigation.js';
+import { ko, v2Products } from '../../../fixtures/storefront-data.js';
+import { HeaderComponent } from '../../../pom/storefront/header-component.js';
+import { InquiryV2Form } from '../../../pom/storefront/inquiry-form.js';
+import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 
 test.describe('storefront v2 mobile critical path', { tag: ['@smoke', '@production', '@mobile'] }, () => {
   test.use({

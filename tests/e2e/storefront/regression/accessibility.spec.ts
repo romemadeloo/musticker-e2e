@@ -1,8 +1,8 @@
-import { test, expect } from '../../fixtures/e2e-test.js';
-import { appPath } from '../../fixtures/env.js';
-import { gotoStorefront } from '../../fixtures/navigation.js';
-import { ko } from '../../fixtures/storefront-data.js';
-import { HeaderComponent } from '../../pom/header-component.js';
+import { test, expect } from '../../../fixtures/e2e-test.js';
+import { appPath } from '../../../fixtures/env.js';
+import { gotoStorefront } from '../../../fixtures/navigation.js';
+import { ko } from '../../../fixtures/storefront-data.js';
+import { HeaderComponent } from '../../../pom/storefront/header-component.js';
 
 test.describe('storefront v2 accessibility smoke', { tag: ['@regression', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });

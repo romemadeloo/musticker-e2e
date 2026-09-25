@@ -1,11 +1,11 @@
 import type { Locator, Page, Response } from '@playwright/test';
 import { expect } from '@playwright/test';
 
-import { ko } from '../fixtures/storefront-data.js';
-import { firstLocatorWithCount, firstVisibleLocator } from '../fixtures/resilient-locator.js';
-import { recordHeal, selfHealEnabled } from '../fixtures/self-heal.js';
+import { ko } from '../../fixtures/storefront-data.js';
+import { firstLocatorWithCount, firstVisibleLocator } from '../../fixtures/resilient-locator.js';
+import { recordHeal, selfHealEnabled } from '../../fixtures/self-heal.js';
 import { enterCartDialogCustomSize } from './cart-size-dialog.js';
-import type { CartLineItem, ProductConfig } from '../fixtures/types.js';
+import type { CartLineItem, ProductConfig } from '../../fixtures/types.js';
 
 const cartPreviewTitle = /\uc7a5\ubc14\uad6c\ub2c8 \ubbf8\ub9ac\ubcf4\uae30|Cart Preview/i;
 const editDialogTitle = /\uc0ac\uc774\uc988 \ubc0f \uc218\ub7c9 \uc218\uc815|\uc5c5\ub370\uc774\ud2b8|Update/i;

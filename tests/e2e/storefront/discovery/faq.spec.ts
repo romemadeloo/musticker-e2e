@@ -1,6 +1,6 @@
-import { test } from '../../fixtures/e2e-test.js';
-import { ko } from '../../fixtures/storefront-data.js';
-import { FaqV2Page } from '../../pom/faq-page.js';
+import { test } from '../../../fixtures/e2e-test.js';
+import { ko } from '../../../fixtures/storefront-data.js';
+import { FaqV2Page } from '../../../pom/storefront/faq-page.js';
 
 test.describe('storefront v2 FAQ', { tag: ['@smoke', '@regression', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });

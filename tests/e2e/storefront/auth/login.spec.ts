@@ -1,10 +1,10 @@
-import { test, expect } from '../../fixtures/e2e-test.js';
-import { appPath, env } from '../../fixtures/env.js';
-import { gotoStorefront } from '../../fixtures/navigation.js';
-import { authCopy, unregisteredLogin } from '../../fixtures/storefront-data.js';
-import { HeaderComponent } from '../../pom/header-component.js';
-import { HomeV2Page } from '../../pom/home-page.js';
-import { LoginPage } from '../../pom/login-page.js';
+import { test, expect } from '../../../fixtures/e2e-test.js';
+import { appPath, env } from '../../../fixtures/env.js';
+import { gotoStorefront } from '../../../fixtures/navigation.js';
+import { authCopy, unregisteredLogin } from '../../../fixtures/storefront-data.js';
+import { HeaderComponent } from '../../../pom/storefront/header-component.js';
+import { HomeV2Page } from '../../../pom/storefront/home-page.js';
+import { LoginPage } from '../../../pom/storefront/login-page.js';
 
 test.describe('storefront authentication', { tag: ['@auth', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowExpectedAuthFailures: true, allowKnownNuxtPayloadFailures: true });
@@ -79,7 +79,7 @@ test.describe('storefront authentication', { tag: ['@auth', '@production'] }, ()
   });
 
   // MS-V2-044: re-verified live against production on 2026-08-11 (masked -> visible -> masked
-  // all confirmed via the input's `type` attribute). The production bug noted in test-case.md on
+  // all confirmed via the input's `type` attribute). The production bug noted in the test cases on
   // 2026-08-10 (toggle rendered but did not unmask) is no longer reproducible, so MS-V2-031 stays
   // un-fixme'd.
   test('MS-V2-031 password visibility toggle masks and unmasks password', async ({ page }) => {

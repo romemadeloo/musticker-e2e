@@ -16,8 +16,8 @@ import {
   quotedPrice,
   requireSchema,
   tableIdentity
-} from '../../fixtures/pricing/pricing-api.js';
-import { activeEnvironmentLabel, pricingProducts } from '../../fixtures/pricing/pricing-products.js';
+} from '../../../fixtures/pricing/pricing-api.js';
+import { activeEnvironmentLabel, pricingProducts } from '../../../fixtures/pricing/pricing-products.js';
 import {
   alternateDimensionsForArea,
   dimensionsForArea,
@@ -30,7 +30,7 @@ import {
   offLadderQuantityBetween,
   ratePerMm,
   sampleIndices
-} from '../../fixtures/pricing/price-table.js';
+} from '../../../fixtures/pricing/price-table.js';
 
 test.describe.configure({ mode: 'parallel' });
 

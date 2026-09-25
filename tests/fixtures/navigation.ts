@@ -30,7 +30,7 @@ import { INTERNAL_ORIGIN_HEADER } from './internal-origin.js';
 const throttleRetryDelaysMs = [2_000, 4_000, 8_000, 15_000, 25_000];
 
 // One initial request plus one per rung. Exported so the hermetic coverage in
-// tests/e2e/security/throttle-detection.spec.ts counts what the ladder actually does rather than
+// tests/e2e/storefront/security/throttle-detection.spec.ts counts what the ladder actually does rather than
 // restating a number that has now changed twice.
 export const throttleRetryAttempts = throttleRetryDelaysMs.length + 1;
 

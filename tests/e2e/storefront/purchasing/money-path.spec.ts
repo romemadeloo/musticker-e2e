@@ -1,10 +1,10 @@
-import { test, expect } from '../../fixtures/e2e-test.js';
-import { formatWon, parseWon } from '../../fixtures/money.js';
-import { cartCopy, freeShippingThresholdWon, v2Products } from '../../fixtures/storefront-data.js';
-import { CartDrawer } from '../../pom/cart-drawer.js';
-import { CartV2Page } from '../../pom/cart-page.js';
-import { CheckoutV2Page } from '../../pom/checkout-page.js';
-import { ProductV2Page } from '../../pom/product-page.js';
+import { test, expect } from '../../../fixtures/e2e-test.js';
+import { formatWon, parseWon } from '../../../fixtures/money.js';
+import { cartCopy, freeShippingThresholdWon, v2Products } from '../../../fixtures/storefront-data.js';
+import { CartDrawer } from '../../../pom/storefront/cart-drawer.js';
+import { CartV2Page } from '../../../pom/storefront/cart-page.js';
+import { CheckoutV2Page } from '../../../pom/storefront/checkout-page.js';
+import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 
 // The pricing suite verifies the quotation API to eight decimal places, and the configurator specs
 // verify that changing an option moves the price. Neither follows one price all the way to the

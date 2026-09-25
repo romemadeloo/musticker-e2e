@@ -14,13 +14,13 @@ import {
   storedRow,
   tableIdentity,
   requireSchema
-} from '../../fixtures/pricing/pricing-api.js';
+} from '../../../fixtures/pricing/pricing-api.js';
 import {
   activeEnvironmentLabel,
   pricingProducts,
   unmappedPricingProducts
-} from '../../fixtures/pricing/pricing-products.js';
-import { canonicalNumber, dimensionsForArea, loadPriceTable } from '../../fixtures/pricing/price-table.js';
+} from '../../../fixtures/pricing/pricing-products.js';
+import { canonicalNumber, dimensionsForArea, loadPriceTable } from '../../../fixtures/pricing/price-table.js';
 
 test.describe.configure({ mode: 'parallel' });
 

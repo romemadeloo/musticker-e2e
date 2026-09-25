@@ -1,10 +1,10 @@
-import { test, expect } from '../../fixtures/e2e-test.js';
-import { env } from '../../fixtures/env.js';
-import { createMailTmAccount, extractOtpCode, waitForMailTmMessage } from '../../fixtures/mail-tm.js';
-import { authCopy, throwawayAccount } from '../../fixtures/storefront-data.js';
-import { recordCreatedAccount } from '../../fixtures/test-data-ledger.js';
-import { LoginPage } from '../../pom/login-page.js';
-import { RegisterPage } from '../../pom/register-page.js';
+import { test, expect } from '../../../fixtures/e2e-test.js';
+import { env } from '../../../fixtures/env.js';
+import { createMailTmAccount, extractOtpCode, waitForMailTmMessage } from '../../../fixtures/mail-tm.js';
+import { authCopy, throwawayAccount } from '../../../fixtures/storefront-data.js';
+import { recordCreatedAccount } from '../../../fixtures/test-data-ledger.js';
+import { LoginPage } from '../../../pom/storefront/login-page.js';
+import { RegisterPage } from '../../../pom/storefront/register-page.js';
 
 // Registration is a two-stage flow, verified live against development-1 on 2026-08-27:
 //

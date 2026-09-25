@@ -1,7 +1,7 @@
 import type { Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
-import { ko } from '../fixtures/storefront-data.js';
+import { ko } from '../../fixtures/storefront-data.js';
 
 export class InquiryV2Form {
   readonly page: Page;

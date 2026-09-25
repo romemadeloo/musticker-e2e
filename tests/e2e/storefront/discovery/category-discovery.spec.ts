@@ -1,6 +1,6 @@
-import { test } from '../../fixtures/e2e-test.js';
-import { categoryProducts, ko } from '../../fixtures/storefront-data.js';
-import { CategoryV2Page } from '../../pom/category-page.js';
+import { test } from '../../../fixtures/e2e-test.js';
+import { categoryProducts, ko } from '../../../fixtures/storefront-data.js';
+import { CategoryV2Page } from '../../../pom/storefront/category-page.js';
 
 test.describe('storefront v2 category discovery', { tag: ['@regression', '@production', '@discovery'] }, () => {
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });

@@ -1,13 +1,13 @@
-import { test, expect } from '../../fixtures/e2e-test.js';
-import { appPath, env } from '../../fixtures/env.js';
-import { SKIP_WITHOUT_MEMBER_CREDENTIALS, hasMemberCredentials } from '../../fixtures/member-auth.js';
-import { gotoStorefront } from '../../fixtures/navigation.js';
-import { dieCutShapeStickers, v2Products } from '../../fixtures/storefront-data.js';
-import { CartDrawer } from '../../pom/cart-drawer.js';
-import { CartV2Page } from '../../pom/cart-page.js';
-import { HeaderComponent } from '../../pom/header-component.js';
-import { LoginPage } from '../../pom/login-page.js';
-import { ProductV2Page } from '../../pom/product-page.js';
+import { test, expect } from '../../../fixtures/e2e-test.js';
+import { appPath, env } from '../../../fixtures/env.js';
+import { SKIP_WITHOUT_MEMBER_CREDENTIALS, hasMemberCredentials } from '../../../fixtures/member-auth.js';
+import { gotoStorefront } from '../../../fixtures/navigation.js';
+import { dieCutShapeStickers, v2Products } from '../../../fixtures/storefront-data.js';
+import { CartDrawer } from '../../../pom/storefront/cart-drawer.js';
+import { CartV2Page } from '../../../pom/storefront/cart-page.js';
+import { HeaderComponent } from '../../../pom/storefront/header-component.js';
+import { LoginPage } from '../../../pom/storefront/login-page.js';
+import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 
 // The configurator specs all end at "the item reached the cart". What happens to it afterwards --
 // removing it, holding two of them, surviving a reload, or being carried across a login -- had no

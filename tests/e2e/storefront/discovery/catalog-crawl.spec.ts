@@ -1,6 +1,6 @@
-import { test } from '../../fixtures/e2e-test.js';
-import { catalogPaths } from '../../fixtures/storefront-data.js';
-import { ProductV2Page } from '../../pom/product-page.js';
+import { test } from '../../../fixtures/e2e-test.js';
+import { catalogPaths } from '../../../fixtures/storefront-data.js';
+import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 
 test.describe('storefront v2 catalog crawl', { tag: ['@regression', '@production'] }, () => {
   test.use({

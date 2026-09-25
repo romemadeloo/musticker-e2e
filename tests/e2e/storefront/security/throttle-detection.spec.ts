@@ -9,8 +9,8 @@
 // unexpected 403s, and manufacturing 403s is the whole point here.
 import { test, expect } from '@playwright/test';
 
-import { appPath } from '../../fixtures/env.js';
-import { gotoStorefront, throttleRetryAttempts } from '../../fixtures/navigation.js';
+import { appPath } from '../../../fixtures/env.js';
+import { gotoStorefront, throttleRetryAttempts } from '../../../fixtures/navigation.js';
 
 // The shell the WAF lets through: a 200 document whose assets are then refused.
 const shellHtml = `<!doctype html>

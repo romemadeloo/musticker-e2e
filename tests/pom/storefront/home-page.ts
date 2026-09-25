@@ -1,9 +1,9 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
-import { appPath } from '../fixtures/env.js';
-import { gotoStorefront } from '../fixtures/navigation.js';
-import { ko } from '../fixtures/storefront-data.js';
+import { appPath } from '../../fixtures/env.js';
+import { gotoStorefront } from '../../fixtures/navigation.js';
+import { ko } from '../../fixtures/storefront-data.js';
 import { HeaderComponent } from './header-component.js';
 import type { CategoryPath } from './header-component.js';
 

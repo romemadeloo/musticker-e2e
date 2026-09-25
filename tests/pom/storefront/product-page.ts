@@ -1,11 +1,11 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
-import { appPath } from '../fixtures/env.js';
-import { parseWon } from '../fixtures/money.js';
-import { gotoStorefront } from '../fixtures/navigation.js';
-import { expectHeadingOrHeal } from '../fixtures/self-heal.js';
-import { ko } from '../fixtures/storefront-data.js';
+import { appPath } from '../../fixtures/env.js';
+import { parseWon } from '../../fixtures/money.js';
+import { gotoStorefront } from '../../fixtures/navigation.js';
+import { expectHeadingOrHeal } from '../../fixtures/self-heal.js';
+import { ko } from '../../fixtures/storefront-data.js';
 
 const wonAmountPattern = /[\d,]+\uc6d0/u;
 

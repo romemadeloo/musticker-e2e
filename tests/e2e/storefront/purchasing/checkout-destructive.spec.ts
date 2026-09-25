@@ -1,9 +1,9 @@
-import { test, expect } from '../../fixtures/e2e-test.js';
-import { createMailTmAccount, extractOtpCode, waitForMailTmMessage } from '../../fixtures/mail-tm.js';
-import { guestCheckoutProfile, v2Products } from '../../fixtures/storefront-data.js';
-import { CheckoutV2Page } from '../../pom/checkout-page.js';
-import { OrderConfirmationPage } from '../../pom/order-confirmation-page.js';
-import { ProductV2Page } from '../../pom/product-page.js';
+import { test, expect } from '../../../fixtures/e2e-test.js';
+import { createMailTmAccount, extractOtpCode, waitForMailTmMessage } from '../../../fixtures/mail-tm.js';
+import { guestCheckoutProfile, v2Products } from '../../../fixtures/storefront-data.js';
+import { CheckoutV2Page } from '../../../pom/storefront/checkout-page.js';
+import { OrderConfirmationPage } from '../../../pom/storefront/order-confirmation-page.js';
+import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 
 const canRunDestructiveCheckout = process.env.RUN_PAYMENT_E2E === 'true';
 

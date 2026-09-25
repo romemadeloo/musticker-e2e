@@ -10,14 +10,14 @@
 // CSVs belong to a different table generation and the cell comparisons are skipped.
 import { test, expect } from '@playwright/test';
 
-import { fetchQuotation, storedRow, tableIdentity } from '../../fixtures/pricing/pricing-api.js';
+import { fetchQuotation, storedRow, tableIdentity } from '../../../fixtures/pricing/pricing-api.js';
 import {
   activeEnvironmentLabel,
   pricingProducts,
   productsSharingPricingId,
   unmappedPricingProducts
-} from '../../fixtures/pricing/pricing-products.js';
-import { canonicalNumber, dimensionsForArea, loadPriceTable } from '../../fixtures/pricing/price-table.js';
+} from '../../../fixtures/pricing/pricing-products.js';
+import { canonicalNumber, dimensionsForArea, loadPriceTable } from '../../../fixtures/pricing/price-table.js';
 
 test.describe.configure({ mode: 'parallel' });
 

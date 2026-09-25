@@ -1,7 +1,7 @@
-import { test, expect } from '../../fixtures/e2e-test.js';
-import { SKIP_WITHOUT_MEMBER_CREDENTIALS, hasMemberCredentials } from '../../fixtures/member-auth.js';
-import { orderHistoryCopy } from '../../fixtures/storefront-data.js';
-import { AccountOrdersPage } from '../../pom/account-orders-page.js';
+import { test, expect } from '../../../fixtures/e2e-test.js';
+import { SKIP_WITHOUT_MEMBER_CREDENTIALS, hasMemberCredentials } from '../../../fixtures/member-auth.js';
+import { orderHistoryCopy } from '../../../fixtures/storefront-data.js';
+import { AccountOrdersPage } from '../../../pom/storefront/account-orders-page.js';
 
 // Order history had no coverage at all: everything after the payment succeeded was untested, which
 // for a print-to-order business is where the shopper spends most of their time with the site.

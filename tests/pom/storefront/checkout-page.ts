@@ -1,10 +1,10 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
-import { appPath } from '../fixtures/env.js';
-import { parseWon } from '../fixtures/money.js';
-import { gotoStorefront } from '../fixtures/navigation.js';
-import { checkoutSummaryLabels, freeShippingThresholdWon, ko } from '../fixtures/storefront-data.js';
+import { appPath } from '../../fixtures/env.js';
+import { parseWon } from '../../fixtures/money.js';
+import { gotoStorefront } from '../../fixtures/navigation.js';
+import { checkoutSummaryLabels, freeShippingThresholdWon, ko } from '../../fixtures/storefront-data.js';
 
 /**
  * The order-summary block, as numbers. Discounts are reported as the positive amount deducted, not

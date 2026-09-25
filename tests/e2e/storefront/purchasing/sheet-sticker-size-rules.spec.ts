@@ -1,22 +1,22 @@
 import { expect } from '@playwright/test';
 
-import { test } from '../../fixtures/e2e-test.js';
+import { test } from '../../../fixtures/e2e-test.js';
 import {
   blockedCustomSize,
   ko,
   presetStickersPerSheet,
   sheetSizeBoundary,
   sheetStickerConfiguratorProducts
-} from '../../fixtures/storefront-data.js';
+} from '../../../fixtures/storefront-data.js';
 import {
   fitsMinimumPerSheet,
   minimumStickersPerSheet,
   sheetPackingBoundaryCases,
   stickersPerSheet
-} from '../../fixtures/sheet-packing.js';
-import { CartDrawer } from '../../pom/cart-drawer.js';
-import { CartV2Page } from '../../pom/cart-page.js';
-import { ProductV2Page } from '../../pom/product-page.js';
+} from '../../../fixtures/sheet-packing.js';
+import { CartDrawer } from '../../../pom/storefront/cart-drawer.js';
+import { CartV2Page } from '../../../pom/storefront/cart-page.js';
+import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 
 // Individual-sticker sheet size rules for the five shape variants (circle/oval/square/rectangle/
 // rounded). The configurator's happy path lives in sheet-sticker-configurator.spec.ts; this file

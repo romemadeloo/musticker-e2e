@@ -53,6 +53,13 @@ across servers**. Probed live on 2026-08-24:
 | clear | 46 `Clear Sticker (8/24/2026)` | 49 `Clear Die Cut / Kiss Cut Pricing (8/21/2026) v.2` | 30 `Clear - Die Cut / Kiss Cut (6/29/2026)` |
 | hologram | 47 `Hologram Sticker (8/24/2026)` | 50 `Hologram Die Cut / Kiss Cut Pricing (8/21/2026)` | 31 `Hologram - Die Cut / Kiss Cut (6/29/2026)` |
 
+> **Superseded for production on 2026-09-10** (commit `5a23135`, "price factor update"). Production
+> now serves die-cut, kiss-cut and the five shapes from **one** table, `48`, with clear on `49` and
+> hologram on `50`. development-static uses `51` (die-cut, kiss-cut and shapes) and `54`.
+> `pricingIds` in [pricing-products.ts](pricing-products.ts) is authoritative, and the ids above are
+> kept for history. development-static registers clear and hologram both as `54`, which is worth
+> re-probing: it may be a copy-paste slip.
+
 Read that table across, not down: id `45` is kiss-cut on production but die-cut on development-1,
 and `46`/`47` are clear/hologram on production but the shapes and kiss-cut tables on development-1. A
 single shared id map would not be merely incomplete, it would assert the wrong table — which is why

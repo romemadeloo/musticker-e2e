@@ -1,7 +1,7 @@
-import { test, expect } from '../../fixtures/e2e-test.js';
-import { appPath } from '../../fixtures/env.js';
-import { gotoStorefront } from '../../fixtures/navigation.js';
-import { ko } from '../../fixtures/storefront-data.js';
+import { test, expect } from '../../../fixtures/e2e-test.js';
+import { appPath } from '../../../fixtures/env.js';
+import { gotoStorefront } from '../../../fixtures/navigation.js';
+import { ko } from '../../../fixtures/storefront-data.js';
 
 const unknownRoute = 'this-page-does-not-exist-e2e-check';
 

@@ -1,9 +1,9 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
-import { appPath } from '../fixtures/env.js';
-import { gotoStorefront } from '../fixtures/navigation.js';
-import { aboutPage, ko } from '../fixtures/storefront-data.js';
+import { appPath } from '../../fixtures/env.js';
+import { gotoStorefront } from '../../fixtures/navigation.js';
+import { aboutPage, ko } from '../../fixtures/storefront-data.js';
 
 export class AboutV2Page {
   readonly page: Page;

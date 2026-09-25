@@ -1,7 +1,7 @@
-import { test } from '../../fixtures/e2e-test.js';
-import { cartLineName, dieCutRollStickers, dieCutShapeStickers } from '../../fixtures/storefront-data.js';
-import { CartDrawer } from '../../pom/cart-drawer.js';
-import { ProductV2Page } from '../../pom/product-page.js';
+import { test } from '../../../fixtures/e2e-test.js';
+import { cartLineName, dieCutRollStickers, dieCutShapeStickers } from '../../../fixtures/storefront-data.js';
+import { CartDrawer } from '../../../pom/storefront/cart-drawer.js';
+import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 
 // Deep configuration + price + cart coverage for the plain size+quantity die-cut catalog products
 // that were previously only "render-only smoke" tested via catalog-crawl.spec.ts (see

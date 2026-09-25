@@ -1,8 +1,8 @@
-import { test, expect } from '../../fixtures/e2e-test.js';
-import { expectNoNewAccessibilityViolations } from '../../fixtures/axe.js';
-import { appPath } from '../../fixtures/env.js';
-import { gotoStorefront } from '../../fixtures/navigation.js';
-import { ko, v2Products } from '../../fixtures/storefront-data.js';
+import { test, expect } from '../../../fixtures/e2e-test.js';
+import { expectNoNewAccessibilityViolations } from '../../../fixtures/axe.js';
+import { appPath } from '../../../fixtures/env.js';
+import { gotoStorefront } from '../../../fixtures/navigation.js';
+import { ko, v2Products } from '../../../fixtures/storefront-data.js';
 
 // MS-V2-023 checks five named controls and one Tab press. That catches nothing a rendering change
 // would break, and nothing at all about the rest of the page. This runs the axe-core WCAG 2.1 AA

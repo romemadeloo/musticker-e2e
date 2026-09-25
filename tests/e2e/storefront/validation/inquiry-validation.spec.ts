@@ -1,8 +1,8 @@
-import { test, expect } from '../../fixtures/e2e-test.js';
-import { ko } from '../../fixtures/storefront-data.js';
-import { appPath } from '../../fixtures/env.js';
-import { gotoStorefront } from '../../fixtures/navigation.js';
-import { InquiryV2Form } from '../../pom/inquiry-form.js';
+import { test, expect } from '../../../fixtures/e2e-test.js';
+import { ko } from '../../../fixtures/storefront-data.js';
+import { appPath } from '../../../fixtures/env.js';
+import { gotoStorefront } from '../../../fixtures/navigation.js';
+import { InquiryV2Form } from '../../../pom/storefront/inquiry-form.js';
 
 test.describe('storefront v2 inquiry validation', { tag: ['@validation', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowExpectedAuthFailures: true, allowKnownNuxtPayloadFailures: true });

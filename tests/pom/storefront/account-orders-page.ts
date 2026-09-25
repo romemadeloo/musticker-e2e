@@ -1,9 +1,9 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
-import { appPath } from '../fixtures/env.js';
-import { gotoStorefront } from '../fixtures/navigation.js';
-import { orderHistoryCopy } from '../fixtures/storefront-data.js';
+import { appPath } from '../../fixtures/env.js';
+import { gotoStorefront } from '../../fixtures/navigation.js';
+import { orderHistoryCopy } from '../../fixtures/storefront-data.js';
 
 /**
  * `/kr/account/orders` -- the member account shell's order-history tab.

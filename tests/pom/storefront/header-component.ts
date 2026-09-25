@@ -1,8 +1,8 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
-import { locateOrHeal } from '../fixtures/self-heal.js';
-import { ko } from '../fixtures/storefront-data.js';
+import { locateOrHeal } from '../../fixtures/self-heal.js';
+import { ko } from '../../fixtures/storefront-data.js';
 import { CartDrawer } from './cart-drawer.js';
 import { SearchDialog } from './search-dialog.js';
 

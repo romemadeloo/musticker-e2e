@@ -39,6 +39,18 @@ export const environments = {
 
 export type EnvironmentName = keyof typeof environments;
 
+// Admin panel origins, only for the environments that have one. Kept apart from `environments`
+// rather than added as a third field, because most servers have no admin panel we know of and an
+// `adminBaseUrl: undefined` on each would read as "checked, none exists". Both verified live on
+// 2026-09-25. The admin panel talks to the same API host as its storefront.
+//
+// Production's panel is live customer data: admin specs are read-only there, and every spec that
+// changes an order refuses to run anywhere but development-static.
+export const adminPanelUrls: Partial<Record<EnvironmentName, string>> = {
+  production: 'https://admin-panel.musticker.com',
+  'development-static': 'https://dev-static-1-admin-panel.musticker.com'
+};
+
 export function isEnvironmentName(value: string): value is EnvironmentName {
   return value in environments;
 }

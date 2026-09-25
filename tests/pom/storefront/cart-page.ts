@@ -1,10 +1,10 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
-import { appPath } from '../fixtures/env.js';
-import { parseLastWon, parseWon } from '../fixtures/money.js';
-import { gotoStorefront } from '../fixtures/navigation.js';
-import { cartCopy, ko } from '../fixtures/storefront-data.js';
+import { appPath } from '../../fixtures/env.js';
+import { parseLastWon, parseWon } from '../../fixtures/money.js';
+import { gotoStorefront } from '../../fixtures/navigation.js';
+import { cartCopy, ko } from '../../fixtures/storefront-data.js';
 import { enterCartDialogCustomSize } from './cart-size-dialog.js';
 
 const sizeChangeDialogTitle = /사이즈 변경/;

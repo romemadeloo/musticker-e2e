@@ -1,13 +1,13 @@
-import { test, expect } from '../../fixtures/e2e-test.js';
-import { env } from '../../fixtures/env.js';
-import { createMailTmAccount, extractOtpCode, waitForMailTmMessage } from '../../fixtures/mail-tm.js';
-import { SKIP_WITHOUT_MEMBER_CREDENTIALS, hasMemberCredentials } from '../../fixtures/member-auth.js';
-import { authCopy, throwawayAccount } from '../../fixtures/storefront-data.js';
-import { recordCreatedAccount } from '../../fixtures/test-data-ledger.js';
-import { AccountProfilePage } from '../../pom/account-profile-page.js';
-import { HeaderComponent } from '../../pom/header-component.js';
-import { LoginPage } from '../../pom/login-page.js';
-import { RegisterPage } from '../../pom/register-page.js';
+import { test, expect } from '../../../fixtures/e2e-test.js';
+import { env } from '../../../fixtures/env.js';
+import { createMailTmAccount, extractOtpCode, waitForMailTmMessage } from '../../../fixtures/mail-tm.js';
+import { SKIP_WITHOUT_MEMBER_CREDENTIALS, hasMemberCredentials } from '../../../fixtures/member-auth.js';
+import { authCopy, throwawayAccount } from '../../../fixtures/storefront-data.js';
+import { recordCreatedAccount } from '../../../fixtures/test-data-ledger.js';
+import { AccountProfilePage } from '../../../pom/storefront/account-profile-page.js';
+import { HeaderComponent } from '../../../pom/storefront/header-component.js';
+import { LoginPage } from '../../../pom/storefront/login-page.js';
+import { RegisterPage } from '../../../pom/storefront/register-page.js';
 
 // The change-password form lives in the 비밀번호 section of /kr/account/profile. Verified live against
 // development-1 on 2026-08-27:

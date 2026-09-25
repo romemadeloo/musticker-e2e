@@ -158,7 +158,7 @@ jobs:
             echo "If the failures read \`snapshot doesn't exist\`, Linux baselines have not been"
             echo "committed yet. Dispatch this workflow with **update_baselines = true**, download the"
             echo "\`visual-baselines-linux\` artifact, and commit the \`*-linux.png\` files under"
-            echo "\`tests/e2e/regression/visual.spec.ts-snapshots/\`."
+            echo "\`tests/e2e/storefront/regression/visual.spec.ts-snapshots/\`."
             echo ""
             echo "Otherwise the storefront's appearance changed. Review the diff images in the"
             echo "Playwright report before updating any baseline."

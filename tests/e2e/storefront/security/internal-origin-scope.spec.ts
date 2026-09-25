@@ -9,8 +9,8 @@
 // while also matching `foomusticker.com`, a domain anyone can register.
 import { test, expect } from '@playwright/test';
 
-import { internalOriginKeyVarFor } from '../../fixtures/env.js';
-import { isMustickerHost } from '../../fixtures/hosts.js';
+import { internalOriginKeyVarFor } from '../../../fixtures/env.js';
+import { isMustickerHost } from '../../../fixtures/hosts.js';
 
 test.describe('internal-origin header scope', { tag: ['@security'] }, () => {
   test('MS-SEC-001 first-party musticker hosts are in scope', () => {

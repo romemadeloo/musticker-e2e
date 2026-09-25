@@ -1,6 +1,6 @@
 import { test, expect, type APIResponse } from '@playwright/test';
 
-import { apiPath } from '../../fixtures/env.js';
+import { apiPath } from '../../../fixtures/env.js';
 
 type JsonRecord = Record<string, unknown>;
 

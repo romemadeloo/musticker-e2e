@@ -1,7 +1,7 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
-import { ko } from '../fixtures/storefront-data.js';
+import { ko } from '../../fixtures/storefront-data.js';
 
 // Shared by the cart preview drawer's 사이즈 및 수량 수정 dialog and the full cart page's 사이즈 변경
 // dialog. Both surface the individual-size choice as a ui-select listbox rather than the product

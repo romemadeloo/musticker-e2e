@@ -1,10 +1,10 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
-import { appPath } from '../fixtures/env.js';
-import { authCopy, guestOrderLookupCopy } from '../fixtures/storefront-data.js';
-import { waitForPasswordFormInteractive } from '../fixtures/hydration.js';
-import { gotoStorefront } from '../fixtures/navigation.js';
+import { appPath } from '../../fixtures/env.js';
+import { authCopy, guestOrderLookupCopy } from '../../fixtures/storefront-data.js';
+import { waitForPasswordFormInteractive } from '../../fixtures/hydration.js';
+import { gotoStorefront } from '../../fixtures/navigation.js';
 
 export class LoginPage {
   readonly page: Page;

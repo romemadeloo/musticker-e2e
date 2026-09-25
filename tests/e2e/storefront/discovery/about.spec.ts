@@ -1,5 +1,5 @@
-import { test } from '../../fixtures/e2e-test.js';
-import { AboutV2Page } from '../../pom/about-page.js';
+import { test } from '../../../fixtures/e2e-test.js';
+import { AboutV2Page } from '../../../pom/storefront/about-page.js';
 
 test.describe('storefront v2 about page', { tag: ['@smoke', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });

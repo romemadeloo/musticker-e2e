@@ -1,10 +1,10 @@
 import { fileURLToPath } from 'node:url';
 
-import { test } from '../../fixtures/e2e-test.js';
-import { cartLineName, ko, sheetStickerConfiguratorProducts } from '../../fixtures/storefront-data.js';
-import { CartDrawer } from '../../pom/cart-drawer.js';
-import { CartV2Page } from '../../pom/cart-page.js';
-import { ProductV2Page } from '../../pom/product-page.js';
+import { test } from '../../../fixtures/e2e-test.js';
+import { cartLineName, ko, sheetStickerConfiguratorProducts } from '../../../fixtures/storefront-data.js';
+import { CartDrawer } from '../../../pom/storefront/cart-drawer.js';
+import { CartV2Page } from '../../../pom/storefront/cart-page.js';
+import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 
 // Individual-sticker sheet configurator flow (material -> individual size -> sheet quantity ->
 // design upload -> cart) for the five shape variants requested for coverage: circle, oval,
@@ -24,7 +24,7 @@ import { ProductV2Page } from '../../pom/product-page.js';
 // A fractional-won per-unit price readout (e.g. "8.582원" for a custom 20x20mm size at the
 // 1,000-sheet tier) was previously flagged here as a defect (MS-V2-059) but confirmed with Korean
 // staff on 2026-08-13 to be expected/acceptable pricing behavior, not a bug -- removed.
-const designFilePath = fileURLToPath(new URL('../../fixtures/files/sample-design.png', import.meta.url));
+const designFilePath = fileURLToPath(new URL('../../../fixtures/files/sample-design.png', import.meta.url));
 
 test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rectangle/rounded)', {
   tag: ['@regression', '@production', '@purchasing']

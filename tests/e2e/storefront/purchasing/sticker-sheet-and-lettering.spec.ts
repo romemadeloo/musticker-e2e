@@ -1,7 +1,7 @@
-import { test } from '../../fixtures/e2e-test.js';
-import { cartLineName, stickerSheetProduct, transferStickerProduct, vinylLetteringProduct } from '../../fixtures/storefront-data.js';
-import { CartDrawer } from '../../pom/cart-drawer.js';
-import { ProductV2Page } from '../../pom/product-page.js';
+import { test } from '../../../fixtures/e2e-test.js';
+import { cartLineName, stickerSheetProduct, transferStickerProduct, vinylLetteringProduct } from '../../../fixtures/storefront-data.js';
+import { CartDrawer } from '../../../pom/storefront/cart-drawer.js';
+import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 
 // Deep configuration + price + cart coverage for three catalog products under ./stickers/ whose
 // control patterns don't match the plain die-cut size+quantity flow (see

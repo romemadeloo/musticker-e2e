@@ -2,9 +2,9 @@ import { fileURLToPath } from 'node:url';
 
 import type { Page } from '@playwright/test';
 
-import { test, expect } from '../../fixtures/e2e-test.js';
-import { appPath } from '../../fixtures/env.js';
-import { gotoStorefront } from '../../fixtures/navigation.js';
+import { test, expect } from '../../../fixtures/e2e-test.js';
+import { appPath } from '../../../fixtures/env.js';
+import { gotoStorefront } from '../../../fixtures/navigation.js';
 
 const runVisual = process.env.RUN_VISUAL_E2E === 'true';
 

@@ -1,8 +1,8 @@
-import { test, expect } from '../../fixtures/e2e-test.js';
-import { env } from '../../fixtures/env.js';
-import { hasMemberCredentials, seedMemberStorageState } from '../../fixtures/member-auth.js';
-import { guestOrderLookupCopy, unregisteredLogin } from '../../fixtures/storefront-data.js';
-import { LoginPage } from '../../pom/login-page.js';
+import { test, expect } from '../../../fixtures/e2e-test.js';
+import { env } from '../../../fixtures/env.js';
+import { hasMemberCredentials, seedMemberStorageState } from '../../../fixtures/member-auth.js';
+import { guestOrderLookupCopy, unregisteredLogin } from '../../../fixtures/storefront-data.js';
+import { LoginPage } from '../../../pom/storefront/login-page.js';
 
 // MS-V2-096 established that the 비회원 mode swaps the password field for email + order number. It
 // stopped there -- nothing actually looked an order up, so the whole guest-lookup path was untested.

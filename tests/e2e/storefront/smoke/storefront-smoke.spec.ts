@@ -1,9 +1,9 @@
-import { test, expect } from '../../fixtures/e2e-test.js';
-import { appPath } from '../../fixtures/env.js';
-import { gotoStorefront } from '../../fixtures/navigation.js';
-import { expectHeadingOrHeal } from '../../fixtures/self-heal.js';
-import { ko } from '../../fixtures/storefront-data.js';
-import { HomeV2Page } from '../../pom/home-page.js';
+import { test, expect } from '../../../fixtures/e2e-test.js';
+import { appPath } from '../../../fixtures/env.js';
+import { gotoStorefront } from '../../../fixtures/navigation.js';
+import { expectHeadingOrHeal } from '../../../fixtures/self-heal.js';
+import { ko } from '../../../fixtures/storefront-data.js';
+import { HomeV2Page } from '../../../pom/storefront/home-page.js';
 
 test.describe('storefront v2 smoke', { tag: ['@smoke', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });

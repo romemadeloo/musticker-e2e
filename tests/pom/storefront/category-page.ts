@@ -1,10 +1,10 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
-import { appPath } from '../fixtures/env.js';
-import { gotoStorefront } from '../fixtures/navigation.js';
-import { expectHeadingOrHeal, locateOrHeal } from '../fixtures/self-heal.js';
-import type { CategoryProduct } from '../fixtures/storefront-data.js';
+import { appPath } from '../../fixtures/env.js';
+import { gotoStorefront } from '../../fixtures/navigation.js';
+import { expectHeadingOrHeal, locateOrHeal } from '../../fixtures/self-heal.js';
+import type { CategoryProduct } from '../../fixtures/storefront-data.js';
 
 export class CategoryV2Page {
   readonly page: Page;

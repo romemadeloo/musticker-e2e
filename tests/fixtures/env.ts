@@ -1,4 +1,4 @@
-import { environments, isEnvironmentName } from './environments.js';
+import { adminPanelUrls, environments, isEnvironmentName } from './environments.js';
 import type { EnvironmentName } from './environments.js';
 
 const selectedEnvironment = resolveSelectedEnvironment();
@@ -34,7 +34,7 @@ export const activeEnvironment: EnvironmentName | undefined = resolveActiveEnvir
  *
  * Split out as a pure function because it is the part that can quietly be wrong: handing the
  * production key to a dev server would put a production credential on a less-guarded host, and
- * nothing about the resulting run would look unusual. tests/e2e/security/ asserts this mapping.
+ * nothing about the resulting run would look unusual. tests/e2e/storefront/security/ asserts this mapping.
  *
  * Undefined means "send no key" -- the honest answer for an unrecognised BASE_URL, where guessing
  * production would be the dangerous guess.
@@ -65,6 +65,23 @@ export function internalOriginKey(): string | undefined {
   const variable = internalOriginKeyVarFor(activeEnvironment);
 
   return variable ? env[variable] : undefined;
+}
+
+/**
+ * The admin panel origin for this run, or undefined when the environment has none.
+ *
+ * ADMIN_BASE_URL overrides, the same way BASE_URL does for the storefront. Undefined is the signal
+ * for admin specs to skip -- there is deliberately no fallback guess, because the obvious guess is
+ * production's panel.
+ */
+export function adminBaseUrl(): string | undefined {
+  const override = process.env.ADMIN_BASE_URL?.trim();
+
+  if (override) {
+    return override.replace(/\/+$/, '');
+  }
+
+  return activeEnvironment ? adminPanelUrls[activeEnvironment] : undefined;
 }
 
 export function appPath(relativePath = ''): string {
