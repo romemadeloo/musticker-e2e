@@ -1,0 +1,1 @@
+[self-heal] product heading ./sheet-stickers/square-sheet: expected "정사각형 판스티커", found "502 Bad Gateway"
