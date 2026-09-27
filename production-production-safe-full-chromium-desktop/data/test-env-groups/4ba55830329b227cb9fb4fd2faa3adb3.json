@@ -1,1 +1,1 @@
-{"id":"4ba55830329b227cb9fb4fd2faa3adb3","fullName":"storefront/pricing/price-interpolation.spec.ts:103:7","name":"MS-PRC-INT-oval-sticker area 760 (20x38) interpolates between 625 and 900","status":"passed","testResultsByEnv":{"default":"8d1821ad3ab1dbad95bb98c09bb5928f"}}
+{"id":"4ba55830329b227cb9fb4fd2faa3adb3","fullName":"storefront/pricing/price-interpolation.spec.ts:103:7","name":"MS-PRC-INT-oval-sticker area 760 (20x38) interpolates between 625 and 900","status":"passed","testResultsByEnv":{"default":"8b249e249c29c1cf002d6821564a0c56"}}
