@@ -1,1 +1,1 @@
-{"id":"b3f23038253ec068fbb7cb31966f8dd2","fullName":"storefront/pricing/price-table.spec.ts:59:7","name":"MS-PRC-transfer-sticker area 403225 (635x635) matches stickers/transfer-sticker.csv","status":"passed","testResultsByEnv":{"default":"e5dbe9b9906bd34dcf0db72731b25008"}}
+{"id":"b3f23038253ec068fbb7cb31966f8dd2","fullName":"storefront/pricing/price-table.spec.ts:59:7","name":"MS-PRC-transfer-sticker area 403225 (635x635) matches stickers/transfer-sticker.csv","status":"failed","testResultsByEnv":{"default":"054f5b970f3e36638a65583838894f58"}}

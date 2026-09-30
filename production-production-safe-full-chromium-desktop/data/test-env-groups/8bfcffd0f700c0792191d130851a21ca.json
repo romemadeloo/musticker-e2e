@@ -1,1 +1,1 @@
-{"id":"8bfcffd0f700c0792191d130851a21ca","fullName":"storefront/pricing/price-table.spec.ts:59:7","name":"MS-PRC-vinyl-lettering area 62500 (250x250) matches stickers/vinyl-lettering.csv","status":"passed","testResultsByEnv":{"default":"260d15c4b34cbd031128f27d546b2d63"}}
+{"id":"8bfcffd0f700c0792191d130851a21ca","fullName":"storefront/pricing/price-table.spec.ts:59:7","name":"MS-PRC-vinyl-lettering area 62500 (250x250) matches stickers/vinyl-lettering.csv","status":"failed","testResultsByEnv":{"default":"cb896ef876e48c6c24aee52332522f20"}}
