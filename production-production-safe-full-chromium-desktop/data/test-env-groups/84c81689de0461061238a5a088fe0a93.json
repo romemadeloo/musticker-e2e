@@ -1,1 +1,1 @@
-{"id":"84c81689de0461061238a5a088fe0a93","fullName":"storefront/pricing/price-interpolation.spec.ts:160:7","name":"MS-PRC-INT-rectangle-roll quantity 15 interpolates between rungs 10 and 20","status":"passed","testResultsByEnv":{"default":"5dc0532921c9c02d9f8cca5d3b2f722e"}}
+{"id":"84c81689de0461061238a5a088fe0a93","fullName":"storefront/pricing/price-interpolation.spec.ts:160:7","name":"MS-PRC-INT-rectangle-roll quantity 15 interpolates between rungs 10 and 20","status":"passed","testResultsByEnv":{"default":"351d7f970a09e95f54c68dfe2c2199e3"}}

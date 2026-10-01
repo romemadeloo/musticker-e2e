@@ -1,1 +1,1 @@
-{"id":"1b0541572367ab50c21f8172681c3be3","fullName":"storefront/pricing/price-interpolation.spec.ts:103:7","name":"MS-PRC-INT-die-cut-sticker area 543000 (724x750) interpolates between 540000 and 546000","status":"passed","testResultsByEnv":{"default":"5b514e50827bba15992c3f3371f30e17"}}
+{"id":"1b0541572367ab50c21f8172681c3be3","fullName":"storefront/pricing/price-interpolation.spec.ts:103:7","name":"MS-PRC-INT-die-cut-sticker area 543000 (724x750) interpolates between 540000 and 546000","status":"passed","testResultsByEnv":{"default":"e75f673c8cab971e5cb75a9cc1b7a55a"}}

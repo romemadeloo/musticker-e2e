@@ -1,1 +1,1 @@
-{"id":"6a2ce0c889584defaaed5f287cb8f11d","fullName":"storefront/pricing/price-interpolation.spec.ts:160:7","name":"MS-PRC-INT-square-sticker quantity 15 interpolates between rungs 10 and 20","status":"passed","testResultsByEnv":{"default":"111f43eeaa3ea43a7571b25c7c549676"}}
+{"id":"6a2ce0c889584defaaed5f287cb8f11d","fullName":"storefront/pricing/price-interpolation.spec.ts:160:7","name":"MS-PRC-INT-square-sticker quantity 15 interpolates between rungs 10 and 20","status":"passed","testResultsByEnv":{"default":"f0864110aa9b695cd3e82c9343f39b9f"}}
