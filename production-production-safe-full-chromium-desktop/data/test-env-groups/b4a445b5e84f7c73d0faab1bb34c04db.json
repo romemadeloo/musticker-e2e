@@ -1,1 +1,1 @@
-{"id":"b4a445b5e84f7c73d0faab1bb34c04db","fullName":"storefront/security/internal-origin-scope.spec.ts:16:3","name":"MS-SEC-001 first-party musticker hosts are in scope","status":"passed","testResultsByEnv":{"default":"4ed65f655d2096792a409fe233cf0868"}}
+{"id":"b4a445b5e84f7c73d0faab1bb34c04db","fullName":"storefront/security/internal-origin-scope.spec.ts:16:3","name":"MS-SEC-001 first-party musticker hosts are in scope","status":"passed","testResultsByEnv":{"default":"850533c3c9fb4a6af431fe0da8df5621"}}

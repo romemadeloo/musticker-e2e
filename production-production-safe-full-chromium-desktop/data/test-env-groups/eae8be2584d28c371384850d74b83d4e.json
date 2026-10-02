@@ -1,1 +1,1 @@
-{"id":"eae8be2584d28c371384850d74b83d4e","fullName":"storefront/pricing/price-interpolation.spec.ts:160:7","name":"MS-PRC-INT-oval-sticker quantity 15 interpolates between rungs 10 and 20","status":"passed","testResultsByEnv":{"default":"edf343a20e8b8ff2d1bc3e549faadf6c"}}
+{"id":"eae8be2584d28c371384850d74b83d4e","fullName":"storefront/pricing/price-interpolation.spec.ts:160:7","name":"MS-PRC-INT-oval-sticker quantity 15 interpolates between rungs 10 and 20","status":"passed","testResultsByEnv":{"default":"3e3742dd6fc9b6fd7ee19eb1d15f0344"}}

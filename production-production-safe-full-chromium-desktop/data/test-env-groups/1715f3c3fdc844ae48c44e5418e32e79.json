@@ -1,1 +1,1 @@
-{"id":"1715f3c3fdc844ae48c44e5418e32e79","fullName":"storefront/pricing/price-interpolation.spec.ts:160:7","name":"MS-PRC-INT-clear-roll quantity 85000 interpolates between rungs 70000 and 100000","status":"passed","testResultsByEnv":{"default":"99ee00d7d588cf3578282c26e5e81cfd"}}
+{"id":"1715f3c3fdc844ae48c44e5418e32e79","fullName":"storefront/pricing/price-interpolation.spec.ts:160:7","name":"MS-PRC-INT-clear-roll quantity 85000 interpolates between rungs 70000 and 100000","status":"passed","testResultsByEnv":{"default":"a1e61c946a0ac168e297af9e637376a1"}}
