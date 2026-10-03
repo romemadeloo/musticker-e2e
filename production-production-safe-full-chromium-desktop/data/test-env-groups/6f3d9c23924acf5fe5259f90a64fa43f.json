@@ -1,1 +1,1 @@
-{"id":"6f3d9c23924acf5fe5259f90a64fa43f","fullName":"storefront/pricing/price-interpolation.spec.ts:160:7","name":"MS-PRC-INT-hologram-sticker quantity 85000 interpolates between rungs 70000 and 100000","status":"passed","testResultsByEnv":{"default":"02cd45c894da7737053ecfb6c6645970"}}
+{"id":"6f3d9c23924acf5fe5259f90a64fa43f","fullName":"storefront/pricing/price-interpolation.spec.ts:160:7","name":"MS-PRC-INT-hologram-sticker quantity 85000 interpolates between rungs 70000 and 100000","status":"passed","testResultsByEnv":{"default":"fde3c3778d8786e737bc2a19423082d4"}}

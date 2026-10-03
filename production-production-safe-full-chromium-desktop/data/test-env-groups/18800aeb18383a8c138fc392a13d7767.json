@@ -1,1 +1,1 @@
-{"id":"18800aeb18383a8c138fc392a13d7767","fullName":"storefront/validation/inquiry-validation.spec.ts:14:3","name":"MS-V2-017 inquiry form validates blank and invalid email submissions","status":"passed","testResultsByEnv":{"default":"b9d4d38aaa47f516648e0819637f28e6"}}
+{"id":"18800aeb18383a8c138fc392a13d7767","fullName":"storefront/validation/inquiry-validation.spec.ts:14:3","name":"MS-V2-017 inquiry form validates blank and invalid email submissions","status":"passed","testResultsByEnv":{"default":"65f873ee2d4f84b9e7393a368d8dd7d8"}}
