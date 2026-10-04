@@ -1,1 +1,1 @@
-{"id":"49e1ae182d675fd7b63fde8812ff28ee","fullName":"storefront/pricing/price-interpolation.spec.ts:191:7","name":"MS-PRC-INT-square-sticker area 625 prices the same as 25x25 and 5x125","status":"passed","testResultsByEnv":{"default":"99d8423a1d4bcbb275666090bd264cc5"}}
+{"id":"49e1ae182d675fd7b63fde8812ff28ee","fullName":"storefront/pricing/price-interpolation.spec.ts:191:7","name":"MS-PRC-INT-square-sticker area 625 prices the same as 25x25 and 5x125","status":"passed","testResultsByEnv":{"default":"2e6321c0d917e98a18fb75096234a93e"}}

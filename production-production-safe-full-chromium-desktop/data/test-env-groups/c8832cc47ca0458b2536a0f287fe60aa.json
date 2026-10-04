@@ -1,1 +1,1 @@
-{"id":"c8832cc47ca0458b2536a0f287fe60aa","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-V2-040 catalog page renders without error: ./stickers/transfer-sticker","status":"passed","testResultsByEnv":{"default":"8eeb89133f4c3dfc435000fcac15ef33"}}
+{"id":"c8832cc47ca0458b2536a0f287fe60aa","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-V2-040 catalog page renders without error: ./stickers/transfer-sticker","status":"passed","testResultsByEnv":{"default":"e7bad490e1cacb74beb67cb5ad7a7c1b"}}
