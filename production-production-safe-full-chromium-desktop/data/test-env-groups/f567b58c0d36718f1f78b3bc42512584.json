@@ -1,1 +1,1 @@
-{"id":"f567b58c0d36718f1f78b3bc42512584","fullName":"storefront/purchasing/checkout-page.spec.ts:16:3","name":"MS-V2-041 checkout page renders shipping, payment, and order summary without submitting","status":"passed","testResultsByEnv":{"default":"69683f4004fc65477f006abf1e914fa4"}}
+{"id":"f567b58c0d36718f1f78b3bc42512584","fullName":"storefront/purchasing/checkout-page.spec.ts:16:3","name":"MS-V2-041 checkout page renders shipping, payment, and order summary without submitting","status":"passed","testResultsByEnv":{"default":"9bc9c06063c1c0804cab4f840da18e58"}}

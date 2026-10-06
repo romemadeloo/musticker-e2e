@@ -1,1 +1,1 @@
-{"id":"da6515213cce533d3ca3bacac5b76f33","fullName":"storefront/pricing/price-interpolation.spec.ts:103:7","name":"MS-PRC-INT-vinyl-lettering area 1062 (18x59) interpolates between 900 and 1225","status":"failed","testResultsByEnv":{"default":"c265346ae3b70d085e66fa14d2a569c1"}}
+{"id":"da6515213cce533d3ca3bacac5b76f33","fullName":"storefront/pricing/price-interpolation.spec.ts:103:7","name":"MS-PRC-INT-vinyl-lettering area 1062 (18x59) interpolates between 900 and 1225","status":"failed","testResultsByEnv":{"default":"0ba4376edb64c6ad0d558b60ca5a295b"}}
