@@ -1,1 +1,1 @@
-{"id":"d74f4e4b605c6ecd995dc198a34ecac9","fullName":"storefront/pricing/price-interpolation.spec.ts:103:7","name":"MS-PRC-INT-transfer-sticker area 120761 (197x613) interpolates between 119025 and 122500","status":"failed","testResultsByEnv":{"default":"ea70e9360c2133a73a42f082e5de4d49"}}
+{"id":"d74f4e4b605c6ecd995dc198a34ecac9","fullName":"storefront/pricing/price-interpolation.spec.ts:103:7","name":"MS-PRC-INT-transfer-sticker area 120761 (197x613) interpolates between 119025 and 122500","status":"failed","testResultsByEnv":{"default":"a3eb696997de0e53a8aa6190f29b0a88"}}

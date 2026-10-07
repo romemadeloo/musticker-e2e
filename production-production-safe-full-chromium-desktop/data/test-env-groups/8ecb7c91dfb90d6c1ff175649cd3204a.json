@@ -1,1 +1,1 @@
-{"id":"8ecb7c91dfb90d6c1ff175649cd3204a","fullName":"storefront/purchasing/sticker-catalog-configurator.spec.ts:41:5","name":"MS-V2-061 둥근 사각형 롤 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"c5c25be5feb9417617b6df5a277f0245"}}
+{"id":"8ecb7c91dfb90d6c1ff175649cd3204a","fullName":"storefront/purchasing/sticker-catalog-configurator.spec.ts:41:5","name":"MS-V2-061 둥근 사각형 롤 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"6f1a4cc7a3b5a0e81f69fb7fa833d330"}}

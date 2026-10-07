@@ -1,1 +1,1 @@
-{"id":"6a72b1890a35a5841a540a9b1b09d10b","fullName":"storefront/pricing/price-interpolation.spec.ts:160:7","name":"MS-PRC-INT-rounded-roll quantity 15 interpolates between rungs 10 and 20","status":"passed","testResultsByEnv":{"default":"e2194c1e0c627a8669b3968005e20342"}}
+{"id":"6a72b1890a35a5841a540a9b1b09d10b","fullName":"storefront/pricing/price-interpolation.spec.ts:160:7","name":"MS-PRC-INT-rounded-roll quantity 15 interpolates between rungs 10 and 20","status":"passed","testResultsByEnv":{"default":"6934b1677be65026e3bac0ef79f18794"}}

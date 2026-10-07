@@ -1,1 +1,1 @@
-{"id":"886b5c786d1ba215eb4f5e2ca1b23e6e","fullName":"storefront/auth/registration.spec.ts:115:3","name":"MS-V2-086 registering an existing email offers sign-in instead of a duplicate account @credentialed","status":"passed","testResultsByEnv":{"default":"3753ab7ff7d1fedd2e2dfda1482813f5"}}
+{"id":"886b5c786d1ba215eb4f5e2ca1b23e6e","fullName":"storefront/auth/registration.spec.ts:115:3","name":"MS-V2-086 registering an existing email offers sign-in instead of a duplicate account @credentialed","status":"passed","testResultsByEnv":{"default":"70eef09cc20db26da3ec5fdf1667b0a9"}}
