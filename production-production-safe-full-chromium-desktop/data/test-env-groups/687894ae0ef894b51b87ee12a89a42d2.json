@@ -1,1 +1,1 @@
-{"id":"687894ae0ef894b51b87ee12a89a42d2","fullName":"storefront/regression/accessibility.spec.ts:10:3","name":"MS-V2-023 core controls are named and keyboard reachable","status":"failed","testResultsByEnv":{"default":"6688cef4cf879f74bcbdaf1afa69327c"}}
+{"id":"687894ae0ef894b51b87ee12a89a42d2","fullName":"storefront/regression/accessibility.spec.ts:10:3","name":"MS-V2-023 core controls are named and keyboard reachable","status":"passed","testResultsByEnv":{"default":"1b29057f588bb9bdc4d5b231bf4cc7b0"}}

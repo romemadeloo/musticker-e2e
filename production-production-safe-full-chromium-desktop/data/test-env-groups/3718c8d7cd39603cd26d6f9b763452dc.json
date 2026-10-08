@@ -1,1 +1,1 @@
-{"id":"3718c8d7cd39603cd26d6f9b763452dc","fullName":"storefront/pricing/price-interpolation.spec.ts:191:7","name":"MS-PRC-INT-sticker-sheet area 2500 prices the same as 50x50 and 25x100","status":"passed","testResultsByEnv":{"default":"de8d5a80e78b7b0375ac93a108985231"}}
+{"id":"3718c8d7cd39603cd26d6f9b763452dc","fullName":"storefront/pricing/price-interpolation.spec.ts:191:7","name":"MS-PRC-INT-sticker-sheet area 2500 prices the same as 50x50 and 25x100","status":"passed","testResultsByEnv":{"default":"1db5e68373e27218bac168ede8701197"}}

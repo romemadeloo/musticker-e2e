@@ -1,1 +1,1 @@
-{"id":"872c3b43bdab88e68c8e3787b912cf38","fullName":"storefront/purchasing/cart-lifecycle.spec.ts:138:3","name":"MS-V2-105 an empty cart page offers a way back into the catalog","status":"passed","testResultsByEnv":{"default":"9a29c1b97c0eb30dc87832c16827e9b4"}}
+{"id":"872c3b43bdab88e68c8e3787b912cf38","fullName":"storefront/purchasing/cart-lifecycle.spec.ts:138:3","name":"MS-V2-105 an empty cart page offers a way back into the catalog","status":"passed","testResultsByEnv":{"default":"87bdd6df157a44dd4c454ea3a8d1f7b2"}}

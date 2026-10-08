@@ -1,1 +1,1 @@
-{"id":"234931bfd3b21bda6ec846b120adf1e2","fullName":"storefront/purchasing/cart-lifecycle.spec.ts:51:3","name":"MS-V2-100 removing the only line item leaves an empty cart, not a broken one","status":"passed","testResultsByEnv":{"default":"1613447e5347b70c5a472c93a61c808e"}}
+{"id":"234931bfd3b21bda6ec846b120adf1e2","fullName":"storefront/purchasing/cart-lifecycle.spec.ts:51:3","name":"MS-V2-100 removing the only line item leaves an empty cart, not a broken one","status":"passed","testResultsByEnv":{"default":"859d3e0f489155134c98c064029fd157"}}
