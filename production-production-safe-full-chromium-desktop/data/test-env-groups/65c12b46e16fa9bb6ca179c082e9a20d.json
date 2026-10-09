@@ -1,1 +1,1 @@
-{"id":"65c12b46e16fa9bb6ca179c082e9a20d","fullName":"storefront/purchasing/sheet-sticker-size-rules.spec.ts:45:5","name":"MS-V2-073 정사각형 판스티커 rejects a custom size that fits only one sticker per sheet","status":"failed","testResultsByEnv":{"default":"835c0aa08a330c3cecc2fee81aaa1e62"}}
+{"id":"65c12b46e16fa9bb6ca179c082e9a20d","fullName":"storefront/purchasing/sheet-sticker-size-rules.spec.ts:45:5","name":"MS-V2-073 정사각형 판스티커 rejects a custom size that fits only one sticker per sheet","status":"failed","testResultsByEnv":{"default":"881873e241930bec9e7953a8877a6102"}}
