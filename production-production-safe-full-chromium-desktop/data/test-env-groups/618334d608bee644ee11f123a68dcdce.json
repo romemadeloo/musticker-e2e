@@ -1,1 +1,1 @@
-{"id":"618334d608bee644ee11f123a68dcdce","fullName":"storefront/security/internal-origin-scope.spec.ts:74:3","name":"MS-SEC-004 an unrecognised environment gets no key at all","status":"passed","testResultsByEnv":{"default":"447f45b73282e2fba01582c398f6955c"}}
+{"id":"618334d608bee644ee11f123a68dcdce","fullName":"storefront/security/internal-origin-scope.spec.ts:74:3","name":"MS-SEC-004 an unrecognised environment gets no key at all","status":"passed","testResultsByEnv":{"default":"70d58032e9f94375044b9765f39014f9"}}

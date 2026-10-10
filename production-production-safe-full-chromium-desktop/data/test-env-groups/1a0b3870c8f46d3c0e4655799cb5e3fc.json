@@ -1,1 +1,1 @@
-{"id":"1a0b3870c8f46d3c0e4655799cb5e3fc","fullName":"storefront/pricing/product-table-mapping.spec.ts:40:5","name":"MS-PRC-MAP transfer-sticker is served by pricing table 11","status":"failed","testResultsByEnv":{"default":"b785bf0e113bdb55d916f267c298998a"}}
+{"id":"1a0b3870c8f46d3c0e4655799cb5e3fc","fullName":"storefront/pricing/product-table-mapping.spec.ts:40:5","name":"MS-PRC-MAP transfer-sticker is served by pricing table 11","status":"failed","testResultsByEnv":{"default":"bb03000a2946974fef6d4c4223ba730a"}}
