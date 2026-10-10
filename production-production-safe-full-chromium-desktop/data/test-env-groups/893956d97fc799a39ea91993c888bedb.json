@@ -1,1 +1,1 @@
-{"id":"893956d97fc799a39ea91993c888bedb","fullName":"storefront/purchasing/money-path.spec.ts:106:3","name":"MS-V2-099 an order at or above the free-shipping threshold ships free","status":"failed","testResultsByEnv":{"default":"c3141f99103600301b53788b93b3d62d"}}
+{"id":"893956d97fc799a39ea91993c888bedb","fullName":"storefront/purchasing/money-path.spec.ts:106:3","name":"MS-V2-099 an order at or above the free-shipping threshold ships free","status":"passed","testResultsByEnv":{"default":"516d4f6ab55e3b9babc9a1e5c062ce91"}}
