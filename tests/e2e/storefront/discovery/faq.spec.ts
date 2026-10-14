@@ -5,7 +5,7 @@ import { FaqV2Page } from '../../../pom/storefront/faq-page.js';
 test.describe('storefront v2 FAQ', { tag: ['@smoke', '@regression', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });
 
-  test('MS-V2-015 FAQ topics and accordions are usable', async ({ page }) => {
+  test('MS-DSC-004 FAQ topics and accordions are usable', async ({ page }) => {
     const faq = new FaqV2Page(page);
 
     await faq.goto();
@@ -13,7 +13,7 @@ test.describe('storefront v2 FAQ', { tag: ['@smoke', '@regression', '@production
     await faq.openOrderQuestion();
   });
 
-  test('MS-V2-016 FAQ search filters and resets content', async ({ page }) => {
+  test('MS-DSC-005 FAQ search filters and resets content', async ({ page }) => {
     const faq = new FaqV2Page(page);
 
     await faq.goto();

@@ -18,7 +18,7 @@ import { INTERNAL_ORIGIN_HEADER } from './internal-origin.js';
 //
 // The delays below spend ~54s over six attempts. Combined with Playwright's own retries that is
 // ~168s of coverage, against a longest-observed window of ~100s (production run #99, 2026-09-01:
-// both MS-V2-078 circle-sheet cases died on /kr/sheet-stickers/circle-sheet between 20:43:14 and
+// both MS-SHT-006 circle-sheet cases died on /kr/sheet-stickers/circle-sheet between 20:43:14 and
 // 20:44:51 UTC, bracketed by passes on the identical URL six seconds before and immediately after).
 // The previous ladder spent ~29s, so its three Playwright attempts covered ~96s and fell a few
 // seconds short of that window -- the whole failure.

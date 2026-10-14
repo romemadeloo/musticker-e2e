@@ -4,7 +4,7 @@ import { appPath } from '../../../fixtures/env.js';
 import { gotoStorefront } from '../../../fixtures/navigation.js';
 import { ko, v2Products } from '../../../fixtures/storefront-data.js';
 
-// MS-V2-023 checks five named controls and one Tab press. That catches nothing a rendering change
+// MS-UX-001 checks five named controls and one Tab press. That catches nothing a rendering change
 // would break, and nothing at all about the rest of the page. This runs the axe-core WCAG 2.1 AA
 // ruleset over the six surfaces a shopper cannot avoid, so a regression anywhere in the markup is
 // caught rather than only in the handful of controls someone thought to name.
@@ -57,7 +57,7 @@ test.describe('storefront v2 WCAG AA scan', { tag: ['@regression', '@a11y', '@pr
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });
 
   for (const scanned of scannedPages) {
-    test(`MS-V2-106 ${scanned.name} has no new WCAG AA violations`, async ({ page }, testInfo) => {
+    test(`MS-UX-004 ${scanned.name} has no new WCAG AA violations`, async ({ page }, testInfo) => {
       await gotoStorefront(page, appPath(scanned.path));
       await scanned.ready(page);
 

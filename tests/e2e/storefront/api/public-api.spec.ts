@@ -5,7 +5,7 @@ import { apiPath } from '../../../fixtures/env.js';
 type JsonRecord = Record<string, unknown>;
 
 test.describe('storefront public API smoke', { tag: ['@api', '@smoke', '@production'] }, () => {
-  test('MS-V2-036 navigation categories API returns public category data', async ({ request }) => {
+  test('MS-API-001 navigation categories API returns public category data', async ({ request }) => {
     const payload = await expectJsonResponse(request.get(apiPath('/sys/kr/navigation/categories')));
 
     expect(hasObjectOrArrayPayload(payload), 'navigation categories payload should contain data').toBe(true);
@@ -14,13 +14,13 @@ test.describe('storefront public API smoke', { tag: ['@api', '@smoke', '@product
     );
   });
 
-  test('MS-V2-037 inquiry types API returns selectable inquiry metadata', async ({ request }) => {
+  test('MS-API-002 inquiry types API returns selectable inquiry metadata', async ({ request }) => {
     const payload = await expectJsonResponse(request.get(apiPath('/sys/kr/inquiry/types')));
 
     expect(hasObjectOrArrayPayload(payload), 'inquiry types payload should contain data').toBe(true);
   });
 
-  test('MS-V2-038 anonymous user session API rejects unauthenticated users safely', async ({ request }) => {
+  test('MS-API-003 anonymous user session API rejects unauthenticated users safely', async ({ request }) => {
     const response = await request.get(apiPath('/sys/kr/user/me'));
 
     expect(response.status()).toBe(401);

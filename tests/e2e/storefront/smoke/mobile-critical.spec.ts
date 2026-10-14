@@ -15,7 +15,7 @@ test.describe('storefront v2 mobile critical path', { tag: ['@smoke', '@producti
     allowTransientProductPageFailures: true
   });
 
-  test('MS-V2-022 home, search, cart, product config, and inquiry work on mobile', async ({ page }) => {
+  test('MS-NAV-008 home, search, cart, product config, and inquiry work on mobile', async ({ page }) => {
     await gotoStorefront(page, appPath());
     await page.getByRole('heading', { name: ko.homeHero }).waitFor({ state: 'visible' });
 

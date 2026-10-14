@@ -10,7 +10,7 @@ test.describe('storefront v2 catalog crawl', { tag: ['@regression', '@production
   });
 
   for (const path of catalogPaths) {
-    test(`MS-V2-040 catalog page renders without error: ${path}`, async ({ page }) => {
+    test(`MS-DSC-007 catalog page renders without error: ${path}`, async ({ page }) => {
       const product = new ProductV2Page(page);
 
       await product.expectCatalogEntryRenders(path);

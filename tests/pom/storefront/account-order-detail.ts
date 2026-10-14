@@ -28,7 +28,7 @@ export class AccountOrderDetail {
   /**
    * Opens an order by searching for it. Completed orders were still listed under 진행 중 on
    * 2026-09-25, so the default segment is searched first; 이전 내역 is only the fallback. By
-   * 2026-10-14 they had moved to 이전 내역 (MUS-QA-007), which only the final step of MS-ADM-001
+   * 2026-10-14 they had moved to 이전 내역 (MUS-QA-007), which only the final step of MS-ADMO-001
    * reaches, so the order of the two searches still suits it.
    */
   async open(orderNumber: string): Promise<void> {

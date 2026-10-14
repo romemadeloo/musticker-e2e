@@ -34,7 +34,7 @@ export function hasMemberCredentials(): boolean {
  * sets one `*_customer_token` cookie scoped to `.musticker.com`, so the same state works on the
  * storefront host. Verified against development-1 on 2026-08-27.
  *
- * Tests that exercise logging in itself (MS-V2-034, MS-V2-035, MS-V2-094) still go through the UI
+ * Tests that exercise logging in itself (MS-AUTH-009, MS-AUTH-010, MS-AUTH-027) still go through the UI
  * -- that is the behaviour under test there.
  */
 export async function seedMemberStorageState(): Promise<MemberStorageState> {

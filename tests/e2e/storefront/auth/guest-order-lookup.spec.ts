@@ -4,7 +4,7 @@ import { hasMemberCredentials, seedMemberStorageState } from '../../../fixtures/
 import { guestOrderLookupCopy, unregisteredLogin } from '../../../fixtures/storefront-data.js';
 import { LoginPage } from '../../../pom/storefront/login-page.js';
 
-// MS-V2-096 established that the 비회원 mode swaps the password field for email + order number. It
+// MS-AUTH-029 established that the 비회원 mode swaps the password field for email + order number. It
 // stopped there -- nothing actually looked an order up, so the whole guest-lookup path was untested.
 //
 // Verified live against development-1 on 2026-08-27:
@@ -21,7 +21,7 @@ const bogusOrderNumber = 'AO-000000-E2E-NOPE';
 test.describe('storefront guest order lookup', { tag: ['@auth', '@production', '@validation'] }, () => {
   test.use({ allowGuestUserMe401: true, allowExpectedAuthFailures: true, allowKnownNuxtPayloadFailures: true });
 
-  test('MS-V2-112 an unknown order number is refused without signing anyone in', async ({ page }) => {
+  test('MS-AUTH-030 an unknown order number is refused without signing anyone in', async ({ page }) => {
     const login = new LoginPage(page);
 
     await login.goto();
@@ -36,7 +36,7 @@ test.describe('storefront guest order lookup', { tag: ['@auth', '@production', '
     await expect(page.getByTestId('app-header-account-dropdown-member')).toHaveCount(0);
   });
 
-  test('MS-V2-113 blank guest lookup is blocked before the endpoint is called @validation', async ({ page }) => {
+  test('MS-AUTH-031 blank guest lookup is blocked before the endpoint is called @validation', async ({ page }) => {
     const login = new LoginPage(page);
 
     await login.goto();
@@ -47,11 +47,11 @@ test.describe('storefront guest order lookup', { tag: ['@auth', '@production', '
   });
 
   test(
-    'MS-V2-114 the refusal does not reveal whether the email belongs to an account @credentialed',
+    'MS-AUTH-032 the refusal does not reveal whether the email belongs to an account @credentialed',
     async ({ page }) => {
       test.skip(
         !hasMemberCredentials(),
-        'MS-V2-114 compares a registered address against an unregistered one, so it needs AUTH_TEST_EMAIL.'
+        'MS-AUTH-032 compares a registered address against an unregistered one, so it needs AUTH_TEST_EMAIL.'
       );
 
       // Proves the test's premise before testing anything: AUTH_TEST_EMAIL has to be a real member on
@@ -76,7 +76,7 @@ test.describe('storefront guest order lookup', { tag: ['@auth', '@production', '
       const refusalForUnregistered = await login.captureGuestOrderLookupRefusal();
 
       // Differing messages would turn this form into an account-existence oracle for anyone with a
-      // list of email addresses -- the same leak MS-V2-030 guards against on the member form.
+      // list of email addresses -- the same leak MS-AUTH-005 guards against on the member form.
       expect(
         refusalForRegistered,
         'guest lookup must refuse a registered and an unregistered address identically, or it leaks which addresses have accounts'

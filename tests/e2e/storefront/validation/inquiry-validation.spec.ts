@@ -11,7 +11,7 @@ test.describe('storefront v2 inquiry validation', { tag: ['@validation', '@produ
     await gotoStorefront(page, appPath());
   });
 
-  test('MS-V2-017 inquiry form validates blank and invalid email submissions', async ({ page }) => {
+  test('MS-INQ-001 inquiry form validates blank and invalid email submissions', async ({ page }) => {
     const inquiry = new InquiryV2Form(page);
 
     await inquiry.open();
@@ -20,7 +20,7 @@ test.describe('storefront v2 inquiry validation', { tag: ['@validation', '@produ
     await inquiry.fillInvalidEmailAndExpectStillOpen();
   });
 
-  test('MS-V2-018 inquiry form documents supported attachment constraints', async ({ page }) => {
+  test('MS-INQ-002 inquiry form documents supported attachment constraints', async ({ page }) => {
     const inquiry = new InquiryV2Form(page);
 
     await inquiry.open();
@@ -28,7 +28,7 @@ test.describe('storefront v2 inquiry validation', { tag: ['@validation', '@produ
     await inquiry.expectUploadGuidance();
   });
 
-  test('MS-V2-019 external inquiry links point to Kakao and Naver destinations', async ({ page }) => {
+  test('MS-INQ-003 external inquiry links point to Kakao and Naver destinations', async ({ page }) => {
     const kakaoLink = page.getByRole('link', { name: ko.kakaoInquiry }).first();
     await expect(kakaoLink).toHaveAttribute('href', /pf\.kakao\.com/);
 

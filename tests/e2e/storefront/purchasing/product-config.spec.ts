@@ -5,7 +5,7 @@ import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 test.describe('storefront v2 product configuration', { tag: ['@regression', '@production', '@purchasing'] }, () => {
   test.use({
     allowGuestUserMe401: true,
-    // MS-V2-012 opens the custom size and quantity inputs without filling them in, which is the
+    // MS-CFG-004 opens the custom size and quantity inputs without filling them in, which is the
     // state under test: the storefront tries to re-quote and warns that the configuration is not
     // priceable yet. The tests here that do complete a configuration still assert a visible price,
     // so a product that genuinely cannot be priced is caught by those instead.
@@ -16,7 +16,7 @@ test.describe('storefront v2 product configuration', { tag: ['@regression', '@pr
     allowTransientProductPageFailures: true
   });
 
-  test('MS-V2-009 die-cut sticker supports size and quantity selection', async ({ page }) => {
+  test('MS-CFG-001 die-cut sticker supports size and quantity selection', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = v2Products.dieCutSticker;
 
@@ -28,7 +28,7 @@ test.describe('storefront v2 product configuration', { tag: ['@regression', '@pr
     await product.clickNextStepAndExpectProgression();
   });
 
-  test('MS-V2-010 die-cut roll sticker supports size and quantity selection', async ({ page }) => {
+  test('MS-CFG-002 die-cut roll sticker supports size and quantity selection', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = v2Products.dieCutRoll;
 
@@ -40,7 +40,7 @@ test.describe('storefront v2 product configuration', { tag: ['@regression', '@pr
     await product.clickNextStepAndExpectProgression();
   });
 
-  test('MS-V2-011 die-cut sheet sticker supports material, sheet size, and quantity selection', async ({ page }) => {
+  test('MS-CFG-003 die-cut sheet sticker supports material, sheet size, and quantity selection', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = v2Products.dieCutSheet;
 
@@ -54,7 +54,7 @@ test.describe('storefront v2 product configuration', { tag: ['@regression', '@pr
     await product.clickNextStepAndExpectProgression();
   });
 
-  test('MS-V2-012 custom size and quantity controls are reachable', async ({ page }) => {
+  test('MS-CFG-004 custom size and quantity controls are reachable', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = v2Products.dieCutSticker;
 
@@ -62,7 +62,7 @@ test.describe('storefront v2 product configuration', { tag: ['@regression', '@pr
     await product.expectCustomControlsOpen();
   });
 
-  test('MS-V2-013 product trust and delivery promises are visible', async ({ page }) => {
+  test('MS-CFG-005 product trust and delivery promises are visible', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = v2Products.dieCutSticker;
 
@@ -70,7 +70,7 @@ test.describe('storefront v2 product configuration', { tag: ['@regression', '@pr
     await product.expectProductionPromises();
   });
 
-  test('MS-V2-014 product review carousel is usable', async ({ page }) => {
+  test('MS-CFG-006 product review carousel is usable', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = v2Products.dieCutSticker;
 

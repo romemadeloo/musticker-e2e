@@ -7,7 +7,7 @@ import { HeaderComponent } from '../../../pom/storefront/header-component.js';
 test.describe('storefront v2 accessibility smoke', { tag: ['@regression', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });
 
-  test('MS-V2-023 core controls are named and keyboard reachable', async ({ page }) => {
+  test('MS-UX-001 core controls are named and keyboard reachable', async ({ page }) => {
     await gotoStorefront(page, appPath());
 
     await expect(page.getByTestId('app-header-search-button')).toBeVisible();

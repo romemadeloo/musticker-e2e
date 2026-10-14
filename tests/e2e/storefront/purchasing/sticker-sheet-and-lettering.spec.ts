@@ -19,7 +19,7 @@ test.describe('storefront v2 catalog: sheet, lettering, and transfer stickers', 
     allowTransientProductPageFailures: true
   });
 
-  test('MS-V2-070 custom sheet sticker supports material, sheet size, and quantity selection through to cart', async ({ page }) => {
+  test('MS-CFG-023 custom sheet sticker supports material, sheet size, and quantity selection through to cart', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = stickerSheetProduct;
 
@@ -42,7 +42,7 @@ test.describe('storefront v2 catalog: sheet, lettering, and transfer stickers', 
   // design, so its "다음 단계" button adds straight to cart and opens the cart preview drawer --
   // unlike every other product in this suite, there is no separate "장바구니 담기" confirmation
   // button to click inside an intermediate dialog.
-  test('MS-V2-071 lettering sticker supports color, custom text, and quantity selection through to cart', async ({ page }) => {
+  test('MS-CFG-024 lettering sticker supports color, custom text, and quantity selection through to cart', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = vinylLetteringProduct;
 
@@ -59,7 +59,7 @@ test.describe('storefront v2 catalog: sheet, lettering, and transfer stickers', 
     await drawer.expectLineItem({ productName: data.heading, quantity: data.quantity });
   });
 
-  test('MS-V2-072 full-color lettering (transfer) sticker supports color, size, and quantity selection through to cart', async ({ page }) => {
+  test('MS-CFG-025 full-color lettering (transfer) sticker supports color, size, and quantity selection through to cart', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = transferStickerProduct;
 

@@ -53,7 +53,7 @@ test.describe('storefront to admin order processing', { tag: ['@admin', '@e2e', 
   );
   test.skip(!hasMemberCredentials(), SKIP_WITHOUT_MEMBER_CREDENTIALS);
 
-  test('MS-ADM-001 artwork review, customer proof approval, production and delivery', async ({
+  test('MS-ADMO-001 artwork review, customer proof approval, production and delivery', async ({
     page,
     adminPage,
     adminApi

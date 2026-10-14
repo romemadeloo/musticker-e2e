@@ -30,7 +30,7 @@ test.describe('storefront change password', { tag: ['@auth', '@production'] }, (
   test.describe('seeded member', { tag: ['@credentialed'] }, () => {
     // The session is seeded from the API instead of driven through the login form: none of these
     // five tests is about logging in, and the form route cost ~15s each and made every one of them
-    // fail whenever login hiccuped. MS-V2-034/035 still cover the form itself.
+    // fail whenever login hiccuped. MS-AUTH-009/MS-AUTH-010 still cover the form itself.
     test.use({ asMember: true });
     test.skip(!hasMemberCredentials(), SKIP_WITHOUT_MEMBER_CREDENTIALS);
 
@@ -38,14 +38,14 @@ test.describe('storefront change password', { tag: ['@auth', '@production'] }, (
       await new AccountProfilePage(page).goto();
     });
 
-    test('MS-V2-089 account profile exposes the password change controls @smoke', async ({ page }) => {
+    test('MS-AUTH-022 account profile exposes the password change controls @smoke', async ({ page }) => {
       const profile = new AccountProfilePage(page);
 
       await profile.expectMemberSummary();
       await profile.expectPasswordControls();
     });
 
-    test('MS-V2-090 change password stays disabled until every field is filled @validation', async ({ page }) => {
+    test('MS-AUTH-023 change password stays disabled until every field is filled @validation', async ({ page }) => {
       const profile = new AccountProfilePage(page);
 
       await expect(profile.changePasswordButton).toBeDisabled();
@@ -60,7 +60,7 @@ test.describe('storefront change password', { tag: ['@auth', '@production'] }, (
       await expect(profile.changePasswordButton).toBeEnabled();
     });
 
-    test('MS-V2-091 a mismatched confirmation is rejected @validation', async ({ page }) => {
+    test('MS-AUTH-024 a mismatched confirmation is rejected @validation', async ({ page }) => {
       const profile = new AccountProfilePage(page);
 
       await profile.changePassword({
@@ -72,7 +72,7 @@ test.describe('storefront change password', { tag: ['@auth', '@production'] }, (
       await profile.expectPasswordChangeRejected(authCopy.passwordMismatch);
     });
 
-    test('MS-V2-092 a new password below the policy is rejected @validation', async ({ page }) => {
+    test('MS-AUTH-025 a new password below the policy is rejected @validation', async ({ page }) => {
       const profile = new AccountProfilePage(page);
 
       await profile.changePassword({
@@ -83,7 +83,7 @@ test.describe('storefront change password', { tag: ['@auth', '@production'] }, (
       await profile.expectPasswordChangeRejected(authCopy.passwordPolicyUnmet);
     });
 
-    test('MS-V2-093 a wrong current password is rejected @validation', async ({ page }) => {
+    test('MS-AUTH-026 a wrong current password is rejected @validation', async ({ page }) => {
       const profile = new AccountProfilePage(page);
 
       await profile.changePassword({
@@ -95,12 +95,12 @@ test.describe('storefront change password', { tag: ['@auth', '@production'] }, (
     });
   });
 
-  test('MS-V2-094 changing a password rotates the credential end to end', { tag: ['@destructive', '@slow'] }, async ({
+  test('MS-AUTH-027 changing a password rotates the credential end to end', { tag: ['@destructive', '@slow'] }, async ({
     page
   }) => {
     test.skip(
       !canRunDestructiveAuth,
-      'MS-V2-094 registers a throwaway member and rotates its password. Set RUN_AUTH_DESTRUCTIVE_E2E=true ' +
+      'MS-AUTH-027 registers a throwaway member and rotates its password. Set RUN_AUTH_DESTRUCTIVE_E2E=true ' +
         'against a dev environment (not production) to run it.'
     );
     test.setTimeout(180_000);
@@ -121,7 +121,7 @@ test.describe('storefront change password', { tag: ['@auth', '@production'] }, (
     const otpEmail = await waitForMailTmMessage(mailbox, (message) => /인증/.test(message.subject));
     const registered = await register.submitVerificationCode(extractOtpCode(otpEmail));
     expect(registered.status()).toBe(201);
-    recordCreatedAccount({ email: mailbox.address, createdBy: 'MS-V2-094' });
+    recordCreatedAccount({ email: mailbox.address, createdBy: 'MS-AUTH-027' });
     await expect(page).toHaveURL(/\/kr\/auth\/profile\/?$/);
 
     const profile = new AccountProfilePage(page);

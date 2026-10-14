@@ -10,7 +10,7 @@ import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 test.describe('storefront authentication', { tag: ['@auth', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowExpectedAuthFailures: true, allowKnownNuxtPayloadFailures: true });
 
-  test('MS-V2-026 account navigation opens login', async ({ page }) => {
+  test('MS-AUTH-001 account navigation opens login', async ({ page }) => {
     const home = new HomeV2Page(page);
 
     await home.goto();
@@ -20,14 +20,14 @@ test.describe('storefront authentication', { tag: ['@auth', '@production'] }, ()
     await login.expectMemberLoginControls();
   });
 
-  test('MS-V2-027 member login form exposes expected controls', async ({ page }) => {
+  test('MS-AUTH-002 member login form exposes expected controls', async ({ page }) => {
     const login = new LoginPage(page);
 
     await login.goto();
     await login.expectMemberLoginControls();
   });
 
-  test('MS-V2-028 blank login is blocked before the auth endpoint is called @validation', async ({ page }) => {
+  test('MS-AUTH-003 blank login is blocked before the auth endpoint is called @validation', async ({ page }) => {
     const login = new LoginPage(page);
 
     await login.goto();
@@ -37,7 +37,7 @@ test.describe('storefront authentication', { tag: ['@auth', '@production'] }, ()
     await expect(login.memberFieldErrors().filter({ hasText: authCopy.requiredFieldLogin })).toHaveCount(2);
   });
 
-  test('MS-V2-029 malformed email is rejected without starting an auth session @validation', async ({ page }) => {
+  test('MS-AUTH-004 malformed email is rejected without starting an auth session @validation', async ({ page }) => {
     const login = new LoginPage(page);
 
     await login.goto();
@@ -50,7 +50,7 @@ test.describe('storefront authentication', { tag: ['@auth', '@production'] }, ()
     await login.expectStillAnonymous();
   });
 
-  test('MS-V2-030 invalid credentials fail safely and keep the user anonymous @validation', async ({ page }) => {
+  test('MS-AUTH-005 invalid credentials fail safely and keep the user anonymous @validation', async ({ page }) => {
     const login = new LoginPage(page);
 
     await login.goto();
@@ -66,7 +66,7 @@ test.describe('storefront authentication', { tag: ['@auth', '@production'] }, ()
     }
   });
 
-  test('MS-V2-032 forgot-password recovery opens and validates its email input @validation', async ({ page }) => {
+  test('MS-AUTH-007 forgot-password recovery opens and validates its email input @validation', async ({ page }) => {
     const login = new LoginPage(page);
 
     await login.goto();
@@ -79,11 +79,11 @@ test.describe('storefront authentication', { tag: ['@auth', '@production'] }, ()
     await login.closeForgotPassword();
   });
 
-  // MS-V2-044: re-verified live against production on 2026-08-11 (masked -> visible -> masked
+  // MS-AUTH-011: re-verified live against production on 2026-08-11 (masked -> visible -> masked
   // all confirmed via the input's `type` attribute). The production bug noted in the test cases on
-  // 2026-08-10 (toggle rendered but did not unmask) is no longer reproducible, so MS-V2-031 stays
+  // 2026-08-10 (toggle rendered but did not unmask) is no longer reproducible, so MS-AUTH-006 stays
   // un-fixme'd.
-  test('MS-V2-031 password visibility toggle masks and unmasks password', async ({ page }) => {
+  test('MS-AUTH-006 password visibility toggle masks and unmasks password', async ({ page }) => {
     const login = new LoginPage(page);
 
     await login.goto();
@@ -91,7 +91,7 @@ test.describe('storefront authentication', { tag: ['@auth', '@production'] }, ()
     await expect(page).toHaveURL(/\/kr\/auth\/login\/?$/);
   });
 
-  test('MS-V2-033 register entry is reachable from login', async ({ page }) => {
+  test('MS-AUTH-008 register entry is reachable from login', async ({ page }) => {
     const login = new LoginPage(page);
 
     await login.goto();
@@ -99,7 +99,7 @@ test.describe('storefront authentication', { tag: ['@auth', '@production'] }, ()
     await expect(page.getByTestId('auth-register-page')).toBeVisible();
   });
 
-  test('MS-V2-034 seeded member can log in @credentialed', async ({ page }) => {
+  test('MS-AUTH-009 seeded member can log in @credentialed', async ({ page }) => {
     test.skip(!env.AUTH_TEST_EMAIL || !env.AUTH_TEST_PASSWORD, 'Set AUTH_TEST_EMAIL and AUTH_TEST_PASSWORD to run.');
 
     const login = new LoginPage(page);
@@ -117,7 +117,7 @@ test.describe('storefront authentication', { tag: ['@auth', '@production'] }, ()
     // this is the one test that forgives them.
     test.use({ allowPostLogout401: true });
 
-    test('MS-V2-035 session persists across reload and navigation, and logout clears it @credentialed', async ({
+    test('MS-AUTH-010 session persists across reload and navigation, and logout clears it @credentialed', async ({
       page
     }) => {
       test.skip(!env.AUTH_TEST_EMAIL || !env.AUTH_TEST_PASSWORD, 'Set AUTH_TEST_EMAIL and AUTH_TEST_PASSWORD to run.');
@@ -151,7 +151,7 @@ test.describe('storefront authentication', { tag: ['@auth', '@production'] }, ()
     });
   });
 
-  test('MS-V2-095 a member-only route is not reachable anonymously', async ({ page }) => {
+  test('MS-AUTH-028 a member-only route is not reachable anonymously', async ({ page }) => {
     // Verified on development-1 on 2026-08-27: the account shell never renders for an anonymous
     // visitor -- the app redirects to the storefront home rather than to the login form.
     await gotoStorefront(page, appPath('./account/profile'));
@@ -160,7 +160,7 @@ test.describe('storefront authentication', { tag: ['@auth', '@production'] }, ()
     await expect(page).not.toHaveURL(/\/kr\/account\/profile/);
   });
 
-  test('MS-V2-096 non-member mode swaps in the guest order-lookup form', async ({ page }) => {
+  test('MS-AUTH-029 non-member mode swaps in the guest order-lookup form', async ({ page }) => {
     const login = new LoginPage(page);
 
     await login.goto();

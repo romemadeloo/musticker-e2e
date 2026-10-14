@@ -51,13 +51,13 @@ on:
         default: ''
         type: string
       run_payment_e2e:
-        description: Enable the destructive checkout test (MS-V2-025). Dev environments only.
+        description: Enable the destructive checkout test (MS-CHK-001). Dev environments only.
         required: true
         default: false
         type: boolean
       run_auth_destructive_e2e:
         description: >-
-          Enable the account-creating and state-mutating auth tests (MS-V2-087/088/094, MS-V2-104).
+          Enable the account-creating and state-mutating auth tests (MS-AUTH-020/MS-AUTH-021/MS-AUTH-027, MS-CRT-005).
           Dev environments only -- each run registers a real member.
         required: true
         default: false
@@ -80,7 +80,7 @@ env:
   E2E_ENVIRONMENT: ${{ inputs.environment }}
   E2E_BROWSER_PROJECT: ${{ inputs.browser_project }}
   RUN_PAYMENT_E2E: ${{ inputs.run_payment_e2e }}
-  # Was never wired up before: choosing the destructive suite ran MS-V2-025 and silently *skipped*
+  # Was never wired up before: choosing the destructive suite ran MS-CHK-001 and silently *skipped*
   # every account-creating auth test, because their gate is this variable rather than RUN_PAYMENT_E2E.
   # Forced off against production, where those tests must never run whatever the dispatcher ticks.
   RUN_AUTH_DESTRUCTIVE_E2E: ${{ inputs.environment != 'production' && inputs.run_auth_destructive_e2e || false }}
@@ -89,7 +89,7 @@ env:
   # refreshed from the same seed data, so one account exists on all of them. Leave either pair unset
   # and the @credentialed tests skip themselves, exactly as before.
   #
-  # Without a dev pair the credentialed *and* the account-mutating destructive tests (MS-V2-104)
+  # Without a dev pair the credentialed *and* the account-mutating destructive tests (MS-CRT-005)
   # could never run anywhere: production has the credentials but forbids destructive runs, and the
   # dev servers allowed them but had no credentials.
   AUTH_TEST_EMAIL: >-

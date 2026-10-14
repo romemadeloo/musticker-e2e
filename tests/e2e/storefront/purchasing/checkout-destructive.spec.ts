@@ -27,11 +27,11 @@ test.describe('storefront v2 destructive checkout', { tag: ['@e2e', '@destructiv
 
   test.skip(
     !canRunDestructiveCheckout,
-    'MS-V2-025 is guarded because it creates checkout/order side effects. Set RUN_PAYMENT_E2E=true against a ' +
+    'MS-CHK-001 is guarded because it creates checkout/order side effects. Set RUN_PAYMENT_E2E=true against a ' +
       'dev sandbox environment (not production -- no sandbox payment exists there yet) to run it.'
   );
 
-  test('MS-V2-025 guest checkout completes via the KakaoPay sandbox and sends an order-confirmation email', async ({
+  test('MS-CHK-001 guest checkout completes via the KakaoPay sandbox and sends an order-confirmation email', async ({
     page
   }) => {
     // Sequential OTP-email polling, a shipping-cost recalculation wait, the PayApp popup round

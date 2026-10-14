@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
  * An append-only record of the member accounts destructive tests create, so the run can delete them
  * afterwards instead of leaving them behind forever.
  *
- * MS-V2-087/088 (registration) and MS-V2-094 (password rotation) each register a real member on the
+ * MS-AUTH-020/MS-AUTH-021 (registration) and MS-AUTH-027 (password rotation) each register a real member on the
  * target dev server through a live emailed OTP. Nothing cleaned them up before this ledger existed,
  * so every `RUN_AUTH_DESTRUCTIVE_E2E=true` run grew the user table by up to three rows.
  *

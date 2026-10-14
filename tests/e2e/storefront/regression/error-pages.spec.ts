@@ -15,7 +15,7 @@ test.describe('storefront v2 error handling', { tag: ['@regression', '@productio
   // Production behavior changed after the 2026-08-11 observation: unknown routes under /kr used to
   // redirect silently to the homepage with a 200. They now return a real 404 and render a dedicated
   // not-found page, so this asserts that page and its way back home rather than a redirect.
-  test('MS-V2-043 unknown route serves the 404 page with a working way back home', async ({ page }) => {
+  test('MS-UX-003 unknown route serves the 404 page with a working way back home', async ({ page }) => {
     const response = await gotoStorefront(page, appPath(`./${unknownRoute}`));
 
     expect(response?.status(), 'unknown route should return a not-found status').toBe(404);

@@ -141,7 +141,7 @@ export default defineConfig({
   reporter: reportersForShardedRun(
     reportersWithSelfHealSummary(reportersWithAllure(process.env.CI ? ciReporters : localReporters))
   ),
-  // Deletes the throwaway members MS-V2-087/088/094 register. A no-op for every other run.
+  // Deletes the throwaway members MS-AUTH-020/MS-AUTH-021/MS-AUTH-027 register. A no-op for every other run.
   globalTeardown: './tests/setup/global-teardown.ts',
   use: {
     baseURL: env.BASE_URL,

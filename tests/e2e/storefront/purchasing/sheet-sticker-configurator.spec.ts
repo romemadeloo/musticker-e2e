@@ -14,15 +14,15 @@ import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 // freeform/die-cut sheet variant.
 //
 // Verified live against development-3 (dev-3.musticker.com) on 2026-08-12 while authoring this
-// suite. The test below (MS-V2-058) intentionally asserts behavior that FAILS today on dev-3 and
+// suite. The test below (MS-CFG-015) intentionally asserts behavior that FAILS today on dev-3 and
 // documents a real defect found during that verification:
-//   - MS-V2-058: size-guide illustration <img alt> text is either a raw untranslated i18n key
+//   - MS-CFG-015: size-guide illustration <img alt> text is either a raw untranslated i18n key
 //     (circle/oval/rectangle-sheet, e.g. "product.sizes.small40x40.label") or an unrelated
 //     paper-size label (square/rounded-sheet, e.g. "A6 105x148", "72x170") instead of meaningful,
 //     localized alt text.
 //
 // A fractional-won per-unit price readout (e.g. "8.582원" for a custom 20x20mm size at the
-// 1,000-sheet tier) was previously flagged here as a defect (MS-V2-059) but confirmed with Korean
+// 1,000-sheet tier) was previously flagged here as a defect (MS-CFG-016) but confirmed with Korean
 // staff on 2026-08-13 to be expected/acceptable pricing behavior, not a bug -- removed.
 const designFilePath = fileURLToPath(new URL('../../../fixtures/files/sample-design.png', import.meta.url));
 
@@ -38,7 +38,7 @@ test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rect
   });
 
   for (const data of sheetStickerConfiguratorProducts) {
-    test(`MS-V2-050 ${data.heading} supports material, size, and quantity selection through to cart`, async ({ page }) => {
+    test(`MS-CFG-007 ${data.heading} supports material, size, and quantity selection through to cart`, async ({ page }) => {
       const product = new ProductV2Page(page);
       await product.goto(data.path, data.heading);
 
@@ -62,7 +62,7 @@ test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rect
     });
   }
 
-  test('MS-V2-051 circle sheet sticker: custom individual size recalculates the whole quantity price ladder', async ({ page }) => {
+  test('MS-CFG-008 circle sheet sticker: custom individual size recalculates the whole quantity price ladder', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = sheetStickerConfiguratorProducts[0];
     await product.goto(data.path, data.heading);
@@ -74,7 +74,7 @@ test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rect
 
   // Sheet stickers show a discount on every tier since early October 2026 (10시트 reads -4% against
   // a 6,900원 list price), so the rule is now that bulk earns a bigger one, not that it alone has one.
-  test('MS-V2-052 circle sheet sticker: bulk quantity tiers surface a bigger discount than smaller tiers', async ({ page }) => {
+  test('MS-CFG-009 circle sheet sticker: bulk quantity tiers surface a bigger discount than smaller tiers', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = sheetStickerConfiguratorProducts[0];
     await product.goto(data.path, data.heading);
@@ -89,7 +89,7 @@ test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rect
       .toBeGreaterThan(smallTierDiscount);
   });
 
-  test('MS-V2-053 circle sheet sticker: design upload modal accepts an order note and a design file before adding to cart', async ({ page }) => {
+  test('MS-CFG-010 circle sheet sticker: design upload modal accepts an order note and a design file before adding to cart', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = sheetStickerConfiguratorProducts[0];
     await product.goto(data.path, data.heading);
@@ -113,7 +113,7 @@ test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rect
     await cart.expectImageLinkVisible(data.heading);
   });
 
-  test('MS-V2-054 circle sheet sticker: editing material from the cart preview drawer recalculates the line price', async ({ page }) => {
+  test('MS-CFG-011 circle sheet sticker: editing material from the cart preview drawer recalculates the line price', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = sheetStickerConfiguratorProducts[0];
     await product.goto(data.path, data.heading);
@@ -128,7 +128,7 @@ test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rect
     await drawer.expectLineItem({ productName: data.heading });
   });
 
-  test('MS-V2-055 circle sheet sticker: cart preview drawer "장바구니 보기" hands off to the full cart page with the item intact', async ({ page }) => {
+  test('MS-CFG-012 circle sheet sticker: cart preview drawer "장바구니 보기" hands off to the full cart page with the item intact', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = sheetStickerConfiguratorProducts[0];
     await product.goto(data.path, data.heading);
@@ -145,7 +145,7 @@ test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rect
     await cart.expectAddImageLinkVisible(data.heading);
   });
 
-  test('MS-V2-056 circle sheet sticker: full cart page "사이즈 변경" dialog exposes material + size only (no quantity), and updates price', async ({ page }) => {
+  test('MS-CFG-013 circle sheet sticker: full cart page "사이즈 변경" dialog exposes material + size only (no quantity), and updates price', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = sheetStickerConfiguratorProducts[0];
     await product.goto(data.path, data.heading);
@@ -162,7 +162,7 @@ test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rect
     await cart.expectRowContainsText(data.heading, ko.hologram);
   });
 
-  test('MS-V2-057 circle sheet sticker: full cart page row quantity select updates price without a separate confirm step', async ({ page }) => {
+  test('MS-CFG-014 circle sheet sticker: full cart page row quantity select updates price without a separate confirm step', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = sheetStickerConfiguratorProducts[0];
     await product.goto(data.path, data.heading);
@@ -184,7 +184,7 @@ test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rect
     // and re-confirmed unfixed on production in run #94 (2026-08-20), where all five variants
     // failed. Marked fixme to keep the board actionable; remove this once the storefront
     // localizes the size-guide alt text, and the test should go green on its own.
-    test.fixme(`MS-V2-058 ${data.heading} size-guide illustrations have meaningful, localized alt text`, async ({ page }) => {
+    test.fixme(`MS-CFG-015 ${data.heading} size-guide illustrations have meaningful, localized alt text`, async ({ page }) => {
       const product = new ProductV2Page(page);
       await product.goto(data.path, data.heading);
 

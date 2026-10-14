@@ -21,7 +21,7 @@ test.describe('storefront v2 catalog: plain die-cut shape stickers', {
   });
 
   for (const data of dieCutShapeStickers) {
-    test(`MS-V2-060 ${data.heading} supports size and quantity selection through to cart`, async ({ page }) => {
+    test(`MS-CFG-017 ${data.heading} supports size and quantity selection through to cart`, async ({ page }) => {
       const product = new ProductV2Page(page);
       await product.goto(data.path, data.heading);
 
@@ -38,7 +38,7 @@ test.describe('storefront v2 catalog: plain die-cut shape stickers', {
   }
 
   for (const data of dieCutRollStickers) {
-    test(`MS-V2-061 ${data.heading} supports size and quantity selection through to cart`, async ({ page }) => {
+    test(`MS-CFG-018 ${data.heading} supports size and quantity selection through to cart`, async ({ page }) => {
       const product = new ProductV2Page(page);
       await product.goto(data.path, data.heading);
 
@@ -54,7 +54,7 @@ test.describe('storefront v2 catalog: plain die-cut shape stickers', {
     });
   }
 
-  test('MS-V2-062 circle sticker: custom individual size recalculates the price', async ({ page }) => {
+  test('MS-CFG-019 circle sticker: custom individual size recalculates the price', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = dieCutShapeStickers.find((entry) => entry.path === './stickers/circle-sticker')!;
     await product.goto(data.path, data.heading);
@@ -64,7 +64,7 @@ test.describe('storefront v2 catalog: plain die-cut shape stickers', {
     await product.expectNextStepEnabled();
   });
 
-  test('MS-V2-063 circle roll sticker: custom individual size recalculates the price', async ({ page }) => {
+  test('MS-CFG-020 circle roll sticker: custom individual size recalculates the price', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = dieCutRollStickers.find((entry) => entry.path === './roll-stickers/circle-roll')!;
     await product.goto(data.path, data.heading);
@@ -74,7 +74,7 @@ test.describe('storefront v2 catalog: plain die-cut shape stickers', {
     await product.expectNextStepEnabled();
   });
 
-  test('MS-V2-064 circle sticker: bulk quantity tiers surface a discount that smaller tiers do not', async ({ page }) => {
+  test('MS-CFG-021 circle sticker: bulk quantity tiers surface a discount that smaller tiers do not', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = dieCutShapeStickers.find((entry) => entry.path === './stickers/circle-sticker')!;
     await product.goto(data.path, data.heading);
@@ -86,7 +86,7 @@ test.describe('storefront v2 catalog: plain die-cut shape stickers', {
     await product.expectBulkDiscountVisible();
   });
 
-  test('MS-V2-065 circle roll sticker: bulk quantity tiers surface a discount that smaller tiers do not', async ({ page }) => {
+  test('MS-CFG-022 circle roll sticker: bulk quantity tiers surface a discount that smaller tiers do not', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = dieCutRollStickers.find((entry) => entry.path === './roll-stickers/circle-roll')!;
     await product.goto(data.path, data.heading);

@@ -22,14 +22,14 @@ const canRunDestructiveAuth = process.env.RUN_AUTH_DESTRUCTIVE_E2E === 'true';
 test.describe('storefront registration', { tag: ['@auth', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowExpectedAuthFailures: true, allowKnownNuxtPayloadFailures: true });
 
-  test('MS-V2-079 register form exposes expected controls @smoke', async ({ page }) => {
+  test('MS-AUTH-012 register form exposes expected controls @smoke', async ({ page }) => {
     const register = new RegisterPage(page);
 
     await register.goto();
     await register.expectRegisterControls();
   });
 
-  test('MS-V2-080 blank register submit is blocked with required-field validation @validation', async ({ page }) => {
+  test('MS-AUTH-013 blank register submit is blocked with required-field validation @validation', async ({ page }) => {
     const register = new RegisterPage(page);
 
     await register.goto();
@@ -40,7 +40,7 @@ test.describe('storefront registration', { tag: ['@auth', '@production'] }, () =
     await expect(register.verificationCodeInput(1)).toHaveCount(0);
   });
 
-  test('MS-V2-081 malformed email is rejected before any account is requested @validation', async ({ page }) => {
+  test('MS-AUTH-014 malformed email is rejected before any account is requested @validation', async ({ page }) => {
     const register = new RegisterPage(page);
 
     await register.goto();
@@ -55,7 +55,7 @@ test.describe('storefront registration', { tag: ['@auth', '@production'] }, () =
     await expect(register.verificationCodeInput(1)).toHaveCount(0);
   });
 
-  test('MS-V2-082 password below the stated policy is rejected @validation', async ({ page }) => {
+  test('MS-AUTH-015 password below the stated policy is rejected @validation', async ({ page }) => {
     const register = new RegisterPage(page);
 
     await register.goto();
@@ -71,7 +71,7 @@ test.describe('storefront registration', { tag: ['@auth', '@production'] }, () =
     await expect(register.verificationCodeInput(1)).toHaveCount(0);
   });
 
-  test('MS-V2-083 registration is blocked until the terms checkbox is agreed @validation', async ({ page }) => {
+  test('MS-AUTH-016 registration is blocked until the terms checkbox is agreed @validation', async ({ page }) => {
     const register = new RegisterPage(page);
 
     await register.goto();
@@ -93,7 +93,7 @@ test.describe('storefront registration', { tag: ['@auth', '@production'] }, () =
     await expect(register.agreeTermsLabel).not.toHaveAttribute('data-state', 'error');
   });
 
-  test('MS-V2-084 register password visibility toggle masks and unmasks', async ({ page }) => {
+  test('MS-AUTH-017 register password visibility toggle masks and unmasks', async ({ page }) => {
     const register = new RegisterPage(page);
 
     await register.goto();
@@ -102,7 +102,7 @@ test.describe('storefront registration', { tag: ['@auth', '@production'] }, () =
     await expect(page).toHaveURL(/\/kr\/auth\/register\/?$/);
   });
 
-  test('MS-V2-085 login entry is reachable from register', async ({ page }) => {
+  test('MS-AUTH-018 login entry is reachable from register', async ({ page }) => {
     const register = new RegisterPage(page);
 
     await register.goto();
@@ -112,7 +112,7 @@ test.describe('storefront registration', { tag: ['@auth', '@production'] }, () =
     await login.expectMemberLoginControls();
   });
 
-  test('MS-V2-086 registering an existing email offers sign-in instead of a duplicate account @credentialed', async ({
+  test('MS-AUTH-019 registering an existing email offers sign-in instead of a duplicate account @credentialed', async ({
     page
   }) => {
     test.skip(!env.AUTH_TEST_EMAIL, 'Set AUTH_TEST_EMAIL to an already-registered member to run.');
@@ -141,11 +141,11 @@ test.describe('storefront registration', { tag: ['@auth', '@production'] }, () =
   test.describe('account creation', { tag: ['@destructive', '@slow'] }, () => {
     test.skip(
       !canRunDestructiveAuth,
-      'MS-V2-087/088 create a real member account and send real verification email. Set ' +
+      'MS-AUTH-020/MS-AUTH-021 create a real member account and send real verification email. Set ' +
         'RUN_AUTH_DESTRUCTIVE_E2E=true against a dev environment (not production) to run them.'
     );
 
-    test('MS-V2-087 a wrong verification code is rejected and creates no account', async ({ page }) => {
+    test('MS-AUTH-020 a wrong verification code is rejected and creates no account', async ({ page }) => {
       test.setTimeout(120_000);
 
       const mailbox = await createMailTmAccount();
@@ -172,7 +172,7 @@ test.describe('storefront registration', { tag: ['@auth', '@production'] }, () =
       await expect(page).toHaveURL(/\/kr\/auth\/register\/?$/);
     });
 
-    test('MS-V2-088 a correct verification code creates the account and signs the new member in', async ({ page }) => {
+    test('MS-AUTH-021 a correct verification code creates the account and signs the new member in', async ({ page }) => {
       test.setTimeout(120_000);
 
       const mailbox = await createMailTmAccount();
@@ -193,7 +193,7 @@ test.describe('storefront registration', { tag: ['@auth', '@production'] }, () =
       expect(response.status()).toBe(201);
       // Books the new member for deletion by the global teardown, so a RUN_AUTH_DESTRUCTIVE_E2E run
       // stops growing the target server's user table by one row each time.
-      recordCreatedAccount({ email: mailbox.address, createdBy: 'MS-V2-088' });
+      recordCreatedAccount({ email: mailbox.address, createdBy: 'MS-AUTH-021' });
 
       // Registration signs the new member straight in and hands off to profile onboarding.
       await expect(page).toHaveURL(/\/kr\/auth\/profile\/?$/);

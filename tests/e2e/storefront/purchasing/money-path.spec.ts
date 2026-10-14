@@ -28,7 +28,7 @@ test.describe('storefront v2 money path', { tag: ['@regression', '@production', 
     allowGuestCheckoutBootstrap401: true
   });
 
-  test('MS-V2-097 the quoted price survives product page, cart, and checkout unchanged', async ({ page }) => {
+  test('MS-CHK-004 the quoted price survives product page, cart, and checkout unchanged', async ({ page }) => {
     const data = v2Products.dieCutSticker;
     const product = new ProductV2Page(page);
 
@@ -74,7 +74,7 @@ test.describe('storefront v2 money path', { tag: ['@regression', '@production', 
     ).toBeGreaterThanOrEqual(summary.subtotal);
   });
 
-  test('MS-V2-098 an order below the free-shipping threshold is charged shipping', async ({ page }) => {
+  test('MS-CHK-005 an order below the free-shipping threshold is charged shipping', async ({ page }) => {
     const data = v2Products.dieCutSticker;
     const product = new ProductV2Page(page);
 
@@ -87,7 +87,7 @@ test.describe('storefront v2 money path', { tag: ['@regression', '@production', 
     // the paid-shipping branch, and that should be a loud failure rather than a silent pass.
     expect(
       quotedPrice,
-      `MS-V2-098 needs a subtotal below ${formatWon(freeShippingThresholdWon)} to exercise paid shipping, but the ` +
+      `MS-CHK-005 needs a subtotal below ${formatWon(freeShippingThresholdWon)} to exercise paid shipping, but the ` +
         `${data.quantity}개 tier now quotes ${formatWon(quotedPrice)}. Lower v2Products.dieCutSticker.quantity.`
     ).toBeLessThan(freeShippingThresholdWon);
 
@@ -103,7 +103,7 @@ test.describe('storefront v2 money path', { tag: ['@regression', '@production', 
     );
   });
 
-  test('MS-V2-099 an order at or above the free-shipping threshold ships free', async ({ page }) => {
+  test('MS-CHK-006 an order at or above the free-shipping threshold ships free', async ({ page }) => {
     const data = v2Products.dieCutSticker;
     const freeShippingQuantity = 1_000;
     const product = new ProductV2Page(page);
@@ -115,7 +115,7 @@ test.describe('storefront v2 money path', { tag: ['@regression', '@production', 
     const quotedPrice = await product.captureQuantityTierPrice(freeShippingQuantity);
     expect(
       quotedPrice,
-      `MS-V2-099 needs a subtotal at or above ${formatWon(freeShippingThresholdWon)} to exercise free shipping, but ` +
+      `MS-CHK-006 needs a subtotal at or above ${formatWon(freeShippingThresholdWon)} to exercise free shipping, but ` +
         `the ${freeShippingQuantity}개 tier quotes ${formatWon(quotedPrice)}. Raise freeShippingQuantity.`
     ).toBeGreaterThanOrEqual(freeShippingThresholdWon);
 

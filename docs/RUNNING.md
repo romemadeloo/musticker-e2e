@@ -21,7 +21,7 @@ npm run test:e2e:list       # confirms the suite loads: 2,467 desktop tests in 3
 ```
 
 The desktop projects skip `@mobile` tests; `E2E_BROWSER_PROJECT=chromium-mobile` lists the one
-mobile test (MS-V2-022). The suite is 2,468 tests in 32 files in total.
+mobile test (MS-NAV-008). The suite is 2,468 tests in 32 files in total.
 
 On Windows PowerShell, use `npm.cmd` / `npx.cmd` if script execution is restricted.
 
@@ -49,10 +49,10 @@ somewhere unexpected.
 
 | Script | Runs |
 | --- | --- |
-| `npm run test:destructive` | Guest checkout (MS-V2-025), registration, password rotation and cart merge |
+| `npm run test:destructive` | Guest checkout (MS-CHK-001), registration, password rotation and cart merge |
 | `npm run test:destructive:auth` | Only the account-changing tests in `storefront/auth` |
 | `npm run admin:login` | Captures an admin panel session (a person enters the code). See [below](#admin-panel-runs) |
-| `npm run test:admin:destructive` | Storefront-to-admin order processing (MS-ADM-001) on static-1 |
+| `npm run test:admin:destructive` | Storefront-to-admin order processing (MS-ADMO-001) on static-1 |
 
 **Other:**
 
@@ -67,7 +67,7 @@ somewhere unexpected.
 To run a single test by ID, filter on its title:
 
 ```bash
-npx playwright test -g "MS-V2-097"
+npx playwright test -g "MS-CHK-004"
 ```
 
 ## Environments
@@ -107,10 +107,10 @@ All of them are documented, with examples, in [.env.example](../.env.example).
 | `PW_WORKERS` | Worker count override. Defaults: 1 locally, 2 in CI |
 | `AUTH_TEST_EMAIL`, `AUTH_TEST_PASSWORD` | Seeded member for `@credentialed` tests. Unset means those tests skip |
 | `INTERNAL_ORIGIN_KEY`, `DEV_INTERNAL_ORIGIN_KEY` | Firewall exemption keys (production / dev). Unset means the tests fall back to retrying 403s |
-| `RUN_PAYMENT_E2E=true` | Enables guest checkout, which creates a real order (MS-V2-025) |
-| `RUN_AUTH_DESTRUCTIVE_E2E=true` | Enables registration, password rotation and cart merge (MS-V2-087/088/094/104) |
-| `RUN_ADMIN_DESTRUCTIVE_E2E=true` | Enables admin order processing (MS-ADM-001) |
-| `ADMIN_E2E_ORDER_NO` | The order MS-ADM-001 processes (see [below](#admin-panel-runs)) |
+| `RUN_PAYMENT_E2E=true` | Enables guest checkout, which creates a real order (MS-CHK-001) |
+| `RUN_AUTH_DESTRUCTIVE_E2E=true` | Enables registration, password rotation and cart merge (MS-AUTH-020/MS-AUTH-021/MS-AUTH-027/MS-CRT-005) |
+| `RUN_ADMIN_DESTRUCTIVE_E2E=true` | Enables admin order processing (MS-ADMO-001) |
+| `ADMIN_E2E_ORDER_NO` | The order MS-ADMO-001 processes (see [below](#admin-panel-runs)) |
 | `ADMIN_EMAIL`, `ADMIN_PASSWORD` | Optional. Pre-fill the form in `npm run admin:login` |
 | `RUN_VISUAL_E2E=true` | Enables screenshot comparisons |
 | `SELF_HEAL=off` | Makes renamed copy fail instead of self-healing. See [ARCHITECTURE.md](ARCHITECTURE.md#self-healing-locators) |
@@ -154,7 +154,7 @@ test.skip(!hasMemberCredentials(), SKIP_WITHOUT_MEMBER_CREDENTIALS);
 ```
 
 The session is fetched once per worker and parked at `.auth/member.json` (gitignored) for
-inspection. Only the tests about sign-in itself use the form: MS-V2-034, 035, 094 and 104.
+inspection. Only the tests about sign-in itself use the form: MS-AUTH-009, MS-AUTH-010, MS-AUTH-027 and MS-CRT-005.
 
 **Admin.** See the next section.
 
@@ -178,7 +178,7 @@ with a message telling you to run `admin:login` again. If the panel shows **Acti
 Detected**, choosing *Logout & Continue* signs the account out everywhere else, including your
 own browser.
 
-**MS-ADM-001** takes one order all the way from design upload to 주문 완료. Checkout on
+**MS-ADMO-001** takes one order all the way from design upload to 주문 완료. Checkout on
 dev-static-1 currently blocks automated browsers with a Cloudflare check before payment, so the
 test starts from an order the seeded member already placed:
 

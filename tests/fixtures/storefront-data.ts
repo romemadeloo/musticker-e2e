@@ -92,7 +92,7 @@ export const checkoutSummaryLabels = {
   total: '합계'
 } as const;
 
-// The storefront promises 5만원 이상 무료배송 on every product page (asserted by MS-V2-013). Verified
+// The storefront promises 5만원 이상 무료배송 on every product page (asserted by MS-CFG-005). Verified
 // live on development-1 on 2026-08-27: a 32,500원 subtotal is charged 3,000원, a 106,000원 subtotal
 // is charged 0원.
 export const freeShippingThresholdWon = 50_000;
@@ -143,7 +143,7 @@ export const authCopy = {
   requiredFieldLogin: '필수 입력 항목입니다.',
   invalidEmailFormat: '이메일 형식이 올바르지 않습니다.',
   // Deliberately identical whether or not the address is registered, so the form does not leak
-  // account existence. MS-V2-030 asserts exactly that.
+  // account existence. MS-AUTH-005 asserts exactly that.
   invalidCredentials: '이메일 주소 & 비밀번호가 일치하지 않습니다.',
   loginSuccessToast: '로그인에 성공했습니다.',
   registerPasswordPolicy: /비밀번호는 최소 6자 이상[\s\S]*대문자, 숫자/,
@@ -452,7 +452,7 @@ const oblongShapeSizePresets = [
 
 // A custom size that packs exactly one sticker per sheet on all five products, so it trips the
 // minimum-two-per-sheet rule everywhere. 144x206 and larger packs zero and trips the same rule --
-// there is deliberately no separate max-work-area message, see MS-V2-073.
+// there is deliberately no separate max-work-area message, see MS-SHT-001.
 export const blockedCustomSize = { widthMm: 123, heightMm: 123 } as const;
 
 type SizePreset = { readonly label: string; readonly dimensions: string };

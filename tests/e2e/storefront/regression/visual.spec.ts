@@ -26,7 +26,7 @@ test.describe('storefront v2 visual snapshots', { tag: ['@visual', '@production'
     ['die-cut-sticker', './stickers/die-cut-sticker'],
     ['faq', './faq']
   ] as const) {
-    test(`MS-V2-024 ${name} visual snapshot`, async ({ page }) => {
+    test(`MS-UX-002 ${name} visual snapshot`, async ({ page }) => {
       await gotoStorefront(page, appPath(path));
       await settleForSnapshot(page);
 

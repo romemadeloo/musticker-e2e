@@ -17,18 +17,36 @@ workbook. They replace the "Automation Standards" section of the retired `test-c
 Every test title starts with its case ID. The workbook uses the same ID, which is what links a
 row in [test-cases.xlsx](test-cases.xlsx) to the code.
 
-| Prefix | Scope | Example |
+Since workbook v1.2 the prefix names the module (the workbook's Area), so an ID tells you where a
+case belongs: `MS-<MODULE>-###`.
+
+| Prefix | Module (workbook Area) | Example |
 | --- | --- | --- |
-| `MS-V2-###` | Storefront | `MS-V2-097 the quoted tier price survives …` |
-| `MS-PRC-<product>` | Pricing, one generated test per price-table row | `MS-PRC-circle-sticker area 900 (30x30) matches …` |
-| `MS-PRC-INT-<product>` | Pricing interpolation | `MS-PRC-INT-die-cut-sticker quantity 15 interpolates …` |
-| `MS-PRC-MAP` | Pricing table mapping | `MS-PRC-MAP die-cut-sticker is served by pricing table 51` |
-| `MS-ADM-###` | Admin panel, including storefront-to-admin journeys | `MS-ADM-001 artwork review, customer proof approval, …` |
+| `MS-NAV-###` | 1. Smoke & core navigation | `MS-NAV-001 homepage loads with critical public content` |
+| `MS-DSC-###` | 2. Discovery & content | `MS-DSC-001 sticker category lists expected product links` |
+| `MS-CFG-###` | 3. Product configuration | `MS-CFG-001 die-cut sticker supports size and quantity selection` |
+| `MS-SHT-###` | 4. Sheet sticker size rules | `MS-SHT-001 원형 판스티커 rejects a custom size that fits only one sticker per sheet` |
+| `MS-CRT-###` | 5. Cart | `MS-CRT-001 removing the only line item leaves an empty cart, not a broken one` |
+| `MS-CHK-###` | 6. Checkout & money path | `MS-CHK-004 the quoted tier price survives …` |
+| `MS-PRC-<product>` | 7. Pricing, one generated test per price-table row | `MS-PRC-circle-sticker area 900 (30x30) matches …` |
+| `MS-PRC-INT-<product>` | 7. Pricing interpolation | `MS-PRC-INT-die-cut-sticker quantity 15 interpolates …` |
+| `MS-PRC-MAP` | 7. Pricing table mapping | `MS-PRC-MAP die-cut-sticker is served by pricing table 51` |
+| `MS-AUTH-###` | 8. Sign-in & registration | `MS-AUTH-001 account navigation opens login` |
+| `MS-ACC-###` | 9. Account & order history | `MS-ACC-001 order history lists the member's orders with a number and a date each` |
+| `MS-INQ-###` | 10. Inquiry & validation | `MS-INQ-001 inquiry form validates blank and invalid email submissions` |
+| `MS-API-###` | 11. Public API | `MS-API-001 navigation categories API returns public category data` |
+| `MS-UX-###` | 12. Accessibility, visual & errors | `MS-UX-001 core controls are named and keyboard reachable` |
+| `MS-SEC-###`, `MS-WAF-###` | 13. Suite safety & resilience | `MS-SEC-001 first-party musticker hosts are in scope` |
+| `MS-ADMO-###` | 14. Admin - order processing, including storefront-to-admin journeys | `MS-ADMO-001 artwork review, customer proof approval, …` |
+| `MS-ADMA-###` | 15. Admin - access & order management | `MS-ADMA-001 (planned: admin login verification code)` |
 
 - IDs are never reused. A withdrawn case keeps its ID, is struck through in the workbook, and gets a
-  note explaining why (see MS-V2-059).
-- Take the next free number in the prefix. The workbook's Test Cases tab is sorted by ID, so the
-  last row is the highest.
+  note explaining why (see MS-CFG-016).
+- Take the next free number in the case's module: the module's last row in the Test Cases tab has
+  the highest number.
+- The workbook's **Legacy ID** column keeps each case's pre-v1.2 ID (`MS-V2-###` / `MS-ADM-###`),
+  so older defect reports, notes and Allure history can still be traced. Do not fill it for new
+  cases.
 - In the workbook, the pricing suite is grouped into cases a person can execute
   (`MS-PRC-TBL-<product>`, `MS-PRC-INT-<template>`, `MS-PRC-MAP-<n>`). Each row states how many
   generated tests it covers.
@@ -59,7 +77,7 @@ import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 test.describe('storefront v2 product configuration', { tag: ['@regression', '@production', '@purchasing'] }, () => {
   test.use({ allowGuestUserMe401: true });                          // named guard allowances only
 
-  test('MS-V2-009 die-cut sticker supports size and quantity selection', async ({ page }) => {
+  test('MS-CFG-001 die-cut sticker supports size and quantity selection', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = v2Products.dieCutSticker;
 
@@ -122,7 +140,7 @@ test.describe('storefront v2 product configuration', { tag: ['@regression', '@pr
   `KNOWN_FALLING_PRICE_INTERVALS`), not hidden by loosening an assertion. New occurrences must
   still fail.
 - When product hasn't decided which side of a discrepancy is wrong, leave it unasserted and say
-  so in a comment. MS-ADM-001 did this for the proof-approval wording until product changed the
+  so in a comment. MS-ADMO-001 did this for the proof-approval wording until product changed the
   copy (MUS-QA-004), and asserts it now. Don't encode the bug as the expectation.
 - A test whose value depends on a precondition (a member existing on the server, a quantity on one
   side of a threshold, a seed order at the right stage) asserts that precondition first. A

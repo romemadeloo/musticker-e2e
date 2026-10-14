@@ -48,7 +48,7 @@ test.describe('storefront v2 cart lifecycle', { tag: ['@regression', '@productio
     allowTransientProductPageFailures: true
   });
 
-  test('MS-V2-100 removing the only line item leaves an empty cart, not a broken one', async ({ page }) => {
+  test('MS-CRT-001 removing the only line item leaves an empty cart, not a broken one', async ({ page }) => {
     const data = v2Products.dieCutSticker;
     const header = new HeaderComponent(page);
 
@@ -67,7 +67,7 @@ test.describe('storefront v2 cart lifecycle', { tag: ['@regression', '@productio
     await cart.expectEmpty();
   });
 
-  test('MS-V2-101 two distinct products become two lines whose prices sum to the cart total', async ({ page }) => {
+  test('MS-CRT-002 two distinct products become two lines whose prices sum to the cart total', async ({ page }) => {
     const first = v2Products.dieCutSticker;
     const header = new HeaderComponent(page);
 
@@ -94,7 +94,7 @@ test.describe('storefront v2 cart lifecycle', { tag: ['@regression', '@productio
     expect(total, 'the cart total must be the two quoted prices added together').toBe(firstPrice + secondPrice);
   });
 
-  test('MS-V2-102 a guest cart survives a full page reload @smoke', async ({ page }) => {
+  test('MS-CRT-003 a guest cart survives a full page reload @smoke', async ({ page }) => {
     const data = v2Products.dieCutSticker;
     const header = new HeaderComponent(page);
 
@@ -112,7 +112,7 @@ test.describe('storefront v2 cart lifecycle', { tag: ['@regression', '@productio
     expect(await cart.captureRowPrices(), 'the restored line must keep its price').toEqual([price]);
   });
 
-  test('MS-V2-103 the cart page confirms a removal before acting on it', async ({ page }) => {
+  test('MS-CRT-004 the cart page confirms a removal before acting on it', async ({ page }) => {
     const data = v2Products.dieCutSticker;
 
     await addToCart(page, { ...data, size: data.size });
@@ -135,7 +135,7 @@ test.describe('storefront v2 cart lifecycle', { tag: ['@regression', '@productio
 test.describe('storefront v2 cart lifecycle copy', { tag: ['@regression', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });
 
-  test('MS-V2-105 an empty cart page offers a way back into the catalog', async ({ page }) => {
+  test('MS-CRT-006 an empty cart page offers a way back into the catalog', async ({ page }) => {
     const cart = new CartV2Page(page);
 
     await gotoStorefront(page, appPath('./cart'));
@@ -166,13 +166,13 @@ test.describe('storefront v2 guest-to-member cart merge', { tag: ['@regression',
   });
 
   test(
-    'MS-V2-104 a guest cart is merged into the member cart on login',
+    'MS-CRT-005 a guest cart is merged into the member cart on login',
     { tag: ['@credentialed', '@destructive', '@slow'] },
     async ({ page }) => {
       test.skip(!hasMemberCredentials(), SKIP_WITHOUT_MEMBER_CREDENTIALS);
       test.skip(
         !canRunDestructiveAuth,
-        'MS-V2-104 adds a line to the seeded member\'s real cart before removing it again. Set ' +
+        'MS-CRT-005 adds a line to the seeded member\'s real cart before removing it again. Set ' +
           'RUN_AUTH_DESTRUCTIVE_E2E=true against a dev environment (not production) to run it.'
       );
       test.setTimeout(180_000);

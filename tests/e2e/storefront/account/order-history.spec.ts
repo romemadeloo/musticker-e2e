@@ -33,12 +33,12 @@ test.describe('storefront v2 order history', { tag: ['@regression', '@production
 
   test.skip(!hasMemberCredentials(), SKIP_WITHOUT_MEMBER_CREDENTIALS);
 
-  test('MS-V2-107 order history lists the member\'s orders with a number and a date each @smoke', async ({ page }) => {
+  test('MS-ACC-001 order history lists the member\'s orders with a number and a date each @smoke', async ({ page }) => {
     const orders = new AccountOrdersPage(page);
 
     await orders.goto();
     const { count: cardCount } = await orders.openSegmentWithOrders();
-    test.skip(cardCount === 0, 'MS-V2-107 needs a member holding at least one order in either segment.');
+    test.skip(cardCount === 0, 'MS-ACC-001 needs a member holding at least one order in either segment.');
 
     // Every card has to identify its order -- a card a shopper cannot trace back to an order number
     // is not usable, and captureOrderNumbers() fails the test naming the offending card.
@@ -61,12 +61,12 @@ test.describe('storefront v2 order history', { tag: ['@regression', '@production
     expect(await orders.captureDeclaredOrderCount()).toBeGreaterThan(0);
   });
 
-  test('MS-V2-108 selecting an order opens that order, not a placeholder', async ({ page }) => {
+  test('MS-ACC-002 selecting an order opens that order, not a placeholder', async ({ page }) => {
     const orders = new AccountOrdersPage(page);
 
     await orders.goto();
     const { count } = await orders.openSegmentWithOrders();
-    test.skip(count === 0, 'MS-V2-108 needs a member holding at least one order to open.');
+    test.skip(count === 0, 'MS-ACC-002 needs a member holding at least one order to open.');
 
     // The detail pane starts as a prompt, so "the invoice is showing" is a real state change.
     await orders.expectNoOrderSelected();
@@ -75,7 +75,7 @@ test.describe('storefront v2 order history', { tag: ['@regression', '@production
     await orders.expectOrderDetail(orderNumber);
   });
 
-  test('MS-V2-109 the 진행 중 / 이전 내역 control switches which orders are listed', async ({ page }) => {
+  test('MS-ACC-003 the 진행 중 / 이전 내역 control switches which orders are listed', async ({ page }) => {
     const orders = new AccountOrdersPage(page);
 
     await orders.goto();
@@ -92,7 +92,7 @@ test.describe('storefront v2 order history', { tag: ['@regression', '@production
 
     test.skip(
       inProgress.length + past.length === 0,
-      'MS-V2-109 needs a member holding at least one order; with both segments empty there is nothing to filter.'
+      'MS-ACC-003 needs a member holding at least one order; with both segments empty there is nothing to filter.'
     );
 
     // The two lists have to be genuinely different sets, not the same list relabelled.
@@ -107,12 +107,12 @@ test.describe('storefront v2 order history', { tag: ['@regression', '@production
     expect(await orders.captureOrderNumbers(), 'switching back must restore the in-progress list').toEqual(inProgress);
   });
 
-  test('MS-V2-110 order search narrows the list to the order that was searched for', async ({ page }) => {
+  test('MS-ACC-004 order search narrows the list to the order that was searched for', async ({ page }) => {
     const orders = new AccountOrdersPage(page);
 
     await orders.goto();
     const { count: totalBefore } = await orders.openSegmentWithOrders();
-    test.skip(totalBefore < 2, 'MS-V2-110 needs a member with at least two orders to prove the list narrowed.');
+    test.skip(totalBefore < 2, 'MS-ACC-004 needs a member with at least two orders to prove the list narrowed.');
 
     const [firstOrderNumber] = await orders.captureOrderNumbers();
 
@@ -133,7 +133,7 @@ test.describe('storefront v2 order history', { tag: ['@regression', '@production
       .toBe(totalBefore);
   });
 
-  test('MS-V2-111 order history tools are present and named', async ({ page }) => {
+  test('MS-ACC-005 order history tools are present and named', async ({ page }) => {
     const orders = new AccountOrdersPage(page);
 
     await orders.goto();

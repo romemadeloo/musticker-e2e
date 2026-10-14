@@ -26,7 +26,7 @@ import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 // Verified live against development-1 (dev.musticker.com) on 2026-08-26.
 //
 // Tagged @production as of 2026-08-28: the narrowed preset tables have been promoted, so the seven
-// single-sticker presets that used to keep MS-V2-075 red on production are gone and all 24 tests
+// single-sticker presets that used to keep MS-SHT-003 red on production are gone and all 24 tests
 // here pass against www.musticker.com.
 test.describe('storefront v2 sheet sticker size rules (minimum two stickers per sheet)', {
   tag: ['@regression', '@production', '@purchasing']
@@ -42,7 +42,7 @@ test.describe('storefront v2 sheet sticker size rules (minimum two stickers per 
   });
 
   for (const data of sheetStickerConfiguratorProducts) {
-    test(`MS-V2-073 ${data.heading} rejects a custom size that fits only one sticker per sheet`, async ({ page }) => {
+    test(`MS-SHT-001 ${data.heading} rejects a custom size that fits only one sticker per sheet`, async ({ page }) => {
       const product = new ProductV2Page(page);
       await product.goto(data.path, data.heading);
 
@@ -64,7 +64,7 @@ test.describe('storefront v2 sheet sticker size rules (minimum two stickers per 
     });
   }
 
-  test('MS-V2-074 circle sheet sticker: the 138x97 gate is exact', async ({ page }) => {
+  test('MS-SHT-002 circle sheet sticker: the 138x97 gate is exact', async ({ page }) => {
     const product = new ProductV2Page(page);
     const { largestAllowed, smallestBlocked } = sheetSizeBoundary;
     await product.goto(sheetSizeBoundary.path, sheetSizeBoundary.heading);
@@ -86,7 +86,7 @@ test.describe('storefront v2 sheet sticker size rules (minimum two stickers per 
   for (const boundaryCase of sheetPackingBoundaryCases) {
     const label = `${boundaryCase.widthMm}x${boundaryCase.heightMm}`;
 
-    test(`MS-V2-078 circle sheet sticker: ${label} packs ${boundaryCase.expected} per sheet and is ${
+    test(`MS-SHT-006 circle sheet sticker: ${label} packs ${boundaryCase.expected} per sheet and is ${
       fitsMinimumPerSheet(boundaryCase.widthMm, boundaryCase.heightMm) ? 'orderable' : 'refused'
     }`, async ({ page }) => {
       const product = new ProductV2Page(page);
@@ -102,7 +102,7 @@ test.describe('storefront v2 sheet sticker size rules (minimum two stickers per 
         return;
       }
 
-      // MS-V2-073 covers what the readouts show for a rejected size; only the gate is asserted here.
+      // MS-SHT-001 covers what the readouts show for a rejected size; only the gate is asserted here.
       await product.expectMinimumTwoPerSheetError();
       await product.expectAllQuantityTiersZeroPriced();
       await product.expectNextStepDisabled();
@@ -110,7 +110,7 @@ test.describe('storefront v2 sheet sticker size rules (minimum two stickers per 
   }
 
   for (const data of sheetStickerConfiguratorProducts) {
-    test(`MS-V2-075 ${data.heading} preset sizes match the shape family table and all fit at least two per sheet`, async ({ page }) => {
+    test(`MS-SHT-003 ${data.heading} preset sizes match the shape family table and all fit at least two per sheet`, async ({ page }) => {
       const product = new ProductV2Page(page);
       await product.goto(data.path, data.heading);
 
@@ -131,7 +131,7 @@ test.describe('storefront v2 sheet sticker size rules (minimum two stickers per 
     });
   }
 
-  test('MS-V2-076 circle sheet sticker: both cart edit dialogs reject a one-per-sheet custom size', async ({ page }) => {
+  test('MS-SHT-004 circle sheet sticker: both cart edit dialogs reject a one-per-sheet custom size', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = sheetStickerConfiguratorProducts[0];
     await product.goto(data.path, data.heading);
@@ -157,7 +157,7 @@ test.describe('storefront v2 sheet sticker size rules (minimum two stickers per 
     );
   });
 
-  test('MS-V2-077 circle sheet sticker: the A5 배치 가이드 modal rejects a one-per-sheet custom size', async ({ page }) => {
+  test('MS-SHT-005 circle sheet sticker: the A5 배치 가이드 modal rejects a one-per-sheet custom size', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = sheetStickerConfiguratorProducts[0];
     await product.goto(data.path, data.heading);

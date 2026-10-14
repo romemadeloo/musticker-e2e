@@ -13,7 +13,7 @@ test.describe('storefront v2 checkout page', { tag: ['@regression', '@production
     allowGuestCheckoutBootstrap401: true
   });
 
-  test('MS-V2-041 checkout page renders shipping, payment, and order summary without submitting', async ({ page }) => {
+  test('MS-CHK-002 checkout page renders shipping, payment, and order summary without submitting', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = v2Products.dieCutSticker;
 
@@ -27,7 +27,7 @@ test.describe('storefront v2 checkout page', { tag: ['@regression', '@production
     await checkout.expectCheckoutFormRenders();
   });
 
-  test('MS-V2-042 checkout blocks payment submission when required fields are blank', async ({ page }) => {
+  test('MS-CHK-003 checkout blocks payment submission when required fields are blank', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = v2Products.dieCutSticker;
 

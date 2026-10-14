@@ -149,7 +149,7 @@ export class AccountOrdersPage {
    *
    * Deliberately does not assert the invoice arithmetic: an order whose amount was revised after
    * placement renders both the old and new totals plus an 추가 결제 금액 row, so the identity that
-   * holds at checkout does not hold here. MS-V2-097 covers the arithmetic where it is unambiguous.
+   * holds at checkout does not hold here. MS-CHK-004 covers the arithmetic where it is unambiguous.
    */
   async expectOrderDetail(orderNumber: string): Promise<void> {
     await expect(this.detailPane).toContainText(orderNumber, { timeout: 20_000 });

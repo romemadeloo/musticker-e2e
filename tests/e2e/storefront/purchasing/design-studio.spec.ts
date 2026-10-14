@@ -27,7 +27,7 @@ test.describe('storefront v2 order chooser and design studio', { tag: ['@regress
 
   const data = v2Products.dieCutSticker;
 
-  test('MS-V2-115 다음 단계 offers three ways to order: with a file, in the studio, or file later', async ({ page }) => {
+  test('MS-CFG-026 다음 단계 offers three ways to order: with a file, in the studio, or file later', async ({ page }) => {
     const product = new ProductV2Page(page);
     await product.goto(data.path, data.heading);
     await product.selectSize(data.size);
@@ -37,7 +37,7 @@ test.describe('storefront v2 order chooser and design studio', { tag: ['@regress
     await product.expectDesignUploadModal();
   });
 
-  test('MS-V2-116 the studio keeps the configured size and quantity and prices every tier 5% below the configurator', async ({
+  test('MS-CFG-027 the studio keeps the configured size and quantity and prices every tier 5% below the configurator', async ({
     page
   }) => {
     // The studio loads its editor and image model before it shows anything.
@@ -65,7 +65,7 @@ test.describe('storefront v2 order chooser and design studio', { tag: ['@regress
     }
   });
 
-  test('MS-V2-117 the studio refuses a low-resolution design and accepts a print-quality one', async ({ page }) => {
+  test('MS-CFG-028 the studio refuses a low-resolution design and accepts a print-quality one', async ({ page }) => {
     test.setTimeout(150_000);
     const product = new ProductV2Page(page);
 

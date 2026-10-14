@@ -119,7 +119,7 @@ one and provides:
 | Admin | A person runs `npm run admin:login` and enters the emailed code (`tests/setup/admin-login.setup.ts`) | `.auth/admin-<environment>.json` | About a week, and ends early if anyone signs in to that panel elsewhere |
 | Guest | A mail.tm disposable inbox receives the checkout code (`mail-tm.ts`) | Nothing saved | One test |
 
-Tests that are about sign-in itself (MS-V2-034, 035, 094, 104) use the form. Everything else takes a
+Tests that are about sign-in itself (MS-AUTH-009, MS-AUTH-010, MS-AUTH-027, MS-CRT-005) use the form. Everything else takes a
 session from the table above.
 
 The member login endpoint answers **HTTP 200 with `success: false`** when it refuses a login, so
@@ -128,7 +128,7 @@ The member login endpoint answers **HTTP 200 with `success: false`** when it ref
 ## Storefront to admin
 
 [tests/e2e/admin/orders/order-processing.spec.ts](../tests/e2e/admin/orders/order-processing.spec.ts)
-(MS-ADM-001) drives two browser contexts at once: `page` is the customer on the storefront and
+(MS-ADMO-001) drives two browser contexts at once: `page` is the customer on the storefront and
 `adminPage` is staff in the admin panel. After every hand-off it checks three things: the admin UI,
 the customer's UI, and the admin API's per-item activity log.
 
@@ -204,8 +204,8 @@ identifier does not vouch for, such as a 404 page, a different slug, or an ambig
   Each one is appended to `.auth/created-accounts.jsonl`
   ([test-data-ledger.ts](../tests/fixtures/test-data-ledger.ts)). The global teardown deletes
   them when `TEST_DATA_USER_DELETE_ENDPOINT` is set, and otherwise keeps the ledger for a later run.
-- **Carts.** MS-V2-104 adds to the seeded member's real cart and removes the line again.
-- **Orders.** MS-V2-025 creates a dev order. MS-ADM-001 takes one existing dev order to 주문 완료.
+- **Carts.** MS-CRT-005 adds to the seeded member's real cart and removes the line again.
+- **Orders.** MS-CHK-001 creates a dev order. MS-ADMO-001 takes one existing dev order to 주문 완료.
   Neither can be undone, which is why both are gated and dev-only.
 - **Upload files.** `tests/fixtures/files/`: `sample-design.png` (the customer's design),
   `qa-proof.png` (a transparent PNG, which the admin proof upload requires) and `studio-design.png`
