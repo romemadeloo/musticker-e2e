@@ -1,1 +1,0 @@
-category card ./sheet-stickers/square-sheet: expected "정사각형 판스티커", found "정사각형 시트 스티커"

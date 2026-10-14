@@ -1,1 +1,1 @@
-{"id":"b6f5e56065277f46d1260602ebcb4a24","fullName":"storefront/pricing/price-interpolation.spec.ts:103:7","name":"MS-PRC-INT-paper-roll area 56112 (168x334) interpolates between 55225 and 57000","status":"passed","testResultsByEnv":{"default":"a41bb7b1ae881912d425995bca161bba"}}
+{"id":"b6f5e56065277f46d1260602ebcb4a24","fullName":"storefront/pricing/price-interpolation.spec.ts:107:7","name":"MS-PRC-INT-paper-roll area 56112 (168x334) interpolates between 55225 and 57000","status":"passed","testResultsByEnv":{"default":"5d1e5d514e8c1b647eb86078a3512eba"}}

@@ -1,7 +1,0 @@
-[self-heal] category card ./sheet-stickers/die-cut-sheet: expected "자유형 판스티커", found "자유형 시트 스티커"
-[self-heal] category card ./sheet-stickers/circle-sheet: expected "원형 판스티커", found "원형 시트 스티커"
-[self-heal] category card ./sheet-stickers/oval-sheet: expected "타원형 판스티커", found "타원형 시트 스티커"
-[self-heal] category card ./sheet-stickers/square-sheet: expected "정사각형 판스티커", found "정사각형 시트 스티커"
-[self-heal] category card ./sheet-stickers/rectangle-sheet: expected "직사각형 판스티커", found "직사각형 시트 스티커"
-[self-heal] category card ./sheet-stickers/rounded-sheet: expected "둥근 사각 판스티커", found "둥근 사각 시트 스티커"
-[self-heal] category card ./sheet-stickers/die-cut-sheet: expected "자유형 판스티커", found "자유형 시트 스티커"

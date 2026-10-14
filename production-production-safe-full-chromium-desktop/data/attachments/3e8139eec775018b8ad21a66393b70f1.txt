@@ -1,1 +1,0 @@
-category card ./stickers/kiss-cut-sticker: expected "도무송 스티커", found "키스컷 스티커"

@@ -1,1 +1,1 @@
-{"id":"20f04775ddf255e165c9afec7afee0e1","fullName":"storefront/purchasing/product-config.spec.ts:19:3","name":"MS-V2-009 die-cut sticker supports size and quantity selection","status":"passed","testResultsByEnv":{"default":"2bb78c35353ced566f422e604ac10a20"}}
+{"id":"20f04775ddf255e165c9afec7afee0e1","fullName":"storefront/purchasing/product-config.spec.ts:19:3","name":"MS-V2-009 die-cut sticker supports size and quantity selection","status":"failed","testResultsByEnv":{"default":"d792750c38ea0f57313e9f4b21884226"}}

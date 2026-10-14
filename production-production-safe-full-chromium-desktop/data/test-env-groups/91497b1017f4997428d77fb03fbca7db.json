@@ -1,1 +1,1 @@
-{"id":"91497b1017f4997428d77fb03fbca7db","fullName":"storefront/pricing/price-interpolation.spec.ts:219:7","name":"MS-PRC-INT-circle-sticker lowest grid row 625 (25x25) prices from the CSV","status":"passed","testResultsByEnv":{"default":"26ddc79dc0c6eaa5339501b9f117d214"}}
+{"id":"91497b1017f4997428d77fb03fbca7db","fullName":"storefront/pricing/price-interpolation.spec.ts:250:7","name":"MS-PRC-INT-circle-sticker lowest grid row 625 (25x25) prices from the CSV","status":"failed","testResultsByEnv":{"default":"6b3f4c12cfe4959cc4b462a5db9f9ef3"}}

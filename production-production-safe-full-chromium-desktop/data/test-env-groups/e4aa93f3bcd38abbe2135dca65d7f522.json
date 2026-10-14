@@ -1,1 +1,1 @@
-{"id":"e4aa93f3bcd38abbe2135dca65d7f522","fullName":"storefront/pricing/price-table.spec.ts:59:7","name":"MS-PRC-transfer-sticker area 57600 (240x240) matches stickers/transfer-sticker.csv","status":"failed","testResultsByEnv":{"default":"b67020422a3c10a18d671abf4a039483"}}
+{"id":"e4aa93f3bcd38abbe2135dca65d7f522","fullName":"storefront/pricing/price-table.spec.ts:59:7","name":"MS-PRC-transfer-sticker area 57600 (240x240) matches stickers/transfer-sticker.csv","status":"passed","testResultsByEnv":{"default":"1c11450372ead8b43287f89447d07dc8"}}
