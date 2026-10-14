@@ -5,7 +5,6 @@ import { appPath } from '../../fixtures/env.js';
 import { gotoStorefront } from '../../fixtures/navigation.js';
 import { ko } from '../../fixtures/storefront-data.js';
 import { HeaderComponent } from './header-component.js';
-import type { CategoryPath } from './header-component.js';
 
 export class HomeV2Page {
   readonly page: Page;
@@ -38,6 +37,8 @@ export class HomeV2Page {
     const footer = this.footer();
 
     await expect(footer).toContainText(ko.footerBrand);
+    await expect(footer.getByRole('img', { name: ko.footerLogoAlt })).toBeVisible();
+    await expect(footer).toContainText(ko.footerCompany);
     await expect(footer).toContainText('1899-5529');
     await expect(footer).toContainText('sales@musticker.com');
     await expect(this.page.getByRole('link', { name: ko.terms }).first()).toBeVisible();
@@ -57,10 +58,6 @@ export class HomeV2Page {
     await localeButton.click();
     await expect(localeButton).toBeVisible();
     await this.page.keyboard.press('Escape').catch(() => undefined);
-  }
-
-  async goToCategory(linkName: string, path: CategoryPath): Promise<void> {
-    await this.header.goToCategory(linkName, path);
   }
 
   async openAccountEntry(): Promise<void> {

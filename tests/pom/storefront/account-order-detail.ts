@@ -27,7 +27,9 @@ export class AccountOrderDetail {
 
   /**
    * Opens an order by searching for it. Completed orders were still listed under 진행 중 on
-   * 2026-09-25, so the default segment is searched first; 이전 내역 is only the fallback.
+   * 2026-09-25, so the default segment is searched first; 이전 내역 is only the fallback. By
+   * 2026-10-14 they had moved to 이전 내역 (MUS-QA-007), which only the final step of MS-ADM-001
+   * reaches, so the order of the two searches still suits it.
    */
   async open(orderNumber: string): Promise<void> {
     await this.orders.goto();
@@ -92,8 +94,9 @@ export class AccountOrderDetail {
   }
 
   /**
-   * Opens the proof and approves it. Approval is a two-step confirm, and the second dialog's copy
-   * says approving moves the order to '제작 진행' -- it does not (see the spec).
+   * Opens the proof and approves it. Approval is a two-step confirm: the second dialog says the
+   * order goes to 제작 대기 (it used to promise '제작 진행', MUS-QA-004), and its 최종 시안 승인
+   * button stays disabled until the customer ticks that they have read the proof notes.
    */
   async approveProof(expectedProofFile: string): Promise<void> {
     await this.pane.getByRole('button', { name: storefrontOrderCopy.viewFinalProof, exact: true }).click();
@@ -103,9 +106,17 @@ export class AccountOrderDetail {
     await expect(proof.getByRole('img', { name: expectedProofFile }).first()).toBeVisible();
     await proof.getByRole('button', { name: storefrontOrderCopy.approveProof, exact: true }).click();
 
-    const confirm = this.page.getByRole('dialog').filter({ hasText: storefrontOrderCopy.approveProofConfirmHeading });
+    const confirm = this.page.getByRole('dialog', { name: storefrontOrderCopy.approveProofConfirmHeading });
     await expect(confirm).toBeVisible();
-    await confirm.getByRole('button', { name: storefrontOrderCopy.approveAndProduce, exact: true }).click();
+    await expect(confirm).toContainText(storefrontOrderCopy.approveProofOutcome);
+
+    const approve = confirm.getByRole('button', { name: storefrontOrderCopy.confirmApproveProof, exact: true });
+    await expect(approve, 'approval must wait for the acknowledgement').toBeDisabled();
+    // The drawn box sits over the real input and takes its clicks, so tick it through the label text
+    // the way a customer would.
+    await confirm.getByText(storefrontOrderCopy.approveProofAcknowledgement, { exact: true }).click();
+    await expect(confirm.getByRole('checkbox', { name: storefrontOrderCopy.approveProofAcknowledgement })).toBeChecked();
+    await approve.click();
     await expect(confirm).toBeHidden({ timeout: 20_000 });
   }
 

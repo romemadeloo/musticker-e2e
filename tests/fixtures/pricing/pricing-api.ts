@@ -16,7 +16,7 @@ export type QuotationParams = {
   width: number;
   height: number;
   quantity?: number;
-  // Sheet products select a different table per material (1=PVC 매트, 2=투명, 3=홀로그램). Unused
+  // Sheet products select a different table per material (1=무광 화이트, formerly PVC 매트; 2=투명; 3=홀로그램). Unused
   // by the /kr/stickers products, wired here for the sheet-sticker category.
   materialId?: number;
   colorId?: number;

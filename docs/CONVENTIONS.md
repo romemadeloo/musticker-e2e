@@ -122,8 +122,8 @@ test.describe('storefront v2 product configuration', { tag: ['@regression', '@pr
   `KNOWN_FALLING_PRICE_INTERVALS`), not hidden by loosening an assertion. New occurrences must
   still fail.
 - When product hasn't decided which side of a discrepancy is wrong, leave it unasserted and say
-  so in a comment. MS-ADM-001 does this for the proof-approval wording. Don't encode the bug as the
-  expectation.
+  so in a comment. MS-ADM-001 did this for the proof-approval wording until product changed the
+  copy (MUS-QA-004), and asserts it now. Don't encode the bug as the expectation.
 - A test whose value depends on a precondition (a member existing on the server, a quantity on one
   side of a threshold, a seed order at the right stage) asserts that precondition first. A
   misconfigured run then fails loudly instead of passing while proving nothing.

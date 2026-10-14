@@ -11,7 +11,11 @@ export const ko = {
   orderNow: '\ubc14\ub85c \uc8fc\ubb38\ud558\uae30',
   inquiryCta: '\uc81c\uc791 \ubb38\uc758\ud558\uae30',
   reviews225: /\uc0ac\uc9c4 \ud6c4\uae30\s*\d+\uac1c|\d+\uac1c \uc0ac\uc9c4 \ud6c4\uae30/,
-  footerBrand: 'MUSTICKER / \uba38\uc2a4\ud2f0\ucee4',
+  // The footer was redesigned by 2026-10-14: the wordmark is now an image (alt "musticker logo")
+  // followed by this text, where it used to read "MUSTICKER / \uba38\uc2a4\ud2f0\ucee4" in full.
+  footerBrand: '/ \uba38\uc2a4\ud2f0\ucee4',
+  footerLogoAlt: 'musticker logo',
+  footerCompany: '(\uc8fc)\uae00\ub85c\ud53d\uc2a4',
   terms: '\uc774\uc6a9\uc57d\uad00',
   privacy: '\uac1c\uc778\uc815\ubcf4\ucc98\ub9ac\ubc29\uce68',
   faq: '\uc790\uc8fc \ubb3b\ub294 \uc9c8\ubb38',
@@ -53,13 +57,20 @@ export const ko = {
   naverInquiry: '\ub124\uc774\ubc84 \ud1a1\ud1a1 \uc73c\ub85c \ubb38\uc758\ud558\uae30',
   addToCart: '\uc7a5\ubc14\uad6c\ub2c8 \ub2f4\uae30',
   sendFileLater: '\uc774 \ub2e8\uacc4\ub97c \uac74\ub108\ub6f0\uace0 \ub098\uc911\uc5d0 \ud30c\uc77c \ubcf4\ub0b4\uae30',
+  // The order chooser that \ub2e4\uc74c \ub2e8\uacc4 opens (since early October 2026).
+  orderChooserHeading: '\uc5b4\ub5bb\uac8c \uc8fc\ubb38\ud558\uc2dc\uaca0\uc5b4\uc694?',
+  uploadFileTypes: 'ai \u00b7 psd \u00b7 pdf \u00b7 eps \u00b7 tif \u00b7 png \u00b7 jpg',
+  orderWithFile: '\ud30c\uc77c\ub85c \uc8fc\ubb38\ud558\uae30',
+  openStudio: '\uc2a4\ud29c\ub514\uc624 \uc774\ub3d9',
+  studioDiscount: '5% \ucd94\uac00 \ud560\uc778',
   secureCheckout: '\uc548\uc804 \uacb0\uc81c',
   payNow: '\uacb0\uc81c\ud558\uae30',
   checkoutEmailPlaceholder: '\uc774\uba54\uc77c \uc8fc\uc18c\ub97c \uc785\ub825\ud574 \uc8fc\uc138\uc694.',
   checkoutNamePlaceholder: '\uc131\ud568\uc744 \uc785\ub825\ud558\uc138\uc694',
   checkoutPostalCodePlaceholder: '\uc6b0\ud3b8\ubc88\ud638\ub97c \uc785\ub825\ud558\uc138\uc694',
   hologram: '\ud640\ub85c\uadf8\ub7a8',
-  pvcMatte: 'PVC \ub9e4\ud2b8',
+  // The sheet stickers' default material. Labelled PVC \ub9e4\ud2b8 until early October 2026.
+  matteWhite: '\ubb34\uad11 \ud654\uc774\ud2b8',
   sizeChangeAction: '\uc0ac\uc774\uc988 \ubcc0\uacbd',
   addImageLink: '\uc774\ubbf8\uc9c0 \ucd94\uac00',
   changeImageLink: '\uc774\ubbf8\uc9c0 \ubcc0\uacbd',
@@ -195,6 +206,11 @@ export const aboutPage = {
 // after the storefront renamed several products (자유형 스티커 -> 자유형 조각스티커, 키스컷 -> 도무송,
 // 아트지 롤 -> 종이 롤, and every 시트 스티커 -> 판스티커). A product page's H1 does not always match its
 // card -- see the per-product headings below.
+//
+// By 2026-10-14 production's cards (and its new header menu) had gone back to the pre-rename names
+// -- 자유형 스티커, 키스컷 스티커, 아트지 롤 스티커, 레터링 스티커, every 판스티커 -> 시트 스티커 -- while
+// its product pages and static-1's cards kept the renamed ones. Logged as MUS-QA-016; these stay on
+// the renamed names until product says which is right, and production runs heal by href meanwhile.
 export const categoryLinks = {
   stickers: [
     '자유형 조각스티커',
@@ -364,12 +380,10 @@ export const dieCutRollStickers = [
   { path: './roll-stickers/circle-roll', heading: '원형 롤 스티커', size: '중형 60x60', quantity: 100 },
   { path: './roll-stickers/square-roll', heading: '정사각형 롤 스티커', size: ko.medium75, quantity: 100 },
   { path: './roll-stickers/rectangle-roll', heading: '직사각형 롤 스티커', size: '중형 75x50', quantity: 100 },
-  // The H1 reads 둥근 사각형 while the category card and the cart line still say 둥근 사각
-  // (production, 2026-09-25).
+  // The H1 read 둥근 사각형 롤 스티커 until early October 2026; it now matches the card and cart line.
   {
     path: './roll-stickers/rounded-roll',
-    heading: '둥근 사각형 롤 스티커',
-    cartName: '둥근 사각 롤 스티커',
+    heading: '둥근 사각 롤 스티커',
     size: ko.medium75,
     quantity: 100
   },
@@ -382,9 +396,11 @@ export const dieCutRollStickers = [
 export const stickerSheetProduct = {
   path: './stickers/sticker-sheet',
   heading: '판스티커',
-  material: ko.pvcMatte,
+  material: ko.matteWhite,
   sheetSize: 'A5',
-  quantity: 10
+  quantity: 10,
+  // 스티커 개수, asked for on static-1 since early October 2026.
+  stickerCount: 4
 } as const;
 
 // Live-text lettering flow: a color swatch (accessible name is the English color name, e.g.
@@ -403,10 +419,9 @@ export const vinylLetteringProduct = {
 // 2026-08-13.
 export const transferStickerProduct = {
   path: './stickers/transfer-sticker',
-  // The H1 was renamed but the category card and the cart line still read 풀 컬러 레터링 스티커
-  // (production, 2026-09-25).
-  heading: '풀 컬러 글자 커팅 스티커',
-  cartName: '풀 컬러 레터링 스티커',
+  // The H1 read 풀 컬러 글자 커팅 스티커 from 2026-09-24 until early October 2026; it is back to
+  // matching the category card and the cart line.
+  heading: '풀 컬러 레터링 스티커',
   colorLabel: ko.fullColor,
   size: ko.medium75,
   quantity: 1
@@ -479,10 +494,9 @@ export const sheetStickerConfiguratorProducts = [
   },
   {
     path: './sheet-stickers/rounded-sheet',
-    // The only sheet product whose H1 kept the old wording: its card and cart line read 둥근 사각
-    // 판스티커 but the page itself says 둥근 사각형 시트 스티커 (production, 2026-09-25).
-    heading: '둥근 사각형 시트 스티커',
-    cartName: categoryLinks.sheetStickers[5],
+    // The H1 said 둥근 사각형 시트 스티커 until early October 2026; it now matches the card and
+    // cart line.
+    heading: categoryLinks.sheetStickers[5],
     sizePresets: roundShapeSizePresets
   }
 ] as const;

@@ -27,6 +27,7 @@ test.describe('storefront v2 catalog: sheet, lettering, and transfer stickers', 
     await product.selectMaterial(data.material);
     await product.selectSheetSize(data.sheetSize);
     await product.selectQuantity(data.quantity);
+    await product.fillStickerCountIfAsked(data.stickerCount);
     await product.expectSheetTemplateControls();
     await product.expectVisiblePrice();
     await product.expectNextStepEnabled();

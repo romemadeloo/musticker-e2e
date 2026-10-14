@@ -8,9 +8,10 @@ import { AdminItemDrawer } from './admin-item-drawer.js';
  * `/orders/<id>` on the admin panel.
  *
  * The forward moves of an order live in the header's single primary action, which changes with the
- * stage -- Move to Production, then Mark as Printing, then Add Tracking Number -- and each asks for
- * confirmation in a modal whose button is "Yes, <action>". The status dropdown next to the order
- * number never moves an order forward; it only offers hold / awaiting reply / cancel.
+ * stage -- Mark as Printing once the proof is approved, then Add Tracking Number (Move to Production,
+ * which used to come first, was gone by 2026-10-14) -- and each asks for confirmation in a modal
+ * whose button is "Yes, <action>". The status dropdown next to the order number never moves an
+ * order forward; it only offers hold / awaiting reply / cancel.
  *
  * Every confirmation modal is rendered up front and hidden, so role locators (which skip hidden
  * elements) are what keeps a click from landing on a stale copy.

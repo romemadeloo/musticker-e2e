@@ -136,8 +136,8 @@ test.describe('storefront v2 sheet sticker size rules (minimum two stickers per 
     const data = sheetStickerConfiguratorProducts[0];
     await product.goto(data.path, data.heading);
 
-    await product.selectMaterial(ko.pvcMatte);
-    await product.selectQuantity(5);
+    await product.selectMaterial(ko.matteWhite);
+    await product.selectQuantity(10);
     await product.addToCart();
 
     const drawer = new CartDrawer(page);

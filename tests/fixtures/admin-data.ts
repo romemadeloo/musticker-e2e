@@ -1,6 +1,7 @@
 // Copy and status codes for the order-processing flow, on both sides of it. Read live off
 // static-1 on 2026-09-25 while walking AO-2609240008-dev and AO-2609250005-dev through
-// the whole lifecycle.
+// the whole lifecycle, and re-checked on 2026-10-14 with AO-2609180003-dev, when the approval
+// dialog, the A-FPA label and the production step had changed.
 
 /**
  * Item-level status codes as the activity log reports them, in lifecycle order, with the label
@@ -17,8 +18,8 @@ export const itemStatus = {
   evaluationFailed: { code: 'FE', label: '검토 반려' },
   evaluationPassed: { code: 'PE', label: '검토 승인' },
   needsApproval: { code: 'NA', label: '승인 대기' },
-  approvedAwaitingProduction: { code: 'A-FPA', label: '승인 완료 - 제작 승인 대기' },
-  preparingOrder: { code: 'PO', label: '주문 준비 중' },
+  // Renamed from '승인 완료 - 제작 승인 대기' on both apps by 2026-10-14 (API name: Approved).
+  approvedAwaitingProduction: { code: 'A-FPA', label: '최종 승인 완료' },
   printing: { code: 'P', label: '인쇄 진행 중' },
   readyToShip: { code: 'RS', label: '출고 준비 완료' },
   onDelivery: { code: 'OD', label: '배송 중' },
@@ -45,7 +46,6 @@ export const adminCopy = {
   finalProofMessagePlaceholder: /Enter final proofing message/,
   sendFinalProof: 'Send Final Proof',
   finalProofSent: 'Final proof sent successfully.',
-  moveToProduction: 'Move to Production',
   markAsPrinting: 'Mark as Printing',
   addTrackingNumber: 'Add Tracking Number',
   addTracking: 'Add Tracking',
@@ -69,7 +69,12 @@ export const storefrontOrderCopy = {
   proofModalName: '디자인 상세 모달',
   approveProof: '승인',
   approveProofConfirmHeading: '최종 시안을 승인하시겠습니까?',
-  approveAndProduce: '승인 & 제작 진행',
+  // Redesigned by 2026-10-14: the old single '승인 & 제작 진행' button became an acknowledgement
+  // checkbox that enables '최종 시안 승인'.
+  approveProofAcknowledgement: '시안 안내사항을 확인했으며 내용을 이해했습니다.',
+  confirmApproveProof: '최종 시안 승인',
+  // What the confirm dialog says approval does. It used to promise '제작 진행' (MUS-QA-004).
+  approveProofOutcome: '제작 대기 상태로 전환',
   trackingSection: '배송 조회',
   trackingNumberLabel: '운송장 번호'
 } as const;

@@ -94,7 +94,8 @@ row rather than a pricing mismatch — against a dev server, run with `--workers
 that reason. If a run shows failures, check whether they are all `HTTP 502` before suspecting the tables.
 
 Row counts, quantity ladders and rate precision all differ per table and are read from the CSV — the
-lettering products use an eight-rung ladder starting at 1, the rest use fourteen rungs starting at
+lettering products use a thirteen-rung ladder starting at 1 (eight rungs up to 300 before production's
+2026-09-29 tables), the rest use fourteen rungs starting at
 10, and `sticker-sheet` stores ten decimal places where the others store eight. Nothing is
 hardcoded.
 
@@ -111,8 +112,8 @@ here until registry entries exist:
 
 | products | pricing_id | table name |
 |---|---|---|
-| `vinyl-lettering` | 8 | `Vinyl Lettering` |
-| `transfer-sticker` | 11 | `Transfer` |
+| `vinyl-lettering` | 8, then 69 from 2026-09-29 | `Vinyl Lettering`, then `Vinyl Lettering Solid Color 2 - 09/29/2026` |
+| `transfer-sticker` | 11, then 72 from 2026-09-29 | `Transfer`, then `Transfer Sticker Solid Color - 09/29/2026` |
 | `sticker-sheet` | 33 / 34 / 35 / 36 | `Sticker Sheet (7/13/2026)`, then `... PVC(Matte) / Transparent / Hologram 07/22/2026` |
 | `die-cut-roll`, `circle-roll`, `square-roll`, `rectangle-roll`, `rounded-roll`, `oval-roll` | 53 | `diecut/kisscut roll - 9/10/2026` |
 | `clear-roll` | 54 | `clear roll - 9/10/2026` |
@@ -134,7 +135,9 @@ simple-sheet shapes share one per material, so those CSVs are duplicates by desi
 five shape stickers already are. Production's roll tables now use a 19-rung ladder from 10 through
 100,000; development roll tables still use the earlier 14-rung ladder from 10 through 10,000. The
 simple-sheet tables use a 21-rung quantity ladder that starts at 1 and tops out at 117,000, and the
-lettering ladder uses 8 rungs.
+lettering ladder uses 13 rungs (1 through 5,000) since 2026-09-29. Its new 500 rung costs **more** per
+mm² than 300 in every area row of both lettering tables (MUS-QA-020); the CSVs record the tables as
+served, so the price-table checks pass and the defect is tracked in the workbook.
 
 ## One table, several products
 

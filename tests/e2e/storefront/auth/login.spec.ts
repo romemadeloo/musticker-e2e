@@ -5,6 +5,7 @@ import { authCopy, unregisteredLogin } from '../../../fixtures/storefront-data.j
 import { HeaderComponent } from '../../../pom/storefront/header-component.js';
 import { HomeV2Page } from '../../../pom/storefront/home-page.js';
 import { LoginPage } from '../../../pom/storefront/login-page.js';
+import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 
 test.describe('storefront authentication', { tag: ['@auth', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowExpectedAuthFailures: true, allowKnownNuxtPayloadFailures: true });
@@ -120,6 +121,9 @@ test.describe('storefront authentication', { tag: ['@auth', '@production'] }, ()
       page
     }) => {
       test.skip(!env.AUTH_TEST_EMAIL || !env.AUTH_TEST_PASSWORD, 'Set AUTH_TEST_EMAIL and AUTH_TEST_PASSWORD to run.');
+      // Login, a reload, a menu navigation to a priced product page, the profile and a logout: about
+      // 35 s alone on static-1, which left too little of the default 60 s under parallel load.
+      test.setTimeout(90_000);
 
       const login = new LoginPage(page);
       const header = new HeaderComponent(page);
@@ -132,7 +136,10 @@ test.describe('storefront authentication', { tag: ['@auth', '@production'] }, ()
       await page.reload();
       await header.expectMemberMenu();
 
+      // Client-side navigation through the 스티커 menu to a product page. Its price has to land before
+      // the test leaves, or the aborted quote logs "Pricing request failed!".
       await header.goToStickers();
+      await new ProductV2Page(page).expectVisiblePrice();
       await header.expectMemberMenu();
 
       // A member-only route is the strongest signal the session is genuinely live.

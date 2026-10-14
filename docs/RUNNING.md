@@ -41,7 +41,7 @@ somewhere unexpected.
 | `npm run test:prod:mobile` | `@mobile` on the Pixel 7 project against production |
 | `npm run test:env:smoke` / `:full` / `:auth` / `:mobile` | The same four, against whichever server `E2E_ENVIRONMENT` selects |
 | `npm run test:smoke` / `:regression` / `:purchasing` / `:validation` / `:auth` / `:api` / `:a11y` | One tag, against the configured environment |
-| `npm run test:pricing` | The price-table suite (2,286 tests, 4 workers). `:prod` and `:static2` pin a server |
+| `npm run test:pricing` | The price-table suite (2,288 tests, 4 workers). `:prod` and `:static2` pin a server |
 | `npm run test:ci` | What CI runs on every PR: everything except `@slow @destructive @payment @visual` |
 | `npm run test:flake` | Smoke tests three times each with no retries, to surface flaky tests |
 
@@ -183,14 +183,18 @@ dev-static-1 currently blocks automated browsers with a Cloudflare check before 
 test starts from an order the seeded member already placed:
 
 ```bash
-npx cross-env ADMIN_E2E_ORDER_NO=AO-2609180004-dev npm run test:admin:destructive
+npx cross-env ADMIN_E2E_ORDER_NO=AO-2609070006-dev npm run test:admin:destructive
 ```
 
 The order must belong to `AUTH_TEST_EMAIL`, be fully paid, and have exactly one item at
-디자인 파일 미제출. **Each run uses the order up.** The workbook's Test Data tab lists candidates.
+디자인 파일 미제출. **Each run uses the order up**, so swap in an unused one from the workbook's Test
+Data tab.
 
 The admin browser is never recorded (no screenshots, video or trace), because the panel shows
-real customers' details and this repository's CI artifacts are public.
+real customers' details and this repository's CI artifacts are public. Playwright's failure
+screenshots and traces cover every open page, not just the customer's, so an admin spec turns
+both off with a top-level `test.use({ screenshot: 'off', trace: 'off' })`, and the `adminPage`
+fixture refuses to start without it.
 
 ## Reports
 

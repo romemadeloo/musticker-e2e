@@ -3,9 +3,11 @@ import { expect } from '@playwright/test';
 
 import { appPath } from '../../fixtures/env.js';
 import { parseWon } from '../../fixtures/money.js';
+import { waitForNuxtHydration } from '../../fixtures/hydration.js';
 import { gotoStorefront } from '../../fixtures/navigation.js';
 import { expectHeadingOrHeal } from '../../fixtures/self-heal.js';
 import { ko } from '../../fixtures/storefront-data.js';
+import { DesignStudio } from './design-studio.js';
 
 const wonAmountPattern = /[\d,]+\uc6d0/u;
 
@@ -40,22 +42,70 @@ export class ProductV2Page {
   async addToCart(): Promise<void> {
     await this.nextStepButton().click();
 
-    const dialog = this.page.getByRole('dialog').first();
-    await expect(dialog).toBeVisible();
+    await expect(this.page.getByRole('dialog').first()).toBeVisible();
+    await this.skipDesignFile();
+  }
 
-    const addToCartButton = dialog.getByRole('button', { name: ko.addToCart });
-    if (await addToCartButton.isVisible().catch(() => false)) {
-      await addToCartButton.click();
+  /**
+   * Adds the line without a design. Most products open the order chooser, where that is
+   * 이 단계를 건너뛰고 나중에 파일 보내기; a few -- 풀 컬러 레터링 스티커 among them (2026-10-14) -- still open
+   * the older 디자인 파일 업로드 dialog, whose only button is 장바구니 담기.
+   */
+  async skipDesignFile(): Promise<void> {
+    const dialog = this.page.getByRole('dialog').first();
+    const button = dialog
+      .getByRole('button', { name: ko.sendFileLater })
+      .or(dialog.getByRole('button', { name: ko.addToCart, exact: true }))
+      .first();
+
+    await expect(button).toBeVisible();
+    await button.click();
+  }
+
+  /**
+   * The custom sheet sticker's 스티커 개수 (how many stickers go on the sheet). Required on static-1
+   * since early October 2026 -- 다음 단계 answers 필수 입력 항목입니다. without it -- and not yet asked
+   * on production, hence filled only when the page asks.
+   */
+  async fillStickerCountIfAsked(count: number): Promise<void> {
+    const field = this.optionsPanel.getByRole('textbox', { name: '스티커 개수' });
+
+    if (await field.isVisible()) {
+      await field.fill(String(count));
+    }
+  }
+
+  /**
+   * Picks a size preset and waits for the tiers to be re-priced for it. Every tier re-quotes when the
+   * size changes (one `pricing/quotation/<slug>?width=…&height=…` call), and a tier price read before
+   * that lands is the previous size's: 17,700원 for 100개 at the default 소형 30x30 instead of 36,100원
+   * at 중형 75x75 (static-1, 2026-10-14). The active pill is marked only by an `is-active` class.
+   */
+  async selectSize(sizeName: string): Promise<void> {
+    const pill = this.optionsPanel.getByRole('button', { name: new RegExp(escapeRegExp(sizeName)) }).first();
+
+    if (await pill.evaluate((element) => element.classList.contains('is-active'))) {
       return;
     }
 
-    const sendFileLaterButton = dialog.getByRole('button', { name: ko.sendFileLater });
-    await expect(sendFileLaterButton).toBeVisible();
-    await sendFileLaterButton.click();
-  }
+    const [, width, height] = (await pill.innerText()).match(/(\d+)\s*x\s*(\d+)/) ?? [];
+    const requoted = this.page.waitForResponse(
+      (response) =>
+        response.url().includes('/pricing/quotation/') &&
+        (!width || (response.url().includes(`width=${width}`) && response.url().includes(`height=${height}`))),
+      { timeout: 20_000 }
+    );
+    // The response alone is not enough: production repaints the tiers a beat after it lands, and a
+    // read in between still sees the old size's prices. So also wait for the tiers to change.
+    const tierPrices = this.optionsPanel.locator('.qty-pill-price');
+    const pricesBefore = await tierPrices.allInnerTexts();
 
-  async selectSize(sizeName: string): Promise<void> {
-    await this.optionsPanel.getByRole('button', { name: new RegExp(escapeRegExp(sizeName)) }).first().click();
+    await pill.click();
+    await expect(pill).toHaveClass(/\bis-active\b/);
+    await requoted;
+    await expect
+      .poll(() => tierPrices.allInnerTexts(), { message: `tier prices re-quoted for ${sizeName}`, timeout: 20_000 })
+      .not.toEqual(pricesBefore);
   }
 
   async selectMaterial(materialName: string): Promise<void> {
@@ -75,8 +125,7 @@ export class ProductV2Page {
   }
 
   async selectQuantity(quantity: number): Promise<void> {
-    const quantityLabel = new RegExp(`^${quantity.toLocaleString('en-US')}\\s*(?:\\S+)?\\s*${wonAmountPattern.source}`, 'u');
-    await this.optionsPanel.getByRole('button', { name: quantityLabel }).first().click();
+    await this.quantityTier(quantity).click();
   }
 
   // The two custom-size fields, addressed by class and reading order rather than by placeholder.
@@ -166,9 +215,12 @@ export class ProductV2Page {
     return parseWon(await price.innerText());
   }
 
+  // The tier whose label starts with exactly this quantity. The lookahead matters: without it 5
+  // matched "50시트" once the sheet tiers stopped offering 5 (early October 2026), and the tests that
+  // asked for 5 sheets silently ordered 50.
   private quantityTier(quantity: number): Locator {
     const quantityLabel = new RegExp(
-      `^${quantity.toLocaleString('en-US')}\\s*(?:\\S+)?\\s*${wonAmountPattern.source}`,
+      `^${quantity.toLocaleString('en-US')}(?![\\d,])\\s*(?:\\S+)?\\s*${wonAmountPattern.source}`,
       'u'
     );
 
@@ -185,6 +237,17 @@ export class ProductV2Page {
 
   async expectNoBulkDiscountVisible(): Promise<void> {
     await expect(this.optionsPanel.getByText(/^-\d+%$/)).toHaveCount(0);
+  }
+
+  /** The discount badge on the price readout (`-4%`) as a number, or 0 when none is shown. */
+  async discountPercent(): Promise<number> {
+    const badge = this.optionsPanel.getByText(/^-\d+%$/);
+
+    if ((await badge.count()) === 0) {
+      return 0;
+    }
+
+    return Number((await badge.first().innerText()).replace(/\D/g, ''));
   }
 
   async expectSizeGuideImagesLocalized(): Promise<void> {
@@ -204,12 +267,34 @@ export class ProductV2Page {
     }
   }
 
+  /**
+   * The 어떻게 주문하시겠어요? chooser that 다음 단계 opens (redesigned by 2026-10-14; it was a
+   * plain upload dialog with a 장바구니 담기 button). Three ways on: order with a design file, design
+   * it in the web studio, or skip and send the file later.
+   */
   async expectDesignUploadModal(): Promise<void> {
-    const dialog = this.page.getByRole('dialog');
-    await expect(dialog.getByTestId('product-category-upload-dropzone')).toContainText(
-      '.eps, .ai, .psd, .pdf, .tif, .png'
-    );
+    const dialog = this.page.getByRole('dialog', { name: ko.orderChooserHeading });
+    await expect(dialog.getByTestId('product-category-upload-dropzone')).toContainText(ko.uploadFileTypes);
     await expect(dialog.getByTestId('product-category-upload-select-files-button')).toBeVisible();
+    await expect(dialog.getByTestId('product-category-upload-proceed-button')).toHaveText(ko.orderWithFile);
+    await expect(dialog.getByTestId('product-category-upload-studio-button')).toHaveText(ko.openStudio);
+    await expect(dialog.getByTestId('product-category-upload-studio-discount')).toContainText(ko.studioDiscount);
+    await expect(dialog.getByTestId('product-category-upload-skip-button')).toHaveText(ko.sendFileLater);
+  }
+
+  /** 다음 단계, then the chooser's 스튜디오 이동, with the current size and quantity. */
+  async openStudio(): Promise<DesignStudio> {
+    await this.nextStepButton().click();
+    await this.page.getByRole('dialog').getByTestId('product-category-upload-studio-button').click();
+
+    const studio = new DesignStudio(this.page);
+    await studio.expectOpen();
+    return studio;
+  }
+
+  /** In the chooser: 파일로 주문하기, once a design file has been attached. */
+  async orderWithDesignFile(): Promise<void> {
+    await this.page.getByRole('dialog').getByTestId('product-category-upload-proceed-button').click();
   }
 
   async fillDesignOrderNote(note: string): Promise<void> {
@@ -353,8 +438,11 @@ export class ProductV2Page {
     const previousButton = this.page.getByRole('button', { name: /\uc774\uc804 \ub9ac\ubdf0/ }).first();
 
     await expect(nextButton).toBeVisible();
+    // A click before hydration lands on an inert button and the track never moves.
+    await waitForNuxtHydration(this.page);
     await nextButton.click();
-    await expect(previousButton).toBeVisible();
+    // 이전 리뷰 starts disabled on the first slide and enables once the track has moved.
+    await expect(previousButton).toBeEnabled();
     await previousButton.click();
     await expect(body).toContainText(ko.reviews225);
   }

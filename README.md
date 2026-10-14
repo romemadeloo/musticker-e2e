@@ -57,10 +57,10 @@ docs/                    documentation and the test case workbook
 
 ## Numbers
 
-As of 2026-09-25: **2,468 Playwright tests in 32 spec files** (2,467 on the desktop projects plus one
-mobile test), documented as **171 test cases**: 139 automated (3 of them only partly, with the rest
-to check by hand), 30 planned admin cases, and 2 withdrawn. Pricing makes up 2,286 of the tests,
-generated from the price tables. The workbook's Coverage Summary tab has the per-area breakdown.
+As of 2026-10-14: **2,473 Playwright tests in 33 spec files** (2,472 on the desktop projects plus one
+mobile test), documented as **175 test cases**: 142 automated (3 of them only partly, with the rest
+to check by hand), 30 planned (29 admin, 1 design studio), and 3 withdrawn. Pricing makes up 2,288
+of the tests, generated from the price tables. The workbook's Coverage Summary tab has the per-area breakdown.
 
 ## Owner
 

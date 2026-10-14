@@ -15,9 +15,12 @@
 //     production            43/44/45/46/47   "... Sticker (8/24/2026)"       match the CSVs
 //     static-2              5/23/25/30/31    "Die Cut", "Clear - ..."        differ
 //
-//   the roll and lettering tables -- production's roll tables were regenerated on 2026-09-10
-//     production            8/11/53/54/55    "... roll - 9/10/2026"          match the CSVs
-//     static-2              8/11/15/16/17    "Roll", "Vinyl Lettering"       match the CSVs
+//   the roll and lettering tables -- production's roll tables were regenerated on 2026-09-10, and
+//   its vinyl-lettering and transfer-sticker tables on 2026-09-29 (new ids 69/72, same rates on the
+//   old rungs 1-300, new rungs 500-5,000)
+//     production            69/72/53/54/55   "... Solid Color - 09/29/2026", "... roll - 9/10/2026"
+//                                                                            match the CSVs
+//     static-2              8/11/15/16/17    "Roll", "Vinyl Lettering"       older generation
 //
 //   sticker-sheet -- same rates everywhere, but the id moved
 //     production            33               "Sticker Sheet (7/13/2026)"     match the CSV
@@ -29,7 +32,7 @@
 //
 // `csvSources` lists the environments a CSV is a valid baseline for. For the sticker tables that is
 // production only, while static-2 still holds the older rates and is identity-checked only. The
-// lettering and sticker-sheet tables match on production and static-2, so they list both.
+// sticker-sheet table matches on production and static-2, so it lists both.
 // (development-1, retired on 2026-09-25, was the other verified sticker baseline.)
 //
 // The remaining static-* servers have no recorded ids yet; the pricing specs skip there with an
@@ -82,11 +85,11 @@ export type PricingProduct = {
 // The /kr/stickers sticker tables: the export is production's. static-2 lags on the older rates.
 const CSV_SOURCES = ['production'] as const satisfies readonly EnvironmentName[];
 
-// The lettering and sticker-sheet tables were left out of the sticker regeneration and are identical
-// on production and static-2. Production's roll tables were regenerated on 2026-09-10, adding high-volume
-// quantity rungs while keeping the old row values comparable for the original rungs; the refreshed
-// roll CSVs are therefore a production-only baseline until the development servers carry the same
-// generation. static-2 has no /exportation endpoint (404), which is why it was checked
+// The sticker-sheet table was left out of the sticker regeneration and is identical on production
+// and static-2. Production's roll tables (2026-09-10) and lettering/transfer tables (2026-09-29) were
+// regenerated with high-volume quantity rungs while keeping the old row values for the original
+// rungs; those CSVs are therefore a production-only baseline until the development servers carry the
+// same generation. static-2 has no /exportation endpoint (404), which is why it was checked
 // by quotation.
 const CSV_SOURCES_ALL = ['production', 'static-2'] as const satisfies readonly EnvironmentName[];
 
@@ -167,20 +170,23 @@ const registry: readonly PricingProductRegistryEntry[] = [
     csvSources: CSV_SOURCES
   },
   {
+    // Table 8 until production moved to 69 "Vinyl Lettering Solid Color 2 - 09/29/2026"; every
+    // color_id is served by the same table.
     slug: 'vinyl-lettering',
     pricingName: /^Vinyl Lettering\b/,
-    pricingIds: { production: 8, 'static-2': 8 },
+    pricingIds: { production: 69, 'static-2': 8 },
     normalizedNr: 100,
     csv: 'stickers/vinyl-lettering.csv',
-    csvSources: CSV_SOURCES_ALL
+    csvSources: CSV_SOURCES_PRODUCTION
   },
   {
+    // Table 11 until production moved to 72 "Transfer Sticker Solid Color - 09/29/2026".
     slug: 'transfer-sticker',
     pricingName: /^Transfer\b/,
-    pricingIds: { production: 11, 'static-2': 11 },
+    pricingIds: { production: 72, 'static-2': 11 },
     normalizedNr: 100,
     csv: 'stickers/transfer-sticker.csv',
-    csvSources: CSV_SOURCES_ALL
+    csvSources: CSV_SOURCES_PRODUCTION
   },
   {
     // Priced per material: the endpoint resolves a different table for each material_id, and a

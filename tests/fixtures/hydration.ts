@@ -1,4 +1,4 @@
-import type { Locator } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
 /**
@@ -10,7 +10,7 @@ import { expect } from '@playwright/test';
  * nor calls the API -- the test then fails on a missing validation message that the app would have
  * rendered a second later. Measured on development-1, the gap is consistently around 1.2s.
  *
- * Nuxt exposes no hydration flag on these builds (no `isHydrating`, no `data-v-app`, and the
+ * Nuxt exposed no hydration flag on the builds this was written against (no `isHydrating`, no `data-v-app`, and the
  * production Vue build keeps `__vnode` off the DOM nodes), so interactivity is established
  * behaviourally instead: a password visibility toggle is a purely client-side control whose effect
  * is directly observable on the input's `type`. Once it responds, the surrounding form is bound too.
@@ -27,4 +27,31 @@ export async function waitForPasswordFormInteractive(toggleButton: Locator, pass
 
   await toggleButton.click();
   await expect(passwordInput).toHaveAttribute('type', 'password');
+}
+
+/**
+ * Waits until Nuxt has finished hydrating the page. Since early October 2026 the storefront exposes
+ * `useNuxtApp()` on `window` (production and static-1), whose `isHydrating` turns false once the
+ * page's handlers are bound -- on a heavy production page that was about 11 s after navigation. The
+ * mounted root's `__vue_app__` is the fallback for a build that does not expose it (development-1
+ * did not, which is why the form helper above works behaviourally).
+ */
+export async function waitForNuxtHydration(page: Page): Promise<void> {
+  await page.waitForFunction(
+    () => {
+      const nuxtApp = (window as { useNuxtApp?: () => { isHydrating?: boolean } }).useNuxtApp;
+
+      if (typeof nuxtApp === 'function') {
+        try {
+          return nuxtApp().isHydrating === false;
+        } catch {
+          // Called outside a Nuxt context on some builds; fall through to the mount check.
+        }
+      }
+
+      return Boolean((document.querySelector('#__nuxt') as { __vue_app__?: unknown } | null)?.__vue_app__);
+    },
+    undefined,
+    { timeout: 30_000 }
+  );
 }

@@ -2,7 +2,7 @@ import { test, expect } from '../../../fixtures/e2e-test.js';
 import { appPath } from '../../../fixtures/env.js';
 import { gotoStorefront } from '../../../fixtures/navigation.js';
 import { expectHeadingOrHeal } from '../../../fixtures/self-heal.js';
-import { ko } from '../../../fixtures/storefront-data.js';
+import { categoryProducts, ko } from '../../../fixtures/storefront-data.js';
 import { HomeV2Page } from '../../../pom/storefront/home-page.js';
 
 test.describe('storefront v2 smoke', { tag: ['@smoke', '@production'] }, () => {
@@ -15,20 +15,30 @@ test.describe('storefront v2 smoke', { tag: ['@smoke', '@production'] }, () => {
     await home.expectCriticalContent();
   });
 
-  test('MS-V2-002 header navigation opens product categories', async ({ page }) => {
+  // Each nav item opens a menu of its category's products rather than the category page (changed by
+  // 2026-10-14). The menu is checked by its links, not its labels: it still uses the names from
+  // before the 2026-09-24 rename (키스컷, 아트지 롤, 시트 스티커 -- see MUS-QA-016), and which side is
+  // right is product's call.
+  test('MS-V2-002 header navigation opens each category product menu', async ({ page }) => {
     const home = new HomeV2Page(page);
+    const categories = [
+      { name: ko.stickers, path: './stickers', products: categoryProducts.stickers },
+      { name: ko.rollStickers, path: './roll-stickers', products: categoryProducts.rollStickers },
+      { name: ko.sheetStickers, path: './sheet-stickers', products: categoryProducts.sheetStickers }
+    ] as const;
 
     await home.goto();
-    await home.goToCategory(ko.stickers, './stickers');
-    await expectHeadingOrHeal(page, ko.stickers, 'category heading ./stickers');
 
-    await home.goto();
-    await home.goToCategory(ko.rollStickers, './roll-stickers');
-    await expectHeadingOrHeal(page, ko.rollStickers, 'category heading ./roll-stickers');
+    for (const category of categories) {
+      await home.header.openCategoryMenu(category.name, category.path);
+      expect(await home.header.categoryMenuPaths(), `${category.path} menu`).toEqual(
+        category.products.map((product) => product.path)
+      );
+    }
 
-    await home.goto();
-    await home.goToCategory(ko.sheetStickers, './sheet-stickers');
-    await expectHeadingOrHeal(page, ko.sheetStickers, 'category heading ./sheet-stickers');
+    const [firstRoll] = categoryProducts.rollStickers;
+    await home.header.goToProductFromMenu(ko.rollStickers, './roll-stickers', firstRoll.path);
+    await expectHeadingOrHeal(page, firstRoll.name, `product heading ${firstRoll.path}`);
   });
 
   test('MS-V2-003 header search opens and finds hologram sticker content', async ({ page }) => {

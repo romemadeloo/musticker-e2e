@@ -20,7 +20,8 @@ import { orderHistoryCopy } from '../../fixtures/storefront-data.js';
  *
  * An empty segment renders `.all-caught-up` INSTEAD of `.order-list` -- the list element is absent
  * entirely, not present and childless -- so "no cards yet" and "no orders at all" are only
- * distinguishable by looking for both.
+ * distinguishable by looking for both. A search with no match in the segment renders `.no-orders`
+ * instead (주문을 찾을 수 없습니다., seen on static-1 on 2026-10-14), so both count as empty.
  */
 export class AccountOrdersPage {
   readonly page: Page;
@@ -41,7 +42,7 @@ export class AccountOrdersPage {
     this.filtersButton = page.getByTestId('account-orders-filters-button');
     this.selectDateButton = page.getByTestId('account-orders-select-date-button');
     this.detailPane = page.locator('.orders-main');
-    this.emptyState = page.locator('.all-caught-up');
+    this.emptyState = page.locator('.all-caught-up, .no-orders');
   }
 
   async goto(): Promise<void> {

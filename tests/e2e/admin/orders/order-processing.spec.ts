@@ -11,16 +11,22 @@ import { AdminOrdersPage } from '../../../pom/admin/admin-orders-page.js';
 const canRun = process.env.RUN_ADMIN_DESTRUCTIVE_E2E === 'true';
 const seedOrderNumber = process.env.ADMIN_E2E_ORDER_NO?.trim();
 
+// Playwright's failure screenshots and traces cover every page in the worker, the admin panel's
+// included, so they are off for the whole file -- see adminPage in admin-test.ts, which enforces it.
+// The customer's side still gets its failure video and error context.
+test.use({ screenshot: 'off', trace: 'off' });
+
 const designFile = path.resolve('tests/fixtures/files/sample-design.png');
 const proofFile = path.resolve('tests/fixtures/files/qa-proof.png');
 
 /**
  * One order, end to end across both apps: the customer sends artwork from the storefront, staff
  * reject it, the customer resubmits, staff pass it and send a proof, the customer approves the
- * proof, and staff take the order through production and shipping to delivered.
+ * proof, and staff take the order through printing and shipping to delivered.
  *
  * Walked by hand on static-1 on 2026-09-25 (AO-2609240008-dev, AO-2609250005-dev) before
- * this was written. Every stage is asserted three ways where it can be: the admin UI, the customer's
+ * this was written, and re-run on 2026-10-14 (AO-2609180003-dev, AO-2609090017-dev) after the
+ * product changes noted below. Every stage is asserted three ways where it can be: the admin UI, the customer's
  * UI, and the admin API's activity log.
  *
  * Where the order comes from: the checkout step is not automated yet. dev-static-1's checkout runs a
@@ -152,20 +158,20 @@ test.describe('storefront to admin order processing', { tag: ['@admin', '@e2e', 
 
       const entry = await adminApi.expectItemStatus(orderId, itemStatus.approvedAwaitingProduction.code);
       expect(entry.user?.is_admin, 'the approval was attributed to staff').toBe(false);
-      // The confirm dialog tells the customer approval moves the order to '제작 진행', but it stays at
-      // 제작 전 until staff click Move to Production (reported 2026-09-25). Not asserted either way
-      // until product confirms which side is wrong.
+      // The confirm dialog now says approval moves the order to 제작 대기 (it promised '제작 진행' until
+      // MUS-QA-004 was fixed), and production waits for staff: the order itself stays at 제작 전.
+      await adminApi.expectOrderStatus(orderId, orderStatus.beforeProduction.code);
+      await customer.expectOrderStatus(orderStatus.beforeProduction.label);
     });
 
     // From here on the activity log attributes every staff action to the customer (is_admin=false),
     // reported 2026-09-25 -- so attribution is only asserted on the customer's own steps above.
-    await test.step('admin: moves the order into production and printing', async () => {
+    // Move to Production was dropped by 2026-10-14: Mark as Printing is now the first staff action after
+    // approval and takes the order to 제작 진행 중 and the item straight to 인쇄 진행 중 (no 주문 준비 중).
+    await test.step('admin: sends the approved order to print', async () => {
       await adminOrder.goto(orderId);
-      await adminOrder.runHeaderAction(adminCopy.moveToProduction);
-      await adminApi.expectOrderStatus(orderId, orderStatus.forProduction.code);
-      await adminApi.expectItemStatus(orderId, itemStatus.preparingOrder.code);
-
       await adminOrder.runHeaderAction(adminCopy.markAsPrinting);
+      await adminApi.expectOrderStatus(orderId, orderStatus.forProduction.code);
       await adminApi.expectItemStatus(orderId, itemStatus.printing.code);
       await adminOrder.expectItemStatus(itemStatus.printing.label);
     });
@@ -205,7 +211,6 @@ test.describe('storefront to admin order processing', { tag: ['@admin', '@e2e', 
         itemStatus.evaluationPassed.code,
         itemStatus.needsApproval.code,
         itemStatus.approvedAwaitingProduction.code,
-        itemStatus.preparingOrder.code,
         itemStatus.printing.code,
         itemStatus.readyToShip.code,
         itemStatus.onDelivery.code,

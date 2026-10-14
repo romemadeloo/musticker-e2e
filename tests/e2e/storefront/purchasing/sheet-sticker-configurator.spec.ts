@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'node:url';
 
-import { test } from '../../../fixtures/e2e-test.js';
+import { expect, test } from '../../../fixtures/e2e-test.js';
 import { cartLineName, ko, sheetStickerConfiguratorProducts } from '../../../fixtures/storefront-data.js';
 import { CartDrawer } from '../../../pom/storefront/cart-drawer.js';
 import { CartV2Page } from '../../../pom/storefront/cart-page.js';
@@ -51,8 +51,7 @@ test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rect
       await product.clickNextStepAndExpectProgression();
       await product.expectDesignUploadModal();
 
-      const addToCartButton = page.getByRole('dialog').getByRole('button', { name: ko.addToCart });
-      await addToCartButton.click();
+      await product.skipDesignFile();
 
       const drawer = new CartDrawer(page);
       await drawer.expectVisible();
@@ -73,16 +72,21 @@ test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rect
     await product.expectNextStepEnabled();
   });
 
-  test('MS-V2-052 circle sheet sticker: bulk quantity tiers surface a discount that smaller tiers do not', async ({ page }) => {
+  // Sheet stickers show a discount on every tier since early October 2026 (10시트 reads -4% against
+  // a 6,900원 list price), so the rule is now that bulk earns a bigger one, not that it alone has one.
+  test('MS-V2-052 circle sheet sticker: bulk quantity tiers surface a bigger discount than smaller tiers', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = sheetStickerConfiguratorProducts[0];
     await product.goto(data.path, data.heading);
 
-    await product.selectQuantity(5);
-    await product.expectNoBulkDiscountVisible();
+    await product.selectQuantity(10);
+    await expect.poll(() => product.discountPercent(), { message: 'the 10시트 discount badge' }).toBeGreaterThan(0);
+    const smallTierDiscount = await product.discountPercent();
 
     await product.selectQuantity(1000);
-    await product.expectBulkDiscountVisible();
+    await expect
+      .poll(() => product.discountPercent(), { message: 'the 1,000시트 discount badge' })
+      .toBeGreaterThan(smallTierDiscount);
   });
 
   test('MS-V2-053 circle sheet sticker: design upload modal accepts an order note and a design file before adding to cart', async ({ page }) => {
@@ -98,8 +102,7 @@ test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rect
     await product.expectDesignFileAccepted('sample-design.png');
     await product.fillDesignOrderNote('Please make sure the colors and size are exactly perfect.');
 
-    const addToCartButton = page.getByRole('dialog').getByRole('button', { name: ko.addToCart });
-    await addToCartButton.click();
+    await product.orderWithDesignFile();
 
     const drawer = new CartDrawer(page);
     await drawer.expectVisible();
@@ -115,8 +118,8 @@ test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rect
     const data = sheetStickerConfiguratorProducts[0];
     await product.goto(data.path, data.heading);
 
-    await product.selectMaterial(ko.pvcMatte);
-    await product.selectQuantity(5);
+    await product.selectMaterial(ko.matteWhite);
+    await product.selectQuantity(10);
     await product.addToCart();
 
     const drawer = new CartDrawer(page);
@@ -130,7 +133,7 @@ test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rect
     const data = sheetStickerConfiguratorProducts[0];
     await product.goto(data.path, data.heading);
 
-    await product.selectQuantity(5);
+    await product.selectQuantity(10);
     await product.addToCart();
 
     const drawer = new CartDrawer(page);
@@ -138,7 +141,7 @@ test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rect
     await drawer.viewCart();
 
     const cart = new CartV2Page(page);
-    await cart.expectRowContainsText(data.heading, '30x30mm', 'PVC 매트', '5시트');
+    await cart.expectRowContainsText(data.heading, '30x30mm', ko.matteWhite, '10시트');
     await cart.expectAddImageLinkVisible(data.heading);
   });
 
@@ -147,8 +150,8 @@ test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rect
     const data = sheetStickerConfiguratorProducts[0];
     await product.goto(data.path, data.heading);
 
-    await product.selectMaterial(ko.pvcMatte);
-    await product.selectQuantity(5);
+    await product.selectMaterial(ko.matteWhite);
+    await product.selectQuantity(10);
     await product.addToCart();
 
     const drawer = new CartDrawer(page);
@@ -164,7 +167,7 @@ test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rect
     const data = sheetStickerConfiguratorProducts[0];
     await product.goto(data.path, data.heading);
 
-    await product.selectQuantity(5);
+    await product.selectQuantity(10);
     await product.addToCart();
 
     const drawer = new CartDrawer(page);

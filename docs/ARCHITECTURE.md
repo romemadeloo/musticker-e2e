@@ -137,11 +137,12 @@ The order lifecycle it walks is documented in the workbook's **Business Rules** 
 ```
 customer uploads design  →  staff evaluate (Failed → customer resubmits → Passed)
   →  staff send final proof  →  customer approves proof
-  →  staff: Move to Production → Mark as Printing → Add Tracking → Send → mark delivered
+  →  staff: Mark as Printing → Add Tracking → Send → mark delivered
 ```
 
 Only the header actions move an **order** forward (BP → FP → SP → CP). The finer stage lives on the
-**item**, and the activity log reports it as a code (SA, CA, FE, PE, NA, A-FPA, PO, P, RS, OD, DE).
+**item**, and the activity log reports it as a code (SA, CA, FE, PE, NA, A-FPA, P, RS, OD, DE). Until early October
+2026 a Move to Production step came before printing and added PO (주문 준비 중).
 [tests/fixtures/admin-data.ts](../tests/fixtures/admin-data.ts) maps codes to labels.
 
 ## Pricing suite
@@ -170,7 +171,21 @@ the 403s that were retried past. The internal-origin key, when configured, avoid
 
 **Hydration.** Nuxt serves fully rendered HTML, and clicks land before Vue has bound its handlers.
 [hydration.ts](../tests/fixtures/hydration.ts) waits until a form is actually interactive. It uses
-the password visibility toggle as the signal, because Nuxt exposes no hydration flag.
+the password visibility toggle as the signal, because Nuxt exposes no hydration flag. The header's
+category links are plain `<a>` tags under their menu handler, so a click that lands too early
+navigates instead of opening the menu. `HeaderComponent.openCategoryMenu` retries until the menu
+reports `aria-expanded="true"`.
+
+**Re-pricing.** Changing a size re-quotes every quantity tier with one `pricing/quotation` call. A
+tier read before that call lands returns the previous size's price, and on production the tiers
+repaint a beat after the response arrives. `ProductV2Page.selectSize` waits for the quotation that
+carries the new width and height, and then for the tier prices on screen to change, so price
+comparisons start from the configured size.
+
+**Nuxt hydration flag.** The storefront exposes `useNuxtApp()` on `window`, and its `isHydrating`
+turns false once handlers are bound (about 11 s after navigation on a heavy production page).
+`waitForNuxtHydration` in hydration.ts waits on it before clicks that need a bound handler: the
+category menu and the review carousel.
 
 **Copy drift (self-healing locators).** Storefront copy changes without notice: the 2026-09-24
 product rename turned 57 tests red without breaking a page. Where a step identifies something by its
@@ -192,8 +207,11 @@ identifier does not vouch for, such as a 404 page, a different slug, or an ambig
 - **Carts.** MS-V2-104 adds to the seeded member's real cart and removes the line again.
 - **Orders.** MS-V2-025 creates a dev order. MS-ADM-001 takes one existing dev order to 주문 완료.
   Neither can be undone, which is why both are gated and dev-only.
-- **Upload files.** `tests/fixtures/files/`: `sample-design.png` (the customer's design) and
-  `qa-proof.png` (a transparent PNG, which the admin proof upload requires).
+- **Upload files.** `tests/fixtures/files/`: `sample-design.png` (the customer's design),
+  `qa-proof.png` (a transparent PNG, which the admin proof upload requires) and `studio-design.png`
+  (1,200px, for the design studio). `sample-design.png` is a 67-byte 1×1 PNG that only works where
+  the server takes the file without decoding it. The studio decodes images in the browser and
+  rejects it, and it rejects `qa-proof.png` as too low-resolution to print.
 - **Emails.** Guest flows use mail.tm inboxes. Admin processing emails the seeded member at each
   notification step.
 
@@ -206,7 +224,7 @@ assertion, so that new occurrences still fail:
   in the baseline, each with a count tripwire.
 - `KNOWN_FALLING_PRICE_INTERVALS` in `price-interpolation.spec.ts`: price intervals where the
   price falls as the size grows.
-- Admin defects found on 2026-09-25 are commented where the spec deliberately does not assert
+- Admin defects found since 2026-09-25 are commented where the spec deliberately does not assert
   them, and logged in the workbook's Defect Log.
 
 ## Fixture reference

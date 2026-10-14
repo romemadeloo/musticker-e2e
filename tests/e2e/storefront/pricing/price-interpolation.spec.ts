@@ -42,19 +42,23 @@ test.describe.configure({ mode: 'parallel' });
 //
 // These are the only two descending intervals across all 22 committed tables, so they are listed
 // explicitly rather than derived from the CSV: a new one appearing should surface as a fresh failure
-// to triage, not be swallowed by a rule. They are marked test.fail() rather than skipped so the
-// assertion still runs -- if the backend starts interpolating signed, these turn red and this whole
-// list should be deleted.
-const KNOWN_FALLING_PRICE_INTERVALS: readonly { slug: string; lower: number; upper: number }[] = [
-  { slug: 'transfer-sticker', lower: 429025, upper: 435600 },
-  // Not currently reached by the sampleIndices walk below, listed so it is handled rather than
-  // suddenly red if that sampling shifts.
-  { slug: 'vinyl-lettering', lower: 60025, upper: 62500 }
+// to triage, not be swallowed by a rule. Each is pinned to the quantity it was confirmed at and has
+// its own test.fail() check below, so the assertion still runs -- if the backend starts
+// interpolating signed, those turn red and this whole list should be deleted.
+//
+// Pinned because the sampled walk moves whenever a table's ladder changes: production's 2026-09-29
+// lettering tables grew from 8 rungs to 13, which moved the walk's quantity from 50 to 200, where
+// these intervals do not fall -- the walk's test.fail() "passed unexpectedly" while transfer-sticker
+// at 409x1057 / 50 was still quoted 2,087,300 (re-checked 2026-10-14).
+const KNOWN_FALLING_PRICE_INTERVALS: readonly { slug: string; lower: number; upper: number; quantity: number }[] = [
+  { slug: 'transfer-sticker', lower: 429025, upper: 435600, quantity: 50 },
+  // vinyl-lettering 200x305 / 100 is quoted 614,900 where 613,700 is correct (re-checked 2026-10-14).
+  { slug: 'vinyl-lettering', lower: 60025, upper: 62500, quantity: 100 }
 ];
 
-function interpolatesAcrossFallingPrice(slug: string, lower: number, upper: number): boolean {
+function interpolatesAcrossFallingPrice(slug: string, lower: number, upper: number, quantity: number): boolean {
   return KNOWN_FALLING_PRICE_INTERVALS.some(
-    (known) => known.slug === slug && known.lower === lower && known.upper === upper
+    (known) => known.slug === slug && known.lower === lower && known.upper === upper && known.quantity === quantity
   );
 }
 
@@ -104,7 +108,7 @@ for (const product of pricingProducts) {
         request
       }) => {
         test.fail(
-          interpolatesAcrossFallingPrice(product.slug, lower, upper),
+          interpolatesAcrossFallingPrice(product.slug, lower, upper, midQuantity),
           `${product.slug} interpolates across a falling total between areas ${lower} and ${upper}, where the API overshoots both bounds -- known defect, see tests/fixtures/pricing/README.md`
         );
 
@@ -140,6 +144,33 @@ for (const product of pricingProducts) {
 
         expect(quotedPrice(body, midQuantity, context), `${context} quoted total: ${identity}`).toBe(
           interpolateByArea(table, area, midQuantity, step)
+        );
+      });
+    }
+
+    // Each known falling interval at the quantity it was confirmed at, whatever the walk above samples.
+    for (const known of KNOWN_FALLING_PRICE_INTERVALS.filter((entry) => entry.slug === product.slug)) {
+      const area = offGridAreaBetween(known.lower, known.upper);
+
+      if (area === null) {
+        continue;
+      }
+
+      const { width, height } = dimensionsForArea(area);
+
+      test(`MS-PRC-INT-${product.slug} known overcharge at area ${area} (${width}x${height}) qty ${known.quantity}`, async ({
+        request
+      }) => {
+        test.fail(
+          true,
+          `${product.slug} interpolates across a falling total between areas ${known.lower} and ${known.upper} at qty ${known.quantity}, where the API overshoots both bounds -- known defect, see tests/fixtures/pricing/README.md`
+        );
+
+        const body = await fetchQuotation(request, product.slug, { width, height, quantity: known.quantity, debug: true });
+        const context = `${product.slug} area ${area} (${width}x${height}) qty ${known.quantity}`;
+
+        expect(quotedPrice(body, known.quantity, context), `${context} quoted total: ${tableIdentity(body)}`).toBe(
+          interpolateByArea(table, area, known.quantity, step)
         );
       });
     }

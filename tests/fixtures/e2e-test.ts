@@ -46,6 +46,7 @@ type GuardOptions = {
   allowExpectedNotFound: boolean;
   allowSheetSizeValidationWarnings: boolean;
   allowPostLogout401: boolean;
+  allowStudioModelLoadNoise: boolean;
 };
 
 function isExpectedGuestUserMe401(status: number, url: string): boolean {
@@ -157,10 +158,27 @@ function isTransientProductPageServerFailure(status: number, url: string): boole
   );
 }
 
+// Any first-party host: static-1 logs the same unused-preload warning as production (2026-10-14).
 function isBenignUnusedPreloadWarning(text: string): boolean {
-  return /The resource https:\/\/www\.musticker\.com\/illustrations\/products\/.* was preloaded using link preload but not used within a few seconds/i.test(
+  return /The resource https:\/\/[\w.-]*musticker\.com\/illustrations\/products\/.* was preloaded using link preload but not used within a few seconds/i.test(
     text
   );
+}
+
+// Opening the design studio (?studio=1) loads a background-removal model in the browser (ONNX,
+// fetched from huggingface.co). onnxruntime warns that it cannot multi-thread outside a
+// cross-origin-isolated page, and the model loader asks for a tokenizer_config.json the model repo
+// does not have (404) -- both seen on every studio open on 2026-10-14, neither stops the studio
+// working. Only studio tests opt in, so the same noise anywhere else still fails the run.
+function isStudioModelLoadWarning(text: string): boolean {
+  return (
+    /^env\.wasm\.numThreads is set to \d+, but this will not work unless you enable crossOriginIsolated mode\./.test(text) ||
+    text === 'WebAssembly multi-threading is not supported in the current environment. Falling back to single-threading.'
+  );
+}
+
+function isStudioModelMissingTokenizerConfig(status: number, url: string): boolean {
+  return status === 404 && /^https:\/\/huggingface\.co\/[^?#]+\/resolve\/[^/]+\/tokenizer_config\.json$/.test(url);
 }
 
 function isBenignWorkerCapabilityFallbackWarning(text: string): boolean {
@@ -184,6 +202,10 @@ function isKnownConsoleMessage(text: string, options: GuardOptions): boolean {
   }
 
   if (options.allowExpectedNotFound && isNuxtPageNotFoundError(text)) {
+    return true;
+  }
+
+  if (options.allowStudioModelLoadNoise && isStudioModelLoadWarning(text)) {
     return true;
   }
 
@@ -296,6 +318,7 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
   allowExpectedNotFound: [false, { option: true }],
   allowSheetSizeValidationWarnings: [false, { option: true }],
   allowPostLogout401: [false, { option: true }],
+  allowStudioModelLoadNoise: [false, { option: true }],
 
   page: async (
     {
@@ -311,7 +334,8 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
       allowGuestCheckoutBootstrap401,
       allowExpectedNotFound,
       allowSheetSizeValidationWarnings,
-      allowPostLogout401
+      allowPostLogout401,
+      allowStudioModelLoadNoise
     },
     use
   ) => {
@@ -327,7 +351,8 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
       allowGuestCheckoutBootstrap401,
       allowExpectedNotFound,
       allowSheetSizeValidationWarnings,
-      allowPostLogout401
+      allowPostLogout401,
+      allowStudioModelLoadNoise
     };
     const consoleFailures: string[] = [];
     const responseFailures: string[] = [];
@@ -444,6 +469,10 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
       }
 
       if (allowPostLogout401 && isPostLogoutMemberDataUnauthorized(status, url)) {
+        return;
+      }
+
+      if (allowStudioModelLoadNoise && isStudioModelMissingTokenizerConfig(status, url)) {
         return;
       }
 
