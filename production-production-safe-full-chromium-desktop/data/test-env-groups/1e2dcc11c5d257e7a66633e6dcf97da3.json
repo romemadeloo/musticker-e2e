@@ -1,1 +1,0 @@
-{"id":"1e2dcc11c5d257e7a66633e6dcf97da3","fullName":"storefront/auth/registration.spec.ts:58:3","name":"MS-V2-082 password below the stated policy is rejected @validation","status":"passed","testResultsByEnv":{"default":"a265e6a9164f8a2ab6cd1dca781e6d8b"}}

@@ -1,1 +1,1 @@
-{"id":"b6d0fd717356954c0462cf8adec67d68","fullName":"storefront/pricing/price-table.spec.ts:59:7","name":"MS-PRC-clear-sticker area 115600 (340x340) matches stickers/clear-sticker.csv","status":"passed","testResultsByEnv":{"default":"cadc16f4390be44a7d01051564619bb9"}}
+{"id":"b6d0fd717356954c0462cf8adec67d68","fullName":"storefront/pricing/price-table.spec.ts:59:7","name":"MS-PRC-clear-sticker area 115600 (340x340) matches stickers/clear-sticker.csv","status":"failed","testResultsByEnv":{"default":"332ab9c7aed50a61c8a7dd740e327abc"}}

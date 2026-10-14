@@ -1,0 +1,1 @@
+{"id":"9489e8777e5c1619622ea1842b610d53","fullName":"storefront/purchasing/cart-lifecycle.spec.ts:70:3","name":"MS-CRT-002 two distinct products become two lines whose prices sum to the cart total","status":"passed","testResultsByEnv":{"default":"20a6d85a83add1d0ac32c663c4faee75"}}

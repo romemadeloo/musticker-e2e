@@ -1,1 +1,1 @@
-{"id":"c31da11a50890290e2d4e5834d92a693","fullName":"storefront/pricing/price-interpolation.spec.ts:191:7","name":"MS-PRC-INT-hologram-sticker quantity 15 interpolates between rungs 10 and 20","status":"passed","testResultsByEnv":{"default":"b2608dae7dae4d4dc3478c7a65cb520d"}}
+{"id":"c31da11a50890290e2d4e5834d92a693","fullName":"storefront/pricing/price-interpolation.spec.ts:191:7","name":"MS-PRC-INT-hologram-sticker quantity 15 interpolates between rungs 10 and 20","status":"failed","testResultsByEnv":{"default":"e7bd1b6aeaec72ff0972ee2ac6528d3f"}}

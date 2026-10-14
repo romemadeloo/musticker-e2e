@@ -1,1 +1,1 @@
-{"id":"33990d30acee65274c775eb0d963d9f2","fullName":"storefront/pricing/price-interpolation.spec.ts:107:7","name":"MS-PRC-INT-hologram-sticker area 146311 (283x517) interpolates between 144400 and 148225","status":"passed","testResultsByEnv":{"default":"736b21bd4426d8b1d0a086e26b900bce"}}
+{"id":"33990d30acee65274c775eb0d963d9f2","fullName":"storefront/pricing/price-interpolation.spec.ts:107:7","name":"MS-PRC-INT-hologram-sticker area 146311 (283x517) interpolates between 144400 and 148225","status":"failed","testResultsByEnv":{"default":"b5760c73515e5e46c018877aa04da71f"}}

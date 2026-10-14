@@ -1,1 +1,0 @@
-{"id":"f9df7036e7cc14b215e39897820af2fc","fullName":"storefront/auth/change-password.spec.ts:86:5","name":"MS-V2-093 a wrong current password is rejected @validation","status":"passed","testResultsByEnv":{"default":"576cd0ae6474a8cd27ebb93d85dcae3b"}}

@@ -1,1 +1,1 @@
-{"id":"d50f3dce190fe368155585167a7d11d3","fullName":"storefront/pricing/price-table.spec.ts:59:7","name":"MS-PRC-oval-sticker area 193600 (440x440) matches stickers/oval-sticker.csv","status":"passed","testResultsByEnv":{"default":"2fc828b37c2e96542b414ac5fa3bbdee"}}
+{"id":"d50f3dce190fe368155585167a7d11d3","fullName":"storefront/pricing/price-table.spec.ts:59:7","name":"MS-PRC-oval-sticker area 193600 (440x440) matches stickers/oval-sticker.csv","status":"failed","testResultsByEnv":{"default":"6fc359ab7655c1dce8c52e3d4bb7bb4e"}}

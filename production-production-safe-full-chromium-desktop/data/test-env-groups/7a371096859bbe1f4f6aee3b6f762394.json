@@ -1,0 +1,1 @@
+{"id":"7a371096859bbe1f4f6aee3b6f762394","fullName":"storefront/purchasing/checkout-page.spec.ts:30:3","name":"MS-CHK-003 checkout blocks payment submission when required fields are blank","status":"passed","testResultsByEnv":{"default":"63d7c9fbef64499415c322275599ac9a"}}

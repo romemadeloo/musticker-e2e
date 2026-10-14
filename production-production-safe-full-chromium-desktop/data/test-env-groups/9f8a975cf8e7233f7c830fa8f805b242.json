@@ -1,1 +1,0 @@
-{"id":"9f8a975cf8e7233f7c830fa8f805b242","fullName":"storefront/purchasing/sheet-sticker-configurator.spec.ts:148:3","name":"MS-V2-056 circle sheet sticker: full cart page \"사이즈 변경\" dialog exposes material + size only (no quantity), and updates price","status":"passed","testResultsByEnv":{"default":"98ed8431077dd36a28cb70109422ca8e"}}

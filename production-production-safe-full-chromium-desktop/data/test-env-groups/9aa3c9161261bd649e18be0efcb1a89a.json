@@ -1,1 +1,1 @@
-{"id":"9aa3c9161261bd649e18be0efcb1a89a","fullName":"storefront/pricing/price-interpolation.spec.ts:222:7","name":"MS-PRC-INT-rounded-sticker area 625 prices the same as 25x25 and 5x125","status":"passed","testResultsByEnv":{"default":"2b6d77909d9e94b6d6081301fc0ad7d7"}}
+{"id":"9aa3c9161261bd649e18be0efcb1a89a","fullName":"storefront/pricing/price-interpolation.spec.ts:222:7","name":"MS-PRC-INT-rounded-sticker area 625 prices the same as 25x25 and 5x125","status":"passed","testResultsByEnv":{"default":"893ddabb9ff2be686c2cf0a83ac41637"}}

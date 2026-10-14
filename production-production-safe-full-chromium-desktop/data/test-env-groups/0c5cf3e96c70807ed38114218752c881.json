@@ -1,1 +1,0 @@
-{"id":"0c5cf3e96c70807ed38114218752c881","fullName":"storefront/auth/login.spec.ts:120:5","name":"MS-V2-035 session persists across reload and navigation, and logout clears it @credentialed","status":"passed","testResultsByEnv":{"default":"201e7e951f1368261baeaf9bb9b8cb0f"}}

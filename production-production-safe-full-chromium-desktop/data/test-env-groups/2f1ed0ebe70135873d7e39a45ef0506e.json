@@ -1,1 +1,1 @@
-{"id":"2f1ed0ebe70135873d7e39a45ef0506e","fullName":"storefront/pricing/price-interpolation.spec.ts:250:7","name":"MS-PRC-INT-transfer-sticker lowest grid row 900 (30x30) prices from the CSV","status":"passed","testResultsByEnv":{"default":"ad1ddc1569c975b44c0e97d6d3eac1b7"}}
+{"id":"2f1ed0ebe70135873d7e39a45ef0506e","fullName":"storefront/pricing/price-interpolation.spec.ts:250:7","name":"MS-PRC-INT-transfer-sticker lowest grid row 900 (30x30) prices from the CSV","status":"passed","testResultsByEnv":{"default":"dc0ce361917e6293d3cb49b13ce8743c"}}

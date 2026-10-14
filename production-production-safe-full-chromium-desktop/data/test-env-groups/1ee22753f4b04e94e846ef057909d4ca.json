@@ -1,1 +1,1 @@
-{"id":"1ee22753f4b04e94e846ef057909d4ca","fullName":"storefront/pricing/price-interpolation.spec.ts:222:7","name":"MS-PRC-INT-die-cut-sticker area 625 prices the same as 25x25 and 5x125","status":"passed","testResultsByEnv":{"default":"bba89c950d97a9c9c5098cfe1fc01a2e"}}
+{"id":"1ee22753f4b04e94e846ef057909d4ca","fullName":"storefront/pricing/price-interpolation.spec.ts:222:7","name":"MS-PRC-INT-die-cut-sticker area 625 prices the same as 25x25 and 5x125","status":"passed","testResultsByEnv":{"default":"1d1b951a5eacdb07b10ca38c88c84422"}}

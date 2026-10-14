@@ -1,0 +1,1 @@
+{"id":"f8917f0248461dcc02ad056dd0c56838","fullName":"storefront/auth/change-password.spec.ts:63:5","name":"MS-AUTH-024 a mismatched confirmation is rejected @validation","status":"passed","testResultsByEnv":{"default":"6b8af867891ce8219930d95b70e44b62"}}

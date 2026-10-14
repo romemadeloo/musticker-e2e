@@ -1,1 +1,1 @@
-{"id":"32830c4477a8f5c9d01b4d21a2fb39dd","fullName":"storefront/pricing/price-table.spec.ts:59:7","name":"MS-PRC-die-cut-sticker area 462000 (660x700) matches stickers/die-cut-sticker.csv","status":"passed","testResultsByEnv":{"default":"3937d49236e9fc84a8d283ea25ee991a"}}
+{"id":"32830c4477a8f5c9d01b4d21a2fb39dd","fullName":"storefront/pricing/price-table.spec.ts:59:7","name":"MS-PRC-die-cut-sticker area 462000 (660x700) matches stickers/die-cut-sticker.csv","status":"failed","testResultsByEnv":{"default":"1940c90b35316ee6fb0662e7fa2041fc"}}

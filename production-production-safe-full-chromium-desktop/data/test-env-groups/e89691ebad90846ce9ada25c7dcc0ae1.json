@@ -1,0 +1,1 @@
+{"id":"e89691ebad90846ce9ada25c7dcc0ae1","fullName":"storefront/account/order-history.spec.ts:64:3","name":"MS-ACC-002 selecting an order opens that order, not a placeholder","status":"passed","testResultsByEnv":{"default":"6e56816bcb725330e669579e18f1eae9"}}
