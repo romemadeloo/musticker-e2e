@@ -1,1 +1,1 @@
-{"id":"73a1793d2f59d8b806e832c48efba696","fullName":"storefront/regression/axe-accessibility.spec.ts:60:5","name":"MS-UX-004 die-cut sticker product has no new WCAG AA violations","status":"passed","testResultsByEnv":{"default":"9cfff9254c7ded36275edf5abb204e27"}}
+{"id":"73a1793d2f59d8b806e832c48efba696","fullName":"storefront/regression/axe-accessibility.spec.ts:60:5","name":"MS-UX-004 die-cut sticker product has no new WCAG AA violations","status":"passed","testResultsByEnv":{"default":"620c40601bb6de6c258a19e54d97f7ea"}}

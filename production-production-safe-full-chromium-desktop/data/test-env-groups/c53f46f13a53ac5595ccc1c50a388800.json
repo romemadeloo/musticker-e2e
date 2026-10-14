@@ -1,1 +1,1 @@
-{"id":"c53f46f13a53ac5595ccc1c50a388800","fullName":"storefront/auth/login.spec.ts:120:5","name":"MS-AUTH-010 session persists across reload and navigation, and logout clears it @credentialed","status":"passed","testResultsByEnv":{"default":"ce34d22739b0d68ad754fdd33dae7892"}}
+{"id":"c53f46f13a53ac5595ccc1c50a388800","fullName":"storefront/auth/login.spec.ts:120:5","name":"MS-AUTH-010 session persists across reload and navigation, and logout clears it @credentialed","status":"passed","testResultsByEnv":{"default":"0de66c8d4234e17126dadb83d77decac"}}

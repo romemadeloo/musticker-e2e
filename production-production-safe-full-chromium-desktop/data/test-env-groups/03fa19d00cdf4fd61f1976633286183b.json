@@ -1,1 +1,1 @@
-{"id":"03fa19d00cdf4fd61f1976633286183b","fullName":"storefront/purchasing/product-config.spec.ts:57:3","name":"MS-CFG-004 custom size and quantity controls are reachable","status":"failed","testResultsByEnv":{"default":"5bf2e804d44d562bab726043879254bd"}}
+{"id":"03fa19d00cdf4fd61f1976633286183b","fullName":"storefront/purchasing/product-config.spec.ts:57:3","name":"MS-CFG-004 custom size and quantity controls are reachable","status":"passed","testResultsByEnv":{"default":"89812472e3762a6e128f1a718f636229"}}

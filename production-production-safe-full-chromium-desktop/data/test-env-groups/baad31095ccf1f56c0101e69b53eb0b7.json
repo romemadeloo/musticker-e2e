@@ -1,1 +1,1 @@
-{"id":"baad31095ccf1f56c0101e69b53eb0b7","fullName":"storefront/purchasing/money-path.spec.ts:31:3","name":"MS-CHK-004 the quoted price survives product page, cart, and checkout unchanged","status":"passed","testResultsByEnv":{"default":"f78eaf7a260fd0457b5a63b24f95f8a7"}}
+{"id":"baad31095ccf1f56c0101e69b53eb0b7","fullName":"storefront/purchasing/money-path.spec.ts:31:3","name":"MS-CHK-004 the quoted price survives product page, cart, and checkout unchanged","status":"passed","testResultsByEnv":{"default":"2ce1c3995ae18b7116ce5ede34963a09"}}

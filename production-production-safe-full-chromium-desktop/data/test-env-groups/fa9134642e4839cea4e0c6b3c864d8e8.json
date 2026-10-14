@@ -1,1 +1,1 @@
-{"id":"fa9134642e4839cea4e0c6b3c864d8e8","fullName":"storefront/regression/axe-accessibility.spec.ts:60:5","name":"MS-UX-004 empty cart has no new WCAG AA violations","status":"passed","testResultsByEnv":{"default":"0a50e3a1224c0708ef51d0e7d028efe6"}}
+{"id":"fa9134642e4839cea4e0c6b3c864d8e8","fullName":"storefront/regression/axe-accessibility.spec.ts:60:5","name":"MS-UX-004 empty cart has no new WCAG AA violations","status":"passed","testResultsByEnv":{"default":"80c9d21ee2fadda836943b26ab33f538"}}

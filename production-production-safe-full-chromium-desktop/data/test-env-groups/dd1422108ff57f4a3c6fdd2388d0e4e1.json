@@ -1,1 +1,1 @@
-{"id":"dd1422108ff57f4a3c6fdd2388d0e4e1","fullName":"storefront/auth/login.spec.ts:53:3","name":"MS-AUTH-005 invalid credentials fail safely and keep the user anonymous @validation","status":"passed","testResultsByEnv":{"default":"5c32fabdbf36550dfbafc17fad0ae198"}}
+{"id":"dd1422108ff57f4a3c6fdd2388d0e4e1","fullName":"storefront/auth/login.spec.ts:53:3","name":"MS-AUTH-005 invalid credentials fail safely and keep the user anonymous @validation","status":"passed","testResultsByEnv":{"default":"1e27d3230be0f1754ace2e227112c814"}}
