@@ -1,1 +1,1 @@
-{"id":"6e524ebc44b24013a4321985eb846a08","fullName":"storefront/purchasing/cart-lifecycle.spec.ts:97:3","name":"MS-V2-102 a guest cart survives a full page reload @smoke","status":"failed","testResultsByEnv":{"default":"83d7a1baabfd9c8ba337a70a14e7b7d0"}}
+{"id":"6e524ebc44b24013a4321985eb846a08","fullName":"storefront/purchasing/cart-lifecycle.spec.ts:97:3","name":"MS-V2-102 a guest cart survives a full page reload @smoke","status":"passed","testResultsByEnv":{"default":"250f9e47415fc99347271e42ccfc725a"}}
