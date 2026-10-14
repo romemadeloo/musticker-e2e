@@ -1,1 +1,1 @@
-{"id":"cfeed664b03fd47bca7c7dfefcc85f31","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-V2-040 catalog page renders without error: ./stickers/vinyl-lettering","status":"passed","testResultsByEnv":{"default":"7bc4b52972bf15d2c31cf534b5cb39c4"}}
+{"id":"cfeed664b03fd47bca7c7dfefcc85f31","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-V2-040 catalog page renders without error: ./stickers/vinyl-lettering","status":"passed","testResultsByEnv":{"default":"2c21190a61d5a5854c9a3810541c33ea"}}

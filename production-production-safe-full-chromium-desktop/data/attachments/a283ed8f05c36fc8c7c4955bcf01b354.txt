@@ -1,0 +1,1 @@
+category card ./stickers/vinyl-lettering: expected "글자 커팅 스티커", found "레터링 스티커"

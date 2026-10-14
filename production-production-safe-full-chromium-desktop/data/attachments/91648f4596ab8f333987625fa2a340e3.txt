@@ -1,0 +1,1 @@
+category card ./sheet-stickers/oval-sheet: expected "타원형 판스티커", found "타원형 시트 스티커"

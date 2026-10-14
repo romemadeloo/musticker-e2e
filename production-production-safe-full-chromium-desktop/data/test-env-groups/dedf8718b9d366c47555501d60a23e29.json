@@ -1,1 +1,1 @@
-{"id":"dedf8718b9d366c47555501d60a23e29","fullName":"storefront/purchasing/product-config.spec.ts:65:3","name":"MS-V2-013 product trust and delivery promises are visible","status":"passed","testResultsByEnv":{"default":"4f56050b35e4c05238b0c252dc0f45ba"}}
+{"id":"dedf8718b9d366c47555501d60a23e29","fullName":"storefront/purchasing/product-config.spec.ts:65:3","name":"MS-V2-013 product trust and delivery promises are visible","status":"passed","testResultsByEnv":{"default":"20c0e07db963ce1619acfc0e091ad289"}}

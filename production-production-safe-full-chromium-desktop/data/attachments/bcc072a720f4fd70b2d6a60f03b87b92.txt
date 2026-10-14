@@ -1,0 +1,1 @@
+category card ./sheet-stickers/circle-sheet: expected "원형 판스티커", found "원형 시트 스티커"

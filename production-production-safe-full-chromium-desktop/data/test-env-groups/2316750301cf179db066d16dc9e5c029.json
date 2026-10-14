@@ -1,1 +1,1 @@
-{"id":"2316750301cf179db066d16dc9e5c029","fullName":"storefront/purchasing/product-config.spec.ts:57:3","name":"MS-V2-012 custom size and quantity controls are reachable","status":"failed","testResultsByEnv":{"default":"8796a997a815d165fafa535221026c23"}}
+{"id":"2316750301cf179db066d16dc9e5c029","fullName":"storefront/purchasing/product-config.spec.ts:57:3","name":"MS-V2-012 custom size and quantity controls are reachable","status":"passed","testResultsByEnv":{"default":"32f8c1b7d8637836336252c23de947e0"}}
