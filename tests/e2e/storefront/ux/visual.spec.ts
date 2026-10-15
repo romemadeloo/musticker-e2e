@@ -14,7 +14,7 @@ const volatileStylesheet = fileURLToPath(new URL('./visual-volatile.css', import
 // their pixels change whenever someone posts one. They are masked; the layout around them is not.
 const reviewSectionTestIds = ['home-reviews-section', 'product-category-reviews-section'];
 
-test.describe('storefront v2 visual snapshots', { tag: ['@visual', '@production'] }, () => {
+test.describe('Visual', { tag: ['@visual', '@production'] }, () => {
   test.skip(!runVisual, 'Set RUN_VISUAL_E2E=true after approving baselines for visual snapshot coverage.');
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });
 

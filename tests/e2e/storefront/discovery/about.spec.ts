@@ -1,7 +1,7 @@
 import { test } from '../../../fixtures/e2e-test.js';
 import { AboutV2Page } from '../../../pom/storefront/about-page.js';
 
-test.describe('storefront v2 about page', { tag: ['@smoke', '@production'] }, () => {
+test.describe('About page', { tag: ['@smoke', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });
 
   test('MS-DSC-006 about page loads hero, sub-nav, stats, and CTAs', async ({ page }) => {

@@ -21,7 +21,7 @@ const shellHtml = `<!doctype html>
 <script src="/_nuxt/c.js"></script>
 </head><body><div id="__nuxt"></div></body></html>`;
 
-test.describe('WAF throttle detection', { tag: ['@security'] }, () => {
+test.describe('Throttle detection', { tag: ['@security'] }, () => {
   test('MS-WAF-001 a subresource 403 storm is reported as throttling, not as missing content', async ({ page }) => {
     let documentRequests = 0;
 

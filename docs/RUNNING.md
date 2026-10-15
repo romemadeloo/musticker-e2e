@@ -238,9 +238,9 @@ baselines. To create them:
 1. Dispatch `visual-regression.yml` with **update_baselines = true**.
 2. Download the `visual-baselines-linux` artifact.
 3. Commit the `*-linux.png` files next to the win32 ones in
-   `tests/e2e/storefront/regression/visual.spec.ts-snapshots/`.
+   `tests/e2e/storefront/ux/visual.spec.ts-snapshots/`.
 
 Baselines never update themselves. Anything that changes on its own is kept out of the screenshots
-instead: [visual-volatile.css](../tests/e2e/storefront/regression/visual-volatile.css) hides
+instead: [visual-volatile.css](../tests/e2e/storefront/ux/visual-volatile.css) hides
 announcement bars and chat buttons, review carousels are masked, and the spec waits for lazy
 content before capturing. A diff that remains is a real change.

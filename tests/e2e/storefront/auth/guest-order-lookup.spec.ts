@@ -18,8 +18,19 @@ import { LoginPage } from '../../../pom/storefront/login-page.js';
 // cases so nothing can collide with a real customer.
 const bogusOrderNumber = 'AO-000000-E2E-NOPE';
 
-test.describe('storefront guest order lookup', { tag: ['@auth', '@production', '@validation'] }, () => {
+test.describe('Guest order lookup', { tag: ['@auth', '@production', '@validation'] }, () => {
   test.use({ allowGuestUserMe401: true, allowExpectedAuthFailures: true, allowKnownNuxtPayloadFailures: true });
+
+  test('MS-AUTH-029 non-member mode swaps in the guest order-lookup form', async ({ page }) => {
+    const login = new LoginPage(page);
+
+    await login.goto();
+    await login.switchToNonMemberMode();
+
+    // Guest lookup is email + order number; it must not offer a password field.
+    await expect(login.passwordInput).toHaveCount(0);
+    await expect(login.nonMemberEmailInput).toHaveAttribute('type', 'email');
+  });
 
   test('MS-AUTH-030 an unknown order number is refused without signing anyone in', async ({ page }) => {
     const login = new LoginPage(page);

@@ -5,7 +5,7 @@ import { ko } from '../../../fixtures/storefront-data.js';
 
 const unknownRoute = 'this-page-does-not-exist-e2e-check';
 
-test.describe('storefront v2 error handling', { tag: ['@regression', '@production'] }, () => {
+test.describe('Error pages', { tag: ['@regression', '@production'] }, () => {
   test.use({
     allowGuestUserMe401: true,
     allowKnownNuxtPayloadFailures: true,

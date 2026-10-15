@@ -19,7 +19,7 @@ import { RegisterPage } from '../../../pom/storefront/register-page.js';
 // full-payment checkout is gated behind RUN_PAYMENT_E2E.
 const canRunDestructiveAuth = process.env.RUN_AUTH_DESTRUCTIVE_E2E === 'true';
 
-test.describe('storefront registration', { tag: ['@auth', '@production'] }, () => {
+test.describe('Registration', { tag: ['@auth', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowExpectedAuthFailures: true, allowKnownNuxtPayloadFailures: true });
 
   test('MS-AUTH-012 register form exposes expected controls @smoke', async ({ page }) => {

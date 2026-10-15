@@ -54,27 +54,56 @@ case belongs: `MS-<MODULE>-###`.
 ## Where a test goes
 
 ```
-tests/e2e/storefront/<area>/<feature>.spec.ts     customer-facing behaviour
-tests/e2e/admin/<area>/<feature>.spec.ts          admin panel behaviour and journeys that start on the storefront
+tests/e2e/storefront/<module>/<suite>.spec.ts    customer-facing behaviour
+tests/e2e/admin/<module>/<suite>.spec.ts         admin panel behaviour and journeys that start on the storefront
 tests/pom/storefront/<page>.ts                    storefront page objects
 tests/pom/admin/<page>.ts                         admin page objects
 tests/fixtures/<topic>.ts                         shared helpers and data, used by both apps
 ```
 
-Storefront areas: `smoke`, `discovery`, `purchasing`, `pricing`, `auth`, `account`, `api`,
-`validation`, `regression`, `security`. Add a new area folder only when a feature doesn't fit any
-of them, and record it in the workbook's Area list.
+The folders mirror the workbook, so a case is found the same way in both:
+
+| Workbook | Playwright | Example |
+|---|---|---|
+| Area (module) | folder | `8. Sign-in & registration` → `storefront/auth/` |
+| Sub-Area (suite) | spec file, and its top-level `test.describe` title | `Registration` → `registration.spec.ts`, `test.describe('Registration', …)` |
+| TC ID and title | `test(...)` title | `MS-AUTH-012 register form exposes expected controls` |
+
+| Module | Folder |
+|---|---|
+| NAV | `storefront/navigation/` |
+| DSC | `storefront/discovery/` |
+| CFG | `storefront/configuration/` |
+| SHT | `storefront/sheet-size-rules/` |
+| CRT | `storefront/cart/` |
+| CHK | `storefront/checkout/` |
+| PRC | `storefront/pricing/` |
+| AUTH | `storefront/auth/` |
+| ACC | `storefront/account/` |
+| INQ | `storefront/inquiry/` |
+| API | `storefront/api/` |
+| UX | `storefront/ux/` |
+| SEC, WAF | `storefront/security/` |
+| ADMO | `admin/orders/` |
+| ADMA | `admin/access/` (when its first spec is written) |
+
+- **One suite per spec file.** The suite name is the top-level `describe` title, written exactly as the
+  workbook's Sub-Area. Nested `describe`s inside a suite are fine for shared settings (`seeded member`,
+  `session lifecycle`) or data (one per pricing product).
+- **A new case goes into the spec file of its suite.** A new suite gets a new spec file and a new
+  Sub-Area value. A new module gets a folder, a row in the table above, and a workbook Area.
+- Workflows select tests by tag, never by folder, so moving a spec does not change which CI suites run it.
 
 ## Anatomy of a spec
 
-From [product-config.spec.ts](../tests/e2e/storefront/purchasing/product-config.spec.ts):
+From [product-config.spec.ts](../tests/e2e/storefront/configuration/product-config.spec.ts):
 
 ```ts
 import { test } from '../../../fixtures/e2e-test.js';               // or admin-test.js
 import { v2Products } from '../../../fixtures/storefront-data.js';   // data, not inline strings
 import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 
-test.describe('storefront v2 product configuration', { tag: ['@regression', '@production', '@purchasing'] }, () => {
+test.describe('Product config', { tag: ['@regression', '@production', '@purchasing'] }, () => {
   test.use({ allowGuestUserMe401: true });                          // named guard allowances only
 
   test('MS-CFG-001 die-cut sticker supports size and quantity selection', async ({ page }) => {

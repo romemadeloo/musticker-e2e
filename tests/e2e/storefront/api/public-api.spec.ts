@@ -4,7 +4,7 @@ import { apiPath } from '../../../fixtures/env.js';
 
 type JsonRecord = Record<string, unknown>;
 
-test.describe('storefront public API smoke', { tag: ['@api', '@smoke', '@production'] }, () => {
+test.describe('Public API', { tag: ['@api', '@smoke', '@production'] }, () => {
   test('MS-API-001 navigation categories API returns public category data', async ({ request }) => {
     const payload = await expectJsonResponse(request.get(apiPath('/sys/kr/navigation/categories')));
 

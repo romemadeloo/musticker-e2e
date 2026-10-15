@@ -25,7 +25,7 @@ test.describe.configure({ mode: 'parallel' });
 // price-table.spec.ts.
 const PROBE_SIZE = { width: 75, height: 75 } as const;
 
-test.describe('pricing product mapping', { tag: ['@api', '@pricing', '@regression'] }, () => {
+test.describe('Product table mapping', { tag: ['@api', '@pricing', '@regression'] }, () => {
   for (const slug of unmappedPricingProducts) {
     test(`MS-PRC-MAP ${slug} is served by a known pricing table`, () => {
       test.skip(

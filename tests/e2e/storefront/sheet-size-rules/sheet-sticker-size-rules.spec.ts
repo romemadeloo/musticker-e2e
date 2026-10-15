@@ -28,7 +28,7 @@ import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 // Tagged @production as of 2026-08-28: the narrowed preset tables have been promoted, so the seven
 // single-sticker presets that used to keep MS-SHT-003 red on production are gone and all 24 tests
 // here pass against www.musticker.com.
-test.describe('storefront v2 sheet sticker size rules (minimum two stickers per sheet)', {
+test.describe('Sheet sticker size rules', {
   tag: ['@regression', '@production', '@purchasing']
 }, () => {
   test.use({

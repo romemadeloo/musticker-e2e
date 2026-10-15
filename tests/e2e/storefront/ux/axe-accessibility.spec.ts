@@ -53,7 +53,7 @@ const scannedPages = [
   }
 ] as const;
 
-test.describe('storefront v2 WCAG AA scan', { tag: ['@regression', '@a11y', '@production'] }, () => {
+test.describe('Axe accessibility', { tag: ['@regression', '@a11y', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });
 
   for (const scanned of scannedPages) {

@@ -4,7 +4,7 @@ import { appPath } from '../../../fixtures/env.js';
 import { gotoStorefront } from '../../../fixtures/navigation.js';
 import { InquiryV2Form } from '../../../pom/storefront/inquiry-form.js';
 
-test.describe('storefront v2 inquiry validation', { tag: ['@validation', '@production'] }, () => {
+test.describe('Inquiry validation', { tag: ['@validation', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowExpectedAuthFailures: true, allowKnownNuxtPayloadFailures: true });
 
   test.beforeEach(async ({ page }) => {

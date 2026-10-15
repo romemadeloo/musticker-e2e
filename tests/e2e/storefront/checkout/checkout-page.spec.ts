@@ -3,7 +3,7 @@ import { v2Products } from '../../../fixtures/storefront-data.js';
 import { CheckoutV2Page } from '../../../pom/storefront/checkout-page.js';
 import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 
-test.describe('storefront v2 checkout page', { tag: ['@regression', '@production'] }, () => {
+test.describe('Checkout page', { tag: ['@regression', '@production'] }, () => {
   test.use({
     allowGuestUserMe401: true,
     allowKnownNuxtPayloadFailures: true,

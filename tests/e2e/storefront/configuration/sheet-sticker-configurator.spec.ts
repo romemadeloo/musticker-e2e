@@ -26,7 +26,7 @@ import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 // staff on 2026-08-13 to be expected/acceptable pricing behavior, not a bug -- removed.
 const designFilePath = fileURLToPath(new URL('../../../fixtures/files/sample-design.png', import.meta.url));
 
-test.describe('storefront v2 sheet sticker configurator (circle/oval/square/rectangle/rounded)', {
+test.describe('Sheet sticker configurator', {
   tag: ['@regression', '@production', '@purchasing']
 }, () => {
   test.use({

@@ -2,7 +2,7 @@ import { test } from '../../../fixtures/e2e-test.js';
 import { ko } from '../../../fixtures/storefront-data.js';
 import { FaqV2Page } from '../../../pom/storefront/faq-page.js';
 
-test.describe('storefront v2 FAQ', { tag: ['@smoke', '@regression', '@production'] }, () => {
+test.describe('FAQ', { tag: ['@smoke', '@regression', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });
 
   test('MS-DSC-004 FAQ topics and accordions are usable', async ({ page }) => {

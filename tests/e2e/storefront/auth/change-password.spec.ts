@@ -24,7 +24,7 @@ import { RegisterPage } from '../../../pom/storefront/register-page.js';
 // never invalidate AUTH_TEST_PASSWORD for the rest of the suite.
 const canRunDestructiveAuth = process.env.RUN_AUTH_DESTRUCTIVE_E2E === 'true';
 
-test.describe('storefront change password', { tag: ['@auth', '@production'] }, () => {
+test.describe('Change password', { tag: ['@auth', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowExpectedAuthFailures: true, allowKnownNuxtPayloadFailures: true });
 
   test.describe('seeded member', { tag: ['@credentialed'] }, () => {

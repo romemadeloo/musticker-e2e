@@ -7,7 +7,7 @@ import { HomeV2Page } from '../../../pom/storefront/home-page.js';
 import { LoginPage } from '../../../pom/storefront/login-page.js';
 import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 
-test.describe('storefront authentication', { tag: ['@auth', '@production'] }, () => {
+test.describe('Login', { tag: ['@auth', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowExpectedAuthFailures: true, allowKnownNuxtPayloadFailures: true });
 
   test('MS-AUTH-001 account navigation opens login', async ({ page }) => {
@@ -158,16 +158,5 @@ test.describe('storefront authentication', { tag: ['@auth', '@production'] }, ()
 
     await expect(page.getByTestId('account-profile-page')).toHaveCount(0);
     await expect(page).not.toHaveURL(/\/kr\/account\/profile/);
-  });
-
-  test('MS-AUTH-029 non-member mode swaps in the guest order-lookup form', async ({ page }) => {
-    const login = new LoginPage(page);
-
-    await login.goto();
-    await login.switchToNonMemberMode();
-
-    // Guest lookup is email + order number; it must not offer a password field.
-    await expect(login.passwordInput).toHaveCount(0);
-    await expect(login.nonMemberEmailInput).toHaveAttribute('type', 'email');
   });
 });

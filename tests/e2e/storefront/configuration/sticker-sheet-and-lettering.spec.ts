@@ -8,7 +8,7 @@ import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 // sticker-catalog-configurator.spec.ts) and were previously only "render-only smoke" tested via
 // catalog-crawl.spec.ts. Verified live against development-3 on 2026-08-13 while authoring this
 // suite.
-test.describe('storefront v2 catalog: sheet, lettering, and transfer stickers', {
+test.describe('Sticker sheet and lettering', {
   tag: ['@regression', '@production', '@purchasing']
 }, () => {
   test.use({

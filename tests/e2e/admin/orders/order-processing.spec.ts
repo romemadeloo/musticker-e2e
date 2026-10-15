@@ -39,7 +39,7 @@ const proofFile = path.resolve('tests/fixtures/files/qa-proof.png');
  * Changes real (dev) data and emails the seeded member at each notification step, so it is gated on
  * RUN_ADMIN_DESTRUCTIVE_E2E and refuses every environment but static-1.
  */
-test.describe('storefront to admin order processing', { tag: ['@admin', '@e2e', '@destructive', '@slow', '@credentialed'] }, () => {
+test.describe('Order processing', { tag: ['@admin', '@e2e', '@destructive', '@slow', '@credentialed'] }, () => {
   test.use({
     asMember: true,
     allowKnownNuxtPayloadFailures: true,

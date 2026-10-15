@@ -6,7 +6,7 @@ import { HeaderComponent } from '../../../pom/storefront/header-component.js';
 import { InquiryV2Form } from '../../../pom/storefront/inquiry-form.js';
 import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 
-test.describe('storefront v2 mobile critical path', { tag: ['@smoke', '@production', '@mobile'] }, () => {
+test.describe('Mobile critical path', { tag: ['@smoke', '@production', '@mobile'] }, () => {
   test.use({
     allowGuestUserMe401: true,
     allowKnownNuxtPayloadFailures: true,

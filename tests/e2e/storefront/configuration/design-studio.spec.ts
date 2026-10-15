@@ -15,7 +15,7 @@ const printQualityDesign = fileURLToPath(new URL('../../../fixtures/files/studio
  * (see tests/pom/storefront/design-studio.ts). Nothing here adds to the cart: attaching a design in
  * the studio stays in the browser, so these run on production.
  */
-test.describe('storefront v2 order chooser and design studio', { tag: ['@regression', '@production', '@purchasing'] }, () => {
+test.describe('Design studio', { tag: ['@regression', '@production', '@purchasing'] }, () => {
   test.use({
     allowGuestUserMe401: true,
     allowKnownNuxtPayloadFailures: true,

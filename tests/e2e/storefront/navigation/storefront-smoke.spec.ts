@@ -5,7 +5,7 @@ import { expectHeadingOrHeal } from '../../../fixtures/self-heal.js';
 import { categoryProducts, ko } from '../../../fixtures/storefront-data.js';
 import { HomeV2Page } from '../../../pom/storefront/home-page.js';
 
-test.describe('storefront v2 smoke', { tag: ['@smoke', '@production'] }, () => {
+test.describe('Storefront smoke', { tag: ['@smoke', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });
 
   test('MS-NAV-001 homepage loads with critical public content', async ({ page }) => {

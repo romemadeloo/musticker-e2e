@@ -12,7 +12,7 @@ import { test, expect } from '@playwright/test';
 import { internalOriginKeyVarFor } from '../../../fixtures/env.js';
 import { isMustickerHost } from '../../../fixtures/hosts.js';
 
-test.describe('internal-origin header scope', { tag: ['@security'] }, () => {
+test.describe('Internal origin scope', { tag: ['@security'] }, () => {
   test('MS-SEC-001 first-party musticker hosts are in scope', () => {
     for (const hostname of [
       'musticker.com',

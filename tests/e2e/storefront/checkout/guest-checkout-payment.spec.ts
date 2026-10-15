@@ -15,7 +15,7 @@ const canRunDestructiveCheckout = process.env.RUN_PAYMENT_E2E === 'true';
 // no API key) supplies a disposable inbox that receives both the OTP and the resulting
 // order-confirmation email, since this only runs against dev sandboxes and creates real side
 // effects there.
-test.describe('storefront v2 destructive checkout', { tag: ['@e2e', '@destructive', '@slow', '@payment'] }, () => {
+test.describe('Guest checkout payment', { tag: ['@e2e', '@destructive', '@slow', '@payment'] }, () => {
   test.use({
     allowGuestUserMe401: true,
     allowKnownNuxtPayloadFailures: true,

@@ -4,7 +4,7 @@ import { gotoStorefront } from '../../../fixtures/navigation.js';
 import { ko } from '../../../fixtures/storefront-data.js';
 import { HeaderComponent } from '../../../pom/storefront/header-component.js';
 
-test.describe('storefront v2 accessibility smoke', { tag: ['@regression', '@production'] }, () => {
+test.describe('Accessibility', { tag: ['@regression', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });
 
   test('MS-UX-001 core controls are named and keyboard reachable', async ({ page }) => {

@@ -9,7 +9,7 @@ import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 // v2Products.dieCutSticker / v2Products.dieCutRoll (no material selector, just size + quantity),
 // confirmed live against development-3 on 2026-08-13 while authoring this suite for all 15
 // products below.
-test.describe('storefront v2 catalog: plain die-cut shape stickers', {
+test.describe('Sticker catalog configurator', {
   tag: ['@regression', '@production', '@purchasing']
 }, () => {
   test.use({

@@ -18,7 +18,7 @@ import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 //     drawer line, the cart page total, and the checkout 소계 all then read.
 //   * 소계 18,700원 + 배송비 3,000원 - 할인 0원 = 합계 21,700원.
 //   * Shipping follows the 5만원 이상 무료배송 promise: 3,000원 at a 32,500원 subtotal, 0원 at 106,000원.
-test.describe('storefront v2 money path', { tag: ['@regression', '@production', '@purchasing'] }, () => {
+test.describe('Money path', { tag: ['@regression', '@production', '@purchasing'] }, () => {
   test.use({
     allowGuestUserMe401: true,
     allowKnownNuxtPayloadFailures: true,

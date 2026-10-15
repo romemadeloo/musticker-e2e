@@ -23,7 +23,7 @@ import { AccountOrdersPage } from '../../../pom/storefront/account-orders-page.j
 // of its orders aged into 이전 내역 and 진행 중 correctly showing 모든 주문을 확인하셨습니다!.
 // Anything needing cards goes through openSegmentWithOrders() and skips when the member holds no
 // orders in either segment.
-test.describe('storefront v2 order history', { tag: ['@regression', '@production', '@auth', '@credentialed'] }, () => {
+test.describe('Order history', { tag: ['@regression', '@production', '@auth', '@credentialed'] }, () => {
   test.use({
     asMember: true,
     allowGuestUserMe401: true,
