@@ -1,1 +1,1 @@
-{"id":"cae6686ecc7f2a7e37878a717c93303d","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-DSC-007 catalog page renders without error: ./roll-stickers/rounded-roll","status":"passed","testResultsByEnv":{"default":"f8f9a9016e1a5436974e07dc72f5c624"}}
+{"id":"cae6686ecc7f2a7e37878a717c93303d","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-DSC-007 catalog page renders without error: ./roll-stickers/rounded-roll","status":"passed","testResultsByEnv":{"default":"6eadc894868434e222bd4f7eb5aff46d"}}

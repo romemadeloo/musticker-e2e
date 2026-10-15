@@ -1,1 +1,1 @@
-{"id":"07b809441a968c7604cd7b7d3350d439","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-circle-sticker area 760 (20x38) interpolates between 625 and 900","status":"failed","testResultsByEnv":{"default":"56aaeb33ae01a194f2117332ab395299"}}
+{"id":"07b809441a968c7604cd7b7d3350d439","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-circle-sticker area 760 (20x38) interpolates between 625 and 900","status":"failed","testResultsByEnv":{"default":"0f7df4a98d8cca66af0d35a740a1852f"}}
