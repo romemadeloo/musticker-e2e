@@ -1,1 +1,1 @@
-{"id":"501cd447c943f983f3eb6a811e9917d7","fullName":"storefront/inquiry/inquiry-validation.spec.ts:23:3","name":"MS-INQ-002 inquiry form documents supported attachment constraints","status":"failed","testResultsByEnv":{"default":"eea36c891e461638dc2dfa4cdd3b0aee"}}
+{"id":"501cd447c943f983f3eb6a811e9917d7","fullName":"storefront/inquiry/inquiry-validation.spec.ts:23:3","name":"MS-INQ-002 inquiry form documents supported attachment constraints","status":"passed","testResultsByEnv":{"default":"ef77f967577748f7bad1c63b2640df99"}}

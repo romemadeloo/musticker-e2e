@@ -1,1 +1,1 @@
-{"id":"f9328780d949b75d032fe6076686b86a","fullName":"storefront/pricing/price-interpolation.spec.ts:192:9","name":"MS-PRC-INT-rounded-sticker quantity 15 interpolates between rungs 10 and 20","status":"passed","testResultsByEnv":{"default":"aca782c76574596b1fd42d4c4e1fb2ed"}}
+{"id":"f9328780d949b75d032fe6076686b86a","fullName":"storefront/pricing/price-interpolation.spec.ts:192:9","name":"MS-PRC-INT-rounded-sticker quantity 15 interpolates between rungs 10 and 20","status":"passed","testResultsByEnv":{"default":"52aba3f330b08bd1e748675da889a200"}}
