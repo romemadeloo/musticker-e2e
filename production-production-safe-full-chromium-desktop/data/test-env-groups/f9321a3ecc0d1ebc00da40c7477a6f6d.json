@@ -1,0 +1,1 @@
+{"id":"f9321a3ecc0d1ebc00da40c7477a6f6d","fullName":"storefront/pricing/price-interpolation.spec.ts:192:9","name":"MS-PRC-INT-circle-sticker quantity 85000 interpolates between rungs 70000 and 100000","status":"failed","testResultsByEnv":{"default":"b050cce64562e2ac57ba10d3109e6a0a"}}

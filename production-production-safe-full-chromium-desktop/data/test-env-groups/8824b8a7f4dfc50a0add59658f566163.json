@@ -1,1 +1,0 @@
-{"id":"8824b8a7f4dfc50a0add59658f566163","fullName":"storefront/auth/login.spec.ts:30:3","name":"MS-AUTH-003 blank login is blocked before the auth endpoint is called @validation","status":"passed","testResultsByEnv":{"default":"c1b795115fc53942d02481bc8a9c68c0"}}

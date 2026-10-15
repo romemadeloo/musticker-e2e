@@ -1,1 +1,0 @@
-{"id":"178e07bdb7fcf0dad50b2f01727812d9","fullName":"storefront/auth/guest-order-lookup.spec.ts:49:3","name":"MS-AUTH-032 the refusal does not reveal whether the email belongs to an account @credentialed","status":"passed","testResultsByEnv":{"default":"7b68354d4fde2d622937bb3c843ce78d"}}
