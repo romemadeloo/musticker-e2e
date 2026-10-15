@@ -1,1 +1,0 @@
-{"id":"462cf650a0bdf503c02ffa6dbd30b1e3","fullName":"storefront/auth/registration.spec.ts:115:3","name":"MS-AUTH-019 registering an existing email offers sign-in instead of a duplicate account @credentialed","status":"passed","testResultsByEnv":{"default":"067146a42ebb8f72885fc9034fea8a85"}}

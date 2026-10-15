@@ -1,1 +1,0 @@
-{"id":"2d1a7ff562b8d152a1b1887cc711a32b","fullName":"storefront/purchasing/money-path.spec.ts:77:3","name":"MS-CHK-005 an order below the free-shipping threshold is charged shipping","status":"passed","testResultsByEnv":{"default":"24535b21ba8ee79f20fff8497b548ac2"}}

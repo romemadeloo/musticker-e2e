@@ -1,1 +1,0 @@
-{"id":"6ee012866f68db5d83b681b6a7ded5d5","fullName":"storefront/auth/login.spec.ts:154:3","name":"MS-AUTH-028 a member-only route is not reachable anonymously","status":"passed","testResultsByEnv":{"default":"d28e78fa8ee5445c8e5dc9b96416c1f3"}}
