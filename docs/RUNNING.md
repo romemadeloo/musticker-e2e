@@ -204,6 +204,7 @@ fixture refuses to start without it.
 | JUnit | `test-results/junit.xml` | CI only |
 | Allure | `allure-results/` when `ALLURE_RESULTS_DIR` is set | CI publishes it to the Allure report server |
 | Self-heal report | `test-results/self-heal-report.md` and the GitHub job summary | Copy that changed and was healed. See [ARCHITECTURE.md](ARCHITECTURE.md#self-healing-locators) |
+| QA Control Center summary | `qacc-summary` artifact (`qacc-summary.json`) | CI only: totals and failed or flaky test titles, written by `scripts/ci/qacc-summary.mjs` from `allure-results/`. The QA Control Center website reads it to show pass/fail counts and failed TC IDs |
 | Failure artifacts | `test-results/<test>/` | Screenshot, video and trace, except where an internal-origin key is in use or for the admin context |
 
 ## CI
