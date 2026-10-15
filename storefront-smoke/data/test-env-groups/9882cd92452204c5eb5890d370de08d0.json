@@ -1,1 +1,0 @@
-{"id":"9882cd92452204c5eb5890d370de08d0","fullName":"storefront/cart/cart-lifecycle.spec.ts:97:3","name":"MS-CRT-003 a guest cart survives a full page reload @smoke","status":"passed","testResultsByEnv":{"default":"ce10932a1cd42c97baae91f16c97cddb"}}
