@@ -1,1 +1,1 @@
-{"id":"8e8d6554b06c99bd16387a791cc1b8b8","fullName":"storefront/auth/login.spec.ts:154:3","name":"MS-AUTH-028 a member-only route is not reachable anonymously","status":"passed","testResultsByEnv":{"default":"9f26a12cf50da357777bf01bbbaa1543"}}
+{"id":"8e8d6554b06c99bd16387a791cc1b8b8","fullName":"storefront/auth/login.spec.ts:154:3","name":"MS-AUTH-028 a member-only route is not reachable anonymously","status":"passed","testResultsByEnv":{"default":"ad2ecefddbfea6621416941417ab5bb7"}}

@@ -1,1 +1,1 @@
-{"id":"76ef0d53f2816ee6219809c0e6f99576","fullName":"storefront/configuration/sticker-catalog-configurator.spec.ts:24:5","name":"MS-CFG-017 투명 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"6ca059cd0e5529a1126fb5b4cbcc4c73"}}
+{"id":"76ef0d53f2816ee6219809c0e6f99576","fullName":"storefront/configuration/sticker-catalog-configurator.spec.ts:24:5","name":"MS-CFG-017 투명 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"646ff7772ec661e52ae4a1b88e7f4275"}}

@@ -1,1 +1,1 @@
-{"id":"d35b6f4fa0d958495e4f123ecc2387ae","fullName":"storefront/pricing/price-interpolation.spec.ts:223:9","name":"MS-PRC-INT-rounded-roll area 225 prices the same as 15x15 and 9x25","status":"passed","testResultsByEnv":{"default":"74b373699aa695ba8cecb9a6aa9e37bc"}}
+{"id":"d35b6f4fa0d958495e4f123ecc2387ae","fullName":"storefront/pricing/price-interpolation.spec.ts:223:9","name":"MS-PRC-INT-rounded-roll area 225 prices the same as 15x15 and 9x25","status":"passed","testResultsByEnv":{"default":"a948e38d64a1dfdba4236f54ec7ba998"}}

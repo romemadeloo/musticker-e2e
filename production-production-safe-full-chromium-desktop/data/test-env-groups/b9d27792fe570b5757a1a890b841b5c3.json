@@ -1,1 +1,1 @@
-{"id":"b9d27792fe570b5757a1a890b841b5c3","fullName":"storefront/pricing/price-interpolation.spec.ts:223:9","name":"MS-PRC-INT-transfer-sticker area 900 prices the same as 30x30 and 25x36","status":"passed","testResultsByEnv":{"default":"8179e1820d32f3b193da7af55dc756f0"}}
+{"id":"b9d27792fe570b5757a1a890b841b5c3","fullName":"storefront/pricing/price-interpolation.spec.ts:223:9","name":"MS-PRC-INT-transfer-sticker area 900 prices the same as 30x30 and 25x36","status":"passed","testResultsByEnv":{"default":"81bf7b119c7a8e5420c88068236405c1"}}

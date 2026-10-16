@@ -1,1 +1,1 @@
-{"id":"4c490d17b7d1024cbf0ea254e3adfc65","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-clear-sticker area 543000 (724x750) interpolates between 540000 and 546000","status":"failed","testResultsByEnv":{"default":"613d6ffe65d2170f31d1abb6e10f1063"}}
+{"id":"4c490d17b7d1024cbf0ea254e3adfc65","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-clear-sticker area 543000 (724x750) interpolates between 540000 and 546000","status":"failed","testResultsByEnv":{"default":"dcbe58cb5ad2d9b69badb4e50f135f39"}}
