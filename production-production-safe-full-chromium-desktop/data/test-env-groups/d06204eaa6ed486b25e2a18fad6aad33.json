@@ -1,1 +1,1 @@
-{"id":"d06204eaa6ed486b25e2a18fad6aad33","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-rectangle-roll area 56112 (168x334) interpolates between 55225 and 57000","status":"failed","testResultsByEnv":{"default":"79892a0afff54b07e356fd7b34ab6fee"}}
+{"id":"d06204eaa6ed486b25e2a18fad6aad33","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-rectangle-roll area 56112 (168x334) interpolates between 55225 and 57000","status":"failed","testResultsByEnv":{"default":"8a06a80729ef791fca700231a92bc85e"}}

@@ -1,1 +1,1 @@
-{"id":"c1fe7ab6e7625141878f60d0dd61b2fc","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-DSC-007 catalog page renders without error: ./roll-stickers/oval-roll","status":"failed","testResultsByEnv":{"default":"9d2586a9a8b6e5aa7aab7c45fef69054"}}
+{"id":"c1fe7ab6e7625141878f60d0dd61b2fc","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-DSC-007 catalog page renders without error: ./roll-stickers/oval-roll","status":"passed","testResultsByEnv":{"default":"73334144c051c64a7be8e8658023a316"}}

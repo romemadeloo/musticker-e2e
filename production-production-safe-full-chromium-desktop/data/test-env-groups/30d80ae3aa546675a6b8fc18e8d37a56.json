@@ -1,1 +1,1 @@
-{"id":"30d80ae3aa546675a6b8fc18e8d37a56","fullName":"storefront/configuration/sticker-catalog-configurator.spec.ts:24:5","name":"MS-CFG-017 정사각형 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"07f797303c2248e1ff873ff03c8eccc2"}}
+{"id":"30d80ae3aa546675a6b8fc18e8d37a56","fullName":"storefront/configuration/sticker-catalog-configurator.spec.ts:24:5","name":"MS-CFG-017 정사각형 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"07a632e8649e2b694f84369f4c48e646"}}

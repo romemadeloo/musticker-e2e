@@ -1,1 +1,1 @@
-{"id":"7a67ea3b25c2ef2f3f1aeded7b670b8c","fullName":"storefront/configuration/sticker-catalog-configurator.spec.ts:24:5","name":"MS-CFG-017 둥근 사각 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"56b78f402c6873a606af5a3a1735d2ec"}}
+{"id":"7a67ea3b25c2ef2f3f1aeded7b670b8c","fullName":"storefront/configuration/sticker-catalog-configurator.spec.ts:24:5","name":"MS-CFG-017 둥근 사각 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"5846b7cf46b52184fb9884cfe5d53018"}}

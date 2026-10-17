@@ -1,1 +1,1 @@
-{"id":"01a4aead9bbe1f73ff4c654a7d1debe7","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-clear-roll area 16262 (94x173) interpolates between 15625 and 16900","status":"failed","testResultsByEnv":{"default":"5b8476aaa1663ec2ab6cc37809a105cf"}}
+{"id":"01a4aead9bbe1f73ff4c654a7d1debe7","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-clear-roll area 16262 (94x173) interpolates between 15625 and 16900","status":"failed","testResultsByEnv":{"default":"2696975c56e2ef156cda597f789a9105"}}
