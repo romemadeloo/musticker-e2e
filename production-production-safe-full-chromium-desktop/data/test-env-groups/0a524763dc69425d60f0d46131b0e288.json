@@ -1,1 +1,1 @@
-{"id":"0a524763dc69425d60f0d46131b0e288","fullName":"storefront/inquiry/inquiry-validation.spec.ts:14:3","name":"MS-INQ-001 inquiry form validates blank and invalid email submissions","status":"passed","testResultsByEnv":{"default":"30cb745040fbbcd0afa254b70273d65c"}}
+{"id":"0a524763dc69425d60f0d46131b0e288","fullName":"storefront/inquiry/inquiry-validation.spec.ts:14:3","name":"MS-INQ-001 inquiry form validates blank and invalid email submissions","status":"passed","testResultsByEnv":{"default":"019ae4f98c8215c1ce91d64588875a95"}}

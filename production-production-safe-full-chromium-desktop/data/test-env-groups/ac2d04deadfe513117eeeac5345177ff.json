@@ -1,1 +1,1 @@
-{"id":"ac2d04deadfe513117eeeac5345177ff","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-clear-sticker area 162 (9x18) interpolates between 100 and 225","status":"failed","testResultsByEnv":{"default":"ddc37700fc6be0400e69a1dbe7158ad6"}}
+{"id":"ac2d04deadfe513117eeeac5345177ff","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-clear-sticker area 162 (9x18) interpolates between 100 and 225","status":"failed","testResultsByEnv":{"default":"07628906d2ef5376cc4673a8fa5e4340"}}
