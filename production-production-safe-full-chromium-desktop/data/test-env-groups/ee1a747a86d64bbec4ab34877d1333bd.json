@@ -1,1 +1,1 @@
-{"id":"ee1a747a86d64bbec4ab34877d1333bd","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-rounded-sticker area 543000 (724x750) interpolates between 540000 and 546000","status":"failed","testResultsByEnv":{"default":"e99d3c00a2f7bf73f1e8ab5b705f171f"}}
+{"id":"ee1a747a86d64bbec4ab34877d1333bd","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-rounded-sticker area 543000 (724x750) interpolates between 540000 and 546000","status":"failed","testResultsByEnv":{"default":"71650f6aa7baa6bcb4bc2fdd02b539d4"}}

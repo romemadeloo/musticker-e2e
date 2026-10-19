@@ -1,1 +1,1 @@
-{"id":"c61ff86abd40121c1dbfcb00a008574a","fullName":"storefront/configuration/sticker-catalog-configurator.spec.ts:41:5","name":"MS-CFG-018 직사각형 롤 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"7e141baa4522aa9c00e60ae39e6c6913"}}
+{"id":"c61ff86abd40121c1dbfcb00a008574a","fullName":"storefront/configuration/sticker-catalog-configurator.spec.ts:41:5","name":"MS-CFG-018 직사각형 롤 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"007c3fd8f2f28119556a2ab31bad77c5"}}
