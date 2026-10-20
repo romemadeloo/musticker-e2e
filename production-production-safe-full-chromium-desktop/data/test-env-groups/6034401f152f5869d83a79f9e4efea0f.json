@@ -1,1 +1,1 @@
-{"id":"6034401f152f5869d83a79f9e4efea0f","fullName":"storefront/configuration/sticker-catalog-configurator.spec.ts:57:3","name":"MS-CFG-019 circle sticker: custom individual size recalculates the price","status":"passed","testResultsByEnv":{"default":"b09c161d12867dfa5bd84a6d16eb4b32"}}
+{"id":"6034401f152f5869d83a79f9e4efea0f","fullName":"storefront/configuration/sticker-catalog-configurator.spec.ts:57:3","name":"MS-CFG-019 circle sticker: custom individual size recalculates the price","status":"passed","testResultsByEnv":{"default":"2c1cb346e3aa0adbb5445d628f5d642e"}}
