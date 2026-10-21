@@ -1,1 +1,1 @@
-{"id":"510d4f049fc92de6bca8705fe35fbc81","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-kiss-cut-sticker area 760 (20x38) interpolates between 625 and 900","status":"failed","testResultsByEnv":{"default":"1ac9360725c848ee75831de73be70ecf"}}
+{"id":"510d4f049fc92de6bca8705fe35fbc81","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-kiss-cut-sticker area 760 (20x38) interpolates between 625 and 900","status":"failed","testResultsByEnv":{"default":"052b617922569e15344b1a9f7b6ee5e5"}}

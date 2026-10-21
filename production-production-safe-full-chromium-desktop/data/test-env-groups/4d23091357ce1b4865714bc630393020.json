@@ -1,1 +1,1 @@
-{"id":"4d23091357ce1b4865714bc630393020","fullName":"storefront/inquiry/inquiry-validation.spec.ts:31:3","name":"MS-INQ-003 external inquiry links point to Kakao and Naver destinations","status":"passed","testResultsByEnv":{"default":"4e525551969fe1254872053a6549092e"}}
+{"id":"4d23091357ce1b4865714bc630393020","fullName":"storefront/inquiry/inquiry-validation.spec.ts:31:3","name":"MS-INQ-003 external inquiry links point to Kakao and Naver destinations","status":"passed","testResultsByEnv":{"default":"bbeb7006da308a1707f0f0b357682021"}}

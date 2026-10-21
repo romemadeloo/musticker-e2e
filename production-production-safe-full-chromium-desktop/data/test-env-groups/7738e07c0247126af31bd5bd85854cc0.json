@@ -1,1 +1,1 @@
-{"id":"7738e07c0247126af31bd5bd85854cc0","fullName":"storefront/pricing/price-interpolation.spec.ts:223:9","name":"MS-PRC-INT-rectangle-roll area 225 prices the same as 15x15 and 9x25","status":"passed","testResultsByEnv":{"default":"037d9e4d7fe7d8b484582ffcb2181521"}}
+{"id":"7738e07c0247126af31bd5bd85854cc0","fullName":"storefront/pricing/price-interpolation.spec.ts:223:9","name":"MS-PRC-INT-rectangle-roll area 225 prices the same as 15x15 and 9x25","status":"passed","testResultsByEnv":{"default":"1ef862bb654b30d14804afe99ef5ee96"}}

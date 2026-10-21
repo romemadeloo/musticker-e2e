@@ -1,1 +1,1 @@
-{"id":"6c92c415b1e16cec5e027503b7b436ed","fullName":"storefront/pricing/price-interpolation.spec.ts:192:9","name":"MS-PRC-INT-square-roll quantity 85000 interpolates between rungs 70000 and 100000","status":"passed","testResultsByEnv":{"default":"c689ba4cc35d6b09c1ab7d7c9622d658"}}
+{"id":"6c92c415b1e16cec5e027503b7b436ed","fullName":"storefront/pricing/price-interpolation.spec.ts:192:9","name":"MS-PRC-INT-square-roll quantity 85000 interpolates between rungs 70000 and 100000","status":"passed","testResultsByEnv":{"default":"52b18536f1a18de4d826b14c23f4120f"}}

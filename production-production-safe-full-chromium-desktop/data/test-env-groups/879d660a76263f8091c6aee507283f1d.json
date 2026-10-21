@@ -1,1 +1,1 @@
-{"id":"879d660a76263f8091c6aee507283f1d","fullName":"storefront/configuration/product-config.spec.ts:43:3","name":"MS-CFG-003 die-cut sheet sticker supports material, sheet size, and quantity selection","status":"passed","testResultsByEnv":{"default":"f39c1211d54fd5acc96e382c9f3c6d80"}}
+{"id":"879d660a76263f8091c6aee507283f1d","fullName":"storefront/configuration/product-config.spec.ts:43:3","name":"MS-CFG-003 die-cut sheet sticker supports material, sheet size, and quantity selection","status":"broken","testResultsByEnv":{"default":"3df6d29d35346e8027921cf46a1d6cc8"}}

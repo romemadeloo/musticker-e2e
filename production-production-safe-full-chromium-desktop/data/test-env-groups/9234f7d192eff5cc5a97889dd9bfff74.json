@@ -1,1 +1,1 @@
-{"id":"9234f7d192eff5cc5a97889dd9bfff74","fullName":"storefront/configuration/product-config.spec.ts:31:3","name":"MS-CFG-002 die-cut roll sticker supports size and quantity selection","status":"failed","testResultsByEnv":{"default":"2d44fc222c920a593de0218102605e47"}}
+{"id":"9234f7d192eff5cc5a97889dd9bfff74","fullName":"storefront/configuration/product-config.spec.ts:31:3","name":"MS-CFG-002 die-cut roll sticker supports size and quantity selection","status":"passed","testResultsByEnv":{"default":"a8b3f1a970a5a33c65240dbc602fd188"}}

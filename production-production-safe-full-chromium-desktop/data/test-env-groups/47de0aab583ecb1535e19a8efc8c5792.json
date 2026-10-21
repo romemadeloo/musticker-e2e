@@ -1,1 +1,1 @@
-{"id":"47de0aab583ecb1535e19a8efc8c5792","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-sticker-sheet area 975312 (936x1042) interpolates between 950625 and 1000000","status":"failed","testResultsByEnv":{"default":"4fa319be75f6df5d7bb219333476fe00"}}
+{"id":"47de0aab583ecb1535e19a8efc8c5792","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-sticker-sheet area 975312 (936x1042) interpolates between 950625 and 1000000","status":"failed","testResultsByEnv":{"default":"2f418e2b5b642ae470d25261a5229ea9"}}
