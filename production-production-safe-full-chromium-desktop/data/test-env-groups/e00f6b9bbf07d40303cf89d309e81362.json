@@ -1,1 +1,1 @@
-{"id":"e00f6b9bbf07d40303cf89d309e81362","fullName":"storefront/sheet-size-rules/sheet-sticker-size-rules.spec.ts:89:5","name":"MS-SHT-006 circle sheet sticker: 98x98 packs 1 per sheet and is refused","status":"failed","testResultsByEnv":{"default":"9260028e9a4dcd9ca94a7df2705cba61"}}
+{"id":"e00f6b9bbf07d40303cf89d309e81362","fullName":"storefront/sheet-size-rules/sheet-sticker-size-rules.spec.ts:89:5","name":"MS-SHT-006 circle sheet sticker: 98x98 packs 1 per sheet and is refused","status":"passed","testResultsByEnv":{"default":"fc76b1cfba6a852c2eba87bf1d26b623"}}

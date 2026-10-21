@@ -1,1 +1,1 @@
-{"id":"588445cfa9ef53648b91cb3ec893a640","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-square-roll area 312 (13x24) interpolates between 225 and 400","status":"passed","testResultsByEnv":{"default":"cf85913afc45b88c462b0e81347af0f3"}}
+{"id":"588445cfa9ef53648b91cb3ec893a640","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-square-roll area 312 (13x24) interpolates between 225 and 400","status":"passed","testResultsByEnv":{"default":"24e25039bd936c805530e60735e60f43"}}

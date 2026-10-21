@@ -1,1 +1,1 @@
-{"id":"21cbbb357bf75ec47f0208e3e364b793","fullName":"storefront/discovery/about.spec.ts:7:3","name":"MS-DSC-006 about page loads hero, sub-nav, stats, and CTAs","status":"failed","testResultsByEnv":{"default":"8dc395b7c1102233686b400aea6abf1b"}}
+{"id":"21cbbb357bf75ec47f0208e3e364b793","fullName":"storefront/discovery/about.spec.ts:7:3","name":"MS-DSC-006 about page loads hero, sub-nav, stats, and CTAs","status":"passed","testResultsByEnv":{"default":"ebb039d831c2be2b6b0c3bc29c64edac"}}

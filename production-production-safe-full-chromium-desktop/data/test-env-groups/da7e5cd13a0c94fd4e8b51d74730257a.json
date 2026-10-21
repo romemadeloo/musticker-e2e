@@ -1,1 +1,1 @@
-{"id":"da7e5cd13a0c94fd4e8b51d74730257a","fullName":"storefront/pricing/price-interpolation.spec.ts:223:9","name":"MS-PRC-INT-rectangle-sticker area 625 prices the same as 25x25 and 5x125","status":"passed","testResultsByEnv":{"default":"5291cbed03d17c6947341d633b984ac2"}}
+{"id":"da7e5cd13a0c94fd4e8b51d74730257a","fullName":"storefront/pricing/price-interpolation.spec.ts:223:9","name":"MS-PRC-INT-rectangle-sticker area 625 prices the same as 25x25 and 5x125","status":"passed","testResultsByEnv":{"default":"2bc3dc50d45f62ea7a703a3c87d000d2"}}

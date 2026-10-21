@@ -1,1 +1,1 @@
-{"id":"3afda903a0bb27f061dbb9618a3353fd","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-rounded-roll area 56112 (168x334) interpolates between 55225 and 57000","status":"failed","testResultsByEnv":{"default":"b9e93ee95c8dcf78f334c1bbe1adff1c"}}
+{"id":"3afda903a0bb27f061dbb9618a3353fd","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-rounded-roll area 56112 (168x334) interpolates between 55225 and 57000","status":"failed","testResultsByEnv":{"default":"d72a5ee1b0d2f33971f28a5ad5782651"}}

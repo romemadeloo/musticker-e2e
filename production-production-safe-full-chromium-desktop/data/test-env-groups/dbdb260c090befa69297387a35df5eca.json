@@ -1,1 +1,1 @@
-{"id":"dbdb260c090befa69297387a35df5eca","fullName":"storefront/navigation/storefront-smoke.spec.ts:11:3","name":"MS-NAV-001 homepage loads with critical public content","status":"passed","testResultsByEnv":{"default":"e4d4df2294b9e8fd09972f97cd45bee7"}}
+{"id":"dbdb260c090befa69297387a35df5eca","fullName":"storefront/navigation/storefront-smoke.spec.ts:11:3","name":"MS-NAV-001 homepage loads with critical public content","status":"failed","testResultsByEnv":{"default":"b005faeace2cfbf92cc8f5a3d3721c48"}}
