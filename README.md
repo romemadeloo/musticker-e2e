@@ -13,6 +13,11 @@ for recording manual runs) are in the workbook [docs/test-cases.xlsx](docs/test-
 
 ## Start here
 
+Incoming ticket automation follows [the promotion workflow](docs/PROMOTION.md):
+reviewed spec/POM/fixture bundles, isolated validation, then a guarded local apply
+and normal PR review. Run `npm run test:framework` for hermetic framework checks.
+Suite runs require an explicit environment; there is no implicit production target.
+
 | If you want to… | Read |
 | --- | --- |
 | Run the tests | [docs/RUNNING.md](docs/RUNNING.md): setup, commands, environments, variables, CI |
@@ -26,7 +31,8 @@ for recording manual runs) are in the workbook [docs/test-cases.xlsx](docs/test-
 npm install
 npx playwright install chromium
 npm run test:e2e:list      # list every test without running anything
-npm run test:prod:smoke    # read-only smoke checks against production
+npm run test:framework     # isolated local checks; no app server requests
+# Set the explicit dev environment in .env before running app suites.
 ```
 
 Every test is safe on production unless it is tagged `@destructive`. Those tests are off by

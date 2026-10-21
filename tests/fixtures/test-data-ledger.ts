@@ -1,6 +1,8 @@
 import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname } from 'node:path';
+import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { env } from './env.js';
+import type { CleanupScope } from './cleanup-scope.js';
 
 /**
  * An append-only record of the member accounts destructive tests create, so the run can delete them
@@ -13,9 +15,14 @@ import { fileURLToPath } from 'node:url';
  * JSON Lines rather than a JSON array so parallel workers can append without reading first and
  * clobbering each other. Lives under `.auth/` because that is already gitignored.
  */
-const LEDGER_PATH = fileURLToPath(new URL('../../.auth/created-accounts.jsonl', import.meta.url));
+export function currentCleanupScope(): CleanupScope {
+  const runId = process.env.E2E_RUN_ID;
+  if (!runId || !/^[a-zA-Z0-9_-]+$/.test(runId)) throw new Error('A valid E2E_RUN_ID is required for account cleanup records.');
+  if (!env.API_BASE_URL) throw new Error('API_BASE_URL is required for account cleanup records.');
+  return { runId, storefrontOrigin: new URL(env.BASE_URL).origin, apiOrigin: new URL(env.API_BASE_URL).origin };
+}
 
-export type CreatedAccount = {
+export type CreatedAccount = CleanupScope & {
   email: string;
   /** ISO 8601. Absolute so a stale ledger is still readable months later. */
   createdAt: string;
@@ -23,19 +30,19 @@ export type CreatedAccount = {
   createdBy: string;
 };
 
-export function recordCreatedAccount(entry: Omit<CreatedAccount, 'createdAt'>): void {
-  const record: CreatedAccount = { ...entry, createdAt: new Date().toISOString() };
+export function recordCreatedAccount(entry: Pick<CreatedAccount, 'email' | 'createdBy'>): void {
+  const record: CreatedAccount = { ...entry, ...currentCleanupScope(), createdAt: new Date().toISOString() };
 
-  mkdirSync(dirname(LEDGER_PATH), { recursive: true });
-  appendFileSync(LEDGER_PATH, `${JSON.stringify(record)}\n`, 'utf8');
+  mkdirSync(dirname(ledgerPath()), { recursive: true });
+  appendFileSync(ledgerPath(), `${JSON.stringify(record)}\n`, 'utf8');
 }
 
 export function readCreatedAccounts(): CreatedAccount[] {
-  if (!existsSync(LEDGER_PATH)) {
+  if (!existsSync(ledgerPath())) {
     return [];
   }
 
-  return readFileSync(LEDGER_PATH, 'utf8')
+  return readFileSync(ledgerPath(), 'utf8')
     .split('\n')
     .map((line) => line.trim())
     .filter(Boolean)
@@ -47,10 +54,12 @@ export function readCreatedAccounts(): CreatedAccount[] {
  * the leftovers on the books for the next run instead of losing track of them.
  */
 export function retainCreatedAccounts(remaining: CreatedAccount[]): void {
-  mkdirSync(dirname(LEDGER_PATH), { recursive: true });
-  writeFileSync(LEDGER_PATH, remaining.map((entry) => `${JSON.stringify(entry)}\n`).join(''), 'utf8');
+  mkdirSync(dirname(ledgerPath()), { recursive: true });
+  writeFileSync(ledgerPath(), remaining.map((entry) => `${JSON.stringify(entry)}\n`).join(''), 'utf8');
 }
 
 export function ledgerPath(): string {
-  return LEDGER_PATH;
+  const runId = process.env.E2E_RUN_ID;
+  if (!runId || !/^[a-zA-Z0-9_-]+$/.test(runId)) throw new Error('A valid E2E_RUN_ID is required.');
+  return join(fileURLToPath(new URL('../../.auth/runs/', import.meta.url)), runId, 'created-accounts.jsonl');
 }

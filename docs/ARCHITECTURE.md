@@ -201,7 +201,7 @@ identifier does not vouch for, such as a 404 page, a different slug, or an ambig
 ## Test data and cleanup
 
 - **Accounts.** Registration and password-rotation tests register real members on a dev server.
-  Each one is appended to `.auth/created-accounts.jsonl`
+  Each one is appended to `.auth/runs/<run-id>/created-accounts.jsonl`
   ([test-data-ledger.ts](../tests/fixtures/test-data-ledger.ts)). The global teardown deletes
   them when `TEST_DATA_USER_DELETE_ENDPOINT` is set, and otherwise keeps the ledger for a later run.
 - **Carts.** MS-CRT-005 adds to the seeded member's real cart and removes the line again.

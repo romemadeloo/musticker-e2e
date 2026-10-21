@@ -11,3 +11,6 @@ allure-report/
 .claude
 .tmp-allure-report-storage/
 ops/allure-report-storage/.env
+promotions/*/evidence/
+promotions/*/validation.json
+promotions/*/applied.json

@@ -1,7 +1,8 @@
 import { request } from '@playwright/test';
 
-import { readCreatedAccounts, retainCreatedAccounts, ledgerPath } from '../fixtures/test-data-ledger.js';
+import { readCreatedAccounts, retainCreatedAccounts, ledgerPath, currentCleanupScope } from '../fixtures/test-data-ledger.js';
 import type { CreatedAccount } from '../fixtures/test-data-ledger.js';
+import { cleanupEndpoint, sameCleanupScope } from '../fixtures/cleanup-scope.js';
 
 /**
  * Deletes the throwaway members the destructive auth tests registered during this run.
@@ -13,7 +14,7 @@ import type { CreatedAccount } from '../fixtures/test-data-ledger.js';
  *
  * Deleting needs an admin endpoint the storefront does not expose, so this is a no-op -- loud, but
  * not a failure -- until `TEST_DATA_USER_DELETE_ENDPOINT` is configured. The ledger is left intact in
- * that case so the accounts stay accounted for and a later configured run can still clear them.
+ * that case so the scoped records remain available for explicit reconciliation.
  */
 export default async function globalTeardown(): Promise<void> {
   const accounts = readCreatedAccounts();
@@ -22,9 +23,9 @@ export default async function globalTeardown(): Promise<void> {
     return;
   }
 
-  const endpoint = process.env.TEST_DATA_USER_DELETE_ENDPOINT;
+  const configuredEndpoint = process.env.TEST_DATA_USER_DELETE_ENDPOINT;
 
-  if (!endpoint) {
+  if (!configuredEndpoint) {
     console.warn(
       [
         `[teardown] ${accounts.length} throwaway account(s) were registered by this run and could not be deleted:`,
@@ -36,11 +37,18 @@ export default async function globalTeardown(): Promise<void> {
     return;
   }
 
+  const scope = currentCleanupScope();
+  const endpoint = cleanupEndpoint(configuredEndpoint, scope);
+
   const api = await request.newContext();
   const undeleted: CreatedAccount[] = [];
 
   try {
     for (const account of accounts) {
+      if (!sameCleanupScope(account, scope)) {
+        undeleted.push(account);
+        continue;
+      }
       const response = await api
         .delete(`${endpoint.replace(/\/$/, '')}/${encodeURIComponent(account.email)}`, {
           headers: process.env.API_TOKEN ? { authorization: `Bearer ${process.env.API_TOKEN}` } : {},

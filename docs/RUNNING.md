@@ -87,13 +87,17 @@ match the branch names exactly.
 | `static-6` | https://dev-static-6.musticker.com/kr | https://dev-static-6-api.musticker.com/index.php | https://dev-static-6-admin-panel.musticker.com |
 | `static-7` | https://dev-static-7.musticker.com/kr | https://dev-static-7-api.musticker.com/index.php | https://dev-static-7-admin-panel.musticker.com |
 | `static-8` | https://dev-static-8.musticker.com/kr | https://dev-static-8-api.musticker.com/index.php | https://dev-static-8-admin-panel.musticker.com |
+| `static-9` | https://dev-static-9.musticker.com/kr | https://dev-static-9-api.musticker.com/index.php | https://dev-static-9-admin-panel.musticker.com |
 
 Each development server has its **own user database**. The seeded member in `.env` has to exist on
 the server you point at.
 
-Precedence: `BASE_URL` / `API_BASE_URL` / `ADMIN_BASE_URL` override `E2E_ENVIRONMENT`, and with
-neither set the storefront defaults to production. There is no default admin panel: with none
-configured, admin specs skip.
+Set `E2E_ENVIRONMENT` or `BASE_URL` explicitly; there is no implicit production
+target. URL overrides must agree with a named environment and with each other.
+Known environments resolve storefront/API/admin together. Unknown dev/custom
+hosts need explicit API/admin URLs when those apps are used. Conflicting stale
+`.env` values fail before execution. See [promotion validation](PROMOTION.md) for
+strict dev-only qualification and run-scoped cleanup.
 
 ## Environment variables
 

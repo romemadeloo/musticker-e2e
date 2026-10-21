@@ -1,8 +1,12 @@
 import { defineConfig, devices } from '@playwright/test';
 import 'dotenv/config';
+import { randomUUID } from 'node:crypto';
 import type { ReporterDescription } from '@playwright/test';
 
 import { env, internalOriginKey } from './tests/fixtures/env.js';
+
+// Set once in the runner and inherited by every worker and teardown.
+process.env.E2E_RUN_ID ||= randomUUID();
 
 const ciReporters: ReporterDescription[] = [
   ['list'],

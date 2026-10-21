@@ -302,9 +302,7 @@ export class CartDrawer {
         .then(() => true)
         .catch(() => false);
 
-      if (!removalObserved) {
-        await this.page.waitForTimeout(500);
-      }
+      if (!removalObserved) throw new Error('Cart removal produced no observable change; refusing another blind delete.');
     }
 
     throw new Error('Cart still had line items after 200 removal attempts.');

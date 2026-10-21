@@ -58,6 +58,11 @@ export const environments = {
     apiBaseUrl: 'https://dev-static-7-api.musticker.com/index.php',
     adminPanel: 'https://dev-static-7-admin-panel.musticker.com'
   },
+  'static-9': {
+    baseUrl: 'https://dev-static-9.musticker.com/kr',
+    apiBaseUrl: 'https://dev-static-9-api.musticker.com/index.php',
+    adminPanel: 'https://dev-static-9-admin-panel.musticker.com'
+  },
   'static-8': {
     baseUrl: 'https://dev-static-8.musticker.com/kr',
     apiBaseUrl: 'https://dev-static-8-api.musticker.com/index.php',

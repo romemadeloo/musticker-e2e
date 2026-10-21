@@ -46,6 +46,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Set up Node.js, dependencies and Playwright
         uses: ./.github/actions/setup-playwright
@@ -57,6 +59,26 @@ jobs:
 
       - name: Type check
         run: npm run typecheck
+
+      - name: Run isolated framework checks
+        run: npm run test:framework
+
+      - name: Validate promotion bundles and affected regression on dev
+        env:
+          AUTH_TEST_EMAIL: ${{ secrets.DEV_AUTH_TEST_EMAIL }}
+          AUTH_TEST_PASSWORD: ${{ secrets.DEV_AUTH_TEST_PASSWORD }}
+          INTERNAL_ORIGIN_KEY: ''
+          TEST_DATA_USER_DELETE_ENDPOINT: ${{ vars.PROMOTION_USER_DELETE_ENDPOINT }}
+        run: npm run promotion:ci -- ${{ github.event.pull_request.base.sha }}
+
+      - name: Retain promotion validation evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: promotion-validation
+          path: promotions/*/evidence/
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: Run smoke tests
         run: npm run test:env:smoke

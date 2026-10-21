@@ -1,7 +1,8 @@
-import type { Locator, Page } from '@playwright/test';
+import type { Locator, Page, Request } from '@playwright/test';
 import { expect } from '@playwright/test';
 
 import { appPath } from '../../fixtures/env.js';
+import { waitForNuxtHydration } from '../../fixtures/hydration.js';
 import { parseWon } from '../../fixtures/money.js';
 import { gotoStorefront } from '../../fixtures/navigation.js';
 import { checkoutSummaryLabels, freeShippingThresholdWon, ko } from '../../fixtures/storefront-data.js';
@@ -141,18 +142,24 @@ export class CheckoutV2Page {
   // hidden, which made a "some error text is visible" check unreliable).
   async expectBlankSubmissionBlocked(): Promise<void> {
     const orderMutationRequests: string[] = [];
-    this.page.on('request', (request) => {
+    const trackMutation = (request: Request) => {
       if (request.method() !== 'GET' && /\/sys\/kr\/(?:order|payment|checkout)\//i.test(request.url())) {
         orderMutationRequests.push(`${request.method()} ${request.url()}`);
       }
-    });
-
-    await this.payButton.click();
-    await this.page.waitForTimeout(1_000);
-
-    await expect(this.page).toHaveURL(/\/kr\/checkout\/?$/);
-    await expect(this.payButton).toBeVisible();
-    expect(orderMutationRequests, 'blank submission should not create an order or payment').toEqual([]);
+    };
+    this.page.on('request', trackMutation);
+    try {
+      await waitForNuxtHydration(this.page);
+      await this.payButton.click();
+      await expect.poll(() => this.page.locator('input:user-invalid, [aria-invalid="true"]:visible, .error-text:visible').count(), {
+        message: 'Blank checkout must expose a validation failure before it can be considered blocked'
+      }).toBeGreaterThan(0);
+      await expect(this.page).toHaveURL(/\/kr\/checkout\/?$/);
+      await expect(this.payButton).toBeVisible();
+      expect(orderMutationRequests, 'blank submission should not create an order or payment').toEqual([]);
+    } finally {
+      this.page.off('request', trackMutation);
+    }
   }
 
   // Filling the guest email immediately fires a verification-email send and opens a full-page
@@ -165,17 +172,11 @@ export class CheckoutV2Page {
     // field the same way expectCheckoutFormRenders does.
     const emailInput = this.page.getByPlaceholder(ko.checkoutEmailPlaceholder).first();
 
-    // A Vue hydration race (or a delayed guest-session restore) can silently wipe a fill some time
-    // after it lands, leaving the input empty with no error. Wait past that window and re-check
-    // before trusting the value, retrying the whole fill if it got reset.
-    await expect(async () => {
-      await emailInput.fill(email);
-      await emailInput.blur();
-      await this.page.waitForTimeout(3_000);
-      await expect(emailInput).toHaveValue(email, { timeout: 2_000 });
-    }).toPass({ timeout: 30_000 });
-
+    await waitForNuxtHydration(this.page);
+    await emailInput.fill(email);
+    await emailInput.blur();
     await expect(this.page.locator('.auth-verification-modal')).toBeVisible({ timeout: 20_000 });
+    await expect(emailInput).toHaveValue(email);
   }
 
   async submitOtpCode(code: string): Promise<void> {

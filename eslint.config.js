@@ -19,6 +19,11 @@ export default [
   ...tseslint.configs.recommended,
 
   {
+    files: ["scripts/promotion.mjs", "scripts/tests/**/*.mjs"],
+    languageOptions: { globals: { process: "readonly", console: "readonly", Buffer: "readonly", URL: "readonly" } },
+  },
+
+  {
     files: ["tests/**/*.ts"],
     plugins: {
       playwright,
@@ -41,7 +46,7 @@ export default [
     rules: {
       "playwright/no-conditional-expect": "off",
       "playwright/no-force-option": "off",
-      "playwright/no-wait-for-timeout": "off",
+      "playwright/no-wait-for-timeout": "error",
     },
   },
 

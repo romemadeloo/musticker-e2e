@@ -133,84 +133,27 @@ export class HeaderComponent {
 
   async openSearch(): Promise<SearchDialog> {
     const dialog = new SearchDialog(this.page);
-
-    for (let attempt = 0; attempt < 3; attempt += 1) {
-      await this.searchButton.click();
-
-      if (await dialog.isVisible({ timeout: 3_000 })) {
-        await dialog.expectVisible();
-        return dialog;
-      }
-
-      await this.page.waitForTimeout(500);
-    }
-
+    await waitForNuxtHydration(this.page);
+    await this.searchButton.click();
     await dialog.expectVisible();
     return dialog;
   }
 
   async openCart(): Promise<CartDrawer> {
     const cart = new CartDrawer(this.page);
-
-    for (let attempt = 0; attempt < 3; attempt += 1) {
-      await this.cartButton.click({ force: attempt > 0 });
-
-      if (await cart.isVisible({ timeout: 3_000 })) {
-        await cart.expectVisible();
-        return cart;
-      }
-
-      await this.page.waitForTimeout(500);
-    }
-
+    await waitForNuxtHydration(this.page);
+    await this.cartButton.click();
     await cart.expectVisible();
     return cart;
   }
 
   async openAccountMenu(): Promise<void> {
-    const accountMenu = this.accountMenu();
-
-    await this.page.waitForLoadState('load').catch(() => undefined);
-    // Production can render the header before Nuxt has bound the account-menu click handler.
-    await this.page.waitForTimeout(1_000);
-
-    // Opening the menu is not the same as it staying open: the header re-renders when the
-    // post-login /user/me response lands, and that can tear the dropdown down in the same tick it
-    // appeared. Confirming with a short timeout drops a torn-down menu back into the loop for
-    // another click -- a bare assertion here cannot recover, and spends its whole timeout waiting
-    // on a header that no longer has a menu to find.
-    const confirmOpen = async (): Promise<boolean> =>
-      expect(accountMenu)
-        .toBeVisible({ timeout: 1_000 })
-        .then(() => true)
-        .catch(() => false);
-
-    for (let attempt = 0; attempt < 5; attempt += 1) {
-      if ((await this.isAccountMenuVisible(accountMenu)) && (await confirmOpen())) {
-        return;
-      }
-
-      await expect(this.accountButton).toBeEnabled();
-      await this.accountButton.click({ force: attempt > 0 });
-
-      const opened = await accountMenu
-        .waitFor({ state: 'visible', timeout: 2_000 })
-        .then(() => true)
-        .catch(() => false);
-
-      if (opened && (await confirmOpen())) {
-        return;
-      }
-
-      if ((await this.accountButton.getAttribute('aria-expanded').catch(() => null)) === 'true') {
-        await this.page.keyboard.press('Escape').catch(() => undefined);
-        await accountMenu.waitFor({ state: 'hidden', timeout: 1_000 }).catch(() => undefined);
-      }
-
-      await this.page.waitForTimeout(500);
-    }
-
-    await expect(accountMenu).toBeVisible();
+    await waitForNuxtHydration(this.page);
+    const menu = this.accountMenu();
+    await expect(async () => {
+      if (!(await menu.isVisible())) await this.accountButton.click();
+      await expect(menu).toBeVisible({ timeout: 2_000 });
+    }).toPass({ timeout: 15_000 });
   }
 
   async chooseLoginFromAccountMenu(): Promise<void> {
@@ -242,7 +185,5 @@ export class HeaderComponent {
       .first();
   }
 
-  private async isAccountMenuVisible(accountMenu: Locator): Promise<boolean> {
-    return accountMenu.isVisible().catch(() => false);
-  }
+
 }

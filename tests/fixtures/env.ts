@@ -1,11 +1,11 @@
-import { environments, isEnvironmentName } from './environments.js';
-import type { EnvironmentConfig, EnvironmentName } from './environments.js';
+import { resolveEnvironment } from './environment-resolver.js';
+import type { EnvironmentName } from './environments.js';
 
-const selectedEnvironment = resolveSelectedEnvironment();
+const resolved = resolveEnvironment(process.env);
 
 export const env = {
-  BASE_URL: process.env.BASE_URL ?? selectedEnvironment?.baseUrl ?? 'https://www.musticker.com/kr',
-  API_BASE_URL: process.env.API_BASE_URL ?? selectedEnvironment?.apiBaseUrl,
+  BASE_URL: resolved.baseURL,
+  API_BASE_URL: resolved.apiURL,
   AUTH_TEST_EMAIL: process.env.AUTH_TEST_EMAIL,
   AUTH_TEST_PASSWORD: process.env.AUTH_TEST_PASSWORD,
   // WAF exemption keys issued by the site owner -- production and the static-* dev servers
@@ -19,15 +19,9 @@ export const env = {
   DEV_INTERNAL_ORIGIN_KEY: process.env.DEV_INTERNAL_ORIGIN_KEY?.trim()
 };
 
-// Which named environment this run is pointed at, for fixtures that hold per-environment data (the
-// pricing registry, whose table ids differ per server). E2E_ENVIRONMENT is authoritative when set;
-// otherwise BASE_URL is matched back against the registry, because the production-facing scripts
-// (test:prod:*, test:regression, and the full-suite workflow) set BASE_URL instead.
-//
-// Undefined means "pointed somewhere not in the registry" -- an ad-hoc BASE_URL, say. Callers must
-// treat that as unknown rather than assuming production: env-specific expectations cannot be
-// asserted against a server we have no recorded data for.
-export const activeEnvironment: EnvironmentName | undefined = resolveActiveEnvironmentName();
+// Validated environment identity. Conflicting URL overrides are rejected before any
+// browser/API fixture is created; unknown explicit targets remain unregistered.
+export const activeEnvironment: EnvironmentName | undefined = resolved.name;
 
 /**
  * Which of the two internal-origin keys belongs to a given environment, by variable name.
@@ -75,19 +69,7 @@ export function internalOriginKey(): string | undefined {
  * production's panel.
  */
 export function adminBaseUrl(): string | undefined {
-  const override = process.env.ADMIN_BASE_URL?.trim();
-
-  if (override) {
-    return override.replace(/\/+$/, '');
-  }
-
-  if (!activeEnvironment) {
-    return undefined;
-  }
-
-  const environment: EnvironmentConfig = environments[activeEnvironment];
-
-  return environment.adminPanel;
+  return resolved.adminURL;
 }
 
 export function appPath(relativePath = ''): string {
@@ -99,48 +81,10 @@ export function appPath(relativePath = ''): string {
 }
 
 export function apiPath(relativePath: string): string {
-  const base = new URL(env.API_BASE_URL ?? defaultApiBaseUrl());
+  if (!env.API_BASE_URL) throw new Error('Set API_BASE_URL explicitly for this unregistered environment.');
+  const base = new URL(env.API_BASE_URL);
   const cleanPath = relativePath.replace(/^\.\//, '').replace(/^\//, '');
   const basePath = base.pathname.replace(/\/$/, '');
 
   return `${base.origin}${basePath}/${cleanPath}`;
-}
-
-function defaultApiBaseUrl(): string {
-  const base = new URL(env.BASE_URL);
-  const apiHost = base.hostname.startsWith('dev.') ? 'dev-api.musticker.com' : 'api.musticker.com';
-
-  return `${base.protocol}//${apiHost}/index.php`;
-}
-
-function normalizeBaseUrl(value: string): string {
-  return value.replace(/\/+$/, '').toLowerCase();
-}
-
-function resolveActiveEnvironmentName(): EnvironmentName | undefined {
-  const requested = process.env.E2E_ENVIRONMENT;
-  if (requested) {
-    // Already validated by resolveSelectedEnvironment(), which throws on an unknown name.
-    return requested as EnvironmentName;
-  }
-
-  const target = normalizeBaseUrl(env.BASE_URL);
-  const names = Object.keys(environments) as EnvironmentName[];
-
-  return names.find((name) => normalizeBaseUrl(environments[name].baseUrl) === target);
-}
-
-function resolveSelectedEnvironment(): EnvironmentConfig | undefined {
-  const requested = process.env.E2E_ENVIRONMENT;
-  if (!requested) {
-    return undefined;
-  }
-
-  if (!isEnvironmentName(requested)) {
-    throw new Error(
-      `Unsupported E2E_ENVIRONMENT "${requested}". Use one of: ${Object.keys(environments).join(', ')}.`
-    );
-  }
-
-  return environments[requested];
 }
