@@ -1,1 +1,1 @@
-{"id":"35093e315b7917dfab8a1486899d9f32","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-oval-sticker area 154062 (317x486) interpolates between 152100 and 156025","status":"failed","testResultsByEnv":{"default":"dc567118496295fb46f76d72e7f454b5"}}
+{"id":"35093e315b7917dfab8a1486899d9f32","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-oval-sticker area 154062 (317x486) interpolates between 152100 and 156025","status":"failed","testResultsByEnv":{"default":"b4df061ddaff47a4a8be390486200f8e"}}

@@ -1,1 +1,1 @@
-{"id":"752d796e87cf2e8ee6b5f386cbd46a4c","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-oval-roll area 16262 (94x173) interpolates between 15625 and 16900","status":"failed","testResultsByEnv":{"default":"61789778710846f884be8b4f1337e12d"}}
+{"id":"752d796e87cf2e8ee6b5f386cbd46a4c","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-oval-roll area 16262 (94x173) interpolates between 15625 and 16900","status":"failed","testResultsByEnv":{"default":"a9ecf7a335ed79e1f65ae8445ed0df36"}}

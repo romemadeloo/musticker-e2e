@@ -1,1 +1,1 @@
-{"id":"453ac9f9ae64cfc7da1154b15ddb44b4","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-rectangle-sticker area 760 (20x38) interpolates between 625 and 900","status":"failed","testResultsByEnv":{"default":"c963ea895978aceea2fe89f26735d2fc"}}
+{"id":"453ac9f9ae64cfc7da1154b15ddb44b4","fullName":"storefront/pricing/price-interpolation.spec.ts:108:9","name":"MS-PRC-INT-rectangle-sticker area 760 (20x38) interpolates between 625 and 900","status":"failed","testResultsByEnv":{"default":"168146ef95b6c58304b6e1c575687529"}}
