@@ -18,6 +18,11 @@ outputs:
 runs:
   using: composite
   steps:
+    - name: Summarise test reliability
+      if: ${{ always() }}
+      shell: bash
+      run: node scripts/ci/qacc-summary.mjs allure-results qacc-summary.json
+
     - name: Check Allure results
       id: allure_results
       shell: bash
@@ -40,6 +45,7 @@ runs:
         npx allure generate allure-results
 
     - name: Upload Playwright and Allure artifacts
+      if: ${{ always() }}
       uses: actions/upload-artifact@v7
       with:
         if-no-files-found: ignore
@@ -49,4 +55,6 @@ runs:
           allure-report/
           test-results/
           playwright-report/
+          readiness-results/
+          qacc-summary.json
         retention-days: ${{ inputs.retention_days }}

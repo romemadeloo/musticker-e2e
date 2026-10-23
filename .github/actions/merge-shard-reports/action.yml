@@ -104,6 +104,10 @@ runs:
         # Allure writes one self-contained file per test result, with a UUID filename, so merging the
         # shards is a copy rather than a real merge -- no collisions and nothing to reconcile.
         for shard_dir in .shard-artifacts/*/; do
+          if [ -d "$shard_dir/readiness-results" ]; then
+            mkdir -p readiness-results
+            cp -R "$shard_dir/readiness-results/." readiness-results/
+          fi
           [ -d "$shard_dir/allure-results" ] || continue
           cp -R "$shard_dir/allure-results/." allure-results/
         done
@@ -127,6 +131,7 @@ runs:
           allure-report/
           playwright-report/
           test-results/
+          readiness-results/
         retention-days: ${{ inputs.retention_days }}
 
     - name: Write summary

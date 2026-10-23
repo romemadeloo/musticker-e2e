@@ -107,6 +107,7 @@ jobs:
             allure-results/
             playwright-report/
             test-results/api/
+            readiness-results/
           retention-days: 14
 
   plan:
@@ -193,6 +194,7 @@ jobs:
             blob-report/
             allure-results/
             test-results/
+            readiness-results/
           retention-days: 14
 
   merge-reports:

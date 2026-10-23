@@ -10,7 +10,7 @@
  * No dependencies, never fails the job: on any problem it writes what it can and exits 0.
  */
 /* global console */
-import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { readdirSync, readFileSync, writeFileSync, appendFileSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
 import { pathToFileURL } from 'node:url';
@@ -37,12 +37,27 @@ export function summarise(results) {
   const totals = { tests: 0, passed: 0, failed: 0, broken: 0, skipped: 0, flaky: 0 };
   const failed = [];
   const flaky = [];
+  const metrics = {
+    attempts: 0, retries: 0, first_attempt_passed: 0, executed: 0,
+    first_attempt_pass_rate: null, attempt_duration_ms: 0, run_span_ms: 0
+  };
+  const timestamps = [];
   for (const list of attempts.values()) {
-    list.sort((a, b) => (a.stop ?? a.start ?? 0) - (b.stop ?? b.start ?? 0));
+    list.sort((a, b) => (a.start ?? a.stop ?? 0) - (b.start ?? b.stop ?? 0));
     const last = list.at(-1);
     const status = ['passed', 'failed', 'broken', 'skipped'].includes(last.status) ? last.status : 'broken';
     totals.tests++;
     totals[status]++;
+    metrics.attempts += list.length;
+    metrics.retries += list.length - 1;
+    if (status !== 'skipped') metrics.executed++;
+    if (list[0].status === 'passed' && status !== 'skipped') metrics.first_attempt_passed++;
+    for (const attempt of list) {
+      if (Number.isFinite(attempt.start) && Number.isFinite(attempt.stop)) {
+        metrics.attempt_duration_ms += Math.max(0, attempt.stop - attempt.start);
+        timestamps.push(attempt.start, attempt.stop);
+      }
+    }
     if (status === 'failed' || status === 'broken') {
       failed.push({
         title: last.name,
@@ -53,15 +68,20 @@ export function summarise(results) {
       });
     } else if (status === 'passed' && list.some((a) => a.status === 'failed' || a.status === 'broken')) {
       totals.flaky++;
-      flaky.push({ title: last.name });
+      flaky.push({ title: last.name, attempts: list.length, retries: list.length - 1 });
     }
   }
   failed.sort((a, b) => a.title.localeCompare(b.title));
   flaky.sort((a, b) => a.title.localeCompare(b.title));
+  metrics.first_attempt_pass_rate = metrics.executed
+    ? Math.round(10000 * metrics.first_attempt_passed / metrics.executed) / 100 : null;
+  if (timestamps.length) metrics.run_span_ms = Math.max(...timestamps) - Math.min(...timestamps);
   return {
     schema: SCHEMA,
     generated_at: new Date().toISOString(),
     totals,
+    data_status: totals.tests ? 'results_present' : 'no_results',
+    metrics,
     failed: failed.slice(0, MAX_FAILED),
     flaky: flaky.slice(0, MAX_FLAKY),
     truncated: failed.length > MAX_FAILED || flaky.length > MAX_FLAKY,
@@ -95,4 +115,16 @@ if (script && import.meta.url === pathToFileURL(script).href && dir && out) {
   console.log(
     `qacc-summary: ${t.tests} tests, ${t.passed} passed, ${t.failed + t.broken} failed, ${t.flaky} flaky, ${t.skipped} skipped`,
   );
+  if (process.env.GITHUB_STEP_SUMMARY) {
+    const m = summary.metrics;
+    appendFileSync(process.env.GITHUB_STEP_SUMMARY, [
+      '\n### Test reliability',
+      `- Result data: ${summary.data_status} (received results only; not proof of complete coverage)`,
+      `- First-attempt pass rate: ${m.first_attempt_pass_rate === null ? 'n/a' : `${m.first_attempt_pass_rate}%`} (${m.first_attempt_passed}/${m.executed}; skipped tests excluded)`,
+      `- Recovered flaky tests: ${t.flaky}; retry attempts: ${m.retries}; skipped: ${t.skipped}`,
+      `- Failed/broken: ${t.failed + t.broken}; total tests: ${t.tests}`,
+      `- Attempt duration sum: ${m.attempt_duration_ms} ms; observed run span: ${m.run_span_ms} ms`,
+      ''
+    ].join('\n'));
+  }
 }

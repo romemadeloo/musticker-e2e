@@ -11,6 +11,14 @@ on:
         default: production
         type: choice
         options: [production, dev-1, dev-2, dev-3, dev-4, dev-5, dev-6]
+      storefront_build:
+        description: Expected storefront build ID (exact x-build-sha response header).
+        required: false
+        type: string
+      api_build:
+        description: Expected API build ID (exact x-build-sha response header).
+        required: false
+        type: string
   push:
     branches:
       - production
@@ -40,6 +48,12 @@ env:
   E2E_BROWSER_PROJECT: chromium-desktop
   RUN_PAYMENT_E2E: 'false'
   RUN_AUTH_DESTRUCTIVE_E2E: 'false'
+  # Application deployment SHAs, never this QA repository's github.sha.
+  EXPECTED_STOREFRONT_BUILD: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.storefront_build || inputs.storefront_build }}
+  EXPECTED_API_BUILD: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.api_build || inputs.api_build }}
+  REQUIRE_BUILD_IDENTITY: ${{ github.event_name == 'repository_dispatch' && 'true' || 'false' }}
+  STOREFRONT_BUILD_HEADER: ${{ vars.STOREFRONT_BUILD_HEADER || 'x-build-sha' }}
+  API_BUILD_HEADER: ${{ vars.API_BUILD_HEADER || 'x-build-sha' }}
 
 jobs:
   smoke:

@@ -217,7 +217,8 @@ fixture refuses to start without it.
 | JUnit | `test-results/junit.xml` | CI only |
 | Allure | `allure-results/` when `ALLURE_RESULTS_DIR` is set | CI publishes it to the Allure report server |
 | Self-heal report | `test-results/self-heal-report.md` and the GitHub job summary | Copy that changed and was healed. See [ARCHITECTURE.md](ARCHITECTURE.md#self-healing-locators) |
-| QA Control Center summary | `qacc-summary` artifact (`qacc-summary.json`) | CI only: totals and failed or flaky test titles, written by `scripts/ci/qacc-summary.mjs` from `allure-results/`. The QA Control Center website reads it to show pass/fail counts and failed TC IDs |
+| QA Control Center summary | `qacc-summary.json` inside standard artifacts; dedicated `qacc-summary` artifact for manual/nightly runs | Totals, failed/flaky titles, first-attempt pass rate, retries, skips, and timing from `allure-results/`. Also written to the GitHub job summary; existing QACC fields remain compatible |
+| Environment readiness | `readiness-results/` | Sanitized availability and build-verification results, retained separately from product-test outcomes |
 | Failure artifacts | `test-results/<test>/` | Screenshot, video and trace, except where an internal-origin key is in use or for the admin context |
 
 ## CI
@@ -227,7 +228,7 @@ fixture refuses to start without it.
 | `pr-checks.yml` | Pull request to an environment branch | Parallel API and quality/critical-UI jobs, separate promotion/affected regression, then aggregate `PR gate` |
 | `smoke.yml` | Branch push, manual, or `storefront-deployed` repository dispatch | API contracts followed by five critical UI checks on the selected target |
 | `production-full-suite.yml` | Daily 20:00 UTC (04:00 Manila / 05:00 KST), manual | Browser-free API stage followed by production-safe UI in 8 shards; no full run on each push |
-| `release-checks.yml` | Manual, dev-1 through dev-6 | API checks, Chromium/Firefox/WebKit/mobile UI and accessibility, then optional sandbox E2E |
+| `release-checks.yml` | Manual, dev-1 through dev-6; defaults to dev-2 | API checks, Chromium/Firefox/WebKit/mobile UI and accessibility, then optional sandbox E2E |
 | `manual-playwright.yml` | Manual | Safe functional/API suites, environment and browser; destructive tests excluded from all selections |
 | `deploy-allure-storage.yml` | Manual | Infrastructure for the Allure report server |
 
@@ -248,10 +249,37 @@ Have the application deployment pipeline send a GitHub repository-dispatch event
 after a successful deployment, or dispatch `smoke.yml` manually. The event body is:
 
 ```json
-{"event_type":"storefront-deployed","client_payload":{"environment":"production"}}
+{"event_type":"storefront-deployed","client_payload":{"environment":"production","storefront_build":"<deployed-storefront-commit>","api_build":"<deployed-api-commit>"}}
 ```
 
 Use `dev-1` through `dev-6` to verify a dev deployment. Unknown targets are rejected.
+
+**Environment and build preflight.** All application suites check the selected storefront HTML
+and the public API navigation endpoint before tests start. Non-success HTTP responses (including
+redirects), invalid API JSON/envelopes, and network timeouts block the suite with a separate
+readiness report. Redirects are never followed with the internal-origin header. The hermetic
+framework suite and `--list` discovery do not contact the application.
+
+The storefront and API must each expose their deployed build ID through the `x-build-sha` response
+header on `/kr` and `/index.php/sys/kr/navigation/categories`, respectively. The app teams must add
+these headers if unavailable and ensure the CDN serves the current value. Repository variables
+`STOREFRONT_BUILD_HEADER` and `API_BUILD_HEADER` can select different header names for smoke/release
+workflows. Expected values must match exactly; the QA repository SHA is not an application build ID.
+Post-deployment repository dispatch requires **both** expected IDs. Manual smoke/release inputs can
+also supply them; locally use `EXPECTED_STOREFRONT_BUILD` and `EXPECTED_API_BUILD`.
+`REQUIRE_BUILD_IDENTITY=true` makes both mandatory locally. Ordinary scheduled, PR, and push runs
+without expectations check readiness and explicitly report build identity as **unverified**.
+No application deployment pipeline or build headers are changed by this QA repository.
+
+**Reliability metrics.** First-attempt pass rate is the number of tests passing their first attempt
+divided by executed tests, excluding final skips. Recovered flaky tests passed after a failed/broken
+attempt; retries on tests that ultimately fail are also counted. Attempt-duration sum includes
+parallel work; observed run span is the interval between the earliest and latest received attempts.
+Neither includes dependency setup or preflight time. Empty results report `no_results` and an
+undefined (`null`) rate, never a successful run. Summaries describe received Allure results and do
+not prove every shard or expected test completed. Metrics are additive in `qacc-summary/1`; QACC's
+existing consumer can continue reading totals, while its UI needs a separate change to display
+the new metrics. CI displays them in job summaries now. Retry policy remains unchanged.
 
 **Controlled E2E.** `release-checks.yml` defaults `run_e2e` to false. Enabling it requires:
 
@@ -264,7 +292,7 @@ The dedicated E2E config refuses production, unknown/mixed targets, missing cred
 flags, or an invalid cleanup origin before running tests. Cleanup failures fail this tier and retain
 the run ledger. Admin order-processing is excluded. The generic manual workflow no longer exposes
 destructive toggles; use the controlled release workflow for these journeys. Run the same tier locally by setting
-`E2E_ENVIRONMENT=dev-1`, `RUN_PAYMENT_E2E=true`, `RUN_AUTH_DESTRUCTIVE_E2E=true`,
+`E2E_ENVIRONMENT=dev-2`, `RUN_PAYMENT_E2E=true`, `RUN_AUTH_DESTRUCTIVE_E2E=true`,
 `DEV_PAYMENT_SANDBOX_ENABLED=true`, credentials, and `TEST_DATA_USER_DELETE_ENDPOINT` before
 `npm run test:e2e:dev`. Do not point the sandbox flag at a live payment provider.
 

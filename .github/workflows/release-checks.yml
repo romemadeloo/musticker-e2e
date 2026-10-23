@@ -6,7 +6,7 @@ on:
       environment:
         description: Dev-Shared target to qualify before release.
         required: true
-        default: dev-1
+        default: dev-2
         type: choice
         options: [dev-1, dev-2, dev-3, dev-4, dev-5, dev-6]
       run_e2e:
@@ -14,6 +14,14 @@ on:
         required: true
         default: false
         type: boolean
+      storefront_build:
+        description: Expected deployed storefront build ID (exact response header).
+        required: false
+        type: string
+      api_build:
+        description: Expected deployed API build ID (exact response header).
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -31,6 +39,10 @@ env:
   RUN_PAYMENT_E2E: 'false'
   RUN_AUTH_DESTRUCTIVE_E2E: 'false'
   PW_WORKERS: '1'
+  EXPECTED_STOREFRONT_BUILD: ${{ inputs.storefront_build }}
+  EXPECTED_API_BUILD: ${{ inputs.api_build }}
+  STOREFRONT_BUILD_HEADER: ${{ vars.STOREFRONT_BUILD_HEADER || 'x-build-sha' }}
+  API_BUILD_HEADER: ${{ vars.API_BUILD_HEADER || 'x-build-sha' }}
 
 jobs:
   api:

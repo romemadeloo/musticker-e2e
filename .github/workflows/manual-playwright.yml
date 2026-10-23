@@ -155,11 +155,6 @@ jobs:
           artifact_name: manual-playwright-${{ inputs.environment }}-${{ inputs.suite }}-${{ inputs.browser_project }}-${{ github.run_attempt }}
           retention_days: 14
 
-      - name: Summarise results for QA Control Center
-        if: ${{ always() }}
-        shell: bash
-        run: node scripts/ci/qacc-summary.mjs allure-results qacc-summary.json
-
       - name: Upload QA Control Center summary
         if: ${{ always() }}
         uses: actions/upload-artifact@v7
