@@ -1,1 +1,1 @@
-{"id":"97d6f41e2ba0790be5f172f25da2c4b1","fullName":"storefront/auth/registration.spec.ts:74:3","name":"MS-AUTH-016 registration is blocked until the terms checkbox is agreed @validation","status":"passed","testResultsByEnv":{"default":"1b9dd1a85812de0067b29b8ad308c01d"}}
+{"id":"97d6f41e2ba0790be5f172f25da2c4b1","fullName":"storefront/auth/registration.spec.ts:74:3","name":"MS-AUTH-016 registration is blocked until the terms checkbox is agreed @validation","status":"passed","testResultsByEnv":{"default":"b03038364acfbcbef487ecc1be47248e"}}
