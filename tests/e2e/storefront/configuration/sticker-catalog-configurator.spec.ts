@@ -7,7 +7,7 @@ import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 // that were previously only "render-only smoke" tested via catalog-crawl.spec.ts (see
 // storefront-data.ts catalogPaths comment). These are structurally identical to
 // v2Products.dieCutSticker / v2Products.dieCutRoll (no material selector, just size + quantity),
-// confirmed live against development-3 on 2026-08-13 while authoring this suite for all 15
+// confirmed live against the dev storefront on 2026-08-13 while authoring this suite for all 15
 // products below.
 test.describe('Sticker catalog configurator', {
   tag: ['@regression', '@production', '@purchasing']

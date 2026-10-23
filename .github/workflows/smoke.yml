@@ -1,16 +1,26 @@
 name: Storefront smoke
 
 on:
+  repository_dispatch:
+    types: [storefront-deployed]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Deployed storefront to verify.
+        required: true
+        default: production
+        type: choice
+        options: [production, dev-1, dev-2, dev-3, dev-4, dev-5, dev-6]
   push:
     branches:
       - production
-      - 'static-*'
+      - 'dev-[1-6]'
 
 permissions:
   contents: read
 
 concurrency:
-  group: buyer-smoke-${{ github.ref }}
+  group: buyer-smoke-${{ github.event_name }}-${{ github.event_name == 'workflow_dispatch' && inputs.environment || github.event_name == 'repository_dispatch' && github.event.client_payload.environment || github.ref_name }}
   cancel-in-progress: true
 
 env:
@@ -26,16 +36,10 @@ env:
   DEV_INTERNAL_ORIGIN_KEY: ${{ secrets.DEV_INTERNAL_ORIGIN_KEY }}
   # Branch names match the keys in tests/fixtures/environments.ts exactly, so this alone
   # selects the right storefront/API URLs for whichever branch triggered the push.
-  E2E_ENVIRONMENT: ${{ github.ref_name }}
+  E2E_ENVIRONMENT: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || github.event_name == 'repository_dispatch' && github.event.client_payload.environment || github.ref_name }}
   E2E_BROWSER_PROJECT: chromium-desktop
   RUN_PAYMENT_E2E: 'false'
-  # production uses its own seeded member; every static-* branch shares DEV_AUTH_TEST_*, since
-  # those servers are refreshed from the same seed data. Either pair being unset makes the
-  # @credentialed tests skip rather than fail, so an unconfigured branch still runs green.
-  AUTH_TEST_EMAIL: >-
-    ${{ github.ref_name == 'production' && secrets.AUTH_TEST_EMAIL || secrets.DEV_AUTH_TEST_EMAIL }}
-  AUTH_TEST_PASSWORD: >-
-    ${{ github.ref_name == 'production' && secrets.AUTH_TEST_PASSWORD || secrets.DEV_AUTH_TEST_PASSWORD }}
+  RUN_AUTH_DESTRUCTIVE_E2E: 'false'
 
 jobs:
   smoke:
@@ -44,6 +48,7 @@ jobs:
     timeout-minutes: 35
     outputs:
       allure_results_found: ${{ steps.test_artifacts.outputs.allure_results_found }}
+      environment: ${{ steps.target.outputs.environment }}
 
     steps:
       - name: Checkout
@@ -54,8 +59,21 @@ jobs:
         with:
           browser_project: chromium-desktop
 
-      - name: Run storefront smoke coverage
-        run: npx playwright test --grep @smoke --grep-invert "@payment|@slow|@destructive|@visual"
+      - name: Validate deployment target
+        id: target
+        shell: bash
+        run: |
+          case "$E2E_ENVIRONMENT" in
+            production|dev-[1-6]) ;;
+            *) echo "Unsupported deployment environment" >&2; exit 1 ;;
+          esac
+          echo "environment=$E2E_ENVIRONMENT" >> "$GITHUB_OUTPUT"
+
+      - name: Run browser-free API contracts
+        run: npm run test:api
+
+      - name: Run critical UI smoke
+        run: npm run test:ui:smoke
 
       - name: Collect Playwright and Allure artifacts
         id: test_artifacts
@@ -68,7 +86,7 @@ jobs:
   allure-report:
     name: Publish Allure report with history
     needs: smoke
-    if: ${{ always() && github.ref == 'refs/heads/production' && needs.smoke.outputs.allure_results_found == 'true' }}
+    if: ${{ always() && github.ref == 'refs/heads/production' && needs.smoke.outputs.environment == 'production' && needs.smoke.outputs.allure_results_found == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     concurrency:

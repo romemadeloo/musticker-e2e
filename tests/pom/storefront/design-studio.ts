@@ -6,7 +6,7 @@ import { parseWon } from '../../fixtures/money.js';
 /**
  * The web design studio: `?studio=1` on a product page, reached from the order chooser's
  * 스튜디오 이동 (see ProductV2Page.openStudio). New in early October 2026 and live on production
- * and static-1; mapped on 2026-10-14. Every control carries a `design-studio-*` test id.
+ * and dev-1; mapped on 2026-10-14. Every control carries a `design-studio-*` test id.
  *
  * The studio carries the configurator's size and quantity over and prices every tier 5% below the
  * configurator (스튜디오 주문 -5% 추가 할인), rounded to 10원. Its 장바구니 담기 stays disabled until a

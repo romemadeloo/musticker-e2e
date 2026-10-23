@@ -11,7 +11,7 @@ import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 // removing it, holding two of them, surviving a reload, or being carried across a login -- had no
 // coverage at all, which for a storefront is the cart's whole job.
 //
-// Verified live against development-1 on 2026-08-27:
+// Verified live against the dev storefront on 2026-08-27:
 //
 //   * A guest cart survives a full document reload (the badge still reads 1).
 //   * Two distinct products make two rows, and 13,800원 + 18,700원 = the 32,500원 cart total.
@@ -144,7 +144,7 @@ test.describe('Cart lifecycle', () => {
       await expect(page.getByTestId('cart-empty-discover-circle-sticker')).toBeVisible();
 
       // The empty state replaces the whole page, 내 장바구니 heading included -- verified on
-      // development-1, so this asserts the summary block is gone rather than expecting that heading.
+      // the dev storefront, so this asserts the summary block is gone rather than expecting that heading.
       await expect(page.getByTestId('cart-page-summary')).toHaveCount(0);
     });
   });

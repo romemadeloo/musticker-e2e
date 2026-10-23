@@ -1,4 +1,5 @@
-import { test, expect, type APIResponse } from '@playwright/test';
+import type { APIResponse } from '@playwright/test';
+import { test, expect } from '../../../fixtures/api-test.js';
 
 import { apiPath } from '../../../fixtures/env.js';
 
@@ -12,12 +13,28 @@ test.describe('Public API', { tag: ['@api', '@smoke', '@production'] }, () => {
     expect(JSON.stringify(payload), 'navigation categories should include known product category slugs').toMatch(
       /stickers|roll-stickers|sheet-stickers/
     );
+    expect(payload).toMatchObject({ success: true, data: expect.any(Array) });
+    const categories = (payload as { data: JsonRecord[] }).data;
+    expect(categories.map(category => category.url_slug)).toEqual(expect.arrayContaining(['stickers', 'roll-stickers', 'sheet-stickers']));
+    expect(new Set(categories.map(category => category.id)).size).toBe(categories.length);
+    for (const category of categories) {
+      expect(category).toMatchObject({ id: expect.any(Number), name: expect.any(String), url_slug: expect.any(String) });
+      expect(category.name).toBeTruthy();
+    }
   });
 
   test('MS-API-002 inquiry types API returns selectable inquiry metadata', async ({ request }) => {
     const payload = await expectJsonResponse(request.get(apiPath('/sys/kr/inquiry/types')));
 
     expect(hasObjectOrArrayPayload(payload), 'inquiry types payload should contain data').toBe(true);
+    expect(payload).toMatchObject({ success: true, data: expect.any(Array) });
+    const types = (payload as { data: JsonRecord[] }).data;
+    expect(types.length).toBeGreaterThan(0);
+    expect(new Set(types.map(type => type.id)).size).toBe(types.length);
+    for (const type of types) {
+      expect(type).toMatchObject({ id: expect.any(Number), name: expect.any(String) });
+      expect(type.name).toBeTruthy();
+    }
   });
 
   test('MS-API-003 anonymous user session API rejects unauthenticated users safely', async ({ request }) => {

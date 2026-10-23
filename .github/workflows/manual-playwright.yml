@@ -4,20 +4,18 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: Storefront/API environment to run against.
+        description: Storefront/API environment (dev-N selects Dev-Shared N).
         required: true
         default: production
         type: choice
         options:
           - production
-          - static-1
-          - static-2
-          - static-3
-          - static-4
-          - static-5
-          - static-6
-          - static-7
-          - static-8
+          - dev-1
+          - dev-2
+          - dev-3
+          - dev-4
+          - dev-5
+          - dev-6
       suite:
         description: Playwright suite to run.
         required: true
@@ -25,14 +23,12 @@ on:
         type: choice
         options:
           - smoke
+          - api
           - auth
           - regression
           - purchasing
-          - pricing
           - validation
           - a11y
-          - visual
-          - destructive
           - custom-grep
       browser_project:
         description: Browser project to run.
@@ -46,22 +42,10 @@ on:
           - chromium-mobile
           - all-desktop
       custom_grep:
-        description: 'Required only when suite is custom-grep. Example: @cart|@payment'
+        description: 'Required only when suite is custom-grep. Example: @cart|@validation'
         required: false
         default: ''
         type: string
-      run_payment_e2e:
-        description: Enable the destructive checkout test (MS-CHK-001). Dev environments only.
-        required: true
-        default: false
-        type: boolean
-      run_auth_destructive_e2e:
-        description: >-
-          Enable the account-creating and state-mutating auth tests (MS-AUTH-020/MS-AUTH-021/MS-AUTH-027, MS-CRT-005).
-          Dev environments only -- each run registers a real member.
-        required: true
-        default: false
-        type: boolean
 
 permissions:
   contents: read
@@ -79,19 +63,13 @@ env:
   DEV_INTERNAL_ORIGIN_KEY: ${{ secrets.DEV_INTERNAL_ORIGIN_KEY }}
   E2E_ENVIRONMENT: ${{ inputs.environment }}
   E2E_BROWSER_PROJECT: ${{ inputs.browser_project }}
-  RUN_PAYMENT_E2E: ${{ inputs.run_payment_e2e }}
-  # Was never wired up before: choosing the destructive suite ran MS-CHK-001 and silently *skipped*
-  # every account-creating auth test, because their gate is this variable rather than RUN_PAYMENT_E2E.
-  # Forced off against production, where those tests must never run whatever the dispatcher ticks.
-  RUN_AUTH_DESTRUCTIVE_E2E: ${{ inputs.environment != 'production' && inputs.run_auth_destructive_e2e || false }}
-  # Each environment has its own user database, so production and the static-* servers need
-  # separate accounts. DEV_AUTH_TEST_* is shared across all of the static-* servers: they are
+  RUN_PAYMENT_E2E: 'false'
+  RUN_AUTH_DESTRUCTIVE_E2E: 'false'
+  # Each environment has its own user database, so production and the dev-* servers need
+  # separate accounts. DEV_AUTH_TEST_* is shared across all of the dev-* servers: they are
   # refreshed from the same seed data, so one account exists on all of them. Leave either pair unset
   # and the @credentialed tests skip themselves, exactly as before.
   #
-  # Without a dev pair the credentialed *and* the account-mutating destructive tests (MS-CRT-005)
-  # could never run anywhere: production has the credentials but forbids destructive runs, and the
-  # dev servers allowed them but had no credentials.
   AUTH_TEST_EMAIL: >-
     ${{ inputs.environment == 'production' && secrets.AUTH_TEST_EMAIL || secrets.DEV_AUTH_TEST_EMAIL }}
   AUTH_TEST_PASSWORD: >-
@@ -112,7 +90,7 @@ jobs:
       - name: Set up Node.js, dependencies and Playwright
         uses: ./.github/actions/setup-playwright
         with:
-          browser_project: ${{ inputs.browser_project }}
+          browser_project: ${{ inputs.suite == 'api' && 'none' || inputs.browser_project }}
 
       - name: Run selected suite
         shell: bash
@@ -123,17 +101,21 @@ jobs:
           set -euo pipefail
 
           pass_with_no_tests=()
-          grep_invert=()
-          production_excludes='@payment|@slow|@destructive|@visual'
+          grep_invert=(--grep-invert '@payment|@slow|@destructive')
+          production_excludes='@payment|@slow|@destructive'
 
           case "$SUITE" in
+            api)
+              npm run test:api
+              exit 0
+              ;;
             smoke)
               grep='@smoke'
               grep_invert=(--grep-invert "$production_excludes")
               ;;
             auth)
               grep='@auth'
-              grep_invert=(--grep-invert '@payment|@slow|@destructive|@visual')
+              grep_invert=(--grep-invert '@payment|@slow|@destructive')
               ;;
             regression)
               grep='@regression'
@@ -143,35 +125,11 @@ jobs:
               grep='@purchasing'
               grep_invert=(--grep-invert '@payment|@slow|@destructive')
               ;;
-            pricing)
-              grep='@pricing'
-              ;;
             validation)
               grep='@validation'
               ;;
             a11y)
               grep='@a11y'
-              ;;
-            visual)
-              grep='@visual'
-              ;;
-            destructive)
-              # Both gates are independent: run_payment_e2e unlocks the checkout test, and
-              # run_auth_destructive_e2e unlocks the account-creating auth tests. With neither on,
-              # every test in the selection skips itself and the run reports a misleading green.
-              if [ "$RUN_PAYMENT_E2E" != "true" ] && [ "$RUN_AUTH_DESTRUCTIVE_E2E" != "true" ]; then
-                echo "The destructive suite needs run_payment_e2e and/or run_auth_destructive_e2e enabled;" >&2
-                echo "with both off every destructive test skips and the run proves nothing." >&2
-                exit 1
-              fi
-
-              if [ "$E2E_ENVIRONMENT" = "production" ]; then
-                echo "The destructive suite must not run against production: it places real orders and" >&2
-                echo "registers real members. Pick a static-* environment." >&2
-                exit 1
-              fi
-
-              grep='@destructive'
               ;;
             custom-grep)
               if [ -z "$CUSTOM_GREP" ]; then

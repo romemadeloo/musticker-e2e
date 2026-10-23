@@ -10,7 +10,7 @@ import { orderHistoryCopy } from '../../fixtures/storefront-data.js';
  *
  * A master/detail layout: `.order-list` on the left holds one `.order-item` card per order, and
  * selecting one routes to `/kr/account/orders/<id>` and fills `.orders-main` with that order's
- * invoice. Verified live against development-1 on 2026-08-27.
+ * invoice. Verified live against the dev storefront on 2026-08-27.
  *
  * Almost nothing here carries a test id -- the page exposes `account-orders-page`,
  * `account-orders-header`, `account-orders-search-input`, `account-orders-filters-button` and
@@ -21,7 +21,7 @@ import { orderHistoryCopy } from '../../fixtures/storefront-data.js';
  * An empty segment renders `.all-caught-up` INSTEAD of `.order-list` -- the list element is absent
  * entirely, not present and childless -- so "no cards yet" and "no orders at all" are only
  * distinguishable by looking for both. A search with no match in the segment renders `.no-orders`
- * instead (주문을 찾을 수 없습니다., seen on static-1 on 2026-10-14), so both count as empty.
+ * instead (주문을 찾을 수 없습니다., seen on dev-1 on 2026-10-14), so both count as empty.
  */
 export class AccountOrdersPage {
   readonly page: Page;

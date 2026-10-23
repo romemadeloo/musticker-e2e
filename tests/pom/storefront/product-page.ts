@@ -63,7 +63,7 @@ export class ProductV2Page {
   }
 
   /**
-   * The custom sheet sticker's 스티커 개수 (how many stickers go on the sheet). Required on static-1
+   * The custom sheet sticker's 스티커 개수 (how many stickers go on the sheet). Required on dev-1
    * since early October 2026 -- 다음 단계 answers 필수 입력 항목입니다. without it -- and not yet asked
    * on production, hence filled only when the page asks.
    */
@@ -79,7 +79,7 @@ export class ProductV2Page {
    * Picks a size preset and waits for the tiers to be re-priced for it. Every tier re-quotes when the
    * size changes (one `pricing/quotation/<slug>?width=…&height=…` call), and a tier price read before
    * that lands is the previous size's: 17,700원 for 100개 at the default 소형 30x30 instead of 36,100원
-   * at 중형 75x75 (static-1, 2026-10-14). The active pill is marked only by an `is-active` class.
+   * at 중형 75x75 (dev-1, 2026-10-14). The active pill is marked only by an `is-active` class.
    */
   async selectSize(sizeName: string): Promise<void> {
     const pill = this.optionsPanel.getByRole('button', { name: new RegExp(escapeRegExp(sizeName)) }).first();
@@ -130,13 +130,13 @@ export class ProductV2Page {
 
   // The two custom-size fields, addressed by class and reading order rather than by placeholder.
   //
-  // Production and development-1 label them differently: development-1 puts the axis in the
+  // Production and the dev storefront label them differently: the dev storefront puts the axis in the
   // placeholder (가로 / 세로) with no visible caption, while production moved the axis out to a
   // visible 너비 / 높이 caption beside the field and gives *both* inputs the same "예: 30"
   // placeholder. So getByPlaceholder('가로') matches nothing on production, and matching the
   // production placeholder would be ambiguous. `.custom-size-input` carries across both, and both
   // render width before height, so order is what actually distinguishes them. The placeholder
-  // union is kept first so the locator still reads as width/height on development-1.
+  // union is kept first so the locator still reads as width/height on the dev storefront.
   private customSizeInput(axis: 'width' | 'height'): Locator {
     const inputs = this.optionsPanel.locator('.custom-size-input');
 
@@ -199,7 +199,7 @@ export class ProductV2Page {
    *
    * This is the figure the shopper is quoted and the one that must survive into the cart and the
    * checkout summary unchanged -- it is already the discounted price, not the struck-through one
-   * (verified on development-1: the 30개 tier reads 18,700원 against a 19,800원 list price, and
+   * (verified on the dev storefront: the 30개 tier reads 18,700원 against a 19,800원 list price, and
    * 18,700원 is what the cart line and the checkout 소계 then show).
    *
    * Waits out the bootstrap pricing round-trip, during which every tier reads 0원.
@@ -364,7 +364,7 @@ export class ProductV2Page {
 
   // A rejected size shows only the minimum-two-per-sheet message -- an oversized entry does not get
   // a separate "가로 138mm × 세로 200mm 이내로 작업해 주세요." line. Confirmed intended on
-  // development-1 (2026-08-26), so this asserts the absence rather than treating it as a gap.
+  // the dev storefront (2026-08-26), so this asserts the absence rather than treating it as a gap.
   async expectNoMaxWorkAreaMessage(): Promise<void> {
     await expect(this.optionsPanel.getByText(/가로 \d+mm × 세로 \d+mm 이내로 작업해 주세요\./)).toHaveCount(0);
   }

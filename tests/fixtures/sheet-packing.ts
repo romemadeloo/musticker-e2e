@@ -9,7 +9,7 @@
 // for every expected sticker count in the suite -- assert against these functions rather than
 // hard-coding counts, so a change to the layout rule is a one-line change here.
 //
-// Verified to reproduce the live per-sheet readout on development-1 for all eight shipped presets
+// Verified to reproduce the live per-sheet readout on the dev storefront for all eight shipped presets
 // and across the boundary region (2026-08-26).
 export const a5Sheet = {
   widthMm: 148,

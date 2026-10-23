@@ -8,7 +8,7 @@ import { expect } from '@playwright/test';
  * finishes hydrating them. A click that lands in that window hits an inert element: it focuses the
  * button and does nothing else. On the auth forms that shows up as a submit which neither validates
  * nor calls the API -- the test then fails on a missing validation message that the app would have
- * rendered a second later. Measured on development-1, the gap is consistently around 1.2s.
+ * rendered a second later. Measured on the dev storefront, the gap is consistently around 1.2s.
  *
  * Nuxt exposed no hydration flag on the builds this was written against (no `isHydrating`, no `data-v-app`, and the
  * production Vue build keeps `__vnode` off the DOM nodes), so interactivity is established
@@ -31,9 +31,9 @@ export async function waitForPasswordFormInteractive(toggleButton: Locator, pass
 
 /**
  * Waits until Nuxt has finished hydrating the page. Since early October 2026 the storefront exposes
- * `useNuxtApp()` on `window` (production and static-1), whose `isHydrating` turns false once the
+ * `useNuxtApp()` on `window` (production and dev-1), whose `isHydrating` turns false once the
  * page's handlers are bound -- on a heavy production page that was about 11 s after navigation. The
- * mounted root's `__vue_app__` is the fallback for a build that does not expose it (development-1
+ * mounted root's `__vue_app__` is the fallback for a build that does not expose it (the dev storefront
  * did not, which is why the form helper above works behaviourally).
  */
 export async function waitForNuxtHydration(page: Page): Promise<void> {

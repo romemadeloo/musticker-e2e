@@ -1,5 +1,5 @@
 // Copy and status codes for the order-processing flow, on both sides of it. Read live off
-// static-1 on 2026-09-25 while walking AO-2609240008-dev and AO-2609250005-dev through
+// dev-1 on 2026-09-25 while walking AO-2609240008-dev and AO-2609250005-dev through
 // the whole lifecycle, and re-checked on 2026-10-14 with AO-2609180003-dev, when the approval
 // dialog, the A-FPA label and the production step had changed.
 

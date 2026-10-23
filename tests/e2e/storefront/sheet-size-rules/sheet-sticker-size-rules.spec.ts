@@ -23,7 +23,7 @@ import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 // covers the size constraint added on 2026-08-26: a sheet must fit at least two stickers, so any
 // individual size that packs one (or zero) is priced at 0원 and cannot be ordered.
 //
-// Verified live against development-1 (dev.musticker.com) on 2026-08-26.
+// Verified live against the dev storefront on 2026-08-26.
 //
 // Tagged @production as of 2026-08-28: the narrowed preset tables have been promoted, so the seven
 // single-sticker presets that used to keep MS-SHT-003 red on production are gone and all 24 tests

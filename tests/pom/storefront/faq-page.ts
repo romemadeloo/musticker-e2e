@@ -4,6 +4,8 @@ import { expect } from '@playwright/test';
 import { appPath } from '../../fixtures/env.js';
 import { gotoStorefront } from '../../fixtures/navigation.js';
 import { ko } from '../../fixtures/storefront-data.js';
+import { waitForNuxtHydration } from '../../fixtures/hydration.js';
+import { discoveryCopy } from '../../fixtures/public-content-data.js';
 
 export class FaqV2Page {
   readonly page: Page;
@@ -31,26 +33,41 @@ export class FaqV2Page {
   }
 
   async openOrderQuestion(): Promise<void> {
-    await this.page.getByText(ko.orderTopic, { exact: true }).first().click().catch(() => undefined);
-    const question = this.page
-      .getByRole('button', { name: ko.guestOrderQuestion })
-      .or(this.page.getByRole('button').filter({ hasText: /\uc8fc\ubb38|\ube44\ud68c\uc6d0|\ud61c\ud0dd/ }))
-      .first();
+    await waitForNuxtHydration(this.page);
+    await this.page.getByText(ko.orderTopic, { exact: true }).first().click();
+    const question = this.page.getByRole('button', { name: ko.guestOrderQuestion, exact: true });
     await expect(question).toBeVisible();
     await question.click();
-    await expect(this.page.locator('body')).toContainText(/\ube44\ud68c\uc6d0|\uc8fc\ubb38|\ud61c\ud0dd|\uba64\ubc84\uc2ed/);
+    await this.expectAnswerVisible(ko.guestOrderQuestion, discoveryCopy.guestOrderAnswer);
+    await question.click();
+    await expect(this.answerPanel(ko.guestOrderQuestion)).toBeHidden();
+  }
+
+  async expectAnswerVisible(question: string, answerText: string): Promise<void> {
+    const panel = this.answerPanel(question);
+    await expect(panel).toBeVisible();
+    await expect(panel).toContainText(answerText);
   }
 
   async search(query: string): Promise<void> {
+    await waitForNuxtHydration(this.page);
     await this.page.getByPlaceholder(ko.faqSearchPlaceholder).fill(query);
   }
 
   async expectSearchResults(query: string): Promise<void> {
-    await expect(this.page.locator('body')).toContainText(query);
+    await expect(this.page.getByRole('button').filter({ hasText: query }).first()).toBeVisible();
+    await expect(this.page.getByRole('button', { name: discoveryCopy.membershipQuestion, exact: true })).toBeHidden();
   }
 
   async clearSearchAndExpectDefaultList(): Promise<void> {
     await this.page.getByPlaceholder(ko.faqSearchPlaceholder).clear();
     await expect(this.page.getByRole('button', { name: /\ud68c\uc6d0\uac00\uc785/ }).first()).toBeVisible();
+  }
+
+  private answerPanel(question: string) {
+    // The deployed accordion has no region role, aria-controls, or expanded ARIA state.
+    return this.page.locator('.mu-accordion-item').filter({
+      has: this.page.getByRole('button', { name: question, exact: true })
+    }).locator('.mu-accordion-content');
   }
 }

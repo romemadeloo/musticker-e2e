@@ -32,7 +32,7 @@ export function hasMemberCredentials(): boolean {
  * tests/fixtures/hydration.ts), which made login a single point of failure for every test that
  * merely needed to *be* logged in. `POST /sys/kr/auth/login` answers in well under a second and
  * sets one `*_customer_token` cookie scoped to `.musticker.com`, so the same state works on the
- * storefront host. Verified against development-1 on 2026-08-27.
+ * storefront host. Verified against the dev storefront on 2026-08-27.
  *
  * Tests that exercise logging in itself (MS-AUTH-009, MS-AUTH-010, MS-AUTH-027) still go through the UI
  * -- that is the behaviour under test there.
@@ -66,8 +66,8 @@ export async function seedMemberStorageState(): Promise<MemberStorageState> {
       }
     });
 
-    // The endpoint reports a refused login as HTTP 200 with `success: false` (the same trap
-    // documented in tests/fixtures/pricing/README.md), so the status alone proves nothing.
+    // The endpoint reports a refused login as HTTP 200 with `success: false`,
+    // so the status alone proves nothing.
     const body = (await response.json()) as { success?: boolean; message?: string };
 
     if (response.status() !== 200 || body.success !== true) {
@@ -75,7 +75,7 @@ export async function seedMemberStorageState(): Promise<MemberStorageState> {
         [
           `Could not authenticate AUTH_TEST_EMAIL against ${loginUrl}.`,
           `HTTP ${response.status()}, success=${String(body.success)}, message=${body.message ?? '(none)'}.`,
-          'Check the credentials belong to the environment under test -- each static-* server',
+          'Check the credentials belong to the environment under test -- each dev-* server',
           'has its own user database, so a production account will not log in on a dev host.'
         ].join('\n')
       );

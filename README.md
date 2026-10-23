@@ -46,14 +46,13 @@ tests/
   e2e/
     storefront/          customer-facing specs, one folder per workbook module (Area)
       navigation/  discovery/  configuration/  sheet-size-rules/  cart/  checkout/
-      pricing/  auth/  account/  inquiry/  api/  ux/  security/
+      auth/  account/  inquiry/  api/  ux/  security/
     admin/               admin panel specs
       orders/            storefront-to-admin order processing
   pom/
     storefront/          page objects for storefront pages, drawers and dialogs
     admin/               page objects for admin panel pages and drawers
   fixtures/              the extended `test`, environments, sign-in, API helpers, test data
-    pricing/             price tables (CSV) and the pricing API client
     files/               upload fixtures (design file, proof image)
   reporters/             self-heal report
   setup/                 global teardown, and the admin session capture (npm run admin:login)
@@ -63,10 +62,8 @@ docs/                    documentation and the test case workbook
 
 ## Numbers
 
-As of 2026-10-14: **2,473 Playwright tests in 34 spec files** (2,472 on the desktop projects plus one
-mobile test), documented as **175 test cases**: 142 automated (3 of them only partly, with the rest
-to check by hand), 30 planned (29 admin, 1 design studio), and 3 withdrawn. Pricing makes up 2,288
-of the tests, generated from the price tables. The workbook's Coverage Summary tab has the per-area breakdown.
+Use `npm run test:e2e:list` to see the current automated test inventory. The dedicated pricing
+and visual snapshot suites have been removed; historical case IDs remain reserved in the workbook.
 
 ## Owner
 

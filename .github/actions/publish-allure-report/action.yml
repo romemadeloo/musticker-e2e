@@ -23,10 +23,6 @@ inputs:
     description: Local directory used for the Pages worktree.
     required: false
     default: .allure-pages
-  history_url:
-    description: Optional fallback URL to existing Allure history files.
-    required: false
-    default: ''
   history_limit:
     description: >-
       How many past runs to keep in the persisted Allure history file. The file is committed to the
@@ -36,10 +32,6 @@ inputs:
       lowering this shrinks an already oversized file on the next run.
     required: false
     default: '15'
-  fallback_root_history:
-    description: Whether to try the repository Pages root /history path when no persisted history exists.
-    required: false
-    default: 'false'
   allure_service_access_token:
     description: Optional Allure Report Storage access token. When set, Allure 3 publishes to Storage during report generation.
     required: false
@@ -99,8 +91,6 @@ runs:
     - name: Restore Allure history
       shell: bash
       env:
-        FALLBACK_ROOT_HISTORY: ${{ inputs.fallback_root_history }}
-        HISTORY_URL: ${{ inputs.history_url }}
         PAGES_DIR: ${{ inputs.pages_dir }}
         REPORT_SLUG: ${{ inputs.report_slug }}
       run: |
@@ -120,32 +110,6 @@ runs:
           cp -R "$history_dir/." "$results_dir/history/"
           history_restored=1
           echo "Restored Allure history from $history_dir."
-        fi
-
-        history_url="$HISTORY_URL"
-        if [ "$history_restored" -eq 0 ] && [ -z "$history_url" ] && [ "$FALLBACK_ROOT_HISTORY" = "true" ]; then
-          owner="${GITHUB_REPOSITORY_OWNER,,}"
-          repo="${GITHUB_REPOSITORY#*/}"
-          history_url="https://${owner}.github.io/${repo}/history"
-        fi
-
-        if [ "$history_restored" -eq 0 ] && [ -n "$history_url" ]; then
-          history_url="${history_url%/}"
-          mkdir -p "$results_dir/history"
-
-          restored=0
-          for file in categories-trend.json duration-trend.json history-trend.json history.json retry-trend.json; do
-            if curl --fail --silent --show-error --location "$history_url/$file" --output "$results_dir/history/$file"; then
-              restored=$((restored + 1))
-            else
-              rm -f "$results_dir/history/$file"
-            fi
-          done
-
-          if [ "$restored" -gt 0 ]; then
-            history_restored=1
-            echo "Restored $restored Allure history file(s) from $history_url."
-          fi
         fi
 
         if [ "$history_restored" -eq 0 ]; then

@@ -40,7 +40,7 @@ export class CheckoutV2Page {
    *
    * The shipping-fee and total rows render as `.ui-skeleton` placeholders while that call is in
    * flight, so reading immediately yields a partial summary that does not add up. Verified against
-   * development-1 on 2026-08-27: 소계 18,700원 + 배송비 3,000원 = 합계 21,700원.
+   * the dev storefront on 2026-08-27: 소계 18,700원 + 배송비 3,000원 = 합계 21,700원.
    */
   async captureOrderSummary(): Promise<OrderSummary> {
     const lines = this.page.locator('.checkout-summary-line');
@@ -165,7 +165,7 @@ export class CheckoutV2Page {
   // Filling the guest email immediately fires a verification-email send and opens a full-page
   // `.auth-verification-modal` overlay that blocks every other checkout control (including the
   // payment-method tiles and pay button) until the OTP is entered. Verified live on
-  // development-3 on 2026-08-13.
+  // the dev storefront on 2026-08-13.
   async fillGuestEmailAndAwaitOtpModal(email: string): Promise<void> {
     // `input[type="email"]` alone can match a second, hidden email input elsewhere on the page
     // (e.g. an inquiry dialog) depending on hydration timing, so scope to the visible checkout

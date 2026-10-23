@@ -1,13 +1,14 @@
 import { test, expect } from '../../../fixtures/e2e-test.js';
+import { activeEnvironment } from '../../../fixtures/env.js';
 import { createMailTmAccount, extractOtpCode, waitForMailTmMessage } from '../../../fixtures/mail-tm.js';
 import { guestCheckoutProfile, v2Products } from '../../../fixtures/storefront-data.js';
 import { CheckoutV2Page } from '../../../pom/storefront/checkout-page.js';
 import { OrderConfirmationPage } from '../../../pom/storefront/order-confirmation-page.js';
 import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 
-const canRunDestructiveCheckout = process.env.RUN_PAYMENT_E2E === 'true';
+const canRunDestructiveCheckout = process.env.RUN_PAYMENT_E2E === 'true' && activeEnvironment?.startsWith('dev-') === true;
 
-// Full guest checkout completion, verified live against development-3 on 2026-08-13 while
+// Full guest checkout completion, verified live against the dev storefront on 2026-08-13 while
 // authoring this suite. Guest checkout requires an emailed OTP before any payment control becomes
 // interactive, and the KakaoPay tile opens a real "PayApp — Local Mock" sandbox popup (not
 // production KakaoPay) on dev environments -- clicking its "Complete card payment" button fires

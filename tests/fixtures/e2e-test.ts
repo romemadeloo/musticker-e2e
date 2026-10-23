@@ -158,7 +158,7 @@ function isTransientProductPageServerFailure(status: number, url: string): boole
   );
 }
 
-// Any first-party host: static-1 logs the same unused-preload warning as production (2026-10-14).
+// Any first-party host: dev-1 logs the same unused-preload warning as production (2026-10-14).
 function isBenignUnusedPreloadWarning(text: string): boolean {
   return /The resource https:\/\/[\w.-]*musticker\.com\/illustrations\/products\/.* was preloaded using link preload but not used within a few seconds/i.test(
     text

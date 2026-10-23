@@ -1,5 +1,5 @@
 import { test, expect } from '../../../fixtures/e2e-test.js';
-import { env } from '../../../fixtures/env.js';
+import { activeEnvironment, env } from '../../../fixtures/env.js';
 import { createMailTmAccount, extractOtpCode, waitForMailTmMessage } from '../../../fixtures/mail-tm.js';
 import { SKIP_WITHOUT_MEMBER_CREDENTIALS, hasMemberCredentials } from '../../../fixtures/member-auth.js';
 import { authCopy, throwawayAccount } from '../../../fixtures/storefront-data.js';
@@ -10,7 +10,7 @@ import { LoginPage } from '../../../pom/storefront/login-page.js';
 import { RegisterPage } from '../../../pom/storefront/register-page.js';
 
 // The change-password form lives in the 비밀번호 section of /kr/account/profile. Verified live against
-// development-1 on 2026-08-27:
+// the dev storefront on 2026-08-27:
 //
 //   * `비밀번호 변경` stays disabled until all three fields are filled.
 //   * Every rejection comes back as an HTTP 200 on PUT /sys/kr/profile/password carrying the reason
@@ -22,7 +22,7 @@ import { RegisterPage } from '../../../pom/storefront/register-page.js';
 // The negative cases below never change a password, so they run against the seeded member. The one
 // test that really does rotate a credential registers its own throwaway account first, so it can
 // never invalidate AUTH_TEST_PASSWORD for the rest of the suite.
-const canRunDestructiveAuth = process.env.RUN_AUTH_DESTRUCTIVE_E2E === 'true';
+const canRunDestructiveAuth = process.env.RUN_AUTH_DESTRUCTIVE_E2E === 'true' && activeEnvironment?.startsWith('dev-') === true;
 
 test.describe('Change password', { tag: ['@auth', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowExpectedAuthFailures: true, allowKnownNuxtPayloadFailures: true });

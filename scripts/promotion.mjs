@@ -22,11 +22,11 @@ export function devServers(servers) {
   for (const [kind, value] of Object.entries(servers)) {
     if (!['storefront', 'api', 'admin'].includes(kind)) throw new Error('Unknown server kind.')
     const url = new URL(value)
-    const match = url.hostname.match(/^dev-static-(\d+)(-api|-admin-panel)?\.musticker\.com$/)
+    const match = url.hostname.match(/^shared-dev-static-(sf|api|admin)(?:-([2-6]))?\.musticker\.com$/)
     const local = ['localhost', '127.0.0.1', '[::1]'].includes(url.hostname)
     if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.search || url.hash || (!match && !local)) throw new Error('Promotion validation only accepts explicit dev/loopback servers.')
-    if (match && (match[2] || '') !== ({ storefront: '', api: '-api', admin: '-admin-panel' })[kind]) throw new Error('Incorrect server role.')
-    const current = local ? 'local' : match[1]
+    if (match && match[1] !== ({ storefront: 'sf', api: 'api', admin: 'admin' })[kind]) throw new Error('Incorrect server role.')
+    const current = local ? 'local' : (match[2] || '1')
     if (tier && tier !== current) throw new Error('Promotion servers belong to different environments.')
     tier = current
   }

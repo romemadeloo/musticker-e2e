@@ -1,12 +1,12 @@
 import { test, expect } from '../../../fixtures/e2e-test.js';
-import { env } from '../../../fixtures/env.js';
+import { activeEnvironment, env } from '../../../fixtures/env.js';
 import { createMailTmAccount, extractOtpCode, waitForMailTmMessage } from '../../../fixtures/mail-tm.js';
 import { authCopy, throwawayAccount } from '../../../fixtures/storefront-data.js';
 import { recordCreatedAccount } from '../../../fixtures/test-data-ledger.js';
 import { LoginPage } from '../../../pom/storefront/login-page.js';
 import { RegisterPage } from '../../../pom/storefront/register-page.js';
 
-// Registration is a two-stage flow, verified live against development-1 on 2026-08-27:
+// Registration is a two-stage flow, verified live against the dev storefront on 2026-08-27:
 //
 //   1. `계정 만들기` validates client-side, then POSTs /auth/register/verification (201) and opens a
 //      4-digit code modal. No account exists yet at this point.
@@ -17,7 +17,7 @@ import { RegisterPage } from '../../../pom/storefront/register-page.js';
 // Everything through stage 1 is read-only and runs anywhere. Stage 2 creates a real account, so the
 // tests that reach it are @destructive and gated behind RUN_AUTH_DESTRUCTIVE_E2E, exactly as the
 // full-payment checkout is gated behind RUN_PAYMENT_E2E.
-const canRunDestructiveAuth = process.env.RUN_AUTH_DESTRUCTIVE_E2E === 'true';
+const canRunDestructiveAuth = process.env.RUN_AUTH_DESTRUCTIVE_E2E === 'true' && activeEnvironment?.startsWith('dev-') === true;
 
 test.describe('Registration', { tag: ['@auth', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowExpectedAuthFailures: true, allowKnownNuxtPayloadFailures: true });

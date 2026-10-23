@@ -13,7 +13,7 @@ import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 // the deeper configuration + cart flow coverage that v2Products.dieCutSheet already gets for the
 // freeform/die-cut sheet variant.
 //
-// Verified live against development-3 (dev-3.musticker.com) on 2026-08-12 while authoring this
+// Verified live against the dev storefront on 2026-08-12 while authoring this
 // suite. The test below (MS-CFG-015) intentionally asserts behavior that FAILS today on dev-3 and
 // documents a real defect found during that verification:
 //   - MS-CFG-015: size-guide illustration <img alt> text is either a raw untranslated i18n key
@@ -180,7 +180,7 @@ test.describe('Sheet sticker configurator', {
 
   for (const data of sheetStickerConfiguratorProducts) {
     // Known failing -- see the suite-level comment above for the defect this test documents
-    // (untranslated i18n key vs. mismatched content). First seen on development-3 on 2026-08-12
+    // (untranslated i18n key vs. mismatched content). First seen on the dev storefront on 2026-08-12
     // and re-confirmed unfixed on production in run #94 (2026-08-20), where all five variants
     // failed. Marked fixme to keep the board actionable; remove this once the storefront
     // localizes the size-guide alt text, and the test should go green on its own.

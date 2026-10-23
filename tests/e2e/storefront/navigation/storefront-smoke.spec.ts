@@ -8,7 +8,7 @@ import { HomeV2Page } from '../../../pom/storefront/home-page.js';
 test.describe('Storefront smoke', { tag: ['@smoke', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });
 
-  test('MS-NAV-001 homepage loads with critical public content', async ({ page }) => {
+  test('MS-NAV-001 homepage loads with critical public content', { tag: '@critical' }, async ({ page }) => {
     const home = new HomeV2Page(page);
 
     await home.goto();
@@ -41,7 +41,7 @@ test.describe('Storefront smoke', { tag: ['@smoke', '@production'] }, () => {
     await expectHeadingOrHeal(page, firstRoll.name, `product heading ${firstRoll.path}`);
   });
 
-  test('MS-NAV-003 header search opens and finds hologram sticker content', async ({ page }) => {
+  test('MS-NAV-003 header search opens and finds hologram sticker content', { tag: '@critical' }, async ({ page }) => {
     const home = new HomeV2Page(page);
 
     await home.goto();
@@ -50,7 +50,7 @@ test.describe('Storefront smoke', { tag: ['@smoke', '@production'] }, () => {
     await expect(page.getByRole('dialog').getByText(/\ud640\ub85c\uadf8\ub7a8/).first()).toBeVisible();
   });
 
-  test('MS-NAV-004 empty cart opens without broken state', async ({ page }) => {
+  test('MS-NAV-004 empty cart opens without broken state', { tag: '@critical' }, async ({ page }) => {
     const home = new HomeV2Page(page);
 
     await home.goto();

@@ -12,7 +12,7 @@ import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 // summary's own arithmetic -- would go unseen by both. These tests close that gap: they assert the
 // figure the shopper was quoted is the figure they are charged, and that the summary adds up.
 //
-// Verified live against development-1 on 2026-08-27:
+// Verified live against the dev storefront on 2026-08-27:
 //
 //   * The 30개 tier of 자유형 조각스티커 at 중형 75x75 quotes 18,700원, and 18,700원 is what the cart
 //     drawer line, the cart page total, and the checkout 소계 all then read.

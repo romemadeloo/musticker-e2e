@@ -81,7 +81,7 @@ export const ko = {
   orderCompletedHeading: '\uc8fc\ubb38\uc774 \uc644\ub8cc\ub418\uc5c8\uc2b5\ub2c8\ub2e4!'
 } as const;
 
-// The order-summary row labels on /kr/checkout, captured live from development-1 on 2026-08-27.
+// The order-summary row labels on /kr/checkout, captured live from the dev storefront on 2026-08-27.
 // Keyed off the label text because the rows carry no test ids -- only `.checkout-summary-line` with
 // a `-label`/`-value` pair, and `.is-total` on the last one.
 export const checkoutSummaryLabels = {
@@ -93,7 +93,7 @@ export const checkoutSummaryLabels = {
 } as const;
 
 // The storefront promises 5만원 이상 무료배송 on every product page (asserted by MS-CFG-005). Verified
-// live on development-1 on 2026-08-27: a 32,500원 subtotal is charged 3,000원, a 106,000원 subtotal
+// live on the dev storefront on 2026-08-27: a 32,500원 subtotal is charged 3,000원, a 106,000원 subtotal
 // is charged 0원.
 export const freeShippingThresholdWon = 50_000;
 
@@ -108,7 +108,7 @@ export const cartCopy = {
   removeConfirmHeading: '장바구니에서 이 상품을 삭제하시겠습니까?'
 } as const;
 
-// Order history (/kr/account/orders), captured live from development-1 on 2026-08-27. The page is a
+// Order history (/kr/account/orders), captured live from the dev storefront on 2026-08-27. The page is a
 // master/detail: `.order-list .order-item` cards on the left, `.orders-main` invoice on the right.
 export const orderHistoryCopy = {
   heading: '주문 현황',
@@ -122,7 +122,7 @@ export const orderHistoryCopy = {
   invoiceLabels: ['상품 금액', '배송비', '총계'] as const
 } as const;
 
-// Guest order lookup (the 비회원 mode of /kr/auth/login), verified on development-1 on 2026-08-27.
+// Guest order lookup (the 비회원 mode of /kr/auth/login), verified on the dev storefront on 2026-08-27.
 // `POST /sys/kr/auth/login/guest/verification` answers HTTP 200 for an unknown order and carries the
 // refusal in the body, surfaced on the order-number field.
 export const guestOrderLookupCopy = {
@@ -131,7 +131,7 @@ export const guestOrderLookupCopy = {
 } as const;
 
 // Shopper-facing copy for the authentication surfaces (login, register, and the account profile's
-// password section), captured live from development-1 on 2026-08-27. Kept as literal Korean rather
+// password section), captured live from the dev storefront on 2026-08-27. Kept as literal Korean rather
 // than escapes so a copy change stays greppable against what the app actually renders.
 export const authCopy = {
   loginHeading: '로그인',
@@ -209,7 +209,7 @@ export const aboutPage = {
 //
 // By 2026-10-14 production's cards (and its new header menu) had gone back to the pre-rename names
 // -- 자유형 스티커, 키스컷 스티커, 아트지 롤 스티커, 레터링 스티커, every 판스티커 -> 시트 스티커 -- while
-// its product pages and static-1's cards kept the renamed ones. Logged as MUS-QA-016; these stay on
+// its product pages and dev-1's cards kept the renamed ones. Logged as MUS-QA-016; these stay on
 // the renamed names until product says which is right, and production runs heal by href meanwhile.
 export const categoryLinks = {
   stickers: [
@@ -360,7 +360,7 @@ export const catalogPaths = [
 
 // Plain size+quantity die-cut shape variants under ./stickers/, distinct from
 // v2Products.dieCutSticker (./stickers/die-cut-sticker) only by heading/size-label/price. Verified
-// live against development-3 on 2026-08-13: none of these expose a material selector.
+// live against the dev storefront on 2026-08-13: none of these expose a material selector.
 export const dieCutShapeStickers = [
   { path: './stickers/hologram-sticker', heading: '홀로그램 스티커', size: ko.medium75, quantity: 100 },
   { path: './stickers/circle-sticker', heading: '원형 스티커', size: '중형 60x60', quantity: 100 },
@@ -373,7 +373,7 @@ export const dieCutShapeStickers = [
 ] as const;
 
 // Plain size+quantity die-cut roll variants under ./roll-stickers/, same shape as
-// v2Products.dieCutRoll (./roll-stickers/die-cut-roll). Verified live against development-3 on
+// v2Products.dieCutRoll (./roll-stickers/die-cut-roll). Verified live against the dev storefront on
 // 2026-08-13: none expose a material selector or sheet-size controls.
 export const dieCutRollStickers = [
   { path: './roll-stickers/clear-roll', heading: '투명 롤 스티커', size: ko.medium75, quantity: 100 },
@@ -392,20 +392,20 @@ export const dieCutRollStickers = [
 ] as const;
 
 // Sheet-template flow (material + sheet size + quantity) like v2Products.dieCutSheet, but a
-// distinct product under ./stickers/. Verified live against development-3 on 2026-08-13.
+// distinct product under ./stickers/. Verified live against the dev storefront on 2026-08-13.
 export const stickerSheetProduct = {
   path: './stickers/sticker-sheet',
   heading: '판스티커',
   material: ko.matteWhite,
   sheetSize: 'A5',
   quantity: 10,
-  // 스티커 개수, asked for on static-1 since early October 2026.
+  // 스티커 개수, asked for on dev-1 since early October 2026.
   stickerCount: 4
 } as const;
 
 // Live-text lettering flow: a color swatch (accessible name is the English color name, e.g.
 // aria-label="Black", with the Korean label only in a child tooltip span) plus a contenteditable
-// text canvas, no design-file upload. Verified live against development-3 on 2026-08-13.
+// text canvas, no design-file upload. Verified live against the dev storefront on 2026-08-13.
 export const vinylLetteringProduct = {
   path: './stickers/vinyl-lettering',
   heading: '글자 커팅 스티커',
@@ -415,7 +415,7 @@ export const vinylLetteringProduct = {
 } as const;
 
 // Despite the "글자 커팅" name this behaves like a plain die-cut shape page (color swatch + size +
-// quantity + design-file upload), not a live-text tool. Verified live against development-3 on
+// quantity + design-file upload), not a live-text tool. Verified live against the dev storefront on
 // 2026-08-13.
 export const transferStickerProduct = {
   path: './stickers/transfer-sticker',
@@ -431,7 +431,7 @@ export const transferStickerProduct = {
 // distinct from the die-cut sheet's A5-template flow above). categoryLinks.sheetStickers[0] is the
 // freeform/die-cut variant already covered by v2Products.dieCutSheet, so it is skipped here.
 //
-// The preset tables below were re-cut on development-1 (verified 2026-08-26) so every preset packs
+// The preset tables below were re-cut on the dev storefront (verified 2026-08-26) so every preset packs
 // at least two stickers onto an A5 sheet; the five products now share exactly two tables, one per
 // shape family. Production still carries the older, wider tables (circle 40x40..100x100, square/
 // rounded 30x30..125x125, oval/rectangle 50x25..125x100), seven of whose presets pack only one

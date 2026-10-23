@@ -7,7 +7,7 @@ import { LoginPage } from '../../../pom/storefront/login-page.js';
 // MS-AUTH-029 established that the 비회원 mode swaps the password field for email + order number. It
 // stopped there -- nothing actually looked an order up, so the whole guest-lookup path was untested.
 //
-// Verified live against development-1 on 2026-08-27:
+// Verified live against the dev storefront on 2026-08-27:
 //
 //   * An unknown order is refused with 존재하지 않는 주문입니다. on the order-number field, reported in
 //     the body of an HTTP 200 POST /sys/kr/auth/login/guest/verification.

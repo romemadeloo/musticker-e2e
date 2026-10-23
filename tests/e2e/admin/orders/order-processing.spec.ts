@@ -24,20 +24,16 @@ const proofFile = path.resolve('tests/fixtures/files/qa-proof.png');
  * reject it, the customer resubmits, staff pass it and send a proof, the customer approves the
  * proof, and staff take the order through printing and shipping to delivered.
  *
- * Walked by hand on static-1 on 2026-09-25 (AO-2609240008-dev, AO-2609250005-dev) before
+ * Walked by hand on dev-1 on 2026-09-25 (AO-2609240008-dev, AO-2609250005-dev) before
  * this was written, and re-run on 2026-10-14 (AO-2609180003-dev, AO-2609090017-dev) after the
  * product changes noted below. Every stage is asserted three ways where it can be: the admin UI, the customer's
  * UI, and the admin API's activity log.
  *
- * Where the order comes from: the checkout step is not automated yet. dev-static-1's checkout runs a
- * Cloudflare bot check ("거의 다 되었어요") before payment that rejects Playwright, and the suite must
- * not try to get past it. Until the dev team exempts test traffic, ADMIN_E2E_ORDER_NO names a paid
- * order the seeded member already placed, with exactly one item still at 디자인 파일 미제출 -- each
- * run consumes one, taking it all the way to 주문 완료. When checkout is unblocked, the order is
- * placed here instead and the seed variable goes away.
+ * ADMIN_E2E_ORDER_NO names a paid order the seeded member already placed, with exactly one
+ * item awaiting its design file. Each run consumes one, taking it all the way to order completion.
  *
  * Changes real (dev) data and emails the seeded member at each notification step, so it is gated on
- * RUN_ADMIN_DESTRUCTIVE_E2E and refuses every environment but static-1.
+ * RUN_ADMIN_DESTRUCTIVE_E2E and refuses every environment but dev-1.
  */
 test.describe('Order processing', { tag: ['@admin', '@e2e', '@destructive', '@slow', '@credentialed'] }, () => {
   test.use({
@@ -48,8 +44,8 @@ test.describe('Order processing', { tag: ['@admin', '@e2e', '@destructive', '@sl
 
   test.skip(!canRun, 'Changes and completes a real dev order. Set RUN_ADMIN_DESTRUCTIVE_E2E=true to run it.');
   test.skip(
-    activeEnvironment !== 'static-1',
-    `Order-processing changes run on static-1 only (this run: ${activeEnvironment ?? 'unknown'}).`
+    activeEnvironment !== 'dev-1',
+    `Order-processing changes run on dev-1 only (this run: ${activeEnvironment ?? 'unknown'}).`
   );
   test.skip(!hasMemberCredentials(), SKIP_WITHOUT_MEMBER_CREDENTIALS);
 
@@ -60,7 +56,7 @@ test.describe('Order processing', { tag: ['@admin', '@e2e', '@destructive', '@sl
   }) => {
     test.skip(
       !seedOrderNumber,
-      'Placing the order through checkout is blocked by a Cloudflare check on dev-static-1. Set ADMIN_E2E_ORDER_NO ' +
+      'This journey needs a seeded order. Set ADMIN_E2E_ORDER_NO ' +
         'to a paid order of the seeded member with one item at 디자인 파일 미제출.'
     );
     // Eleven hand-offs between two apps, each waiting on a real server round trip.

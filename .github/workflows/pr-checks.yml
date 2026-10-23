@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - production
-      - 'static-*'
+      - 'dev-[1-6]'
 
 permissions:
   contents: read
@@ -30,6 +30,7 @@ env:
   DEV_INTERNAL_ORIGIN_KEY: ${{ secrets.DEV_INTERNAL_ORIGIN_KEY }}
   E2E_BROWSER_PROJECT: chromium-desktop
   RUN_PAYMENT_E2E: 'false'
+  RUN_AUTH_DESTRUCTIVE_E2E: 'false'
   AUTH_TEST_EMAIL: >-
     ${{ github.base_ref == 'production' && secrets.AUTH_TEST_EMAIL || secrets.DEV_AUTH_TEST_EMAIL }}
   AUTH_TEST_PASSWORD: >-
@@ -63,6 +64,45 @@ jobs:
       - name: Run isolated framework checks
         run: npm run test:framework
 
+      - name: Run smoke tests
+        run: npm run test:ui:smoke
+
+      - name: Collect Playwright and Allure artifacts
+        id: test_artifacts
+        if: ${{ always() }}
+        uses: ./.github/actions/playwright-artifacts
+        with:
+          artifact_name: pr-checks-playwright-results
+          retention_days: 7
+
+  api-contracts:
+    name: API contracts (no browser)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup-playwright
+        with:
+          browser_project: none
+      - run: npm run test:api
+      - name: Retain API evidence
+        if: ${{ always() }}
+        uses: ./.github/actions/playwright-artifacts
+        with:
+          artifact_name: pr-api-results
+          retention_days: 7
+
+  promotion-validation:
+    name: Reviewed promotion and affected regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup-playwright
+        with:
+          browser_project: chromium-desktop
       - name: Validate promotion bundles and affected regression on dev
         env:
           AUTH_TEST_EMAIL: ${{ secrets.DEV_AUTH_TEST_EMAIL }}
@@ -80,16 +120,24 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-      - name: Run smoke tests
-        run: npm run test:env:smoke
 
-      - name: Collect Playwright and Allure artifacts
-        id: test_artifacts
-        if: ${{ always() }}
-        uses: ./.github/actions/playwright-artifacts
-        with:
-          artifact_name: pr-checks-playwright-results
-          retention_days: 7
+  pr-gate:
+    name: PR gate
+    needs: [lint-typecheck-smoke, api-contracts, promotion-validation]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require all checks to pass
+        shell: bash
+        env:
+          UI_RESULT: ${{ needs.lint-typecheck-smoke.result }}
+          API_RESULT: ${{ needs.api-contracts.result }}
+          PROMOTION_RESULT: ${{ needs.promotion-validation.result }}
+        run: |
+          test "$UI_RESULT" = success
+          test "$API_RESULT" = success
+          test "$PROMOTION_RESULT" = success
 
   allure-report:
     name: Publish Allure report with history

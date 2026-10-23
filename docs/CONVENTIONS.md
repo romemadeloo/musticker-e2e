@@ -28,18 +28,16 @@ case belongs: `MS-<MODULE>-###`.
 | `MS-SHT-###` | 4. Sheet sticker size rules | `MS-SHT-001 원형 판스티커 rejects a custom size that fits only one sticker per sheet` |
 | `MS-CRT-###` | 5. Cart | `MS-CRT-001 removing the only line item leaves an empty cart, not a broken one` |
 | `MS-CHK-###` | 6. Checkout & money path | `MS-CHK-004 the quoted tier price survives …` |
-| `MS-PRC-<product>` | 7. Pricing, one generated test per price-table row | `MS-PRC-circle-sticker area 900 (30x30) matches …` |
-| `MS-PRC-INT-<product>` | 7. Pricing interpolation | `MS-PRC-INT-die-cut-sticker quantity 15 interpolates …` |
-| `MS-PRC-MAP` | 7. Pricing table mapping | `MS-PRC-MAP die-cut-sticker is served by pricing table 51` |
 | `MS-AUTH-###` | 8. Sign-in & registration | `MS-AUTH-001 account navigation opens login` |
 | `MS-ACC-###` | 9. Account & order history | `MS-ACC-001 order history lists the member's orders with a number and a date each` |
 | `MS-INQ-###` | 10. Inquiry & validation | `MS-INQ-001 inquiry form validates blank and invalid email submissions` |
 | `MS-API-###` | 11. Public API | `MS-API-001 navigation categories API returns public category data` |
-| `MS-UX-###` | 12. Accessibility, visual & errors | `MS-UX-001 core controls are named and keyboard reachable` |
+| `MS-UX-###` | 12. Accessibility & errors | `MS-UX-001 core controls are named and keyboard reachable` |
 | `MS-SEC-###`, `MS-WAF-###` | 13. Suite safety & resilience | `MS-SEC-001 first-party musticker hosts are in scope` |
 | `MS-ADMO-###` | 14. Admin - order processing, including storefront-to-admin journeys | `MS-ADMO-001 artwork review, customer proof approval, …` |
 | `MS-ADMA-###` | 15. Admin - access & order management | `MS-ADMA-001 (planned: admin login verification code)` |
 
+- The dedicated pricing suite and visual snapshot case `MS-UX-002` have been removed from automation. Their historical workbook IDs remain reserved.
 - IDs are never reused. A withdrawn case keeps its ID, is struck through in the workbook, and gets a
   note explaining why (see MS-CFG-016).
 - Take the next free number in the case's module: the module's last row in the Test Cases tab has
@@ -47,9 +45,6 @@ case belongs: `MS-<MODULE>-###`.
 - The workbook's **Legacy ID** column keeps each case's pre-v1.2 ID (`MS-V2-###` / `MS-ADM-###`),
   so older defect reports, notes and Allure history can still be traced. Do not fill it for new
   cases.
-- In the workbook, the pricing suite is grouped into cases a person can execute
-  (`MS-PRC-TBL-<product>`, `MS-PRC-INT-<template>`, `MS-PRC-MAP-<n>`). Each row states how many
-  generated tests it covers.
 
 ## Where a test goes
 
@@ -77,7 +72,6 @@ The folders mirror the workbook, so a case is found the same way in both:
 | SHT | `storefront/sheet-size-rules/` |
 | CRT | `storefront/cart/` |
 | CHK | `storefront/checkout/` |
-| PRC | `storefront/pricing/` |
 | AUTH | `storefront/auth/` |
 | ACC | `storefront/account/` |
 | INQ | `storefront/inquiry/` |
@@ -89,7 +83,7 @@ The folders mirror the workbook, so a case is found the same way in both:
 
 - **One suite per spec file.** The suite name is the top-level `describe` title, written exactly as the
   workbook's Sub-Area. Nested `describe`s inside a suite are fine for shared settings (`seeded member`,
-  `session lifecycle`) or data (one per pricing product).
+  `session lifecycle`) or data-driven cases.
 - **A new case goes into the spec file of its suite.** A new suite gets a new spec file and a new
   Sub-Area value. A new module gets a folder, a row in the table above, and a workbook Area.
 - Workflows select tests by tag, never by folder, so moving a spec does not change which CI suites run it.
@@ -129,7 +123,7 @@ test.describe('Product config', { tag: ['@regression', '@production', '@purchasi
 - **Steps.** Long journeys use `test.step('who: what happens', …)`. The step names read as the
   workbook's Test Steps and show in the report.
 - **Comments explain why, not what.** Record what was verified, where and when ("verified on
-  static-1, 2026-09-25"), because that is what a later reader can't reconstruct.
+  dev-1, 2026-09-25"), because that is what a later reader can't reconstruct.
 
 ## Locators and assertions
 
@@ -153,7 +147,7 @@ test.describe('Product config', { tag: ['@regression', '@production', '@purchasi
   against production.
 - **Admin production** is limited to reading. The only order a test may open there is the
   designated test order. Every order-changing admin spec checks `activeEnvironment` and refuses
-  anything but `static-1`.
+  anything but `dev-1`.
 - **Sessions.** Use `asMember` or `adminPage`. Don't drive a login form unless sign-in is what the
   test is about.
 - **Clean up** what you can before the test ends, and record what you can't (created accounts go

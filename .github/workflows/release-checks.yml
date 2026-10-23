@@ -1,0 +1,109 @@
+name: Dev release checks
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Dev-Shared target to qualify before release.
+        required: true
+        default: dev-1
+        type: choice
+        options: [dev-1, dev-2, dev-3, dev-4, dev-5, dev-6]
+      run_e2e:
+        description: Also run destructive sandbox checkout, email, account and cart journeys.
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-checks-${{ inputs.environment }}
+  cancel-in-progress: false
+
+env:
+  E2E_ENVIRONMENT: ${{ inputs.environment }}
+  ALLURE_RESULTS_DIR: allure-results
+  DEV_INTERNAL_ORIGIN_KEY: ${{ secrets.DEV_INTERNAL_ORIGIN_KEY }}
+  AUTH_TEST_EMAIL: ${{ secrets.DEV_AUTH_TEST_EMAIL }}
+  AUTH_TEST_PASSWORD: ${{ secrets.DEV_AUTH_TEST_PASSWORD }}
+  RUN_PAYMENT_E2E: 'false'
+  RUN_AUTH_DESTRUCTIVE_E2E: 'false'
+  PW_WORKERS: '1'
+
+jobs:
+  api:
+    name: Dev API contracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-playwright
+        with:
+          browser_project: none
+      - run: npm run test:api
+      - name: Retain API evidence
+        if: ${{ always() }}
+        uses: ./.github/actions/playwright-artifacts
+        with:
+          artifact_name: release-${{ inputs.environment }}-api
+
+  regression:
+    name: Regression on ${{ matrix.browser }}
+    needs: api
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        browser: [chromium-desktop, firefox-desktop, webkit-desktop, chromium-mobile]
+    env:
+      E2E_BROWSER_PROJECT: ${{ matrix.browser }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-playwright
+        with:
+          browser_project: ${{ matrix.browser }}
+      - name: Run production-safe UI and accessibility coverage
+        run: npm run test:ui:full
+      - name: Retain browser evidence
+        if: ${{ always() }}
+        uses: ./.github/actions/playwright-artifacts
+        with:
+          artifact_name: release-${{ inputs.environment }}-${{ matrix.browser }}
+
+  sandbox-e2e:
+    name: Sandbox E2E and email journeys
+    needs: [api, regression]
+    if: ${{ inputs.run_e2e }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # Environment-scoped variables can provide the cleanup URL and sandbox confirmation per dev.
+    environment: ${{ inputs.environment }}
+    env:
+      E2E_BROWSER_PROJECT: chromium-desktop
+      RUN_PAYMENT_E2E: 'true'
+      RUN_AUTH_DESTRUCTIVE_E2E: 'true'
+      DEV_PAYMENT_SANDBOX_ENABLED: ${{ vars.DEV_PAYMENT_SANDBOX_ENABLED }}
+      TEST_DATA_USER_DELETE_ENDPOINT: ${{ vars.PROMOTION_USER_DELETE_ENDPOINT }}
+      API_TOKEN: ${{ secrets.TEST_DATA_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-playwright
+        with:
+          browser_project: chromium-desktop
+      - name: Validate preconditions and run dev-only E2E
+        run: npm run test:e2e:dev
+      - name: Retain E2E evidence
+        if: ${{ always() }}
+        uses: ./.github/actions/playwright-artifacts
+        with:
+          artifact_name: release-${{ inputs.environment }}-sandbox-e2e

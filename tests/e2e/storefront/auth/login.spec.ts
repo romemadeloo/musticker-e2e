@@ -20,7 +20,7 @@ test.describe('Login', { tag: ['@auth', '@production'] }, () => {
     await login.expectMemberLoginControls();
   });
 
-  test('MS-AUTH-002 member login form exposes expected controls', async ({ page }) => {
+  test('MS-AUTH-002 member login form exposes expected controls', { tag: '@critical' }, async ({ page }) => {
     const login = new LoginPage(page);
 
     await login.goto();
@@ -122,7 +122,7 @@ test.describe('Login', { tag: ['@auth', '@production'] }, () => {
     }) => {
       test.skip(!env.AUTH_TEST_EMAIL || !env.AUTH_TEST_PASSWORD, 'Set AUTH_TEST_EMAIL and AUTH_TEST_PASSWORD to run.');
       // Login, a reload, a menu navigation to a priced product page, the profile and a logout: about
-      // 35 s alone on static-1, which left too little of the default 60 s under parallel load.
+      // 35 s alone on dev-1, which left too little of the default 60 s under parallel load.
       test.setTimeout(90_000);
 
       const login = new LoginPage(page);
@@ -152,7 +152,7 @@ test.describe('Login', { tag: ['@auth', '@production'] }, () => {
   });
 
   test('MS-AUTH-028 a member-only route is not reachable anonymously', async ({ page }) => {
-    // Verified on development-1 on 2026-08-27: the account shell never renders for an anonymous
+    // Verified on the dev storefront on 2026-08-27: the account shell never renders for an anonymous
     // visitor -- the app redirects to the storefront home rather than to the login form.
     await gotoStorefront(page, appPath('./account/profile'));
 

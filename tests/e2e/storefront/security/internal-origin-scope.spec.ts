@@ -19,9 +19,9 @@ test.describe('Internal origin scope', { tag: ['@security'] }, () => {
       'www.musticker.com',
       'static.musticker.com',
       'api.musticker.com',
-      'dev.musticker.com',
-      'dev-3.musticker.com',
-      'dev-static-1-api.musticker.com'
+      'shared-dev-static-api.musticker.com',
+      'shared-dev-static-sf-6.musticker.com',
+      'shared-dev-static-admin-6.musticker.com'
     ]) {
       expect(isMustickerHost(hostname), `${hostname} must receive the header`).toBe(true);
     }
@@ -49,21 +49,19 @@ test.describe('Internal origin scope', { tag: ['@security'] }, () => {
     }
   });
 
-  // Production and the static-* dev servers have separate WAFs and separate keys. Sending the
+  // Production and the dev-* dev servers have separate WAFs and separate keys. Sending the
   // production key to a dev host would put a production credential on a less-guarded server, and
   // the run would look completely normal while doing it -- so the mapping is pinned here.
   test('MS-SEC-003 each environment resolves to its own key', () => {
     expect(internalOriginKeyVarFor('production')).toBe('INTERNAL_ORIGIN_KEY');
 
     for (const environment of [
-      'static-1',
-      'static-2',
-      'static-3',
-      'static-4',
-      'static-5',
-      'static-6',
-      'static-7',
-      'static-8'
+      'dev-1',
+      'dev-2',
+      'dev-3',
+      'dev-4',
+      'dev-5',
+      'dev-6'
     ] as const) {
       expect(internalOriginKeyVarFor(environment), `${environment} must use the dev key`).toBe(
         'DEV_INTERNAL_ORIGIN_KEY'

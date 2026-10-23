@@ -1,9 +1,6 @@
 name: Production full suite
 
 on:
-  push:
-    branches:
-      - production
   schedule:
     # 04:00 Asia/Manila every day.
     - cron: '0 20 * * *'
@@ -49,10 +46,12 @@ concurrency:
   cancel-in-progress: false
 
 env:
+  E2E_ENVIRONMENT: production
   ALLURE_RESULTS_DIR: allure-results
   BASE_URL: ${{ vars.PRODUCTION_BASE_URL || 'https://www.musticker.com/kr' }}
   E2E_BROWSER_PROJECT: ${{ github.event_name == 'workflow_dispatch' && inputs.browser_project || 'chromium-desktop' }}
   RUN_PAYMENT_E2E: 'false'
+  RUN_AUTH_DESTRUCTIVE_E2E: 'false'
   AUTH_TEST_EMAIL: ${{ secrets.AUTH_TEST_EMAIL }}
   AUTH_TEST_PASSWORD: ${{ secrets.AUTH_TEST_PASSWORD }}
   # WAF exemption for the CI egress IP, issued by the site owner. Without it the storefront answers
@@ -95,6 +94,20 @@ jobs:
 
       - name: List Playwright tests
         run: npm run test:e2e:list
+
+      - name: Run browser-free API contracts
+        run: npm run test:api
+
+      - name: Retain API evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: production-api-results
+          path: |
+            allure-results/
+            playwright-report/
+            test-results/api/
+          retention-days: 14
 
   plan:
     name: Plan shards
@@ -156,13 +169,13 @@ jobs:
 
           case "$SUITE" in
             smoke)
-              npm run test:prod:smoke -- --shard="$SHARD"
+              npm run test:ui:smoke -- --shard="$SHARD"
               ;;
             auth)
               npm run test:prod:auth -- --shard="$SHARD"
               ;;
             production-safe-full)
-              npm run test:prod:full -- --shard="$SHARD"
+              npm run test:ui:full -- --shard="$SHARD"
               ;;
             *)
               echo "Unsupported production suite: $SUITE" >&2

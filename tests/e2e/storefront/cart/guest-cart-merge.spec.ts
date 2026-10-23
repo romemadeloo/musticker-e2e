@@ -1,5 +1,5 @@
 import { test, expect } from '../../../fixtures/e2e-test.js';
-import { env } from '../../../fixtures/env.js';
+import { activeEnvironment, env } from '../../../fixtures/env.js';
 import { SKIP_WITHOUT_MEMBER_CREDENTIALS, hasMemberCredentials } from '../../../fixtures/member-auth.js';
 import { dieCutShapeStickers } from '../../../fixtures/storefront-data.js';
 import { CartDrawer } from '../../../pom/storefront/cart-drawer.js';
@@ -9,10 +9,10 @@ import { LoginPage } from '../../../pom/storefront/login-page.js';
 import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 
 // Moved out of cart-lifecycle.spec.ts so it reads as its own suite. Verified live against
-// development-1 on 2026-08-27: logging in merges the guest cart into the member cart *additively* --
+// the dev storefront on 2026-08-27: logging in merges the guest cart into the member cart *additively* --
 // a member holding one item who signs in with two guest items ends up with three, not two.
 const hologramSticker = dieCutShapeStickers[0];
-const canRunDestructiveAuth = process.env.RUN_AUTH_DESTRUCTIVE_E2E === 'true';
+const canRunDestructiveAuth = process.env.RUN_AUTH_DESTRUCTIVE_E2E === 'true' && activeEnvironment?.startsWith('dev-') === true;
 
 // Deliberately NOT tagged @production: this adds a line to a real member's cart. It is excluded from
 // production runs by @destructive anyway, but carrying @production would label it production-safe,

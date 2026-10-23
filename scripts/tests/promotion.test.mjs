@@ -30,9 +30,20 @@ test('complete spec/POM bundle is inspectable; payload drift and destination cha
   assert.throws(() => inspectBundle(f.repo, f.bundle), /payload changed/)
 })
 test('dev servers must be explicit, match roles and belong to one environment', () => {
+  for (let number = 1; number <= 6; number++) {
+    const suffix = number === 1 ? '' : `-${number}`
+    const servers = {
+      storefront: `https://shared-dev-static-sf${suffix}.musticker.com/kr`,
+      api: `https://shared-dev-static-api${suffix}.musticker.com/index.php`,
+      admin: `https://shared-dev-static-admin${suffix}.musticker.com`
+    }
+    assert.deepEqual(devServers(servers), servers)
+    assert.throws(() => devServers({ ...servers, admin: 'https://shared-dev-static-admin-7.musticker.com' }), /dev/)
+  }
+  assert.throws(() => devServers({ storefront: 'https://unregistered-sf.musticker.com/kr', api: 'https://unregistered-api.musticker.com' }), /dev/)
   assert.throws(() => devServers({ storefront: 'https://www.musticker.com/kr', api: 'https://api.musticker.com' }), /dev/)
-  assert.throws(() => devServers({ storefront: 'https://dev-static-9.musticker.com/kr', api: 'https://dev-static-1-api.musticker.com' }), /different/)
-  assert.throws(() => devServers({ storefront: 'https://dev-static-9-api.musticker.com', api: 'https://dev-static-9.musticker.com' }), /role/)
+  assert.throws(() => devServers({ storefront: 'https://shared-dev-static-sf-6.musticker.com/kr', api: 'https://shared-dev-static-api.musticker.com' }), /different/)
+  assert.throws(() => devServers({ storefront: 'https://shared-dev-static-api-6.musticker.com', api: 'https://shared-dev-static-sf-6.musticker.com' }), /role/)
   assert.throws(() => devServers({ storefront: 'http://127.0.0.1:9/kr' }), /explicit/)
 })
 test('uncompleted tickets and missing traceability cannot be promoted', t => {

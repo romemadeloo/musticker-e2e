@@ -7,7 +7,6 @@
 - [Page objects](#page-objects)
 - [Sessions](#sessions)
 - [Storefront to admin](#storefront-to-admin)
-- [Pricing suite](#pricing-suite)
 - [Resilience: firewall, hydration, copy drift](#resilience-firewall-hydration-copy-drift)
 - [Test data and cleanup](#test-data-and-cleanup)
 - [Known defects in code](#known-defects-in-code)
@@ -26,7 +25,7 @@ fixtures/admin-test.ts                 + admin browser context and admin API
 page objects (tests/pom/…)             say HOW: locators, actions, reusable assertions
   │ read copy and data from
   ▼
-fixtures/*-data.ts, pricing/*.csv      Korean copy, products, price tables, status codes
+fixtures/*-data.ts                    Korean copy, products, status codes
 ```
 
 A spec never uses raw selectors. It calls page-object methods, and every copy string comes from a
@@ -145,22 +144,6 @@ Only the header actions move an **order** forward (BP → FP → SP → CP). The
 2026 a Move to Production step came before printing and added PO (주문 준비 중).
 [tests/fixtures/admin-data.ts](../tests/fixtures/admin-data.ts) maps codes to labels.
 
-## Pricing suite
-
-`tests/e2e/storefront/pricing/` checks the pricing API against the price tables staff maintain. Those
-tables are committed as CSV under
-[tests/fixtures/pricing/](../tests/fixtures/pricing) (see its README):
-
-- **Price table.** Every grid row of every product's CSV matches the API's quote, which is
-  2,104 generated tests.
-- **Interpolation.** Sizes and quantities between grid rows are priced between their neighbours.
-- **Mapping.** Each product is served by the pricing table it should be, and products that share
-  a table agree.
-
-Pricing table IDs differ per server, so `pricing-products.ts` holds a registry per environment.
-Fractional per-unit prices (`8.582원`) are intended behaviour, confirmed by Korean staff on
-2026-08-13. No test asserts whole-won per-unit prices.
-
 ## Resilience: firewall, hydration, copy drift
 
 **The firewall.** Production's firewall rate-limits a single IP address under full-suite load and
@@ -251,4 +234,3 @@ assertion, so that new occurrences still fail:
 | `axe.ts` | WCAG scan helper and the known-violation baseline |
 | `test-data-ledger.ts` | Created-account ledger for the teardown |
 | `types.ts` | Shared product and cart-line types |
-| `pricing/` | Price tables (CSV), pricing API client, product-to-table registry |

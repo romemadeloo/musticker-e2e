@@ -26,6 +26,9 @@ export default async function globalTeardown(): Promise<void> {
   const configuredEndpoint = process.env.TEST_DATA_USER_DELETE_ENDPOINT;
 
   if (!configuredEndpoint) {
+    if (process.env.REQUIRE_TEST_DATA_CLEANUP === 'true') {
+      throw new Error('Required account cleanup endpoint is missing; the run ledger has been retained.');
+    }
     console.warn(
       [
         `[teardown] ${accounts.length} throwaway account(s) were registered by this run and could not be deleted:`,
@@ -82,5 +85,8 @@ export default async function globalTeardown(): Promise<void> {
       `[teardown] ${undeleted.length} of ${accounts.length} throwaway account(s) could not be deleted; ` +
         `they are still recorded in ${ledgerPath()}.`
     );
+    if (process.env.REQUIRE_TEST_DATA_CLEANUP === 'true') {
+      throw new Error('Dev E2E cleanup is incomplete; the run ledger has been retained for reconciliation.');
+    }
   }
 }

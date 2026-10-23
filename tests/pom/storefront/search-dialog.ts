@@ -1,5 +1,6 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
+import { v2Products } from '../../fixtures/storefront-data.js';
 
 export class SearchDialog {
   readonly page: Page;
@@ -35,6 +36,14 @@ export class SearchDialog {
     await expect(this.dieCutStickerResult()).toBeVisible();
   }
 
+  async expectNoResultsHidden(): Promise<void> {
+    await expect(this.page.getByTestId('app-header-search-empty-result')).toBeHidden();
+  }
+
+  async expectClosed(): Promise<void> {
+    await expect(this.dialog).toBeHidden();
+  }
+
   async expectNoResults(): Promise<void> {
     await expect(this.page.getByTestId('app-header-search-empty-result')).toBeVisible();
     await expect(this.dialog.getByText(/\uac80\uc0c9 \uacb0\uacfc\uac00 \uc5c6\uc2b5\ub2c8\ub2e4|No results/i)).toBeVisible();
@@ -45,6 +54,7 @@ export class SearchDialog {
     await this.dieCutStickerResult().click();
 
     await expect(this.page).toHaveURL(/\/kr\/stickers\/die-cut-sticker\/?$/);
+    await expect(this.page.getByRole('heading', { level: 1, name: v2Products.dieCutSticker.heading, exact: true })).toBeVisible();
   }
 
   async closeWithEscape(): Promise<void> {

@@ -6,7 +6,7 @@ import { AccountOrdersPage } from '../../../pom/storefront/account-orders-page.j
 // Order history had no coverage at all: everything after the payment succeeded was untested, which
 // for a print-to-order business is where the shopper spends most of their time with the site.
 //
-// Verified live against development-1 on 2026-08-27 with a seeded member holding 67 orders:
+// Verified live against the dev storefront on 2026-08-27 with a seeded member holding 67 orders:
 //
 //   * 진행 중 lists 61 cards, 이전 내역 lists 6, and the segmented control reports which is showing
 //     through `aria-pressed`.
@@ -55,7 +55,7 @@ test.describe('Order history', { tag: ['@regression', '@production', '@auth', '@
     }
 
     // The advertised count has to be a real number. It is deliberately NOT asserted equal to the
-    // rendered card count: on development-1 the badge read 57 against 61 visible cards (and 3
+    // rendered card count: on the dev storefront the badge read 57 against 61 visible cards (and 3
     // against 6 on 이전 내역). Whether the badge excludes some states by design or is undercounting
     // is an open question for the storefront team -- asserting either way would be a guess.
     expect(await orders.captureDeclaredOrderCount()).toBeGreaterThan(0);

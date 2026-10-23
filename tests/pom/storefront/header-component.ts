@@ -76,7 +76,7 @@ export class HeaderComponent {
    *
    * The nav items are plain links underneath, so a click that lands before Nuxt has bound the handler
    * navigates to the category page instead (which is how the old category-page assertion kept passing
-   * on static-1), so every click waits for hydration first. On its own category page the link opens
+   * on dev-1), so every click waits for hydration first. On its own category page the link opens
    * no menu at all, so if a click still navigated, the retry goes back first. It never clicks a menu
    * that already reports open, since a second click closes it.
    */

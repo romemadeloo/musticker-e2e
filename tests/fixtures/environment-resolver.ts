@@ -12,8 +12,8 @@ function url(value: string, label: string): URL {
 const normalize = (value: string) => value.replace(/\/+$/, '');
 function tier(host: string): string | undefined {
   if (/^(?:www\.|api\.|admin-panel\.)?musticker\.com$/.test(host)) return 'production';
-  const dev = host.match(/^dev-static-(\d+)(?:-api|-admin-panel)?\.musticker\.com$/);
-  if (dev) return `static-${dev[1]}`;
+  const dev = host.match(/^shared-dev-static-(?:sf|api|admin)(?:-([2-6]))?\.musticker\.com$/);
+  if (dev) return `dev-${dev[1] || '1'}`;
   if (['localhost', '127.0.0.1', '[::1]'].includes(host)) return 'local';
   return undefined;
 }

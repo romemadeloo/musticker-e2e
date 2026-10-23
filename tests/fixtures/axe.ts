@@ -24,7 +24,7 @@ export type KnownViolation = {
 };
 
 /**
- * Accessibility rules the storefront currently fails, measured live on development-1 on 2026-08-27
+ * Accessibility rules the storefront currently fails, measured live on the dev storefront on 2026-08-27
  * across home, the sticker category, a product page, FAQ, login, and the empty cart.
  *
  * These are real defects, not false positives, and they are recorded here rather than suppressed so

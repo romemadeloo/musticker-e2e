@@ -26,9 +26,6 @@ outputs:
   allure_results_found:
     description: Whether the merged allure-results directory contains files.
     value: ${{ steps.merge_allure.outputs.found }}
-  shard_count:
-    description: How many shard artifacts contributed to the merge.
-    value: ${{ steps.collect_blobs.outputs.shard_count }}
 
 runs:
   using: composite

@@ -37,9 +37,9 @@ build evidence or execution results. Use this manifest schema:
   "buildEvidence": "Path to retained build-verification evidence",
   "project": "chromium-desktop",
   "servers": {
-    "storefront": "https://dev-static-9.musticker.com/kr",
-    "api": "https://dev-static-9-api.musticker.com/index.php",
-    "admin": "https://dev-static-9-admin-panel.musticker.com"
+    "storefront": "https://shared-dev-static-sf.musticker.com/kr",
+    "api": "https://shared-dev-static-api.musticker.com/index.php",
+    "admin": "https://shared-dev-static-admin.musticker.com"
   },
   "sources": [{
     "path": "tests/e2e/feature/source.spec.ts",

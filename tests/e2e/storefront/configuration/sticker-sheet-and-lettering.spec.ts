@@ -6,7 +6,7 @@ import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 // Deep configuration + price + cart coverage for three catalog products under ./stickers/ whose
 // control patterns don't match the plain die-cut size+quantity flow (see
 // sticker-catalog-configurator.spec.ts) and were previously only "render-only smoke" tested via
-// catalog-crawl.spec.ts. Verified live against development-3 on 2026-08-13 while authoring this
+// catalog-crawl.spec.ts. Verified live against the dev storefront on 2026-08-13 while authoring this
 // suite.
 test.describe('Sticker sheet and lettering', {
   tag: ['@regression', '@production', '@purchasing']
