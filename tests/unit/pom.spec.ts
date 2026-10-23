@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { HeaderComponent } from '../pom/storefront/header-component.js';
 import { CheckoutV2Page } from '../pom/storefront/checkout-page.js';
-import { ko } from '../fixtures/storefront-data.js';
+import { checkoutValidationCopy, ko } from '../fixtures/storefront-data.js';
 
 test('header actions wait for hydration and observable dialogs instead of forced retry clicks', async ({ page }) => {
   await page.setContent(`<header>
@@ -36,4 +36,16 @@ test('blank checkout requires visible validation and OTP waits for its modal', a
   await expect(page.locator('input:invalid')).toHaveCount(1);
   await checkout.fillGuestEmailAndAwaitOtpModal('synthetic@example.test');
   await expect(page.locator('.auth-verification-modal')).toBeVisible();
+});
+
+test('checkout recognizes visible required-field copy without depending on an error CSS class', async ({ page }) => {
+  await page.route('**/*', route => route.fulfill({ contentType: 'text/html; charset=utf-8', body: `
+    <input placeholder="${ko.checkoutEmailPlaceholder}">
+    <p hidden id="feedback">${checkoutValidationCopy.requiredEmail}</p>
+    <button onclick="document.querySelector('#feedback').hidden=false">${ko.payNow}</button>
+    <script>window.useNuxtApp=()=>({isHydrating:false});</script>` }));
+  await page.goto('http://127.0.0.1:9/kr/checkout');
+  await expect(page.getByText(checkoutValidationCopy.requiredEmail, { exact: true })).toBeHidden();
+  await new CheckoutV2Page(page).expectBlankSubmissionBlocked();
+  await expect(page.getByText(checkoutValidationCopy.requiredEmail, { exact: true })).toBeVisible();
 });

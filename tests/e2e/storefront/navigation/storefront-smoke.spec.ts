@@ -74,16 +74,17 @@ test.describe('Storefront smoke', { tag: ['@smoke', '@production'] }, () => {
     await home.expectFooterContent();
 
     await expect(page.getByRole('link', { name: ko.terms }).first()).toHaveAttribute('href', /\/kr\/terms-of-use/);
+    await expect(page.getByRole('link', { name: ko.privacy }).first()).toHaveAttribute('href', /\/kr\/privacy-policy/);
+    await expect(page.getByRole('link', { name: ko.faq }).first()).toHaveAttribute('href', /\/kr\/faq/);
+
+    // Check all footer links on the initial home page, then visit each destination once.
+    // Repeated full home loads spent the 60s budget before the final FAQ assertion.
     await gotoStorefront(page, appPath('./terms-of-use'));
     await expect(page).toHaveURL(/\/kr\/terms-of-use\/?$/);
 
-    await home.goto();
-    await expect(page.getByRole('link', { name: ko.privacy }).first()).toHaveAttribute('href', /\/kr\/privacy-policy/);
     await gotoStorefront(page, appPath('./privacy-policy'));
     await expect(page).toHaveURL(/\/kr\/privacy-policy\/?$/);
 
-    await home.goto();
-    await expect(page.getByRole('link', { name: ko.faq }).first()).toHaveAttribute('href', /\/kr\/faq/);
     await gotoStorefront(page, appPath('./faq'));
     await expect(page).toHaveURL(/\/kr\/faq\/?$/);
   });

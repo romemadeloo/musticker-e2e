@@ -214,12 +214,25 @@ fixture refuses to start without it.
 | Output | Where | Notes |
 | --- | --- | --- |
 | HTML report | `playwright-report/` | Open with `npx playwright show-report` |
+| Playwright JSON | `PLAYWRIGHT_JSON_OUTPUT_NAME` | Set this variable to a file path, such as `test-results/dev-2-full.json`, to retain structured results alongside the usual reporters |
 | JUnit | `test-results/junit.xml` | CI only |
 | Allure | `allure-results/` when `ALLURE_RESULTS_DIR` is set | CI publishes it to the Allure report server |
 | Self-heal report | `test-results/self-heal-report.md` and the GitHub job summary | Copy that changed and was healed. See [ARCHITECTURE.md](ARCHITECTURE.md#self-healing-locators) |
 | QA Control Center summary | `qacc-summary.json` inside standard artifacts; dedicated `qacc-summary` artifact for manual/nightly runs | Totals, failed/flaky titles, first-attempt pass rate, retries, skips, and timing from `allure-results/`. Also written to the GitHub job summary; existing QACC fields remain compatible |
 | Environment readiness | `readiness-results/` | Sanitized availability and build-verification results, retained separately from product-test outcomes |
 | Failure artifacts | `test-results/<test>/` | Screenshot, video and trace, except where an internal-origin key is in use or for the admin context |
+| Browser diagnostics | `browser-diagnostics.json` test attachment | On failure: up to 100 failed requests and 100 console source locations. Excludes request headers, bodies, query strings, cookies, and form values; useful when secret protection disables traces |
+
+The **Dev-2 Audit 2026-10-23** sheet in `docs/test-cases.xlsx` retains the full run and focused
+replays separately. The initial desktop run selected 180 tests: 172 passed, 3 failed, 5 skipped.
+Checkout feedback selection, footer sequencing, and mobile sequencing were corrected and passed
+focused replays. The invalid-login console fetch error remains reproducible (MUS-QA-022).
+Firefox critical checks failed 5/5 on console/font findings, including one font HTTP 502
+(MUS-QA-023). WebKit passed 3/5; two cases failed on unused Nuxt preload warnings requiring
+performance/test-policy review (MUS-QA-024). Functional assertions completed in these browser
+critical cases. Mobile Chromium emulation passed after the sequencing correction. Five size-guide
+alt-text variants remain `fixme`; no complete release qualification is claimed. Build identity is
+unverified, and sandbox/destructive E2E still needs its configured prerequisites.
 
 ## CI
 

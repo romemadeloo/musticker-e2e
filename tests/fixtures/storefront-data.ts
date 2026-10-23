@@ -81,6 +81,11 @@ export const ko = {
   orderCompletedHeading: '\uc8fc\ubb38\uc774 \uc644\ub8cc\ub418\uc5c8\uc2b5\ub2c8\ub2e4!'
 } as const;
 
+// Required-email feedback verified on dev-2 checkout during the 2026-10-23 regression audit.
+export const checkoutValidationCopy = {
+  requiredEmail: '필수 입력 항목입니다.'
+} as const;
+
 // The order-summary row labels on /kr/checkout, captured live from the dev storefront on 2026-08-27.
 // Keyed off the label text because the rows carry no test ids -- only `.checkout-summary-line` with
 // a `-label`/`-value` pair, and `.is-total` on the last one.

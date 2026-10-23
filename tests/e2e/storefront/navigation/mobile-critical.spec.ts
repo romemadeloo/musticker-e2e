@@ -19,6 +19,11 @@ test.describe('Mobile critical path', { tag: ['@smoke', '@production', '@mobile'
     await gotoStorefront(page, appPath());
     await page.getByRole('heading', { name: ko.homeHero }).waitFor({ state: 'visible' });
 
+    // Inquiry is embedded on home; inspect it before leaving instead of loading home again.
+    const inquiry = new InquiryV2Form(page);
+    await inquiry.open();
+    await inquiry.expectVisible();
+
     const header = new HeaderComponent(page);
     const searchDialog = await header.openSearch();
     await searchDialog.searchFor('\uc2a4\ud2f0\ucee4');
@@ -33,10 +38,5 @@ test.describe('Mobile critical path', { tag: ['@smoke', '@production', '@mobile'
     await product.selectSize(data.size);
     await product.selectQuantity(data.quantity);
     await product.expectNextStepEnabled();
-
-    await gotoStorefront(page, appPath());
-    const inquiry = new InquiryV2Form(page);
-    await inquiry.open();
-    await inquiry.expectVisible();
   });
 });

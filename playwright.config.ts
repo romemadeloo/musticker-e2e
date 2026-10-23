@@ -20,6 +20,9 @@ const localReporters: ReporterDescription[] = [
 ];
 
 function reportersWithAllure(reporters: ReporterDescription[]): ReporterDescription[] {
+  if (process.env.PLAYWRIGHT_JSON_OUTPUT_NAME) {
+    reporters = [...reporters, ['json']];
+  }
   if (!process.env.ALLURE_RESULTS_DIR) {
     return reporters;
   }

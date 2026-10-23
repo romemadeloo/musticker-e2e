@@ -5,7 +5,7 @@ import { appPath } from '../../fixtures/env.js';
 import { waitForNuxtHydration } from '../../fixtures/hydration.js';
 import { parseWon } from '../../fixtures/money.js';
 import { gotoStorefront } from '../../fixtures/navigation.js';
-import { checkoutSummaryLabels, freeShippingThresholdWon, ko } from '../../fixtures/storefront-data.js';
+import { checkoutSummaryLabels, checkoutValidationCopy, freeShippingThresholdWon, ko } from '../../fixtures/storefront-data.js';
 
 /**
  * The order-summary block, as numbers. Discounts are reported as the positive amount deducted, not
@@ -136,10 +136,8 @@ export class CheckoutV2Page {
   // No coupon-code input was found on the anonymous checkout page as of 2026-08-11 (only a
   // static "coupon discount" summary line). This asserts the safer, verified behavior instead:
   // submitting with required shipping/contact fields blank must not create an order or advance
-  // past the payment step. Confirmed via network capture that no order/payment-mutating request
-  // fires on a blank submit attempt, so that absence is the assertion instead of a specific
-  // validation-message locator (the page renders 14 `.error-text` nodes at all times, most
-  // hidden, which made a "some error text is visible" check unreliable).
+  // past the payment step. Require visible native/ARIA validation or the checkout's actual
+  // required-email message; hidden error nodes and an unchanged URL alone cannot prove rejection.
   async expectBlankSubmissionBlocked(): Promise<void> {
     const orderMutationRequests: string[] = [];
     const trackMutation = (request: Request) => {
@@ -151,9 +149,9 @@ export class CheckoutV2Page {
     try {
       await waitForNuxtHydration(this.page);
       await this.payButton.click();
-      await expect.poll(() => this.page.locator('input:user-invalid, [aria-invalid="true"]:visible, .error-text:visible').count(), {
-        message: 'Blank checkout must expose a validation failure before it can be considered blocked'
-      }).toBeGreaterThan(0);
+      const validation = this.page.locator('input:user-invalid:visible, [aria-invalid="true"]:visible')
+        .or(this.page.getByText(checkoutValidationCopy.requiredEmail, { exact: true }).filter({ visible: true }));
+      await expect(validation.first(), 'Blank checkout must expose visible validation').toBeVisible();
       await expect(this.page).toHaveURL(/\/kr\/checkout\/?$/);
       await expect(this.payButton).toBeVisible();
       expect(orderMutationRequests, 'blank submission should not create an order or payment').toEqual([]);

@@ -337,7 +337,8 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
       allowPostLogout401,
       allowStudioModelLoadNoise
     },
-    use
+    use,
+    testInfo
   ) => {
     const guardOptions = {
       allowGuestUserMe401,
@@ -356,6 +357,21 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
     };
     const consoleFailures: string[] = [];
     const responseFailures: string[] = [];
+    // Keep diagnostics usable when traces are disabled for internal-origin secrets.
+    // Never collect headers, bodies, query strings, cookies, or entered form values.
+    const networkFailures: object[] = [];
+    const consoleSources: object[] = [];
+    const safeURL = (value: string) => {
+      try { const url = new URL(value); return `${url.origin}${url.pathname}`; }
+      catch { return '(no source URL)'; }
+    };
+    page.on('requestfailed', request => {
+      if (networkFailures.length >= 100) return;
+      networkFailures.push({
+        url: safeURL(request.url()), method: request.method(), resourceType: request.resourceType(),
+        error: request.failure()?.errorText, timestamp: Date.now()
+      });
+    });
     let hadSupersededPricingRequest = false;
     let pendingCartCreateNetworkFailures = 0;
     let pendingTransientApiNetworkFailures = 0;
@@ -368,6 +384,10 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
       }
 
       const text = message.text();
+      if (consoleSources.length < 100) {
+        const location = message.location();
+        consoleSources.push({ type: message.type(), source: safeURL(location.url), line: location.lineNumber, timestamp: Date.now() });
+      }
       if (
         allowTransientProductPageFailures &&
         pendingTransientProductPageFailures > 0 &&
@@ -486,6 +506,12 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
     // blocked attempt by the time it does. Forgive exactly as many as it navigated past -- a 403
     // that nothing retried still fails the run.
     const throttleBlocks = retriedThrottleBlockCount(page);
+
+    if (consoleFailures.length || responseFailures.length || testInfo.status !== testInfo.expectedStatus) {
+      await testInfo.attach('browser-diagnostics.json', {
+        body: JSON.stringify({ networkFailures, consoleSources }), contentType: 'application/json'
+      });
+    }
 
     expect
       .soft(
