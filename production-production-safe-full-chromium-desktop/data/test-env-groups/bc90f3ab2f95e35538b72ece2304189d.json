@@ -1,1 +1,1 @@
-{"id":"bc90f3ab2f95e35538b72ece2304189d","fullName":"storefront/configuration/sticker-catalog-configurator.spec.ts:41:5","name":"MS-CFG-018 종이 롤 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"cdfdb772f2b2d47eb5e96218453a2b77"}}
+{"id":"bc90f3ab2f95e35538b72ece2304189d","fullName":"storefront/configuration/sticker-catalog-configurator.spec.ts:41:5","name":"MS-CFG-018 종이 롤 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"c9a05f595d21dc07b22ea472e1f58967"}}

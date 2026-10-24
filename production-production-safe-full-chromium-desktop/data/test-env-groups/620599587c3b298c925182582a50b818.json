@@ -1,1 +1,1 @@
-{"id":"620599587c3b298c925182582a50b818","fullName":"storefront/navigation/header-search.spec.ts:8:3","name":"MS-NAV-009 search recovers from no results when the query is replaced","status":"passed","testResultsByEnv":{"default":"45038d295596d6aaa3eff5a415e6a9be"}}
+{"id":"620599587c3b298c925182582a50b818","fullName":"storefront/navigation/header-search.spec.ts:8:3","name":"MS-NAV-009 search recovers from no results when the query is replaced","status":"passed","testResultsByEnv":{"default":"9caa84bd71011fd85a7e830d0a7737b8"}}

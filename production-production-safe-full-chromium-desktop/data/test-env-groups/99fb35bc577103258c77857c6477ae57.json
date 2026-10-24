@@ -1,1 +1,1 @@
-{"id":"99fb35bc577103258c77857c6477ae57","fullName":"storefront/navigation/public-entry.spec.ts:7:3","name":"MS-NAV-011 public root entry renders the storefront with localized support links","status":"passed","testResultsByEnv":{"default":"5675d2e2baa240acd256802872525070"}}
+{"id":"99fb35bc577103258c77857c6477ae57","fullName":"storefront/navigation/public-entry.spec.ts:7:3","name":"MS-NAV-011 public root entry renders the storefront with localized support links","status":"passed","testResultsByEnv":{"default":"27ff3dbeb97d08dfb8fc57eac05ad32c"}}
