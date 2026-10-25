@@ -1,1 +1,1 @@
-{"id":"48f4e698f4e608562fd8565165963e75","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-DSC-007 catalog page renders without error: ./stickers/rounded-sticker","status":"passed","testResultsByEnv":{"default":"6d065b353e8ae2014fc2116da6bd17d5"}}
+{"id":"48f4e698f4e608562fd8565165963e75","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-DSC-007 catalog page renders without error: ./stickers/rounded-sticker","status":"passed","testResultsByEnv":{"default":"b7f358833ec067b1199dc5e42b988dfc"}}
