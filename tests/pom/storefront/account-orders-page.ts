@@ -99,12 +99,12 @@ export class AccountOrdersPage {
 
   /** Order numbers in render order, read off the cards. */
   async captureOrderNumbers(): Promise<string[]> {
-    const cards = this.orderCards();
-    const cardCount = await cards.count();
+    // Nuxt can replace the list while the API response settles. Capture one render of the list;
+    // counting first and then reading nth(index) can leave a locator waiting for a vanished card.
+    const cardTexts = await this.orderCards().allInnerTexts();
     const numbers: string[] = [];
 
-    for (let index = 0; index < cardCount; index += 1) {
-      const text = await cards.nth(index).innerText();
+    for (const [index, text] of cardTexts.entries()) {
       const number = text.match(orderHistoryCopy.orderNumberPattern)?.[0];
 
       expect(number, `order card ${index} carries no order number: "${text.replace(/\n+/g, ' | ')}"`).toBeTruthy();

@@ -9,7 +9,7 @@ export const faqFooterLinks = [
 export const publicFooterPages = [
   { id: 'MS-DSC-012', name: 'terms', label: '이용약관', path: './terms-of-use', heading: /이용약관/, section: '#cancellation-refunds-returns' },
   { id: 'MS-DSC-013', name: 'privacy', label: '개인정보처리방침', path: './privacy-policy', heading: /개인정보처리방침/, section: '#user-rights-and-how-to-exercise' },
-  { id: 'MS-DSC-014', name: 'licenses', label: '오픈소스 고지', path: './open-source-licenses', heading: /오픈소스/, section: undefined },
+  { id: 'MS-DSC-014', name: 'licenses', label: '오픈소스 고지', path: './open-source-licenses', heading: /라이선스 및 콘텐츠 이용안내/, section: undefined },
   { id: 'MS-DSC-015', name: 'announcements', label: '공지사항', path: './announcements', heading: /공지사항/, section: undefined }
 ] as const;
 

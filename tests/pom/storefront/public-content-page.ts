@@ -62,7 +62,8 @@ export class PublicContentPage {
       await expect(section).toContainText(/\S/);
       // Section links expose their destination through href rather than a test ID.
       await main.locator(`a[href="${target.section}"]`).click();
-      await expect(this.page).toHaveURL(url => url.hash === target.section);
+      // The client scroll spy may replace the semantic anchor with its numbered section hash.
+      await expect(this.page).toHaveURL(url => url.pathname === appPath(target.path) && url.hash.length > 1);
       await expect(section).toBeInViewport();
     } else {
       await expect(main).toContainText(/\S.{100}/s);

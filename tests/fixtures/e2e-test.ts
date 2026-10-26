@@ -165,6 +165,51 @@ function isBenignUnusedPreloadWarning(text: string): boolean {
   );
 }
 
+// Firefox reports a metadata warning for the storefront's two Pretendard subsets. The font still
+// renders, and the same warning appears on unrelated routes, so it does not describe the behavior
+// any individual test is asserting. Keep the match limited to these exact first-party font files.
+export function isBenignPretendardMetadataWarning(text: string): boolean {
+  return new RegExp(
+    `^\\[JavaScript Warning: "downloadable font: name: name records are not sorted\\. \\(font-family: "Pretendard" style:normal weight:100\\.\\.900 stretch:100 src index:0\\) source: https://${DEV_STOREFRONT_HOST}/fonts/PretendardVariable\\.(?:latin|kr)\\.woff2"\\]$`
+  ).test(text);
+}
+
+export function isBenignPretendardPreloadWarning(text: string): boolean {
+  return new RegExp(
+    `^\\[JavaScript Warning: "The resource at .https://${DEV_STOREFRONT_HOST}/fonts/PretendardVariable\\.(?:latin|kr)\\.woff2. preloaded with link preload was not used within a few seconds\\. Make sure all attributes of the preload tag are set correctly\\." \\{file: "https://${DEV_STOREFRONT_HOST}/kr(?:/[a-z0-9/-]+)?" line: 0\\}\\]$`
+  ).test(text);
+}
+
+// WebKit warns when Nuxt preloads a first-party JS chunk or route payload but the current route
+// does not use it immediately. Firefox emits its own wording for the route payload. These are
+// browser scheduling warnings, not failed requests or app exceptions.
+export function isBenignNuxtPreloadWarning(text: string): boolean {
+  const routePayload = `https://${DEV_STOREFRONT_HOST}/kr(?:/[a-z0-9/-]+)?/_payload\\.json\\?_b=[a-f0-9-]+`;
+  return (
+    new RegExp(
+      `^The resource https://${DEV_STOREFRONT_HOST}/_nuxt/[A-Za-z0-9_-]+\\.js was preloaded using link preload but not used within a few seconds from the window's load event\\. Please make sure it wasn't preloaded for nothing\\.$`
+    ).test(text) ||
+    new RegExp(
+      `^The resource ${routePayload} was preloaded using link preload but not used within a few seconds from the window's load event\\. Please make sure it wasn't preloaded for nothing\\.$`
+    ).test(text) ||
+    new RegExp(
+      `^\\[JavaScript Warning: "The resource at “${routePayload}” preloaded with link preload was not used within a few seconds\\. Make sure all attributes of the preload tag are set correctly\\." \\{file: "https://${DEV_STOREFRONT_HOST}/kr(?:/[a-z0-9/-]+)?(?:\\?studio=1)?" line: 0\\}\\]$`
+    ).test(text)
+  );
+}
+
+export function isBenignFirefoxIllustrationPreloadWarning(text: string): boolean {
+  return new RegExp(
+    `^\\[JavaScript Warning: "The resource at “https://${DEV_STOREFRONT_HOST}/illustrations/products/[a-z0-9/-]+\\.svg” preloaded with link preload was not used within a few seconds\\. Make sure all attributes of the preload tag are set correctly\\." \\{file: "https://${DEV_STOREFRONT_HOST}/kr/[a-z0-9/-]+" line: 0\\}\\]$`
+  ).test(text);
+}
+
+// The design worker uses its lightweight model when Firefox has no WebGPU adapter. The workflow
+// still completes; retain every other WebGPU warning and every console error as a finding.
+export function isBenignWorkerModelFallbackWarning(text: string): boolean {
+  return text === '[Worker] WebGPU 어댑터 조회 실패 — 가벼운 모델을 씁니다 Error';
+}
+
 // Opening the design studio (?studio=1) loads a background-removal model in the browser (ONNX,
 // fetched from huggingface.co). onnxruntime warns that it cannot multi-thread outside a
 // cross-origin-isolated page, and the model loader asks for a tokenizer_config.json the model repo
@@ -445,6 +490,17 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
 
       if (allowKnownPriceWarnings && hadSupersededPricingRequest && text === 'Unable to retrieve prices.') {
         hadSupersededPricingRequest = false;
+        return;
+      }
+
+      if (
+        message.type() === 'warning' &&
+        (isBenignPretendardMetadataWarning(text) ||
+          isBenignPretendardPreloadWarning(text) ||
+          isBenignNuxtPreloadWarning(text) ||
+          isBenignFirefoxIllustrationPreloadWarning(text) ||
+          isBenignWorkerModelFallbackWarning(text))
+      ) {
         return;
       }
 
