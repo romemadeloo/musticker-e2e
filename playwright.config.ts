@@ -1,9 +1,13 @@
 import { defineConfig, devices } from '@playwright/test';
 import 'dotenv/config';
+// Turns E2E_ENVIRONMENT=qa into dev-1, or dev-2 when dev-1 is down.
+import './tests/setup/resolve-qa-environment.js';
 import { randomUUID } from 'node:crypto';
 import type { ReporterDescription } from '@playwright/test';
 
-import { env, internalOriginKey } from './tests/fixtures/env.js';
+// Dynamic on purpose: env.ts reads E2E_ENVIRONMENT the moment it loads, and a static import would
+// be evaluated alongside the resolver above instead of after its top-level await finishes.
+const { env, internalOriginKey } = await import('./tests/fixtures/env.js');
 
 // Set once in the runner and inherited by every worker and teardown.
 process.env.E2E_RUN_ID ||= randomUUID();
@@ -144,6 +148,10 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 1,
+  // Retries keep a run's evidence when a test fails once, but a pass-on-retry still fails CI: a
+  // flaky test is a test bug (MS-CFG-027 hid a pricing race behind "flaky" for days). Locally the
+  // retry is kept as a diagnostic and does not fail the run.
+  failOnFlakyTests: !!process.env.CI,
   workers: resolveWorkers(),
   reporter: reportersForShardedRun(
     reportersWithSelfHealSummary(reportersWithAllure(process.env.CI ? ciReporters : localReporters))

@@ -58,7 +58,7 @@ test.describe('Order history', { tag: ['@regression', '@production', '@auth', '@
     // rendered card count: on the dev storefront the badge read 57 against 61 visible cards (and 3
     // against 6 on 이전 내역). Whether the badge excludes some states by design or is undercounting
     // is an open question for the storefront team -- asserting either way would be a guess.
-    expect(await orders.captureDeclaredOrderCount()).toBeGreaterThan(0);
+    await expect.poll(() => orders.captureDeclaredOrderCount()).toBeGreaterThan(0);
   });
 
   test('MS-ACC-002 selecting an order opens that order, not a placeholder', async ({ page }) => {
@@ -104,7 +104,9 @@ test.describe('Order history', { tag: ['@regression', '@production', '@auth', '@
 
     await orders.switchTo('inProgress');
     await orders.waitForListSettled();
-    expect(await orders.captureOrderNumbers(), 'switching back must restore the in-progress list').toEqual(inProgress);
+    await expect
+      .poll(() => orders.captureOrderNumbers(), { message: 'switching back must restore the in-progress list' })
+      .toEqual(inProgress);
   });
 
   test('MS-ACC-004 order search narrows the list to the order that was searched for', async ({ page }) => {

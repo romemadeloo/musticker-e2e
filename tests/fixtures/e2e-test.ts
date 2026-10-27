@@ -33,7 +33,9 @@ type SessionWorkerFixtures = {
   memberAuthState: () => Promise<MemberStorageState>;
 };
 
-type GuardOptions = {
+// Every option needs an entry in console-allowances.ts, which records why it exists and, for
+// workarounds, when it must be re-checked.
+export type GuardOptions = {
   allowGuestUserMe401: boolean;
   allowKnownPriceWarnings: boolean;
   allowIncompletePricingWarnings: boolean;

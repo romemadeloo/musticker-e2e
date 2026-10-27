@@ -121,9 +121,47 @@ jobs:
           retention-days: 7
 
 
+  # A new or edited spec has to pass five times in a row with no retries before it merges, so a
+  # flaky test is caught in review instead of in the nightly. Only spec files the PR touches are
+  # repeated -- not their dependants -- so a shared fixture edit cannot turn this into the whole
+  # suite five times over; the smoke job above covers fixtures.
+  stress-changed-specs:
+    name: Stress changed specs (5x, no retries)
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Find changed specs
+        id: changed
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          specs="$(git diff --name-only --diff-filter=AM "$BASE_SHA"...HEAD -- 'tests/e2e/**/*.spec.ts' | tr '\n' ' ')"
+          echo "specs=$specs" >> "$GITHUB_OUTPUT"
+          echo "Changed specs: ${specs:-none}"
+      - if: ${{ steps.changed.outputs.specs != '' }}
+        uses: ./.github/actions/setup-playwright
+        with:
+          browser_project: chromium-desktop
+      - if: ${{ steps.changed.outputs.specs != '' }}
+        name: Repeat changed specs
+        run: >-
+          npx playwright test ${{ steps.changed.outputs.specs }}
+          --repeat-each=5 --retries=0 --grep-invert "@payment|@slow|@destructive"
+      - name: Retain stress evidence
+        if: ${{ failure() && steps.changed.outputs.specs != '' }}
+        uses: ./.github/actions/playwright-artifacts
+        with:
+          artifact_name: pr-stress-playwright-results
+          retention_days: 7
+
   pr-gate:
     name: PR gate
-    needs: [lint-typecheck-smoke, api-contracts, promotion-validation]
+    needs: [lint-typecheck-smoke, api-contracts, promotion-validation, stress-changed-specs]
     if: ${{ always() }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -134,10 +172,12 @@ jobs:
           UI_RESULT: ${{ needs.lint-typecheck-smoke.result }}
           API_RESULT: ${{ needs.api-contracts.result }}
           PROMOTION_RESULT: ${{ needs.promotion-validation.result }}
+          STRESS_RESULT: ${{ needs.stress-changed-specs.result }}
         run: |
           test "$UI_RESULT" = success
           test "$API_RESULT" = success
           test "$PROMOTION_RESULT" = success
+          test "$STRESS_RESULT" = success
 
   allure-report:
     name: Publish Allure report with history

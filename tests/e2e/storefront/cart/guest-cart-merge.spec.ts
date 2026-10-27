@@ -62,10 +62,9 @@ test.describe('Guest cart merge', { tag: ['@regression', '@purchasing'] }, () =>
       const mergedRowCount = await cart.rowCount();
       expect(mergedRowCount, 'the merged cart must hold at least the guest line').toBeGreaterThanOrEqual(1);
       await expect(cart.row(hologramSticker.heading)).toBeVisible();
-      expect(
-        await cart.captureRowPrices(),
-        'the guest line must keep its price through the merge'
-      ).toContain(guestPrice);
+      await expect
+        .poll(() => cart.captureRowPrices(), { message: 'the guest line must keep its price through the merge' })
+        .toContain(guestPrice);
       await cart.expectTotalIsSumOfRows();
 
       // Put the member's cart back the way it was found. Anything this test adds to a real account

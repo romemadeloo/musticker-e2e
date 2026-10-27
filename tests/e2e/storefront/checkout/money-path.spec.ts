@@ -59,7 +59,11 @@ test.describe('Money path', { tag: ['@regression', '@production', '@purchasing']
     await expect(page.getByRole('heading', { name: cartCopy.pageHeading })).toBeVisible();
     await cart.expectRowCount(1);
     await cart.expectDeclaredItemCount(1);
-    expect(await cart.captureRowPrices(), 'the single cart line must carry the quoted price').toEqual([quotedPrice]);
+    await expect
+      .poll(() => cart.captureRowPrices(), { message: 'the single cart line must carry the quoted price' })
+      .toEqual([quotedPrice]);
+    // expectTotalIsSumOfRows() polls the total itself; this compares the settled value it returns.
+    // eslint-disable-next-line no-restricted-syntax
     expect(await cart.expectTotalIsSumOfRows(), 'cart total must equal the quoted price').toBe(quotedPrice);
 
     // 3. Checkout, where shipping and discounts finally apply.

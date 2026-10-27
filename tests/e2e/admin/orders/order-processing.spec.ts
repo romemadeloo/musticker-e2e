@@ -108,6 +108,8 @@ test.describe('Order processing', { tag: ['@admin', '@e2e', '@destructive', '@sl
 
     await test.step('admin: finds the order and rejects the file with feedback', async () => {
       await adminOrders.goto();
+      // openOrder() searches and navigates -- an action, not a read, so it must run exactly once.
+      // eslint-disable-next-line no-restricted-syntax
       expect(await adminOrders.openOrder(orderNumber)).toBe(orderId);
       await adminOrder.expectOrder(orderNumber, orderStatus.beforeProduction.label);
       await adminOrder.expectItemStatus(itemStatus.artworkSubmitted.label);

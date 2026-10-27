@@ -31,9 +31,9 @@ test.describe('Storefront smoke', { tag: ['@smoke', '@production'] }, () => {
 
     for (const category of categories) {
       await home.header.openCategoryMenu(category.name, category.path);
-      expect(await home.header.categoryMenuPaths(), `${category.path} menu`).toEqual(
-        category.products.map((product) => product.path)
-      );
+      await expect
+        .poll(() => home.header.categoryMenuPaths(), { message: `${category.path} menu` })
+        .toEqual(category.products.map((product) => product.path));
     }
 
     const [firstRoll] = categoryProducts.rollStickers;

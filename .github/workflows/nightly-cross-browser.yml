@@ -1,0 +1,62 @@
+name: Nightly cross-browser
+
+# The PR and smoke checks run Chromium only. Firefox and WebKit failed far more often than Chromium
+# in the 2026-10-26 run (30 and 35 failures against 2), so every desktop browser runs the full
+# non-destructive suite each night and gets its own artifact and reliability summary, which keeps
+# a browser-specific regression visible instead of averaged away.
+
+on:
+  schedule:
+    # 02:00 Asia/Manila every day, two hours ahead of the production full suite.
+    - cron: '0 18 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightly-cross-browser-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  # The QA team's main test server, dev-1, falling back to dev-2 when dev-1 fails readiness. The
+  # run's step summary says which one was used (tests/setup/resolve-qa-environment.ts).
+  E2E_ENVIRONMENT: qa
+  ALLURE_RESULTS_DIR: allure-results
+  RUN_PAYMENT_E2E: 'false'
+  RUN_AUTH_DESTRUCTIVE_E2E: 'false'
+  AUTH_TEST_EMAIL: ${{ secrets.DEV_AUTH_TEST_EMAIL }}
+  AUTH_TEST_PASSWORD: ${{ secrets.DEV_AUTH_TEST_PASSWORD }}
+  # Dev-only target, so only the dev WAF key is passed.
+  DEV_INTERNAL_ORIGIN_KEY: ${{ secrets.DEV_INTERNAL_ORIGIN_KEY }}
+
+jobs:
+  browser:
+    name: Full suite on ${{ matrix.browser_project }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        browser_project: [chromium-desktop, firefox-desktop, webkit-desktop]
+    env:
+      E2E_BROWSER_PROJECT: ${{ matrix.browser_project }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js, dependencies and Playwright
+        uses: ./.github/actions/setup-playwright
+        with:
+          browser_project: ${{ matrix.browser_project }}
+
+      - name: Run the non-destructive suite
+        run: npm run test:ci
+
+      - name: Collect Playwright and Allure artifacts
+        if: ${{ always() }}
+        uses: ./.github/actions/playwright-artifacts
+        with:
+          artifact_name: nightly-${{ matrix.browser_project }}-playwright-results
+          retention_days: 14

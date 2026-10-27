@@ -1,7 +1,9 @@
 import { defineConfig } from '@playwright/test';
 import base from './playwright.config.js';
-import { activeEnvironment, env } from './tests/fixtures/env.js';
 import { assertDevE2EReady } from './tests/fixtures/dev-e2e-preflight.js';
+
+// After the base config has resolved E2E_ENVIRONMENT=qa; see playwright.config.ts.
+const { activeEnvironment, env } = await import('./tests/fixtures/env.js');
 
 assertDevE2EReady({
   environment: activeEnvironment,

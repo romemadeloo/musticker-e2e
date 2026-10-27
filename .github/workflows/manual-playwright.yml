@@ -4,12 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: Storefront/API environment (dev-N selects Dev-Shared N).
+        description: Storefront/API environment (dev-N selects Dev-Shared N; qa is dev-1, falling back to dev-2).
         required: true
         default: production
         type: choice
         options:
           - production
+          - qa
           - dev-1
           - dev-2
           - dev-3

@@ -29,6 +29,7 @@
     "test:regression": "playwright test --grep @regression",
     "test:a11y": "playwright test --grep @a11y",
     "test:flake": "playwright test --grep @smoke --grep-invert \"@destructive\" --repeat-each=3 --retries=0",
+    "test:stress": "playwright test --only-changed --repeat-each=5 --retries=0 --grep-invert \"@payment|@slow|@destructive\"",
     "test:destructive": "cross-env RUN_PAYMENT_E2E=true RUN_AUTH_DESTRUCTIVE_E2E=true playwright test --grep @destructive",
     "test:destructive:auth": "cross-env RUN_AUTH_DESTRUCTIVE_E2E=true playwright test tests/e2e/storefront/auth --grep @destructive",
     "admin:login": "playwright test --config tests/setup/admin-login.config.ts",

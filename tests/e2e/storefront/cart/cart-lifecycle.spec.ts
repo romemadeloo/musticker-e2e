@@ -107,7 +107,9 @@ test.describe('Cart lifecycle', () => {
       const cart = new CartV2Page(page);
       await cart.goto();
       await cart.expectRowCount(1);
-      expect(await cart.captureRowPrices(), 'the restored line must keep its price').toEqual([price]);
+      await expect
+        .poll(() => cart.captureRowPrices(), { message: 'the restored line must keep its price' })
+        .toEqual([price]);
     });
 
     test('MS-CRT-004 the cart page confirms a removal before acting on it', async ({ page }) => {
