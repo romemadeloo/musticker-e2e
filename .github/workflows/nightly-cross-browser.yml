@@ -51,6 +51,19 @@ jobs:
         with:
           browser_project: ${{ matrix.browser_project }}
 
+      # Admin sign-in always ends in a code emailed to sales@musticker.com, so CI cannot sign in with
+      # a password. It restores a session a person saved instead (scripts/ci/admin-session.mjs).
+      # Missing or expired, the admin specs skip and this step leaves a warning in the run summary.
+      # The secret is scoped to this step; .auth/ is in no artifact path.
+      - name: Restore and check the dev-1 admin session
+        env:
+          ADMIN_SESSION_DEV1: ${{ secrets.ADMIN_SESSION_DEV1 }}
+        run: |
+          node scripts/ci/admin-session.mjs restore dev-1
+          # dev-1's API and admin panel, as in tests/fixtures/environments.ts.
+          node scripts/ci/admin-session.mjs check dev-1 \
+            https://shared-dev-static-api.musticker.com/index.php https://shared-dev-static-admin.musticker.com
+
       - name: Run the non-destructive suite
         run: npm run test:ci
 

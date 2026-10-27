@@ -93,6 +93,17 @@ jobs:
         with:
           browser_project: ${{ inputs.suite == 'api' && 'none' || inputs.browser_project }}
 
+      # Same as nightly-cross-browser.yml: admin specs use a saved dev-1 session, since admin sign-in
+      # needs an emailed code. Only dev-1 has one; qa normally resolves to dev-1.
+      - name: Restore and check the dev-1 admin session
+        if: ${{ inputs.environment == 'dev-1' || inputs.environment == 'qa' }}
+        env:
+          ADMIN_SESSION_DEV1: ${{ secrets.ADMIN_SESSION_DEV1 }}
+        run: |
+          node scripts/ci/admin-session.mjs restore dev-1
+          node scripts/ci/admin-session.mjs check dev-1 \
+            https://shared-dev-static-api.musticker.com/index.php https://shared-dev-static-admin.musticker.com
+
       - name: Run selected suite
         shell: bash
         env:

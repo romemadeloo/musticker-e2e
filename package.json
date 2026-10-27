@@ -43,7 +43,8 @@
     "test:ui:smoke": "playwright test --grep @critical --grep-invert \"@api|@slow|@destructive|@payment\"",
     "test:ui:full": "playwright test --grep-invert \"@api|@slow|@destructive|@payment\"",
     "test:ui:regression": "playwright test --grep @regression --grep-invert \"@api|@slow|@destructive|@payment\"",
-    "test:e2e:dev": "cross-env E2E_BROWSER_PROJECT=chromium-desktop playwright test --config playwright.dev-e2e.config.ts"
+    "test:e2e:dev": "cross-env E2E_BROWSER_PROJECT=chromium-desktop playwright test --config playwright.dev-e2e.config.ts",
+    "admin:session:export": "node scripts/ci/admin-session.mjs export"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",

@@ -47,7 +47,7 @@ export default [
   // this catches the wrapped form too. API specs compare settled HTTP responses and are exempt.
   {
     files: ["tests/e2e/**/*.spec.ts"],
-    ignores: ["tests/e2e/storefront/api/**"],
+    ignores: ["tests/e2e/**/api/**"],
     rules: {
       "no-restricted-syntax": [
         "error",

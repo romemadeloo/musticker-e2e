@@ -7,8 +7,8 @@ import { adminBaseUrl, apiPath } from './env.js';
  * Read-only views of the admin API, for asserting what an admin UI action actually changed.
  *
  * Built on the admin browser context's `request`, which shares that context's cookies, so no token
- * handling happens here. Every method is a GET: state changes in admin specs go through the UI,
- * because the UI is what is under test. Endpoints were read off the admin panel's own traffic on
+ * handling happens here. Every method is a GET apart from deleteQaHoliday, a cleanup safety net:
+ * state changes in admin specs go through the UI, because the UI is what is under test. Endpoints were read off the admin panel's own traffic on
  * dev-1, 2026-09-25.
  */
 
@@ -23,6 +23,19 @@ export type AdminOrderSummary = {
   item_status: AdminStatus;
   payment_status: AdminStatus;
   payment_summary: { total_cost: number; payment_method_name: string };
+  is_starred: number;
+};
+
+export type AdminOrderTab = { id: number; code: string; name: string; is_header_tab: number; sort_order: number };
+
+export type AdminHoliday = {
+  id: number;
+  name: string;
+  holiday_date: string;
+  type: 'public' | 'special';
+  affects_production: boolean;
+  affects_shipping: boolean;
+  notes: string | null;
 };
 
 export type AdminOrderItem = {
@@ -122,6 +135,55 @@ export class AdminApi {
         message: `order ${orderId} never reached order status ${code}`
       })
       .toBe(code);
+  }
+
+  /** The status tabs Manage Orders shows, in display order. Endpoints read on dev-1, 2026-10-27. */
+  async orderTabs(): Promise<AdminOrderTab[]> {
+    const tabs = await this.get<AdminOrderTab[]>('/sys/kr/orders/admin/order-tabs');
+    return tabs.filter((tab) => tab.is_header_tab === 1).sort((a, b) => a.sort_order - b.sort_order);
+  }
+
+  /** How many orders a tab holds -- the number its badge should show. */
+  async orderTabCount(code: string): Promise<number> {
+    const data = await this.get<{ total: number }>(
+      `/sys/kr/orders/admin/list/count?order_date&search_key&page=1&order_tab=${code}`
+    );
+    return data.total;
+  }
+
+  /** The newest orders on a tab's first page, as the list shows them. */
+  async ordersInTab(code: string): Promise<AdminOrderSummary[]> {
+    const page = await this.get<{ data?: AdminOrderSummary[] } | AdminOrderSummary[]>(
+      `/sys/kr/orders/admin/list?order_date&search_key=&page=1&order_tab=${code}&sort_column&sort_direction`
+    );
+    return Array.isArray(page) ? page : (page.data ?? []);
+  }
+
+  /** The dashboard's customer split; also what Manage Customers' segment badges show. */
+  customerSegments(): Promise<{ all: number; member: number; nonmember: number }> {
+    return this.get('/sys/kr/dashboard/customers');
+  }
+
+  async holidays(search = ''): Promise<AdminHoliday[]> {
+    const data = await this.get<{ holidays: AdminHoliday[] }>(
+      `/sys/kr/holiday/all?search=${encodeURIComponent(search)}&page=1&per_page=100`
+    );
+    return data.holidays;
+  }
+
+  /**
+   * Cleanup only -- never the action under test, which goes through the UI. Removes a holiday a
+   * spec created, so one that failed half-way does not leave its record on a shared server.
+   * Refuses anything not named with QA_RECORD_PREFIX.
+   */
+  async deleteQaHoliday(holiday: AdminHoliday, prefix: string): Promise<void> {
+    expect(holiday.name.startsWith(prefix), `refusing to delete non-QA holiday "${holiday.name}"`).toBe(true);
+    const origin = adminBaseUrl();
+    const response = await this.request.post(apiPath('/sys/kr/holiday/delete'), {
+      headers: origin ? { origin, referer: `${origin}/` } : {},
+      data: { holiday_id: holiday.id }
+    });
+    expect(response.ok(), `holiday cleanup answered HTTP ${response.status()}`).toBe(true);
   }
 
   private async get<T>(path: string): Promise<T> {

@@ -87,3 +87,47 @@ export const storefrontOrderCopy = {
 export function qaTrackingNumber(now = new Date()): string {
   return `QATE${String(now.getTime()).slice(-12)}`;
 }
+
+/**
+ * Every section of the panel's sidebar with the heading its page opens on, read off dev-1 on
+ * 2026-10-27 from the panel's own route table. Detail, create and edit routes are left out: they
+ * need an id or change data. /seo and /static/* are internal tooling pages without a sidebar entry.
+ */
+export const adminSections = [
+  { path: '/dashboard', heading: 'Dashboard' },
+  { path: '/orders', heading: 'Manage Orders' },
+  { path: '/customers', heading: 'Manage Customers' },
+  { path: '/couriers', heading: 'Couriers' },
+  { path: '/manage-shipping', heading: 'Manage Shipping List' },
+  { path: '/shipping-methods', heading: 'Production Schedules' },
+  { path: '/shipping-methods/express-shipping', heading: 'Express Shipping' },
+  { path: '/holidays', heading: 'Holidays' },
+  { path: '/reviews', heading: 'Reviews' },
+  { path: '/static-reviews', heading: 'Static Reviews' },
+  { path: '/offers', heading: 'Offers' },
+  { path: '/manage-notice', heading: 'Notice Management' },
+  { path: '/naver-ep', heading: 'Naver EP Manager' },
+  { path: '/seo', heading: 'SEO Meta Tags' },
+  { path: '/sitemap', heading: 'Sitemaps' },
+  { path: '/studio-elements', heading: 'Studio Elements' },
+  { path: '/notifications', heading: 'Notification Center' },
+  { path: '/security-logs', heading: 'Security Logs' },
+  { path: '/settings', heading: 'Settings' }
+] as const;
+
+export const holidayCopy = {
+  addHoliday: 'Add Holiday',
+  nameField: 'Holiday',
+  notesField: 'Notes',
+  save: 'Save',
+  cancel: 'Cancel',
+  deleteHeading: 'Delete Holiday',
+  keepIt: 'No, Thanks',
+  confirmDelete: "Yes, I'm Sure"
+} as const;
+
+/**
+ * Prefix for every record an admin spec creates, so a leftover from a crashed run is recognisable
+ * on a shared server and the cleanup sweep only ever touches the suite's own records.
+ */
+export const QA_RECORD_PREFIX = 'QA-E2E';
