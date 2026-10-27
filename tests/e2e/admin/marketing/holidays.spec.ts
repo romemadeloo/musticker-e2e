@@ -1,3 +1,4 @@
+import type { AdminApi } from '../../../fixtures/admin-api.js';
 import { QA_RECORD_PREFIX } from '../../../fixtures/admin-data.js';
 import { expect, test } from '../../../fixtures/admin-test.js';
 import { activeEnvironment } from '../../../fixtures/env.js';
@@ -26,15 +27,21 @@ const longDate = (date: Date) => date.toLocaleDateString('en-US', { month: 'long
 test.describe('Holidays', { tag: ['@admin', '@regression'] }, () => {
   test.skip(activeEnvironment === 'production', 'Creates and deletes holidays; never on production.');
 
-  const name = `${QA_RECORD_PREFIX} holiday ${process.env.E2E_RUN_ID?.slice(0, 8) ?? Date.now()}`;
+  // One name per test, never per file: CI runs this file's tests in parallel, and when they shared a
+  // name, a test that finished first had its afterEach delete the holiday another test was still
+  // editing (CI, 2026-10-27). The search is a substring match, so results are also matched exactly.
+  const holidayName = () => `${QA_RECORD_PREFIX} holiday ${process.env.E2E_RUN_ID?.slice(0, 8) ?? 'local'} ${test.info().testId.slice(-8)}`;
+  const holidaysNamed = async (adminApi: AdminApi, name: string) =>
+    (await adminApi.holidays(name)).filter((holiday) => holiday.name === name);
 
   test.afterEach(async ({ adminApi }) => {
-    for (const leftover of await adminApi.holidays(name)) {
+    for (const leftover of await holidaysNamed(adminApi, holidayName())) {
       await adminApi.deleteQaHoliday(leftover, QA_RECORD_PREFIX);
     }
   });
 
   test('MS-ADM-010 a holiday can be added, edited, and deleted after confirmation', async ({ adminPage, adminApi }) => {
+    const name = holidayName();
     const holidays = new AdminHolidaysPage(adminPage);
     const date = testDate();
     await holidays.goto();
@@ -46,7 +53,7 @@ test.describe('Holidays', { tag: ['@admin', '@regression'] }, () => {
 
       await expect(holidays.row(name)).toBeVisible();
       await expect.poll(() => holidays.rowCells(name)).toEqual([name, longDate(date), 'Public', 'No', 'No', 'QA e2e']);
-      const [saved] = await adminApi.holidays(name);
+      const [saved] = await holidaysNamed(adminApi, name);
       expect(saved).toMatchObject({ name, type: 'public', affects_production: false, affects_shipping: false, notes: 'QA e2e' });
     });
 
@@ -56,7 +63,7 @@ test.describe('Holidays', { tag: ['@admin', '@regression'] }, () => {
       await holidays.saveAndExpectClosed();
 
       await expect(holidays.row(name)).toContainText('Special');
-      await expect.poll(async () => (await adminApi.holidays(name))[0]?.type).toBe('special');
+      await expect.poll(async () => (await holidaysNamed(adminApi, name))[0]?.type).toBe('special');
     });
 
     await test.step('"No, Thanks" keeps it', async () => {
@@ -69,7 +76,7 @@ test.describe('Holidays', { tag: ['@admin', '@regression'] }, () => {
       await holidays.requestDelete(name);
       await holidays.answerDelete(true);
       await expect(holidays.row(name)).toHaveCount(0);
-      await expect.poll(async () => (await adminApi.holidays(name)).length).toBe(0);
+      await expect.poll(async () => (await holidaysNamed(adminApi, name)).length).toBe(0);
     });
   });
 
