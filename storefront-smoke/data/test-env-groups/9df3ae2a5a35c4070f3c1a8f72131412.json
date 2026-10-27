@@ -1,0 +1,1 @@
+{"id":"9df3ae2a5a35c4070f3c1a8f72131412","fullName":"admin/api/admin-access.spec.ts:37:3","name":"MS-ADM-001 anonymous POST /sys/kr/holiday/add is refused before validation","status":"passed","testResultsByEnv":{"default":"711d445de7e14c25b3ccb8057c6152a5"}}

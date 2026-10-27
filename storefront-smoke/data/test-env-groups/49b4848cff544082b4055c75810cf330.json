@@ -1,0 +1,1 @@
+{"id":"49b4848cff544082b4055c75810cf330","fullName":"admin/api/admin-access.spec.ts:29:5","name":"MS-ADM-001 anonymous GET /sys/kr/dashboard/customers is refused","status":"passed","testResultsByEnv":{"default":"50104e560bd0d1b43815e8de6cf6dfdd"}}
