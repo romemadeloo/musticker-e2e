@@ -56,12 +56,16 @@ test.describe('Design studio', { tag: ['@regression', '@production', '@purchasin
     const studio = await product.openStudio();
     await studio.expectSize(75, 75);
     await studio.expectQuantity(data.quantity);
-    expect(await studio.currentPrice(), 'studio price for the configured quantity').toBe(
-      studioPrice(configuratorPrices[data.quantity])
-    );
+    // Polled: the studio first renders the configurator's undiscounted price and applies its 5%
+    // discount a moment later, so a single read can catch the pre-discount value.
+    await expect
+      .poll(() => studio.currentPrice(), { message: 'studio price for the configured quantity' })
+      .toBe(studioPrice(configuratorPrices[data.quantity]));
 
     for (const quantity of [10, 1000] as const) {
-      expect(await studio.tierPrice(quantity), `studio ${quantity}개 tier`).toBe(studioPrice(configuratorPrices[quantity]));
+      await expect
+        .poll(() => studio.tierPrice(quantity), { message: `studio ${quantity}개 tier` })
+        .toBe(studioPrice(configuratorPrices[quantity]));
     }
   });
 
