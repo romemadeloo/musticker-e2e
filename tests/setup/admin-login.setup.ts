@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 
 import { adminStorageStatePath, isAdminSessionValid } from '../fixtures/admin-auth.js';
 import { activeEnvironment, adminBaseUrl } from '../fixtures/env.js';
+import { waitForNuxtHydration } from '../fixtures/hydration.js';
 
 /**
  * Captures an admin panel session for the admin specs to reuse (see tests/fixtures/admin-auth.ts):
@@ -27,14 +28,31 @@ test('capture an admin panel session', async ({ page }) => {
   const password = process.env.ADMIN_PASSWORD;
 
   if (email && password) {
-    await page.getByPlaceholder('Enter your email').fill(email);
-    await page.getByPlaceholder('Enter your password').fill(password);
+    const emailInput = page.getByPlaceholder('Enter your email');
+    const passwordInput = page.getByPlaceholder('Enter your password');
 
-    if (!(await page.getByRole('checkbox').first().isChecked())) {
-      await page.getByText('Keep me signed in').click();
+    // The form is server-rendered and usable-looking before Vue hydrates it, and hydration resets the
+    // inputs -- a fill in that window is wiped and Sign In submits an empty password (2026-10-27).
+    // So wait for hydration, then confirm both values survived before submitting.
+    await waitForNuxtHydration(page);
+    await expect(async () => {
+      await emailInput.fill(email);
+      await passwordInput.fill(password);
+      await expect(emailInput).toHaveValue(email, { timeout: 1_000 });
+      await expect(passwordInput).toHaveValue(password, { timeout: 1_000 });
+    }).toPass({ timeout: 20_000 });
+
+    // A hidden <input> inside a styled label: there is no accessible checkbox to find by role.
+    const keepSignedIn = page.locator('#login-remember label');
+    if (!(await keepSignedIn.locator('input[type="checkbox"]').isChecked())) {
+      await keepSignedIn.click();
     }
+    await expect(keepSignedIn.locator('input[type="checkbox"]'), '"Keep me signed in" ticked').toBeChecked();
 
     await page.getByRole('button', { name: 'Sign In' }).click();
+    await expect(page.getByText('Verification Required'), 'the panel did not accept the email and password').toBeVisible({
+      timeout: 20_000
+    });
     console.log('\nSigned in. Enter the verification code sent to sales@musticker.com in the browser window.\n');
   } else {
     console.log('\nSign in in the browser window (tick "Keep me signed in"), then enter the verification code.\n');
