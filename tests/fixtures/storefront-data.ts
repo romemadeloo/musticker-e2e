@@ -68,6 +68,8 @@ export const ko = {
   checkoutEmailPlaceholder: '\uc774\uba54\uc77c \uc8fc\uc18c\ub97c \uc785\ub825\ud574 \uc8fc\uc138\uc694.',
   checkoutNamePlaceholder: '\uc131\ud568\uc744 \uc785\ub825\ud558\uc138\uc694',
   checkoutPostalCodePlaceholder: '\uc6b0\ud3b8\ubc88\ud638\ub97c \uc785\ub825\ud558\uc138\uc694',
+  // Shown above a signed-in member's shipping form only.
+  checkoutAddressSavedNote: '이 주소는 나중에 다시 사용할 수 있도록 저장됩니다.',
   hologram: '\ud640\ub85c\uadf8\ub7a8',
   // The sheet stickers' default material. Labelled PVC \ub9e4\ud2b8 until early October 2026.
   matteWhite: '\ubb34\uad11 \ud654\uc774\ud2b8',

@@ -55,6 +55,8 @@ somewhere unexpected.
 | `npm run test:destructive:auth` | Only the account-changing tests in `storefront/auth` |
 | `npm run admin:login` | Captures an admin panel session (a person enters the code). See [below](#admin-panel-runs) |
 | `npm run test:admin:destructive` | Storefront-to-admin order processing (MS-ADMO-001) on dev-1 |
+| `npm run test:admin:order-emails` | A new member's order from registration to delivered, checking every customer email (MS-ADMO-019) on dev-1 |
+| `npm run test:admin:order-emails:capture` | The same, recording the emails of steps not yet in `order-emails.ts` instead of failing on them |
 | `npm run test:e2e:dev` | Five destructive storefront sandbox/email journeys, one worker, no retries; requires preflight configuration below |
 
 **Other:**
@@ -126,8 +128,9 @@ All of them are documented, with examples, in [.env.example](../.env.example).
 | `INTERNAL_ORIGIN_KEY`, `DEV_INTERNAL_ORIGIN_KEY` | Firewall exemption keys (production / dev). Unset means the tests fall back to retrying 403s |
 | `RUN_PAYMENT_E2E=true` | Enables guest checkout, which creates a real order (MS-CHK-001) |
 | `RUN_AUTH_DESTRUCTIVE_E2E=true` | Enables registration, password rotation and cart merge (MS-AUTH-020/MS-AUTH-021/MS-AUTH-027/MS-CRT-005) |
-| `RUN_ADMIN_DESTRUCTIVE_E2E=true` | Enables admin order processing (MS-ADMO-001) |
+| `RUN_ADMIN_DESTRUCTIVE_E2E=true` | Enables admin order processing (MS-ADMO-001; MS-ADMO-019 also needs `RUN_PAYMENT_E2E=true`) |
 | `ADMIN_E2E_ORDER_NO` | The order MS-ADMO-001 processes (see [below](#admin-panel-runs)) |
+| `ORDER_EMAIL_CAPTURE=true` | MS-ADMO-019 records unrecorded steps' emails instead of failing on them |
 | `ADMIN_EMAIL`, `ADMIN_PASSWORD` | Optional. Pre-fill the form in `npm run admin:login` |
 | `SELF_HEAL=off` | Makes renamed copy fail instead of self-healing. See [ARCHITECTURE.md](ARCHITECTURE.md#self-healing-locators) |
 | `TEST_DATA_USER_DELETE_ENDPOINT`, `API_TOKEN` | Let the teardown delete members created by tests |
@@ -202,6 +205,25 @@ npx cross-env ADMIN_E2E_ORDER_NO=AO-2609070006-dev npm run test:admin:destructiv
 The order must belong to `AUTH_TEST_EMAIL`, be fully paid, and have exactly one item at
 디자인 파일 미제출. **Each run uses the order up**, so swap in an unused one from the workbook's Test
 Data tab.
+
+**MS-ADMO-019** walks the same lifecycle on an order it places itself, and reads every email the
+customer gets along the way. A new member registers with a mail.tm inbox, orders and pays with
+the KakaoPay sandbox, and after each step the emails that arrived are compared with
+[order-emails.ts](../tests/fixtures/order-emails.ts): exact subject, sender, and the facts each
+must carry (order number, product, rejection reason, proof message, tracking number). Every email
+is also checked for an empty body or a broken template (`{{`, `undefined`, `NaN`). No seed order
+or seeded member is needed. Each run leaves one completed dev order and one throwaway member.
+
+A step whose emails are still `undefined` in `order-emails.ts` fails the test with a ready-to-paste
+entry built from what arrived. To record them without failing:
+
+```bash
+npm run test:admin:order-emails:capture
+```
+
+Then check the printed entries (also attached to the report as `customer-emails.json`), paste
+them into `customerOrderEmails`, and run `npm run test:admin:order-emails`. Admin emails go to
+sales@musticker.com, which the suite cannot read, so they are not checked yet.
 
 The admin browser is never recorded (no screenshots, video or trace), because the panel shows
 real customers' details and this repository's CI artifacts are public. Playwright's failure

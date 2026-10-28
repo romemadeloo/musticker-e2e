@@ -177,6 +177,17 @@ export class CheckoutV2Page {
     await expect(emailInput).toHaveValue(email);
   }
 
+  // A signed-in member checks out under their account's address: the page has no email field and no
+  // verification modal at all, and the shipping section notes the address will be saved for next
+  // time. Verified live on dev-1 on 2026-10-28 with a freshly registered member (MS-ADMO-019).
+  async expectMemberCheckout(): Promise<void> {
+    await waitForNuxtHydration(this.page);
+    await expect(this.page.getByPlaceholder(ko.checkoutNamePlaceholder)).toBeVisible({ timeout: 20_000 });
+    await expect(this.page.getByText(ko.checkoutAddressSavedNote)).toBeVisible();
+    await expect(this.page.getByPlaceholder(ko.checkoutEmailPlaceholder)).toHaveCount(0);
+    await expect(this.page.locator('.auth-verification-modal')).toHaveCount(0);
+  }
+
   async submitOtpCode(code: string): Promise<void> {
     const modal = this.page.locator('.auth-verification-modal');
     const inputs = modal.locator('input');
@@ -216,6 +227,10 @@ export class CheckoutV2Page {
 
   // The pay button opens the KakaoPay gateway (a real "PayApp — Local Mock" sandbox page on dev
   // environments) in a popup window.
+  //
+  // For a signed-in member the first popup is a throwaway: a blank window that closes at once, and
+  // the PayApp page opens in a second popup once POST /orders/checkout answers (seen on dev-1,
+  // 2026-10-28). So this waits for the popup that leaves about:blank, not the first one to open.
   async submitPaymentAndAwaitPayAppPopup(): Promise<Page> {
     // The pay button carries a real `disabled` attribute, and the order-summary shipping-fee/total
     // rows render as `.ui-skeleton` placeholders, until an async shipping-cost recalculation
@@ -225,14 +240,39 @@ export class CheckoutV2Page {
     await expect(this.page.locator('.checkout-summary-line .ui-skeleton')).toHaveCount(0, { timeout: 30_000 });
     await expect(this.payButton).toBeEnabled({ timeout: 30_000 });
 
-    const [popup] = await Promise.all([this.page.waitForEvent('popup', { timeout: 30_000 }), this.payButton.click()]);
+    const [popup] = await Promise.all([
+      this.page.waitForEvent('popup', {
+        timeout: 30_000,
+        predicate: async (candidate) => {
+          await Promise.race([
+            candidate.waitForURL((url) => url.href !== 'about:blank', { timeout: 15_000 }),
+            candidate.waitForEvent('close', { timeout: 15_000 })
+          ]).catch(() => undefined);
+          return !candidate.isClosed() && candidate.url() !== 'about:blank';
+        }
+      }),
+      this.payButton.click()
+    ]);
     return popup;
   }
 
   // Clicking the mock's "Complete card payment" button closes the popup itself and fires the
   // payment webhook that redirects the original checkout tab to the order-confirmation page.
+  //
+  // Bounded, and reports what the popup showed instead: left to the test timeout, a mock that never
+  // offers the button (seen once on dev-1, 2026-10-28) used up all 20 minutes of MS-ADMO-019.
   async completePayAppMockCardPayment(popup: Page): Promise<void> {
-    await popup.getByRole('button', { name: 'Complete card payment' }).click();
+    try {
+      await popup.getByRole('button', { name: 'Complete card payment' }).click({ timeout: 30_000 });
+    } catch (error) {
+      const windows = popup.context().pages().map((open) => open.url());
+      const text = popup.isClosed() ? '(popup closed)' : (await popup.locator('body').innerText().catch(() => '')).slice(0, 500);
+      throw new Error(
+        `The PayApp popup never offered "Complete card payment".\nPopup: ${popup.url()}\nPopup text: ${text}\n` +
+          `Open windows: ${windows.join(', ')}`,
+        { cause: error }
+      );
+    }
     await popup.waitForEvent('close', { timeout: 15_000 }).catch(() => undefined);
   }
 }

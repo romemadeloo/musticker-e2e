@@ -49,6 +49,7 @@ export type GuardOptions = {
   allowSheetSizeValidationWarnings: boolean;
   allowPostLogout401: boolean;
   allowStudioModelLoadNoise: boolean;
+  allowKnownArtworkReminderFailure: boolean;
 };
 
 function isExpectedGuestUserMe401(status: number, url: string): boolean {
@@ -151,6 +152,19 @@ function isNuxtPageNotFoundError(text: string): boolean {
 
 function isNotFoundResourceConsoleError(text: string): boolean {
   return text === 'Failed to load resource: the server responded with a status of 404 ()';
+}
+
+// MUS-QA-025: after a member pays, the confirmation page asks the API to send the artwork reminder
+// email and dev-1 answers 500, every time since at least 2026-10-28 (orders 2630, 2633).
+function isArtworkReminderServerFailure(status: number, url: string): boolean {
+  return status === 500 && /\/sys\/kr\/orders\/checkout\/complete\/send\/artwork\/\d+$/.test(url);
+}
+
+function isArtworkReminderConsoleError(text: string): boolean {
+  return (
+    text === 'Critical Server Error. Please contact support.' ||
+    /^Order artwork reminder email failed: FetchError: \[POST\] "[^"]*\/sys\/kr\/orders\/checkout\/complete\/send\/artwork\/\d+": 500\b/.test(text)
+  );
 }
 
 function isTransientProductPageServerFailure(status: number, url: string): boolean {
@@ -366,6 +380,7 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
   allowSheetSizeValidationWarnings: [false, { option: true }],
   allowPostLogout401: [false, { option: true }],
   allowStudioModelLoadNoise: [false, { option: true }],
+  allowKnownArtworkReminderFailure: [false, { option: true }],
 
   page: async (
     {
@@ -382,7 +397,8 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
       allowExpectedNotFound,
       allowSheetSizeValidationWarnings,
       allowPostLogout401,
-      allowStudioModelLoadNoise
+      allowStudioModelLoadNoise,
+      allowKnownArtworkReminderFailure
     },
     use,
     testInfo
@@ -400,7 +416,8 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
       allowExpectedNotFound,
       allowSheetSizeValidationWarnings,
       allowPostLogout401,
-      allowStudioModelLoadNoise
+      allowStudioModelLoadNoise,
+      allowKnownArtworkReminderFailure
     };
     const consoleFailures: string[] = [];
     const responseFailures: string[] = [];
@@ -424,6 +441,9 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
     let pendingTransientApiNetworkFailures = 0;
     let pendingTransientProductPageFailures = 0;
     let pendingExpectedNotFoundResponses = 0;
+    // The reminder's two console errors are only forgiven after its 500 has been seen, so the
+    // generic "Critical Server Error" text still fails a test when anything else causes it.
+    let seenArtworkReminderFailure = false;
 
     page.on('console', (message) => {
       if (!['error', 'warning'].includes(message.type())) {
@@ -446,6 +466,10 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
 
       if (allowExpectedNotFound && pendingExpectedNotFoundResponses > 0 && isNotFoundResourceConsoleError(text)) {
         pendingExpectedNotFoundResponses = Math.max(0, pendingExpectedNotFoundResponses - 1);
+        return;
+      }
+
+      if (allowKnownArtworkReminderFailure && seenArtworkReminderFailure && isArtworkReminderConsoleError(text)) {
         return;
       }
 
@@ -551,6 +575,11 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
       }
 
       if (allowStudioModelLoadNoise && isStudioModelMissingTokenizerConfig(status, url)) {
+        return;
+      }
+
+      if (allowKnownArtworkReminderFailure && isArtworkReminderServerFailure(status, url)) {
+        seenArtworkReminderFailure = true;
         return;
       }
 

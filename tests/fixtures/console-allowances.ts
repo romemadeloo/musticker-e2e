@@ -81,5 +81,12 @@ export const consoleAllowances: Record<keyof GuardOptions, ConsoleAllowance> = {
     reason: 'The studio\'s in-browser background-removal model warns about threading and a missing tokenizer_config.json (404).',
     owner: 'QA',
     reviewBy: '2027-01-31'
+  },
+  allowKnownArtworkReminderFailure: {
+    kind: 'workaround',
+    reason: 'After a member pays, POST /orders/checkout/complete/send/artwork/<id> answers 500 on dev-1, so no artwork reminder email is sent. A product defect, tolerated so MS-ADMO-019 can check every other email.',
+    owner: 'QA',
+    reviewBy: '2026-12-31',
+    ticket: 'MUS-QA-025'
   }
 };

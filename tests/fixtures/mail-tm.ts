@@ -16,7 +16,10 @@ export type MailTmMessage = {
   id: string;
   subject: string;
   text?: string;
+  /** mail.tm splits an HTML body into parts; only the full message (not the inbox listing) has it. */
+  html?: string[];
   from?: { address?: string };
+  createdAt?: string;
 };
 
 export async function createMailTmAccount(): Promise<MailTmAccount> {
@@ -46,21 +49,78 @@ export async function waitForMailTmMessage(
   const deadline = Date.now() + timeoutMs;
 
   while (Date.now() < deadline) {
-    const page = await mailTmFetch<{ 'hydra:member': MailTmMessage[] }>('/messages', {
-      headers: { Authorization: `Bearer ${account.token}` }
-    });
-
-    const match = page['hydra:member'].find(predicate);
+    const match = (await listMailTmMessages(account)).find(predicate);
     if (match) {
-      return mailTmFetch<MailTmMessage>(`/messages/${match.id}`, {
-        headers: { Authorization: `Bearer ${account.token}` }
-      });
+      return readMailTmMessage(account, match.id);
     }
 
     await new Promise((resolve) => setTimeout(resolve, 3_000));
   }
 
   throw new Error(`Timed out after ${timeoutMs}ms waiting for a matching mail.tm message`);
+}
+
+/**
+ * Every message that arrived since the caller last looked, oldest first and read in full. `seen`
+ * holds the ids already handed out and is updated, so calling this after each step of a journey
+ * attributes each email to the step that sent it.
+ *
+ * Returns as soon as `count` new messages are in, or once `timeoutMs` has passed with whatever
+ * arrived by then -- the caller asserts on the count, so a missing email reads as a test failure
+ * naming the step, not a timeout here. Without `count` it always waits the full time, which is how
+ * an unknown number of emails is collected.
+ */
+export async function waitForNewMailTmMessages(
+  account: MailTmAccount,
+  seen: Set<string>,
+  { count, timeoutMs }: { count?: number; timeoutMs: number }
+): Promise<MailTmMessage[]> {
+  const deadline = Date.now() + timeoutMs;
+  let fresh: MailTmMessage[];
+
+  for (;;) {
+    fresh = (await listMailTmMessages(account)).filter((message) => !seen.has(message.id));
+    if ((count !== undefined && fresh.length >= count) || Date.now() >= deadline) {
+      break;
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 3_000));
+  }
+
+  fresh.forEach((message) => seen.add(message.id));
+  const messages = await Promise.all(fresh.map((message) => readMailTmMessage(account, message.id)));
+  return messages.sort((a, b) => (a.createdAt ?? '').localeCompare(b.createdAt ?? ''));
+}
+
+/** The message's readable body: the plain-text part, or the HTML with its tags stripped. */
+export function mailTmBody(message: MailTmMessage): string {
+  const text = message.text?.trim();
+  if (text) {
+    return text;
+  }
+
+  return (message.html ?? [])
+    .join('\n')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** The inbox's newest page (30 messages), as summaries without the body. */
+async function listMailTmMessages(account: MailTmAccount): Promise<MailTmMessage[]> {
+  const page = await mailTmFetch<{ 'hydra:member': MailTmMessage[] }>('/messages', {
+    headers: { Authorization: `Bearer ${account.token}` }
+  });
+
+  return page['hydra:member'];
+}
+
+async function readMailTmMessage(account: MailTmAccount, id: string): Promise<MailTmMessage> {
+  return mailTmFetch<MailTmMessage>(`/messages/${id}`, {
+    headers: { Authorization: `Bearer ${account.token}` }
+  });
 }
 
 // The OTP body also contains a "© Copyright 2026" footer, whose year is itself a plausible

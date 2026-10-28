@@ -34,6 +34,8 @@
     "test:destructive:auth": "cross-env RUN_AUTH_DESTRUCTIVE_E2E=true playwright test tests/e2e/storefront/auth --grep @destructive",
     "admin:login": "playwright test --config tests/setup/admin-login.config.ts",
     "test:admin:destructive": "cross-env E2E_ENVIRONMENT=dev-1 RUN_ADMIN_DESTRUCTIVE_E2E=true playwright test tests/e2e/admin --grep @destructive --retries=0",
+    "test:admin:order-emails": "cross-env E2E_ENVIRONMENT=dev-1 RUN_ADMIN_DESTRUCTIVE_E2E=true RUN_PAYMENT_E2E=true playwright test tests/e2e/admin/orders/order-emails.spec.ts --retries=0",
+    "test:admin:order-emails:capture": "cross-env E2E_ENVIRONMENT=dev-1 RUN_ADMIN_DESTRUCTIVE_E2E=true RUN_PAYMENT_E2E=true ORDER_EMAIL_CAPTURE=true playwright test tests/e2e/admin/orders/order-emails.spec.ts --retries=0",
     "test:ci": "playwright test --grep-invert \"@slow|@destructive|@payment\"",
     "allure:storage:up": "docker compose --env-file ops/allure-report-storage/.env -f ops/allure-report-storage/compose.yaml up --build -d",
     "allure:storage:logs": "docker compose --env-file ops/allure-report-storage/.env -f ops/allure-report-storage/compose.yaml logs -f",

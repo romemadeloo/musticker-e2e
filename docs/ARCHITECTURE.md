@@ -127,7 +127,10 @@ The member login endpoint answers **HTTP 200 with `success: false`** when it ref
 ## Storefront to admin
 
 [tests/e2e/admin/orders/order-processing.spec.ts](../tests/e2e/admin/orders/order-processing.spec.ts)
-(MS-ADMO-001) drives two browser contexts at once: `page` is the customer on the storefront and
+(MS-ADMO-001) and [order-emails.spec.ts](../tests/e2e/admin/orders/order-emails.spec.ts)
+(MS-ADMO-019) share the lifecycle in
+[order-lifecycle.ts](../tests/e2e/admin/orders/order-lifecycle.ts), one stage per hand-off, and
+drive two browser contexts at once: `page` is the customer on the storefront and
 `adminPage` is staff in the admin panel. After every hand-off it checks three things: the admin UI,
 the customer's UI, and the admin API's per-item activity log.
 
@@ -189,14 +192,15 @@ identifier does not vouch for, such as a 404 page, a different slug, or an ambig
   them when `TEST_DATA_USER_DELETE_ENDPOINT` is set, and otherwise keeps the ledger for a later run.
 - **Carts.** MS-CRT-005 adds to the seeded member's real cart and removes the line again.
 - **Orders.** MS-CHK-001 creates a dev order. MS-ADMO-001 takes one existing dev order to 주문 완료.
+  MS-ADMO-019 registers a member, places an order and takes it to 주문 완료.
   Neither can be undone, which is why both are gated and dev-only.
 - **Upload files.** `tests/fixtures/files/`: `sample-design.png` (the customer's design),
   `qa-proof.png` (a transparent PNG, which the admin proof upload requires) and `studio-design.png`
   (1,200px, for the design studio). `sample-design.png` is a 67-byte 1×1 PNG that only works where
   the server takes the file without decoding it. The studio decodes images in the browser and
   rejects it, and it rejects `qa-proof.png` as too low-resolution to print.
-- **Emails.** Guest flows use mail.tm inboxes. Admin processing emails the seeded member at each
-  notification step.
+- **Emails.** Guest flows use mail.tm inboxes. MS-ADMO-001 emails the seeded member at each
+  notification step; MS-ADMO-019 sends them to its own member's mail.tm inbox and checks each one.
 
 ## Known defects in code
 
@@ -225,6 +229,7 @@ assertion, so that new occurrences still fail:
 | `navigation.ts` | `gotoStorefront()` with the 403 retry ladder |
 | `member-auth.ts` | Seeded member API login |
 | `mail-tm.ts` | Disposable inboxes, message polling, OTP extraction |
+| `order-emails.ts` | The customer emails each order step should send, for MS-ADMO-019 |
 | `storefront-data.ts` | Korean storefront copy, product fixtures, checkout profile, thresholds |
 | `money.ts` | `parseWon` / `formatWon` |
 | `sheet-packing.ts` | The A5 sheet layout formula and its boundary cases |
