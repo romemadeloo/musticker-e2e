@@ -122,7 +122,7 @@ export function validateBundle(repo, bundle) {
   const evidence = path.join(bundle, 'evidence', new Date().toISOString().replace(/[:.]/g, '-'))
   fs.mkdirSync(evidence, { recursive: true })
   try {
-    const skip = new Set(['.git', 'node_modules', '.env', '.auth', 'promotions', 'test-results', 'playwright-report', 'allure-results', 'allure-report', 'blob-report'])
+    const skip = new Set(['.git', 'node_modules', '.env', '.development.env', '.production.env', '.auth', 'promotions', 'test-results', 'playwright-report', 'allure-results', 'allure-report', 'blob-report'])
     fs.cpSync(repo, temporary, { recursive: true, filter: source => source === repo || !path.relative(repo, source).split(path.sep).some(part => skip.has(part)) })
     fs.symlinkSync(path.join(repo, 'node_modules'), path.join(temporary, 'node_modules'), process.platform === 'win32' ? 'junction' : 'dir')
     // Session files are local-only; never share cleanup ledgers across runs.
@@ -130,8 +130,8 @@ export function validateBundle(repo, bundle) {
     if (fs.existsSync(auth)) fs.cpSync(auth, path.join(temporary, '.auth'), { recursive: true, filter: source => !source.endsWith('.jsonl') && !path.relative(auth, source).split(path.sep).includes('runs') })
     for (const file of manifest.files) { const target = safePath(temporary, file.path); fs.mkdirSync(path.dirname(target), { recursive: true }); fs.writeFileSync(target, payload(bundle, file.path)) }
     const specs = affectedSpecs(temporary, manifest.files.map(file => file.path))
-    const envFile = path.join(repo, '.env')
-    const localEnv = fs.existsSync(envFile) ? createRequire(path.join(repo, 'package.json'))('dotenv').parse(fs.readFileSync(envFile)) : {}
+    const parseEnv = createRequire(path.join(repo, 'package.json'))('dotenv').parse
+    const localEnv = Object.assign({}, ...['.development.env', '.env'].map(name => path.join(repo, name)).filter(file => fs.existsSync(file)).map(file => parseEnv(fs.readFileSync(file))))
     const env = { ...localEnv, ...process.env, E2E_ENVIRONMENT: '', BASE_URL: manifest.servers.storefront, API_BASE_URL: manifest.servers.api, ADMIN_BASE_URL: manifest.servers.admin || '', E2E_BROWSER_PROJECT: manifest.project, PROMOTION_VALIDATION: 'true', SELF_HEAL: 'off', PW_WORKERS: '1', E2E_RUN_ID: randomUUID(), ALLURE_RESULTS_DIR: '', PW_BLOB_REPORT: 'false' }
     const commands = [
       ['node_modules/typescript/bin/tsc', '--noEmit'],
