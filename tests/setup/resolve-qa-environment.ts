@@ -1,4 +1,4 @@
-import './load-env.js';
+import 'dotenv/config';
 
 import { request } from '@playwright/test';
 import { appendFileSync } from 'node:fs';

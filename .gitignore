@@ -1,8 +1,6 @@
 node_modules/
 .auth/
 .env
-.development.env
-.production.env
 test-results/
 readiness-results/
 qacc-summary.json
