@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import './load-env.js';
 // Turns E2E_ENVIRONMENT=qa into the server the suite will use, so the session is saved for it.
 import './resolve-qa-environment.js';
 

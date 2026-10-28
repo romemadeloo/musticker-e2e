@@ -1,5 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-import 'dotenv/config';
+import './tests/setup/load-env.js';
 // Turns E2E_ENVIRONMENT=qa into dev-1, or dev-2 when dev-1 is down.
 import './tests/setup/resolve-qa-environment.js';
 import { randomUUID } from 'node:crypto';
