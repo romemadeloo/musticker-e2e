@@ -32,7 +32,7 @@ npm install
 npx playwright install chromium
 npm run test:e2e:list      # list every test without running anything
 npm run test:framework     # isolated local checks; no app server requests
-# Copy .development.env.example to .development.env and set the dev environment before running app suites.
+# Set the explicit dev environment in .env before running app suites.
 ```
 
 Every test is safe on production unless it is tagged `@destructive`. Those tests are off by

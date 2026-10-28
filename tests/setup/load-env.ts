@@ -1,11 +1,10 @@
 import dotenv from 'dotenv';
 
 /**
- * Loads .production.env when E2E_ENVIRONMENT=production is set in the shell, otherwise
- * .development.env, which also holds the run settings (E2E_ENVIRONMENT, HEADED, RUN_*). A legacy
- * .env, if present, is read first and wins. Nothing overrides a variable that is already set, so
- * real environment variables (CI) win over every file. All three files are gitignored; see
- * .development.env.example and .production.env.example.
+ * Loads .env, then the secrets file for the environment it targets: .production.env when
+ * E2E_ENVIRONMENT=production, .development.env for qa and dev-*. Neither file overrides a variable
+ * that is already set, so real environment variables (CI) win over .env, and .env wins over both.
+ * Both files are gitignored; see .development.env.example and .production.env.example.
  */
 dotenv.config();
 dotenv.config({
