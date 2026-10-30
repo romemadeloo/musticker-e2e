@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Manrope } from 'next/font/google';
+import { Suspense } from 'react';
+import { TopLoader } from '@/components/top-loader';
 import './globals.css';
 
 const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope', display: 'swap' });
@@ -18,7 +20,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-screen antialiased">{children}</body>
+      <body className="min-h-screen antialiased">
+        {/* useSearchParams needs a Suspense boundary. */}
+        <Suspense fallback={null}>
+          <TopLoader />
+        </Suspense>
+        {children}
+      </body>
     </html>
   );
 }
