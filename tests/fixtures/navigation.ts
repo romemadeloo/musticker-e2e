@@ -70,6 +70,20 @@ export function retriedThrottleBlockCount(page: Page): number {
 }
 
 /**
+ * The page's current path and query, without a trailing slash, for `expect.poll()`.
+ *
+ * `expect(page).toHaveURL(predicate)` goes through `waitForURL()`, which also waits for the `load`
+ * event. On dev-1 that event can land after the 10s assertion timeout although the URL matched almost
+ * at once, so the assertion fails with the right URL as "Received" (MS-DSC-012 and MS-NAV-014,
+ * 2026-10-30). Polling the URL checks only what the assertion is about.
+ */
+export function currentPath(page: Page): string {
+  const url = new URL(page.url());
+
+  return `${url.pathname.replace(/(.)\/$/, '$1')}${url.search}`;
+}
+
+/**
  * Navigates to a storefront path, retrying with backoff while the WAF answers 403.
  *
  * Returns the final response so callers can assert on its status, exactly like `page.goto`. Throws

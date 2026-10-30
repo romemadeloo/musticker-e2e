@@ -28,15 +28,9 @@ const encodings = {
 test.describe('Static asset CORS', { tag: ['@api', '@smoke', '@production'] }, () => {
   for (const path of corsFonts) {
     for (const [variant, acceptEncoding] of Object.entries(encodings)) {
+      // The woff2 browser variant was cached without CORS headers on 2026-10-27; fixed on the CDN by
+      // 2026-10-30 (Access-Control-Allow-Origin: *), so every variant is expected to pass again.
       test(`MS-API-009 ${path} carries CORS headers for the storefront (${variant} encoding)`, async () => {
-        // Known defect, 2026-10-27: the browser-encoding variant of this file is cached without
-        // CORS headers (.test-check-20261027/DEFECT-static-cdn-font-cors.md). When this starts
-        // passing, the CDN has been fixed -- remove this line.
-        test.fail(
-          path.endsWith('.woff2') && variant === 'browser',
-          'DEFECT static CDN font CORS: woff2 browser variant cached without Access-Control-Allow-Origin'
-        );
-
         const storefrontOrigin = new URL(env.BASE_URL).origin;
         const cdn = await request.newContext({
           extraHTTPHeaders: { origin: storefrontOrigin, 'accept-encoding': acceptEncoding }

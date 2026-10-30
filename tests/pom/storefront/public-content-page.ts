@@ -5,7 +5,7 @@ import { appPath, env } from '../../fixtures/env.js';
 import { waitForNuxtHydration } from '../../fixtures/hydration.js';
 import { discoveryCopy } from '../../fixtures/public-content-data.js';
 import type { FaqFooterLink, PublicFooterPage } from '../../fixtures/public-content-data.js';
-import { gotoStorefront } from '../../fixtures/navigation.js';
+import { currentPath, gotoStorefront } from '../../fixtures/navigation.js';
 import { ko } from '../../fixtures/storefront-data.js';
 import { FaqV2Page } from './faq-page.js';
 import { HomeV2Page } from './home-page.js';
@@ -26,7 +26,9 @@ export class PublicContentPage {
     const link = this.page.getByRole('contentinfo').getByRole('link', { name: label, exact: true });
     if ((await link.getAttribute('target')) === '_blank') {
       const [popup] = await Promise.all([this.page.waitForEvent('popup'), link.click()]);
-      await popup.waitForLoadState('domcontentloaded');
+      // A popup starts on about:blank and waitForLoadState() resolves for that blank document, so
+      // a destination slower than the 10s URL assertion failed MS-DSC-012 on dev-1 (2026-10-30).
+      await popup.waitForURL((url) => url.href !== 'about:blank', { waitUntil: 'domcontentloaded' });
       return new PublicContentPage(popup);
     }
     await link.click();
@@ -34,7 +36,8 @@ export class PublicContentPage {
   }
 
   async expectFaqDestination(link: FaqFooterLink): Promise<void> {
-    await expect(this.page).toHaveURL(url => url.pathname === appPath('./faq') && url.searchParams.get('topic') === link.topic && url.searchParams.get('question') === ('questionKey' in link ? link.questionKey : null));
+    const faqQuery = new URLSearchParams({ topic: link.topic, ...('questionKey' in link ? { question: link.questionKey } : {}) });
+    await expect.poll(() => currentPath(this.page)).toBe(`${appPath('./faq')}?${faqQuery}`);
     await waitForNuxtHydration(this.page);
     // FAQ topic controls have no tab roles or selected ARIA state on the deployed page.
     await expect(this.page.locator('.topics-nav .selected')).toHaveText(link.topicLabel);
@@ -53,17 +56,20 @@ export class PublicContentPage {
   }
 
   async expectPublicDestination(target: PublicFooterPage): Promise<void> {
-    await expect(this.page).toHaveURL(url => url.pathname === appPath(target.path));
+    await expect.poll(() => currentPath(this.page)).toBe(appPath(target.path));
     // The license route nests its content main inside the application layout's main.
     const main = this.page.getByRole('main').last();
     await expect(main.getByRole('heading', { level: 1, name: target.heading })).toBeVisible();
-    if (target.section) {
-      const section = main.locator(target.section);
+    if (target.sectionTitle) {
+      // Section ids are semantic in the server HTML (#user-rights-and-how-to-exercise) but hydration
+      // renumbers them (#privacy-section-8), so the section is found by its numbered title instead
+      // (dev-1, 2026-10-30). The page's outer content section contains every title, hence last().
+      const section = main.locator('section', { has: this.page.getByRole('heading', { name: target.sectionTitle }) }).last();
       await expect(section).toContainText(/\S/);
-      // Section links expose their destination through href rather than a test ID.
-      await main.locator(`a[href="${target.section}"]`).click();
+      await main.getByRole('link', { name: target.sectionTitle, exact: true }).click();
       // The client scroll spy may replace the semantic anchor with its numbered section hash.
-      await expect(this.page).toHaveURL(url => url.pathname === appPath(target.path) && url.hash.length > 1);
+      await expect.poll(() => new URL(this.page.url()).hash.length, { message: 'the section link sets a hash' }).toBeGreaterThan(1);
+      expect(currentPath(this.page)).toBe(appPath(target.path));
       await expect(section).toBeInViewport();
     } else {
       await expect(main).toContainText(/\S.{100}/s);

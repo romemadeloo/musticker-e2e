@@ -144,10 +144,8 @@ test.describe('Sheet sticker size rules', {
     await drawer.expectVisible();
     await drawer.expectCustomSizeRejectedInEditDialog(blockedCustomSize.widthMm, blockedCustomSize.heightMm);
 
-    // Reload to drop the drawer's still-open edit dialog before exercising the same rule on the
-    // full cart page's own dialog.
-    await page.reload();
-
+    // Navigating to the cart page drops the drawer's still-open edit dialog; a reload first only
+    // added a second navigation that could cancel a quote in flight.
     const cart = new CartV2Page(page);
     await cart.goto();
     await cart.expectCustomSizeRejectedInSizeChangeDialog(

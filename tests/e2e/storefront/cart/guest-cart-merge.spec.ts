@@ -52,7 +52,7 @@ test.describe('Guest cart merge', { tag: ['@regression', '@purchasing'] }, () =>
       // Logging in through the form is the merge trigger, so this test cannot use a seeded session.
       const login = new LoginPage(page);
       await login.goto();
-      await login.loginWithCredentials(env.AUTH_TEST_EMAIL!, env.AUTH_TEST_PASSWORD!);
+      await login.loginAndAwaitGuestCartMerge(env.AUTH_TEST_EMAIL!, env.AUTH_TEST_PASSWORD!);
 
       const cart = new CartV2Page(page);
       await cart.goto();

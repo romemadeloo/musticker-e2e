@@ -283,6 +283,20 @@ export class LoginPage {
     await expect(this.page.getByTestId('ui-toast')).toContainText('\ub85c\uadf8\uc778\uc5d0 \uc131\uacf5\ud588\uc2b5\ub2c8\ub2e4');
   }
 
+  // The guest cart lives in the browser until login; the client then copies it into the member cart
+  // with POST /cart/create, about 1.5s after the success toast. Navigating away before that request
+  // finishes drops the guest lines, so a merge test must wait for it (seen on dev-1, 2026-10-30).
+  async loginAndAwaitGuestCartMerge(email: string, password: string): Promise<void> {
+    const merged = this.page.waitForResponse(
+      (response) =>
+        response.request().method() === 'POST' && /\/sys\/kr\/cart\/create(?:\?|$)/.test(response.url()),
+      { timeout: 30_000 }
+    );
+
+    await this.loginWithCredentials(email, password);
+    expect((await merged).ok(), 'the guest cart must be copied into the member cart').toBe(true);
+  }
+
   private async submitWithEnter(): Promise<boolean> {
     const loginResponse = this.waitForSuccessfulLoginResponse(12_000);
 

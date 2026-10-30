@@ -35,6 +35,11 @@ test.describe('Guest checkout payment', { tag: ['@e2e', '@destructive', '@slow',
   test('MS-CHK-001 guest checkout completes via the KakaoPay sandbox and sends an order-confirmation email', async ({
     page
   }) => {
+    // Blocked, 2026-10-30: the redesigned checkout runs a Cloudflare Turnstile check with a live site
+    // key when a guest presses 결제하기, and it never clears in automated browsers, so no OTP email
+    // is sent. Needs dev environments to use Turnstile's always-pass test key (or a QA bypass);
+    // then rewrite the email/OTP steps below for the new flow and remove this line.
+    test.fixme(true, 'Guest checkout is behind Cloudflare Turnstile on dev environments (no test site key)');
     // Sequential OTP-email polling, a shipping-cost recalculation wait, the PayApp popup round
     // trip, and a second email poll can legitimately add up past the 60s default on a live dev
     // environment.

@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 import {
+  abortedFetchConsoleKind,
   isBenignNuxtPreloadWarning,
   isBenignFirefoxIllustrationPreloadWarning,
   isBenignPretendardMetadataWarning,
@@ -58,6 +59,16 @@ test('Firefox illustration preload warning is limited to first-party SVG assets'
   expect(isBenignFirefoxIllustrationPreloadWarning(warning(`${storefront}/illustrations/products/stickers/die-cut.svg`))).toBe(true);
   expect(isBenignFirefoxIllustrationPreloadWarning(warning(`${storefront}/illustrations/products/stickers/die-cut.png`))).toBe(false);
   expect(isBenignFirefoxIllustrationPreloadWarning(warning('https://external.example/illustrations/products/stickers/die-cut.svg'))).toBe(false);
+});
+
+test('only a bare "Failed to fetch" or NUXT_E5002 is a candidate for the navigation-abort allowance', () => {
+  expect(abortedFetchConsoleKind('TypeError: Failed to fetch')).toBe('api');
+  expect(abortedFetchConsoleKind('Pricing request failed! TypeError: Failed to fetch')).toBe('api');
+  expect(abortedFetchConsoleKind('[NUXT_E5002]')).toBe('appManifest');
+  expect(abortedFetchConsoleKind('Pricing request failed! TypeError: Failed to fetch dynamically imported module')).toBeUndefined();
+  expect(abortedFetchConsoleKind('Order failed! TypeError: Failed to fetch')).toBeUndefined();
+  expect(abortedFetchConsoleKind('TypeError: NetworkError when attempting to fetch resource.')).toBeUndefined();
+  expect(abortedFetchConsoleKind('[NUXT_E5002] something else')).toBeUndefined();
 });
 
 test('worker model fallback warning does not cover other WebGPU failures', () => {

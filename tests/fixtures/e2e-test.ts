@@ -1,4 +1,5 @@
 import { test as base, expect } from '@playwright/test';
+import type { Request } from '@playwright/test';
 
 import { DEV_API_HOST, DEV_STOREFRONT_HOST } from './hosts.js';
 import { applyInternalOriginHeader } from './internal-origin.js';
@@ -50,6 +51,7 @@ export type GuardOptions = {
   allowPostLogout401: boolean;
   allowStudioModelLoadNoise: boolean;
   allowKnownArtworkReminderFailure: boolean;
+  allowNavigationAbortedFetches: boolean;
 };
 
 function isExpectedGuestUserMe401(status: number, url: string): boolean {
@@ -99,6 +101,39 @@ function isSupersededPricingRequest(text: string): boolean {
       `Pricing request failed! FetchError: \\[GET\\] "https://${DEV_API_HOST}/.*/pricing/quotation/[^"]+": <no response> Canceled due to newer request\\.`
     ).test(text) || text === 'Pricing request failed! AbortError: The user aborted a request.'
   );
+}
+
+// A navigation cancels whatever API fetches the page still had open, and the storefront logs each
+// one as a bare "TypeError: Failed to fetch" (prefixed for quotations). MS-SHT-004 logged it on
+// dev-1 (2026-10-30) 1ms after its circle-sheet quotation was aborted by the test's own navigation.
+// The same navigation can cancel Nuxt's app-manifest fetch (/_nuxt/builds/meta/<build>.json), which
+// Nuxt reports as a bare "[NUXT_E5002]": MS-CHK-002 logged it on dev-1 (2026-10-30) 2ms after its
+// goto to the checkout aborted the product page's manifest fetch.
+// Neither message names a request, so each is only forgiven when an aborted first-party request of
+// its own kind was seen close to it; a fetch that failed for any other reason still fails the run.
+const ABORTED_FETCH_MATCH_WINDOW_MS = 1_000;
+
+export type AbortedFetchKind = 'api' | 'appManifest';
+
+export function abortedFetchConsoleKind(text: string): AbortedFetchKind | undefined {
+  if (/^(?:Pricing request failed! )?TypeError: Failed to fetch$/.test(text)) return 'api';
+  if (text === '[NUXT_E5002]') return 'appManifest';
+  return undefined;
+}
+
+// Chromium, Firefox and WebKit each word a cancelled request differently.
+function abortedRequestKind(request: Request): AbortedFetchKind | undefined {
+  if (
+    !['fetch', 'xhr'].includes(request.resourceType()) ||
+    !['net::ERR_ABORTED', 'NS_BINDING_ABORTED', 'cancelled'].includes(request.failure()?.errorText ?? '')
+  ) {
+    return undefined;
+  }
+  if (new RegExp(`^https://${DEV_API_HOST}/`, 'i').test(request.url())) return 'api';
+  if (new RegExp(`^https://${DEV_STOREFRONT_HOST}/_nuxt/builds/meta/[^/]+\\.json(?:\\?|$)`, 'i').test(request.url())) {
+    return 'appManifest';
+  }
+  return undefined;
 }
 
 // The storefront re-quotes whenever a configuration control changes, and logs this warning when the
@@ -381,6 +416,7 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
   allowPostLogout401: [false, { option: true }],
   allowStudioModelLoadNoise: [false, { option: true }],
   allowKnownArtworkReminderFailure: [false, { option: true }],
+  allowNavigationAbortedFetches: [true, { option: true }],
 
   page: async (
     {
@@ -398,7 +434,8 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
       allowSheetSizeValidationWarnings,
       allowPostLogout401,
       allowStudioModelLoadNoise,
-      allowKnownArtworkReminderFailure
+      allowKnownArtworkReminderFailure,
+      allowNavigationAbortedFetches
     },
     use,
     testInfo
@@ -417,7 +454,8 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
       allowSheetSizeValidationWarnings,
       allowPostLogout401,
       allowStudioModelLoadNoise,
-      allowKnownArtworkReminderFailure
+      allowKnownArtworkReminderFailure,
+      allowNavigationAbortedFetches
     };
     const consoleFailures: string[] = [];
     const responseFailures: string[] = [];
@@ -435,6 +473,16 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
         url: safeURL(request.url()), method: request.method(), resourceType: request.resourceType(),
         error: request.failure()?.errorText, timestamp: Date.now()
       });
+    });
+    // The console message and the request failure arrive in either order, so they are paired up
+    // after the test rather than as they come in.
+    const abortedFetches: Array<{ kind: AbortedFetchKind; at: number }> = [];
+    const abortedFetchConsoleErrors: Array<{ kind: AbortedFetchKind; entry: string; at: number }> = [];
+    page.on('requestfailed', request => {
+      const kind = abortedRequestKind(request);
+      if (kind) {
+        abortedFetches.push({ kind, at: Date.now() });
+      }
     });
     let hadSupersededPricingRequest = false;
     let pendingCartCreateNetworkFailures = 0;
@@ -534,6 +582,12 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
         return;
       }
 
+      const abortedKind = allowNavigationAbortedFetches ? abortedFetchConsoleKind(text) : undefined;
+      if (abortedKind) {
+        abortedFetchConsoleErrors.push({ kind: abortedKind, entry: `[${message.type()}] ${text}`, at: Date.now() });
+        return;
+      }
+
       consoleFailures.push(`[${message.type()}] ${text}`);
     });
 
@@ -593,6 +647,12 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
     // blocked attempt by the time it does. Forgive exactly as many as it navigated past -- a 403
     // that nothing retried still fails the run.
     const throttleBlocks = retriedThrottleBlockCount(page);
+
+    for (const { kind, entry, at } of abortedFetchConsoleErrors) {
+      if (!abortedFetches.some((aborted) => aborted.kind === kind && Math.abs(aborted.at - at) <= ABORTED_FETCH_MATCH_WINDOW_MS)) {
+        consoleFailures.push(entry);
+      }
+    }
 
     if (consoleFailures.length || responseFailures.length || testInfo.status !== testInfo.expectedStatus) {
       await testInfo.attach('browser-diagnostics.json', {

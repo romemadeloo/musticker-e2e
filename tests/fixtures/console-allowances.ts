@@ -88,5 +88,9 @@ export const consoleAllowances: Record<keyof GuardOptions, ConsoleAllowance> = {
     owner: 'QA',
     reviewBy: '2026-12-31',
     ticket: 'MUS-QA-025'
+  },
+  allowNavigationAbortedFetches: {
+    kind: 'by-design',
+    reason: 'Navigating away cancels the page\'s in-flight API fetches, which the storefront logs as "TypeError: Failed to fetch" (API calls) or Nuxt as "[NUXT_E5002]" (its app manifest). Forgiven only when an aborted first-party request of the same kind was seen within a second of the message.'
   }
 };

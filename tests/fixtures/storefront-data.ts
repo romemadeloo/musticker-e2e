@@ -67,7 +67,11 @@ export const ko = {
   payNow: '\uacb0\uc81c\ud558\uae30',
   checkoutEmailPlaceholder: '\uc774\uba54\uc77c \uc8fc\uc18c\ub97c \uc785\ub825\ud574 \uc8fc\uc138\uc694.',
   checkoutNamePlaceholder: '\uc131\ud568\uc744 \uc785\ub825\ud558\uc138\uc694',
-  checkoutPostalCodePlaceholder: '\uc6b0\ud3b8\ubc88\ud638\ub97c \uc785\ub825\ud558\uc138\uc694',
+  // Since the checkout redesign (seen on dev-1 and production, 2026-10-30) the postal code and
+  // road address are read-only fields filled by the Kakao postcode search behind \uc8fc\uc18c \ucc3e\uae30.
+  checkoutPostalCodeLabel: '\uc6b0\ud3b8\ubc88\ud638',
+  checkoutAddressSearch: '\uc8fc\uc18c \ucc3e\uae30',
+  checkoutDetailAddressPlaceholder: '\uc0c1\uc138 \uc8fc\uc18c\ub97c \uc785\ub825\ud574\uc8fc\uc138\uc694',
   // Shown above a signed-in member's shipping form only.
   checkoutAddressSavedNote: '이 주소는 나중에 다시 사용할 수 있도록 저장됩니다.',
   hologram: '\ud640\ub85c\uadf8\ub7a8',
@@ -188,11 +192,12 @@ export const unregisteredLogin = {
 // by anything, and this data only needs to pass client-side validation, not represent a real person.
 export const guestCheckoutProfile = {
   fullName: '\ud14c\uc2a4\ud2b8 \uc0ac\uc6a9\uc790',
-  postalCode: '06168',
   phone: ['010', '1234', '5678'] as const,
-  province: '\uc11c\uc6b8\ud2b9\ubcc4\uc2dc',
-  city: '\uac15\ub0a8\uad6c',
-  streetAddress: '\ud14c\ud5e4\ub780\ub85c 152',
+  // Searched in the Kakao postcode widget; the result whose road address contains roadAddress is
+  // picked and the checkout fills in postalCode itself (verified on dev-1, 2026-10-30).
+  addressQuery: '\ud14c\ud5e4\ub780\ub85c 152',
+  roadAddress: '\uc11c\uc6b8 \uac15\ub0a8\uad6c \ud14c\ud5e4\ub780\ub85c 152',
+  postalCode: '06236',
   detailAddress: '101\ud638'
 } as const;
 
