@@ -1,0 +1,31 @@
+name: Dashboard scheduler tick
+
+# Starts due QA-dashboard schedules (dashboard/app/api/cron/scheduler). Vercel's Hobby plan runs
+# its own cron at most daily (dashboard/vercel.json, 00:00 KST), so this tick provides the
+# 15-minute resolution. GitHub may delay scheduled workflows under load; the route only dispatches
+# occurrences that are due and never the same one twice.
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Call the scheduler
+        env:
+          DASHBOARD_URL: ${{ secrets.DASHBOARD_URL }}
+          DASHBOARD_CRON_SECRET: ${{ secrets.DASHBOARD_CRON_SECRET }}
+        run: |
+          if [ -z "$DASHBOARD_URL" ] || [ -z "$DASHBOARD_CRON_SECRET" ]; then
+            echo "DASHBOARD_URL or DASHBOARD_CRON_SECRET is not set; nothing to do."
+            exit 0
+          fi
+          curl --fail-with-body --silent --show-error --max-time 90 \
+            -H "Authorization: Bearer $DASHBOARD_CRON_SECRET" \
+            "$DASHBOARD_URL/api/cron/scheduler"

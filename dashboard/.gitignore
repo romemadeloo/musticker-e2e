@@ -7,3 +7,7 @@ next-env.d.ts
 *.tsbuildinfo
 supabase/.temp/
 supabase/.branches/
+
+.vercel
+.env*
+!.env.example

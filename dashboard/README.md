@@ -60,13 +60,16 @@ Flaky (passed on retry) counts as *not passed* in pass rates, matching `failOnFl
    | `SLACK_WEBHOOK_URL` | Optional incoming webhook |
    | `NEXT_PUBLIC_SITE_URL` | The deployment URL |
 
-3. Deploy. `vercel.json` registers `/api/cron/scheduler` every 15 minutes. That needs a Pro plan; on Hobby, crons run at
-   most once a day, so change the schedule to daily or trigger the route from elsewhere with the bearer secret.
+3. Deploy. `vercel.json` pins the Next.js framework and runs `/api/cron/scheduler` once a day (00:00 KST), the most the
+   Hobby plan allows. The 15-minute scheduler resolution comes from `.github/workflows/dashboard-scheduler.yml`, which
+   calls the same route with `DASHBOARD_CRON_SECRET`. On a Pro plan you can set the Vercel cron to `*/15 * * * *` and
+   drop that workflow.
 
 ### 3. GitHub Actions
 
-Add repository secrets `DASHBOARD_URL` (the Vercel URL) and `DASHBOARD_INGEST_TOKEN`. `manual-playwright.yml` already
-passes them, plus `dashboard_run_id` and `DASHBOARD_SUITE`. To have the other workflows report too, add the same two
+Add repository secrets `DASHBOARD_URL` (the Vercel URL), `DASHBOARD_INGEST_TOKEN`, and `DASHBOARD_CRON_SECRET` (the
+deployment's `CRON_SECRET`). `manual-playwright.yml` already passes the first two, plus `dashboard_run_id` and
+`DASHBOARD_SUITE`. To have the other workflows report too, add the same two
 `env` entries (and `DASHBOARD_SUITE: <name>`) to them.
 
 In the dashboard, open **Settings** and fill in the GitHub owner, repository, workflow file and ref.
