@@ -316,12 +316,8 @@ export function AppShell({
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="app-header sticky top-0 z-30 flex items-center gap-2 bg-[var(--page)]/85 px-4 py-4 backdrop-blur md:px-8">
-          <button
-            type="button"
-            className="icon-btn"
-            aria-label="Toggle navigation"
-            onClick={() => (window.matchMedia('(min-width: 1024px)').matches ? togglePanel() : setDrawerOpen(true))}
-          >
+          {/* Phones only: the sidebar is hidden there. Desktop collapses from the sidebar itself. */}
+          <button type="button" className="icon-btn lg:hidden" aria-label="Open menu" onClick={() => setDrawerOpen(true)}>
             <Menu size={22} />
           </button>
           <form action="/cases" className="relative hidden sm:block">
