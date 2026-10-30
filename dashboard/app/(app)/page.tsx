@@ -70,8 +70,8 @@ export default async function DashboardPage() {
 
   return (
     <>
-      <div className="mb-7 grid gap-6 md:grid-cols-3 2xl:grid-cols-[1.8fr_1fr_1fr_1fr]">
-        <section className="hero animate-rise min-h-[250px] p-7 md:col-span-3 2xl:col-span-1">
+      <div className="mb-7 grid gap-6 md:grid-cols-3">
+        <section className="hero animate-rise min-h-[250px] p-7 md:col-span-3">
           <HeroArt />
           <div className="relative max-w-[60%] max-sm:max-w-full">
             <h1 className="text-[26px] leading-tight font-extrabold">
