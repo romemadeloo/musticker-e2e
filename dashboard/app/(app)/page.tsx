@@ -4,6 +4,8 @@ import { Card, EmptyState, TextLink, ToneTile } from '@/components/ui';
 import { OutcomeGauge, TrendCard } from '@/components/charts';
 import { ExecutionsTable } from '@/components/executions-table';
 import { HeroArt } from '@/components/hero-art';
+import { ModuleRings } from '@/components/module-health';
+import { toModuleStats, type ModuleStatRow } from '@/lib/modules';
 import { StatusBadge } from '@/components/status-badge';
 import { nextRuns } from '@/lib/cron';
 import { formatDateTime, formatDuration, formatPercent, formatRelative } from '@/lib/format';
@@ -24,7 +26,7 @@ export default async function DashboardPage() {
   const { project } = await getCurrentProject();
   const supabase = await createClient();
 
-  const [auth, recent, daily, caseCount, flakyCases, schedules, environments, envRuns] = await Promise.all([
+  const [auth, recent, daily, caseCount, flakyCases, schedules, environments, envRuns, moduleRows] = await Promise.all([
     supabase.auth.getUser(),
     supabase.from('executions').select('*').eq('project_id', project.id).order('created_at', { ascending: false }).limit(8),
     supabase.from('v_daily_stats').select('*').eq('project_id', project.id).gte('day', sinceDay(14)),
@@ -38,9 +40,11 @@ export default async function DashboardPage() {
       .eq('project_id', project.id)
       .not('status', 'in', '(queued,running)')
       .order('created_at', { ascending: false })
-      .limit(200)
+      .limit(200),
+    supabase.rpc('module_stats', { p_project_id: project.id, p_since: `${sinceDay(14)}T00:00:00+09:00` })
   ]);
 
+  const modules = toModuleStats((moduleRows.data ?? []) as ModuleStatRow[]);
   const executions = (recent.data ?? []) as Execution[];
   const series = toDaySeries((daily.data ?? []) as DailyStat[], 14);
   const all = totals(series);
@@ -124,6 +128,15 @@ export default async function DashboardPage() {
         </div>
         <OutcomeGauge passed={all.passed} flaky={all.flaky} failed={all.failed} skipped={skipped} />
       </div>
+
+      <Card
+        title="Module health"
+        actions={<TextLink href="/analytics">Pass rate by module →</TextLink>}
+        className="mb-7"
+      >
+        <p className="-mt-2 px-6 pb-4 text-xs font-semibold text-[var(--muted)]">Pass rate per workbook area, last 14 days, all environments</p>
+        <ModuleRings modules={modules} />
+      </Card>
 
       <div className="mb-7 grid gap-6 lg:grid-cols-3">
         <Card title="Recent executions" actions={<TextLink href="/executions">View all</TextLink>} className="lg:col-span-2">

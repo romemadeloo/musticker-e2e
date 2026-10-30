@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import { Card, EmptyState, PageHeader, StatTile, TableWrap } from '@/components/ui';
 import { LineTrend, OutcomeBars } from '@/components/charts';
+import { ModuleTable } from '@/components/module-health';
 import { ENVIRONMENT_KEYS } from '@/lib/constants';
+import { toModuleStats, type ModuleStatRow } from '@/lib/modules';
 import { formatDuration, formatPercent, passRate } from '@/lib/format';
 import { getCurrentProject } from '@/lib/project';
 import { sinceDay, toDaySeries, totals } from '@/lib/stats';
@@ -33,12 +35,14 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Pr
     runsQuery = runsQuery.eq('environment_key', env);
   }
 
-  const [daily, runs, caseStats, suites] = await Promise.all([
+  const [daily, runs, caseStats, suites, moduleRows] = await Promise.all([
     dailyQuery,
     runsQuery,
     supabase.from('v_case_stats').select('*').eq('project_id', project.id).gt('runs', 0),
-    supabase.from('test_suites').select('id,title,file,area').eq('project_id', project.id)
+    supabase.from('test_suites').select('id,title,file,area').eq('project_id', project.id),
+    supabase.rpc('module_stats', { p_project_id: project.id, p_since: `${since}T00:00:00+09:00`, p_environment: env || null })
   ]);
+  const modules = toModuleStats((moduleRows.data ?? []) as ModuleStatRow[]);
 
   const series = toDaySeries((daily.data ?? []) as DailyStat[], days);
   const sum = totals(series);
@@ -119,6 +123,14 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Pr
         <StatTile label="Failures" value={sum.failed} hint={`${sum.flaky} flaky`} />
         <StatTile label="Runner time" value={formatDuration(Math.round(totalDuration * 60_000))} hint="sum of run durations" />
       </div>
+
+      <Card
+        title="Pass rate by module"
+        actions={<span className="text-xs font-semibold text-[var(--muted)]">Workbook areas · last {days} days{env ? ` · ${env}` : ''}</span>}
+        className="mb-6"
+      >
+        <ModuleTable modules={modules} />
+      </Card>
 
       <div className="mb-6 grid gap-4 lg:grid-cols-2">
         <Card title="Pass rate">
