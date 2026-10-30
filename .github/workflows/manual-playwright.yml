@@ -47,6 +47,11 @@ on:
         required: false
         default: ''
         type: string
+      dashboard_run_id:
+        description: Set by the QA dashboard when it starts this run; leave empty when running by hand.
+        required: false
+        default: ''
+        type: string
 
 permissions:
   contents: read
@@ -64,6 +69,11 @@ env:
   DEV_INTERNAL_ORIGIN_KEY: ${{ secrets.DEV_INTERNAL_ORIGIN_KEY }}
   E2E_ENVIRONMENT: ${{ inputs.environment }}
   E2E_BROWSER_PROJECT: ${{ inputs.browser_project }}
+  # QA dashboard (dashboard/). Unset secrets leave tests/reporters/dashboard-reporter.ts a no-op.
+  DASHBOARD_URL: ${{ secrets.DASHBOARD_URL }}
+  DASHBOARD_INGEST_TOKEN: ${{ secrets.DASHBOARD_INGEST_TOKEN }}
+  DASHBOARD_RUN_ID: ${{ inputs.dashboard_run_id }}
+  DASHBOARD_SUITE: ${{ inputs.suite }}
   RUN_PAYMENT_E2E: 'false'
   RUN_AUTH_DESTRUCTIVE_E2E: 'false'
   # Each environment has its own user database, so production and the dev-* servers need

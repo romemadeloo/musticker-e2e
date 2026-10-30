@@ -11,6 +11,8 @@ export default [
       "allure-results/**",
       "playwright-report/**",
       "test-results/**",
+      // Next.js app with its own toolchain (dashboard/package.json).
+      "dashboard/**",
     ],
   },
 

@@ -40,6 +40,12 @@ function reportersWithSelfHealSummary(reporters: ReporterDescription[]): Reporte
   return [...reporters, ['./tests/reporters/self-heal-reporter.ts']];
 }
 
+// Sends the catalog and results to the QA dashboard (dashboard/). A no-op unless DASHBOARD_URL and
+// DASHBOARD_INGEST_TOKEN are set. Kept in sharded runs: shards of one GitHub run share an execution.
+function reportersWithDashboard(reporters: ReporterDescription[]): ReporterDescription[] {
+  return [...reporters, ['./tests/reporters/dashboard-reporter.ts']];
+}
+
 // A sharded run cannot produce a meaningful HTML report per shard -- each one only knows about its
 // own slice. `blob` emits a merge-able intermediate instead, which `npx playwright merge-reports`
 // turns back into one HTML report covering every shard (see .github/actions/merge-shard-reports).
@@ -154,7 +160,7 @@ export default defineConfig({
   failOnFlakyTests: !!process.env.CI,
   workers: resolveWorkers(),
   reporter: reportersForShardedRun(
-    reportersWithSelfHealSummary(reportersWithAllure(process.env.CI ? ciReporters : localReporters))
+    reportersWithDashboard(reportersWithSelfHealSummary(reportersWithAllure(process.env.CI ? ciReporters : localReporters)))
   ),
   globalSetup: './tests/setup/global-readiness.ts',
   // Deletes the throwaway members MS-AUTH-020/MS-AUTH-021/MS-AUTH-027 register. A no-op for every other run.

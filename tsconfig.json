@@ -8,5 +8,6 @@
     "resolveJsonModule": true,
     "types": ["node", "@playwright/test"],
     "noEmit": true
-  }
+  },
+  "exclude": ["node_modules", "dashboard"]
 }
