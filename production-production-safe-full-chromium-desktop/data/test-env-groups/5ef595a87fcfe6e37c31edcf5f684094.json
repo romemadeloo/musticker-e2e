@@ -1,0 +1,1 @@
+{"id":"5ef595a87fcfe6e37c31edcf5f684094","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /shipping-methods is sent to sign in and back","status":"passed","testResultsByEnv":{"default":"7a998326b16924d228c117de262a20a6"}}

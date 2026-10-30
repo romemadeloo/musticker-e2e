@@ -1,0 +1,1 @@
+{"id":"22e7b75c04db91eab86e0feda0be61c1","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /seo is sent to sign in and back","status":"passed","testResultsByEnv":{"default":"e86c6962d126ede965d15499d2e63084"}}

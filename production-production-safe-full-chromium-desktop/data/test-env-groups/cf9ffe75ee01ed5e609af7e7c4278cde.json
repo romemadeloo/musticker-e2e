@@ -1,1 +1,1 @@
-{"id":"cf9ffe75ee01ed5e609af7e7c4278cde","fullName":"storefront/discovery/public-content.spec.ts:9:5","name":"MS-DSC-011 footer refund link selects its FAQ topic and survives reload","status":"passed","testResultsByEnv":{"default":"c0bd314382718454bb84cfe6908e4ce3"}}
+{"id":"cf9ffe75ee01ed5e609af7e7c4278cde","fullName":"storefront/discovery/public-content.spec.ts:9:5","name":"MS-DSC-011 footer refund link selects its FAQ topic and survives reload","status":"passed","testResultsByEnv":{"default":"5fae15f97cf54ecfe8632de26e5cd68a"}}

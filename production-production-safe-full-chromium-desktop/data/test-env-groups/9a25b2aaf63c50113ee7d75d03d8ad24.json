@@ -1,0 +1,1 @@
+{"id":"9a25b2aaf63c50113ee7d75d03d8ad24","fullName":"storefront/security/mail-tm.spec.ts:18:3","name":"MS-SEC-005 a generated inbox is a unique, empty mailbox its own token can read","status":"passed","testResultsByEnv":{"default":"2cafcf000ba11426ca52266b897903fb"}}

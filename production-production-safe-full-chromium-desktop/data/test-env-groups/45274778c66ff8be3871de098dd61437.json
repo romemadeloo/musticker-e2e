@@ -1,0 +1,1 @@
+{"id":"45274778c66ff8be3871de098dd61437","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /couriers is sent to sign in and back","status":"passed","testResultsByEnv":{"default":"05e9db83db6c565ac74888cacc5382f7"}}

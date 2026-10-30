@@ -1,0 +1,1 @@
+{"id":"b773829bd0f479b98dd119f007a901b2","fullName":"storefront/security/mail-tm.spec.ts:52:3","name":"MS-SEC-006 the OTP is read past the copyright year, wherever the year appears","status":"passed","testResultsByEnv":{"default":"128045a4905fc5937ca3a6beefb90032"}}

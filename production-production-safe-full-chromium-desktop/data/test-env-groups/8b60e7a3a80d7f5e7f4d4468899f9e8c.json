@@ -1,0 +1,1 @@
+{"id":"8b60e7a3a80d7f5e7f4d4468899f9e8c","fullName":"storefront/checkout/checkout-page.spec.ts:96:5","name":"MS-CHK-010 일반 배송 promises a delivery window after today and charges the fee the summary shows","status":"failed","testResultsByEnv":{"default":"62b67b19d9c88ab799950e804d63f482"}}

@@ -1,0 +1,1 @@
+{"id":"c8fadf4434e5dc77a4bb1da90a402ad7","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /manage-notice is sent to sign in and back","status":"passed","testResultsByEnv":{"default":"6384cb70c29e2a1d2d35e9df97f70aff"}}

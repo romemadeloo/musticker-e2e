@@ -1,1 +1,1 @@
-{"id":"708c1bb0debd72e2074903976320f2c2","fullName":"storefront/auth/login.spec.ts:69:3","name":"MS-AUTH-007 forgot-password recovery opens and validates its email input @validation","status":"passed","testResultsByEnv":{"default":"73780f6dfa4bab636a6c47b14115fdeb"}}
+{"id":"708c1bb0debd72e2074903976320f2c2","fullName":"storefront/auth/login.spec.ts:69:3","name":"MS-AUTH-007 forgot-password recovery opens and validates its email input @validation","status":"passed","testResultsByEnv":{"default":"b2da31a1bb1576af6e57dcfb67b7f61c"}}
