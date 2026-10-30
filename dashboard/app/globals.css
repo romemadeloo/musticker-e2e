@@ -324,6 +324,44 @@ select.input {
   color: var(--accent);
 }
 
+/* Foldable nav group: animates height via grid rows, so no measuring is needed. */
+.fold {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.3s ease, opacity 0.3s ease;
+}
+.fold[data-open='false'] {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+.fold > * {
+  min-height: 0;
+}
+
+/* Collapsed-sidebar flyout next to a rail icon. */
+.flyout {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+  animation: none;
+}
+.group:hover > .flyout,
+.group:focus-within > .flyout {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+}
+/* Bridges the gap between icon and flyout so the pointer can cross it. */
+.flyout::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -14px;
+  width: 14px;
+}
+
 .rail-link {
   display: grid;
   place-items: center;

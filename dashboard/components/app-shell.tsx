@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import {
   BarChart3,
   Bell,
+  ChevronDown,
   CalendarClock,
   FileText,
   FlaskConical,
@@ -15,6 +16,8 @@ import {
   LogOut,
   Menu,
   Moon,
+  PanelLeftClose,
+  PanelLeftOpen,
   Play,
   PlayCircle,
   Search,
@@ -23,6 +26,7 @@ import {
   Sun,
   X
 } from 'lucide-react';
+import { FOLDED_COOKIE, NAV_COOKIE } from '@/lib/constants';
 import type { Project } from '@/lib/types';
 import { selectProject, signOut } from '@/app/(app)/actions';
 
@@ -63,6 +67,10 @@ const groups: NavGroup[] = [
     items: [{ href: '/settings', label: 'Settings', icon: Settings }]
   }
 ];
+
+function writeCookie(name: string, value: string) {
+  document.cookie = `${name}=${encodeURIComponent(value)}; path=/; max-age=31536000; samesite=lax`;
+}
 
 function isActive(pathname: string, href: string) {
   return href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`);
@@ -124,21 +132,53 @@ export function AppShell({
   currentId,
   email,
   recentFailures,
+  initialCollapsed,
+  initialFolded,
   children
 }: {
   projects: Project[];
   currentId: string;
   email: string;
   recentFailures: number;
+  initialCollapsed: boolean;
+  initialFolded: string[];
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const [panelOpen, setPanelOpen] = useState(true);
+  const [panelOpen, setPanelOpen] = useState(!initialCollapsed);
+  const [folded, setFolded] = useState<Set<string>>(() => new Set(initialFolded));
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => setDrawerOpen(false), [pathname]);
+
+  // Cookies rather than localStorage so the server renders the remembered state on first paint.
+  const togglePanel = () =>
+    setPanelOpen((open) => {
+      writeCookie(NAV_COOKIE, open ? 'collapsed' : 'open');
+      return !open;
+    });
+  const toggleGroup = (title: string) =>
+    setFolded((prev) => {
+      const next = new Set(prev);
+      if (next.has(title)) next.delete(title);
+      else next.add(title);
+      writeCookie(FOLDED_COOKIE, [...next].join('|'));
+      return next;
+    });
+
+  // Ctrl/Cmd+B toggles the panel, as in most editors.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b' && window.matchMedia('(min-width: 1024px)').matches) {
+        e.preventDefault();
+        togglePanel();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  });
   useEffect(() => {
     if (!menuOpen) return;
     const close = (e: MouseEvent) => {
@@ -159,9 +199,20 @@ export function AppShell({
         </button>
       </div>
       <form action={selectProject} className="px-6 pt-6 pb-2">
-        <label className="label text-[12px] tracking-wide text-[var(--muted)] uppercase" htmlFor="project-select">
-          Project
-        </label>
+        <div className="flex items-center justify-between">
+          <label className="label text-[12px] tracking-wide text-[var(--muted)] uppercase" htmlFor="project-select">
+            Project
+          </label>
+          <button
+            type="button"
+            onClick={togglePanel}
+            className="icon-btn -mt-2 -mr-2 hidden !h-9 !w-9 lg:grid"
+            aria-label="Collapse sidebar"
+            title="Collapse sidebar (Ctrl+B)"
+          >
+            <PanelLeftClose size={19} />
+          </button>
+        </div>
         <select
           id="project-select"
           name="projectId"
@@ -178,18 +229,44 @@ export function AppShell({
       </form>
       <nav className="flex-1 overflow-y-auto px-5 pb-6">
         {groups.map((group) => (
-          <div key={group.title} className="mt-5">
-            <h2 className="mb-2 px-3 text-[15px] font-extrabold text-ink">{group.title}</h2>
-            <ul className="space-y-1">
-              {group.items.map(({ href, label, icon: Icon }) => (
-                <li key={href}>
-                  <Link href={href} className="nav-link" aria-current={isActive(pathname, href) ? 'page' : undefined}>
-                    <Icon size={20} strokeWidth={1.8} aria-hidden />
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <div key={group.title} className="mt-4">
+            <h2>
+              <button
+                type="button"
+                onClick={() => toggleGroup(group.title)}
+                aria-expanded={!folded.has(group.title)}
+                className="flex w-full items-center justify-between rounded-xl px-3 py-1.5 text-[15px] font-extrabold text-ink transition-colors hover:text-accent"
+              >
+                <span className="flex items-center gap-2">
+                  {group.title}
+                  {folded.has(group.title) && group.items.some((i) => isActive(pathname, i.href)) && (
+                    <span className="h-2 w-2 rounded-full bg-[var(--accent)]" aria-label="contains the current page" />
+                  )}
+                </span>
+                <ChevronDown
+                  size={16}
+                  className={`text-[var(--muted)] transition-transform duration-300 ${folded.has(group.title) ? '-rotate-90' : ''}`}
+                  aria-hidden
+                />
+              </button>
+            </h2>
+            <div className="fold" data-open={!folded.has(group.title)}>
+              <ul className="space-y-1 overflow-hidden pt-1">
+                {group.items.map(({ href, label, icon: Icon }) => (
+                  <li key={href}>
+                    <Link
+                      href={href}
+                      className="nav-link"
+                      aria-current={isActive(pathname, href) ? 'page' : undefined}
+                      tabIndex={folded.has(group.title) ? -1 : undefined}
+                    >
+                      <Icon size={20} strokeWidth={1.8} aria-hidden />
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         ))}
       </nav>
@@ -205,18 +282,34 @@ export function AppShell({
         </Link>
         <div className="flex flex-1 flex-col items-center gap-3">
           {groups.map((g) => (
-            <Link
-              key={g.title}
-              href={g.items[0].href}
-              className="rail-link"
-              data-active={activeGroup?.title === g.title}
-              title={g.title}
-              aria-label={g.title}
-            >
-              <g.icon size={24} strokeWidth={1.7} />
-            </Link>
+            <div key={g.title} className="group relative">
+              <Link href={g.items[0].href} className="rail-link" data-active={activeGroup?.title === g.title} aria-label={g.title}>
+                <g.icon size={24} strokeWidth={1.7} />
+              </Link>
+              {/* With the panel collapsed, the group's pages fly out on hover or keyboard focus. */}
+              {!panelOpen && (
+                <div className="flyout card absolute top-0 left-full z-50 ml-3 w-56 p-2">
+                  <div className="px-3 pt-2 pb-1.5 text-xs font-extrabold tracking-wide text-[var(--muted)] uppercase">{g.title}</div>
+                  {g.items.map(({ href, label, icon: Icon }) => (
+                    <Link key={href} href={href} className="nav-link !py-2.5 !text-[14px]" aria-current={isActive(pathname, href) ? 'page' : undefined}>
+                      <Icon size={18} strokeWidth={1.8} aria-hidden />
+                      {label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
         </div>
+        <button
+          type="button"
+          onClick={togglePanel}
+          className="rail-link mb-4"
+          aria-label={panelOpen ? 'Collapse sidebar' : 'Expand sidebar'}
+          title={`${panelOpen ? 'Collapse' : 'Expand'} sidebar (Ctrl+B)`}
+        >
+          {panelOpen ? <PanelLeftClose size={22} strokeWidth={1.7} /> : <PanelLeftOpen size={22} strokeWidth={1.7} />}
+        </button>
         <form action={signOut}>
           <button type="submit" className="rounded-full transition-transform hover:scale-105" title={`Sign out ${email}`} aria-label="Sign out">
             <Avatar email={email} size={48} />
@@ -247,7 +340,7 @@ export function AppShell({
             type="button"
             className="icon-btn"
             aria-label="Toggle navigation"
-            onClick={() => (window.matchMedia('(min-width: 1024px)').matches ? setPanelOpen((o) => !o) : setDrawerOpen(true))}
+            onClick={() => (window.matchMedia('(min-width: 1024px)').matches ? togglePanel() : setDrawerOpen(true))}
           >
             <Menu size={22} />
           </button>

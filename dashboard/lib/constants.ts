@@ -22,3 +22,7 @@ export const CRON_PRESETS = [
 ] as const;
 
 export const PROJECT_COOKIE = 'qa_project';
+
+// Sidebar state: 'collapsed' hides the nav panel; folded holds group titles joined by '|'.
+export const NAV_COOKIE = 'qa_nav';
+export const FOLDED_COOKIE = 'qa_nav_folded';
