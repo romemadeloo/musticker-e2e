@@ -5,7 +5,7 @@ import './globals.css';
 const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope', display: 'swap' });
 
 export const metadata: Metadata = {
-  title: 'Musticker QA Dashboard',
+  title: 'QA Test Automation and Monitoring',
   description: 'Playwright runs, test catalog, schedules and environments for the Musticker E2E suite.'
 };
 

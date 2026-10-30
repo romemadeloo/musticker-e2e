@@ -197,7 +197,11 @@ export function AppShell({
           <span className="shrink-0">
             <Logo />
           </span>
-          <span className="nav-label text-[17px] font-extrabold tracking-tight">Musticker QA</span>
+          {/* Two fixed lines, so the title never reflows while the sidebar narrows. */}
+          <span className="nav-label leading-tight">
+            <span className="block text-[15px] font-extrabold tracking-tight">QA Test Automation</span>
+            <span className="block text-[13px] font-bold text-[var(--muted)]">and Monitoring</span>
+          </span>
         </Link>
         {mobile && (
           <button type="button" className="icon-btn ml-auto" onClick={() => setDrawerOpen(false)} aria-label="Close menu">

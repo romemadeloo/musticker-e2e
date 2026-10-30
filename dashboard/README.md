@@ -1,4 +1,4 @@
-# Musticker QA Dashboard
+# QA Test Automation and Monitoring
 
 A Next.js app (on Vercel) with a Supabase backend for the Playwright suite in this repository.
 
@@ -43,7 +43,7 @@ Flaky (passed on retry) counts as *not passed* in pass rates, matching `failOnFl
 3. **Authentication → Sign In / Providers → Email**: turn off "Allow new users to sign up". Every signed-in user has full
    access (see the RLS policies), so accounts should only be created by an admin under **Authentication → Users**.
 4. **Authentication → URL Configuration**: set the Site URL to the Vercel URL and add `<vercel-url>/auth/callback` as a
-   redirect URL (for magic links).
+   redirect URL (for Supabase's emailed links, such as password resets).
 
 ### 2. Vercel
 

@@ -1,7 +1,7 @@
-import { signIn, sendMagicLink } from './actions';
+import { signIn } from './actions';
 
-export default async function LoginPage({ searchParams }: { searchParams: Promise<{ next?: string; error?: string; sent?: string }> }) {
-  const { next = '/', error, sent } = await searchParams;
+export default async function LoginPage({ searchParams }: { searchParams: Promise<{ next?: string; error?: string }> }) {
+  const { next = '/', error } = await searchParams;
 
   return (
     <main className="relative grid min-h-screen place-items-center overflow-hidden px-4">
@@ -15,8 +15,8 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
             <circle cx="3" cy="24" r="3" fill="#8965e5" />
           </svg>
           <div>
-            <h1 className="text-xl font-extrabold tracking-tight">Musticker QA</h1>
-            <p className="text-sm font-semibold text-[var(--muted)]">Playwright test dashboard</p>
+            <h1 className="text-lg leading-tight font-extrabold tracking-tight">QA Test Automation and Monitoring</h1>
+            <p className="text-sm font-semibold text-[var(--muted)]">Playwright runs, results and schedules</p>
           </div>
         </div>
 
@@ -24,7 +24,6 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         <p className="mb-6 text-sm text-ink-2">Sign in with your dashboard account.</p>
 
         {error && <p className="mb-4 rounded-2xl bg-[var(--critical-soft)] px-4 py-3 text-sm font-semibold text-critical-text">{error}</p>}
-        {sent && <p className="mb-4 rounded-2xl bg-[var(--good-soft)] px-4 py-3 text-sm font-semibold text-good-text">Check your inbox for a sign-in link.</p>}
 
         <form className="space-y-4">
           <input type="hidden" name="next" value={next} />
@@ -38,19 +37,12 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
             <label className="label" htmlFor="password">
               Password
             </label>
-            <input id="password" name="password" type="password" autoComplete="current-password" className="input w-full" />
+            <input id="password" name="password" type="password" required autoComplete="current-password" className="input w-full" />
           </div>
           <button formAction={signIn} className="btn btn-primary w-full justify-center !py-3">
             Sign in
           </button>
-          <div className="flex items-center gap-3 text-xs font-semibold text-[var(--muted)]">
-            <span className="h-px flex-1 bg-[var(--border)]" /> or <span className="h-px flex-1 bg-[var(--border)]" />
-          </div>
-          <button formAction={sendMagicLink} formNoValidate className="btn w-full justify-center !py-3">
-            Email me a sign-in link
-          </button>
         </form>
-        <p className="mt-6 text-center text-xs text-[var(--muted)]">Accounts are created by an admin in Supabase → Authentication → Users.</p>
       </div>
     </main>
   );
