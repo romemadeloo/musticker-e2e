@@ -18,30 +18,22 @@ const map: Record<string, { tone: Tone; label: string; icon: typeof CheckCircle2
   retired: { tone: 'neutral', label: 'Retired', icon: CircleSlash }
 };
 
-const toneClass: Record<Tone, string> = {
-  good: 'text-good-text',
-  warning: 'text-warning-text',
-  critical: 'text-critical-text',
-  neutral: 'text-muted',
-  info: 'text-accent'
+const pill: Record<Tone, string> = {
+  good: 'bg-[var(--good-soft)] text-good-text',
+  warning: 'bg-[var(--warning-soft)] text-warning-text',
+  critical: 'bg-[var(--critical-soft)] text-critical-text',
+  neutral: 'bg-[var(--surface-2)] text-[var(--muted)]',
+  info: 'bg-[var(--accent-soft)] text-accent'
 };
 
-const dotClass: Record<Tone, string> = {
-  good: 'text-good',
-  warning: 'text-warning',
-  critical: 'text-critical',
-  neutral: 'text-muted',
-  info: 'text-accent'
-};
-
-// Status is always icon + label, never color alone.
+// Status is always icon + label in a tinted pill, never color alone.
 export function StatusBadge({ status }: { status: string | null | undefined }) {
   if (!status) return <span className="text-muted">—</span>;
   const entry = map[status] ?? { tone: 'neutral' as Tone, label: status, icon: CircleDashed };
   const Icon = entry.icon;
   return (
-    <span className={`inline-flex items-center gap-1.5 text-[13px] font-medium ${toneClass[entry.tone]}`}>
-      <Icon size={15} className={`${dotClass[entry.tone]} ${status === 'running' ? 'animate-spin' : ''}`} aria-hidden />
+    <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[12.5px] font-bold whitespace-nowrap ${pill[entry.tone]}`}>
+      <Icon size={14} className={status === 'running' ? 'animate-spin' : ''} aria-hidden />
       {entry.label}
     </span>
   );
