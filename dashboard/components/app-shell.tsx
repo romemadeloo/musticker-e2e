@@ -192,27 +192,28 @@ export function AppShell({
 
   const panel = (
     <div className="flex h-full flex-col">
-      <div className="flex items-center justify-between px-7 pt-6 pb-4 lg:hidden">
-        <Logo />
-        <button type="button" className="icon-btn" onClick={() => setDrawerOpen(false)} aria-label="Close menu">
+      <div className="flex items-center justify-between gap-2 px-6 pt-6 pb-2">
+        <Link href="/" className="flex items-center gap-3" aria-label="Dashboard home">
+          <Logo />
+          <span className="text-[17px] font-extrabold tracking-tight">Musticker QA</span>
+        </Link>
+        <button
+          type="button"
+          onClick={togglePanel}
+          className="icon-btn hidden !h-9 !w-9 lg:grid"
+          aria-label="Collapse sidebar"
+          title="Collapse sidebar (Ctrl+B)"
+        >
+          <PanelLeftClose size={19} />
+        </button>
+        <button type="button" className="icon-btn lg:hidden" onClick={() => setDrawerOpen(false)} aria-label="Close menu">
           <X size={20} />
         </button>
       </div>
-      <form action={selectProject} className="px-6 pt-6 pb-2">
-        <div className="flex items-center justify-between">
-          <label className="label text-[12px] tracking-wide text-[var(--muted)] uppercase" htmlFor="project-select">
-            Project
-          </label>
-          <button
-            type="button"
-            onClick={togglePanel}
-            className="icon-btn -mt-2 -mr-2 hidden !h-9 !w-9 lg:grid"
-            aria-label="Collapse sidebar"
-            title="Collapse sidebar (Ctrl+B)"
-          >
-            <PanelLeftClose size={19} />
-          </button>
-        </div>
+      <form action={selectProject} className="px-6 pt-4 pb-2">
+        <label className="label text-[12px] tracking-wide text-[var(--muted)] uppercase" htmlFor="project-select">
+          Project
+        </label>
         <select
           id="project-select"
           name="projectId"
@@ -227,7 +228,7 @@ export function AppShell({
           ))}
         </select>
       </form>
-      <nav className="flex-1 overflow-y-auto px-5 pb-6">
+      <nav className="flex-1 overflow-y-auto px-5 pb-4">
         {groups.map((group) => (
           <div key={group.title} className="mt-4">
             <h2>
@@ -270,60 +271,68 @@ export function AppShell({
           </div>
         ))}
       </nav>
+      <div className="m-4 flex items-center gap-3 rounded-2xl bg-[var(--surface-2)] p-3">
+        <Avatar email={email} size={40} />
+        <div className="min-w-0 flex-1">
+          <div className="truncate text-sm font-bold">{email.split('@')[0]}</div>
+          <div className="truncate text-xs text-[var(--muted)]">{email}</div>
+        </div>
+        <form action={signOut}>
+          <button type="submit" className="icon-btn !h-9 !w-9" aria-label="Sign out" title="Sign out">
+            <LogOut size={18} />
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+
+  const rail = (
+    <div className="flex h-full flex-col items-center py-6">
+      <Link href="/" aria-label="Dashboard home" className="mb-8">
+        <Logo />
+      </Link>
+      <div className="flex flex-1 flex-col items-center gap-3">
+        {groups.map((g) => (
+          <div key={g.title} className="group relative">
+            <Link href={g.items[0].href} className="rail-link" data-active={activeGroup?.title === g.title} aria-label={g.title}>
+              <g.icon size={24} strokeWidth={1.7} />
+            </Link>
+            {/* The group's pages fly out on hover or keyboard focus. */}
+            <div className="flyout card absolute top-0 left-full z-50 ml-3 w-56 p-2">
+              <div className="px-3 pt-2 pb-1.5 text-xs font-extrabold tracking-wide text-[var(--muted)] uppercase">{g.title}</div>
+              {g.items.map(({ href, label, icon: Icon }) => (
+                <Link key={href} href={href} className="nav-link !py-2.5 !text-[14px]" aria-current={isActive(pathname, href) ? 'page' : undefined}>
+                  <Icon size={18} strokeWidth={1.8} aria-hidden />
+                  {label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      <button type="button" onClick={togglePanel} className="rail-link mb-4" aria-label="Expand sidebar" title="Expand sidebar (Ctrl+B)">
+        <PanelLeftOpen size={22} strokeWidth={1.7} />
+      </button>
+      <form action={signOut}>
+        <button type="submit" className="rounded-full transition-transform hover:scale-105" title={`Sign out ${email}`} aria-label="Sign out">
+          <Avatar email={email} size={44} />
+        </button>
+      </form>
     </div>
   );
 
   return (
     <div className="flex min-h-screen">
-      {/* Icon rail */}
-      <aside className="sticky top-0 hidden h-screen w-[104px] shrink-0 flex-col items-center border-r border-line bg-[var(--rail)] py-6 lg:flex">
-        <Link href="/" aria-label="Dashboard home" className="mb-8">
-          <Logo />
-        </Link>
-        <div className="flex flex-1 flex-col items-center gap-3">
-          {groups.map((g) => (
-            <div key={g.title} className="group relative">
-              <Link href={g.items[0].href} className="rail-link" data-active={activeGroup?.title === g.title} aria-label={g.title}>
-                <g.icon size={24} strokeWidth={1.7} />
-              </Link>
-              {/* With the panel collapsed, the group's pages fly out on hover or keyboard focus. */}
-              {!panelOpen && (
-                <div className="flyout card absolute top-0 left-full z-50 ml-3 w-56 p-2">
-                  <div className="px-3 pt-2 pb-1.5 text-xs font-extrabold tracking-wide text-[var(--muted)] uppercase">{g.title}</div>
-                  {g.items.map(({ href, label, icon: Icon }) => (
-                    <Link key={href} href={href} className="nav-link !py-2.5 !text-[14px]" aria-current={isActive(pathname, href) ? 'page' : undefined}>
-                      <Icon size={18} strokeWidth={1.8} aria-hidden />
-                      {label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-        <button
-          type="button"
-          onClick={togglePanel}
-          className="rail-link mb-4"
-          aria-label={panelOpen ? 'Collapse sidebar' : 'Expand sidebar'}
-          title={`${panelOpen ? 'Collapse' : 'Expand'} sidebar (Ctrl+B)`}
-        >
-          {panelOpen ? <PanelLeftClose size={22} strokeWidth={1.7} /> : <PanelLeftOpen size={22} strokeWidth={1.7} />}
-        </button>
-        <form action={signOut}>
-          <button type="submit" className="rounded-full transition-transform hover:scale-105" title={`Sign out ${email}`} aria-label="Sign out">
-            <Avatar email={email} size={48} />
-          </button>
-        </form>
-      </aside>
-
-      {/* Nav panel (desktop) */}
+      {/* Desktop sidebar: the full panel when open, the icon rail when collapsed. Overflow is only
+          clipped while open, so the rail's flyouts can extend past it. */}
       <aside
-        className={`sticky top-0 hidden h-screen shrink-0 overflow-hidden border-r border-line bg-[var(--panel)] transition-[width] duration-300 lg:block ${
-          panelOpen ? 'w-[300px]' : 'w-0 border-r-0'
+        className={`sticky top-0 z-40 hidden h-screen shrink-0 border-r border-line bg-[var(--panel)] transition-[width] duration-300 ease-out lg:block ${
+          panelOpen ? 'w-[300px] overflow-hidden' : 'w-[92px]'
         }`}
       >
-        <div className="w-[300px]">{panel}</div>
+        <div key={panelOpen ? 'panel' : 'rail'} className={`animate-fade h-full ${panelOpen ? 'w-[300px]' : 'w-[92px]'}`}>
+          {panelOpen ? panel : rail}
+        </div>
       </aside>
 
       {/* Nav drawer (mobile) */}

@@ -105,6 +105,8 @@ body {
   background: var(--accent-soft);
 }
 
+/* Component classes sit in the components layer so Tailwind utilities (hidden, lg:grid, …) override them. */
+@layer components {
 /* Cards */
 .card {
   background: var(--surface);
@@ -398,6 +400,7 @@ select.input {
 .fab svg {
   animation: spin-slow 6s linear infinite;
 }
+}
 
 /* Motion */
 @keyframes rise {
@@ -460,6 +463,14 @@ select.input {
 .animate-rise {
   animation: rise 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   animation-delay: calc(var(--i, 0) * 70ms);
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+.animate-fade {
+  animation: fade-in 0.35s ease both;
 }
 .animate-float {
   animation: float 4s ease-in-out infinite;
