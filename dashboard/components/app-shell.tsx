@@ -271,18 +271,6 @@ export function AppShell({
           </div>
         ))}
       </nav>
-      <div className="m-4 flex items-center gap-3 rounded-2xl bg-[var(--surface-2)] p-3">
-        <Avatar email={email} size={40} />
-        <div className="min-w-0 flex-1">
-          <div className="truncate text-sm font-bold">{email.split('@')[0]}</div>
-          <div className="truncate text-xs text-[var(--muted)]">{email}</div>
-        </div>
-        <form action={signOut}>
-          <button type="submit" className="icon-btn !h-9 !w-9" aria-label="Sign out" title="Sign out">
-            <LogOut size={18} />
-          </button>
-        </form>
-      </div>
     </div>
   );
 
@@ -310,14 +298,9 @@ export function AppShell({
           </div>
         ))}
       </div>
-      <button type="button" onClick={togglePanel} className="rail-link mb-4" aria-label="Expand sidebar" title="Expand sidebar (Ctrl+B)">
+      <button type="button" onClick={togglePanel} className="rail-link" aria-label="Expand sidebar" title="Expand sidebar (Ctrl+B)">
         <PanelLeftOpen size={22} strokeWidth={1.7} />
       </button>
-      <form action={signOut}>
-        <button type="submit" className="rounded-full transition-transform hover:scale-105" title={`Sign out ${email}`} aria-label="Sign out">
-          <Avatar email={email} size={44} />
-        </button>
-      </form>
     </div>
   );
 
