@@ -188,141 +188,129 @@ export function AppShell({
     return () => document.removeEventListener('mousedown', close);
   }, [menuOpen]);
 
-  const activeGroup = groups.find((g) => g.items.some((i) => isActive(pathname, i.href)));
-
-  const panel = (
-    <div className="flex h-full flex-col">
-      <div className="flex items-center justify-between gap-2 px-6 pt-6 pb-2">
-        <Link href="/" className="flex items-center gap-3" aria-label="Dashboard home">
-          <Logo />
-          <span className="text-[17px] font-extrabold tracking-tight">Musticker QA</span>
+  // One nav for both states: collapsing narrows it, fades labels, titles and the project picker out,
+  // and leaves every icon exactly where it was. Collapsed, each item shows its name as a tooltip.
+  const sidebar = (collapsed: boolean, mobile: boolean) => (
+    <div className="flex h-full flex-col" data-collapsed={collapsed}>
+      <div className="flex h-[76px] shrink-0 items-center gap-3 pr-4 pl-[23px]">
+        <Link href="/" className="flex min-w-0 items-center gap-3" aria-label="Dashboard home">
+          <span className="shrink-0">
+            <Logo />
+          </span>
+          <span className="nav-label text-[17px] font-extrabold tracking-tight">Musticker QA</span>
         </Link>
-        <button
-          type="button"
-          onClick={togglePanel}
-          className="icon-btn hidden !h-9 !w-9 lg:grid"
-          aria-label="Collapse sidebar"
-          title="Collapse sidebar (Ctrl+B)"
-        >
-          <PanelLeftClose size={19} />
-        </button>
-        <button type="button" className="icon-btn lg:hidden" onClick={() => setDrawerOpen(false)} aria-label="Close menu">
-          <X size={20} />
-        </button>
+        {mobile && (
+          <button type="button" className="icon-btn ml-auto" onClick={() => setDrawerOpen(false)} aria-label="Close menu">
+            <X size={20} />
+          </button>
+        )}
       </div>
-      <form action={selectProject} className="px-6 pt-4 pb-2">
-        <label className="label text-[12px] tracking-wide text-[var(--muted)] uppercase" htmlFor="project-select">
-          Project
-        </label>
-        <select
-          id="project-select"
-          name="projectId"
-          defaultValue={currentId}
-          className="input w-full"
-          onChange={(e) => e.currentTarget.form?.requestSubmit()}
-        >
-          {projects.map((p) => (
-            <option key={p.id} value={p.id}>
-              {p.name}
-            </option>
-          ))}
-        </select>
-      </form>
-      <nav className="flex-1 overflow-y-auto px-5 pb-4">
-        {groups.map((group) => (
-          <div key={group.title} className="mt-4">
-            <h2>
-              <button
-                type="button"
-                onClick={() => toggleGroup(group.title)}
-                aria-expanded={!folded.has(group.title)}
-                className="flex w-full items-center justify-between rounded-xl px-3 py-1.5 text-[15px] font-extrabold text-ink transition-colors hover:text-accent"
-              >
-                <span className="flex items-center gap-2">
-                  {group.title}
-                  {folded.has(group.title) && group.items.some((i) => isActive(pathname, i.href)) && (
-                    <span className="h-2 w-2 rounded-full bg-[var(--accent)]" aria-label="contains the current page" />
-                  )}
-                </span>
-                <ChevronDown
-                  size={16}
-                  className={`text-[var(--muted)] transition-transform duration-300 ${folded.has(group.title) ? '-rotate-90' : ''}`}
-                  aria-hidden
-                />
-              </button>
-            </h2>
-            <div className="fold" data-open={!folded.has(group.title)}>
-              <ul className="space-y-1 overflow-hidden pt-1">
-                {group.items.map(({ href, label, icon: Icon }) => (
-                  <li key={href}>
-                    <Link
-                      href={href}
-                      className="nav-link"
-                      aria-current={isActive(pathname, href) ? 'page' : undefined}
-                      tabIndex={folded.has(group.title) ? -1 : undefined}
-                    >
-                      <Icon size={20} strokeWidth={1.8} aria-hidden />
-                      {label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        ))}
-      </nav>
-    </div>
-  );
 
-  const rail = (
-    <div className="flex h-full flex-col items-center py-6">
-      <Link href="/" aria-label="Dashboard home" className="mb-8">
-        <Logo />
-      </Link>
-      <div className="flex flex-1 flex-col items-center gap-3">
-        {groups.map((g) => (
-          <div key={g.title} className="group relative">
-            <Link href={g.items[0].href} className="rail-link" data-active={activeGroup?.title === g.title} aria-label={g.title}>
-              <g.icon size={24} strokeWidth={1.7} />
-            </Link>
-            {/* The group's pages fly out on hover or keyboard focus. */}
-            <div className="flyout card absolute top-0 left-full z-50 ml-3 w-56 p-2">
-              <div className="px-3 pt-2 pb-1.5 text-xs font-extrabold tracking-wide text-[var(--muted)] uppercase">{g.title}</div>
-              {g.items.map(({ href, label, icon: Icon }) => (
-                <Link key={href} href={href} className="nav-link !py-2.5 !text-[14px]" aria-current={isActive(pathname, href) ? 'page' : undefined}>
-                  <Icon size={18} strokeWidth={1.8} aria-hidden />
-                  {label}
-                </Link>
+      <div className="fold" data-open={!collapsed}>
+        <form action={selectProject} className="overflow-hidden" aria-hidden={collapsed}>
+          <div className="px-5 pb-2">
+            <label className="label text-[12px] tracking-wide whitespace-nowrap text-[var(--muted)] uppercase" htmlFor={mobile ? 'project-select-m' : 'project-select'}>
+              Project
+            </label>
+            <select
+              id={mobile ? 'project-select-m' : 'project-select'}
+              name="projectId"
+              defaultValue={currentId}
+              className="input w-full"
+              tabIndex={collapsed ? -1 : undefined}
+              onChange={(e) => e.currentTarget.form?.requestSubmit()}
+            >
+              {projects.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name}
+                </option>
               ))}
-            </div>
+            </select>
           </div>
-        ))}
+        </form>
       </div>
-      <button type="button" onClick={togglePanel} className="rail-link" aria-label="Expand sidebar" title="Expand sidebar (Ctrl+B)">
-        <PanelLeftOpen size={22} strokeWidth={1.7} />
-      </button>
+
+      <nav className={`flex-1 px-3 pb-3 ${collapsed ? 'overflow-visible' : 'overflow-x-hidden overflow-y-auto'}`}>
+        {groups.map((group) => {
+          const isFolded = !collapsed && folded.has(group.title);
+          return (
+            <div key={group.title} className="mt-3">
+              <div className="fold" data-open={!collapsed}>
+                <h2 className="overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={() => toggleGroup(group.title)}
+                    aria-expanded={!isFolded}
+                    tabIndex={collapsed ? -1 : undefined}
+                    className="flex w-full items-center justify-between rounded-xl px-3 py-1.5 text-[15px] font-extrabold whitespace-nowrap text-ink transition-colors hover:text-accent"
+                  >
+                    <span className="flex items-center gap-2">
+                      {group.title}
+                      {isFolded && group.items.some((i) => isActive(pathname, i.href)) && (
+                        <span className="h-2 w-2 rounded-full bg-[var(--accent)]" aria-label="contains the current page" />
+                      )}
+                    </span>
+                    <ChevronDown size={16} className={`text-[var(--muted)] transition-transform duration-300 ${isFolded ? '-rotate-90' : ''}`} aria-hidden />
+                  </button>
+                </h2>
+              </div>
+              <div className="fold" data-open={collapsed}>
+                <div className="overflow-hidden">
+                  <div className="mx-auto my-2 h-px w-8 bg-[var(--border)]" />
+                </div>
+              </div>
+              <div className="fold" data-open={!isFolded}>
+                <ul className={`space-y-1 pt-1 ${collapsed ? '' : 'overflow-hidden'}`}>
+                  {group.items.map(({ href, label, icon: Icon }) => (
+                    <li key={href} className="nav-item relative">
+                      <Link
+                        href={href}
+                        className="nav-link"
+                        aria-current={isActive(pathname, href) ? 'page' : undefined}
+                        aria-label={collapsed ? label : undefined}
+                        tabIndex={isFolded ? -1 : undefined}
+                      >
+                        <Icon size={20} strokeWidth={1.8} className="shrink-0" aria-hidden />
+                        <span className="nav-label">{label}</span>
+                      </Link>
+                      {collapsed && <span className="nav-tip">{label}</span>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          );
+        })}
+      </nav>
+
+      {!mobile && (
+        <div className="nav-item relative border-t border-line px-3 py-3">
+          <button type="button" onClick={togglePanel} className="nav-link w-full" aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}>
+            {collapsed ? <PanelLeftOpen size={20} strokeWidth={1.8} className="shrink-0" /> : <PanelLeftClose size={20} strokeWidth={1.8} className="shrink-0" />}
+            <span className="nav-label">Collapse sidebar</span>
+            <kbd className="nav-label ml-auto rounded-md bg-[var(--surface-2)] px-1.5 py-0.5 font-sans text-[11px] text-[var(--muted)]">Ctrl B</kbd>
+          </button>
+          {collapsed && <span className="nav-tip">Expand sidebar · Ctrl B</span>}
+        </div>
+      )}
     </div>
   );
 
   return (
     <div className="flex min-h-screen">
-      {/* Desktop sidebar: the full panel when open, the icon rail when collapsed. Overflow is only
-          clipped while open, so the rail's flyouts can extend past it. */}
       <aside
-        className={`sticky top-0 z-40 hidden h-screen shrink-0 border-r border-line bg-[var(--panel)] transition-[width] duration-300 ease-out lg:block ${
-          panelOpen ? 'w-[300px] overflow-hidden' : 'w-[92px]'
+        className={`sidebar sticky top-0 z-40 hidden h-screen shrink-0 border-r border-line bg-[var(--panel)] lg:block ${
+          panelOpen ? 'w-[280px] overflow-hidden' : 'w-[80px]'
         }`}
       >
-        <div key={panelOpen ? 'panel' : 'rail'} className={`animate-fade h-full ${panelOpen ? 'w-[300px]' : 'w-[92px]'}`}>
-          {panelOpen ? panel : rail}
-        </div>
+        {sidebar(!panelOpen, false)}
       </aside>
 
       {/* Nav drawer (mobile) */}
       {drawerOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <button type="button" className="absolute inset-0 bg-black/50" onClick={() => setDrawerOpen(false)} aria-label="Close menu" />
-          <aside className="animate-rise absolute top-0 left-0 h-full w-[300px] max-w-[85vw] bg-[var(--panel)] shadow-2xl">{panel}</aside>
+          <aside className="drawer absolute top-0 left-0 h-full w-[280px] max-w-[85vw] bg-[var(--panel)] shadow-2xl">{sidebar(false, true)}</aside>
         </div>
       )}
 

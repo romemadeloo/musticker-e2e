@@ -101,6 +101,14 @@ body {
   font-family: var(--font-sans);
 }
 
+:focus:not(:focus-visible) {
+  outline: none;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 ::selection {
   background: var(--accent-soft);
 }
@@ -300,37 +308,77 @@ select.input {
   color: var(--text);
 }
 
-/* Sidebar nav pill */
+/* Sidebar: one nav that narrows in place. Width, labels and spacing share one easing curve. */
+.sidebar {
+  transition: width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
 .nav-link {
   display: flex;
   align-items: center;
   gap: 14px;
+  width: 100%;
   border-radius: 999px;
   padding: 11px 18px;
   font-size: 15px;
   font-weight: 600;
   color: var(--text-2);
-  transition: background 0.2s ease, color 0.2s ease;
-}
-.nav-link svg {
-  transition: transform 0.2s ease;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease, gap 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .nav-link:hover {
-  color: var(--accent);
-}
-.nav-link:hover svg {
-  transform: translateX(3px);
+  background: var(--surface-2);
+  color: var(--text);
 }
 .nav-link[aria-current='page'] {
   background: var(--accent-soft);
   color: var(--accent);
 }
+.nav-label {
+  display: inline-block;
+  max-width: 220px;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 1;
+  transition: opacity 0.2s ease 0.08s, max-width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+[data-collapsed='true'] .nav-label {
+  max-width: 0;
+  opacity: 0;
+  transition: opacity 0.12s ease, max-width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+[data-collapsed='true'] .nav-link {
+  gap: 0;
+}
 
-/* Foldable nav group: animates height via grid rows, so no measuring is needed. */
+/* Tooltip beside a collapsed item. */
+.nav-tip {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 14px);
+  z-index: 60;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: var(--text);
+  color: var(--page);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-4px, -50%);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.nav-item:hover > .nav-tip,
+.nav-item:has(:focus-visible) > .nav-tip {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+/* Foldable block: animates height via grid rows, so no measuring is needed. */
 .fold {
   display: grid;
   grid-template-rows: 1fr;
-  transition: grid-template-rows 0.3s ease, opacity 0.3s ease;
+  transition: grid-template-rows 0.28s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
 }
 .fold[data-open='false'] {
   grid-template-rows: 0fr;
@@ -340,43 +388,9 @@ select.input {
   min-height: 0;
 }
 
-/* Collapsed-sidebar flyout next to a rail icon. */
-.flyout {
-  visibility: hidden;
-  opacity: 0;
-  transform: translateX(-6px);
-  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
-  animation: none;
-}
-.group:hover > .flyout,
-.group:focus-within > .flyout {
-  visibility: visible;
-  opacity: 1;
-  transform: none;
-}
-/* Bridges the gap between icon and flyout so the pointer can cross it. */
-.flyout::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -14px;
-  width: 14px;
-}
-
-.rail-link {
-  display: grid;
-  place-items: center;
-  width: 54px;
-  height: 54px;
-  border-radius: 999px;
-  color: var(--text-2);
-  transition: background 0.2s ease, color 0.2s ease;
-}
-.rail-link:hover,
-.rail-link[data-active='true'] {
-  background: var(--accent-soft);
-  color: var(--accent);
+/* Mobile drawer slides in from the left. */
+.drawer {
+  animation: drawer-in 0.28s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .fab {
@@ -463,6 +477,11 @@ select.input {
 .animate-rise {
   animation: rise 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   animation-delay: calc(var(--i, 0) * 70ms);
+}
+@keyframes drawer-in {
+  from {
+    transform: translateX(-100%);
+  }
 }
 @keyframes fade-in {
   from {
