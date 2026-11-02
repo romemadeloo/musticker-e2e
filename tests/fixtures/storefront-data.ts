@@ -119,6 +119,78 @@ export const cartCopy = {
   removeConfirmHeading: '장바구니에서 이 상품을 삭제하시겠습니까?'
 } as const;
 
+// The member account shell (/kr/account/*): the summary strip and the six-section menu every account
+// page shares, captured live from dev-1 on 2026-11-02. Each section's tab is `account-shell-tab-<key>`
+// and its page root `account-<key>-page`, so the key is the one name that ties tab, URL and page together.
+export const accountMenuSections = [
+  { key: 'profile', label: '프로필', path: 'account/profile' },
+  { key: 'address-book', label: '주소록', path: 'account/address-book' },
+  { key: 'orders', label: '주문 내역', path: 'account/orders' },
+  { key: 'points', label: '포인트', path: 'account/points' },
+  { key: 'coupons', label: '쿠폰', path: 'account/coupons' },
+  { key: 'reviews', label: '내 리뷰', path: 'account/reviews' }
+] as const;
+
+export type AccountMenuSection = (typeof accountMenuSections)[number];
+
+// Account sections other than order history, captured live from dev-1 on 2026-11-02.
+export const accountCopy = {
+  profile: {
+    emailChangeHeading: '이메일 변경',
+    withdrawButton: '회원 탈퇴'
+  },
+  addressBook: {
+    heading: '주소록',
+    addDialogHeading: '새 주소 추가',
+    defaultBadge: '기본 배송',
+    nameField: '성함',
+    postcodeField: '우편번호',
+    findAddressButton: '주소 찾기',
+    cancelButton: '취소',
+    saveButton: '저장',
+    menuItems: ['주소 수정', '삭제', '기본 배송지로 설정'] as const
+  },
+  points: {
+    heading: '포인트',
+    historyHeading: '포인트 내역',
+    ledgerLoading: '포인트 내역을 불러오는 중입니다.',
+    filterAll: '전체',
+    filterEarned: '적립',
+    filterSpent: '차감',
+    challengesHeading: '챌린지',
+    showAllChallenges: '전체 보기',
+    questDialogHeading: '위대한 스티커 퀘스트',
+    // A ledger row's amount: "+57 P" / "-5556 P". Quest rewards that are not points (a coupon, e.g.
+    // "15% 할인 쿠폰 (1회 사용)") carry no amount at all, so they never match.
+    signedAmountPattern: /^([+-])\s*[\d,]+\s*P$/,
+    // "4/7" next to 챌린지, and 완료한 퀘스트 "4/7" in the dialog.
+    questProgressPattern: /(\d+)\s*\/\s*(\d+)/
+  },
+  coupons: {
+    codeInputPlaceholder: '쿠폰 코드 입력',
+    registerButton: '쿠폰 등록',
+    blankCode: '쿠폰 코드를 입력해 주세요.',
+    invalidCode: '유효하지 않은 쿠폰 코드입니다.',
+    usageBadge: /1회 사용|다회 사용/
+  },
+  reviews: {
+    heading: '후기',
+    writableHeading: '작성 가능한 후기',
+    noCompletedReviews: '아직 등록된 후기가 없습니다',
+    writeButton: '후기 작성',
+    writeDialogTitle: '후기 작성',
+    // dev-1 labels it 등록; production's newer form (keyword chips, 리뷰 초안 만들기) says 리뷰 등록.
+    // Seen side by side on 2026-11-02.
+    submitButton: /^(?:리뷰 )?등록$/,
+    // A card holding several lines of one order pages through them: "3 중 1" is line 1 of 3.
+    linePagerPattern: /(\d+)\s*중\s*\d+/,
+    // The queue is fetched 8 at a time (`review/queue?skip=0&take=8`) and paginated at that size.
+    pageSize: 8
+  },
+  // Shared by every dated row in the account pages: "2026년 11월 02일".
+  koreanDatePattern: /\d{4}년\s*\d{1,2}월\s*\d{1,2}일/
+} as const;
+
 // Order history (/kr/account/orders), captured live from the dev storefront on 2026-08-27. The page is a
 // master/detail: `.order-list .order-item` cards on the left, `.orders-main` invoice on the right.
 export const orderHistoryCopy = {

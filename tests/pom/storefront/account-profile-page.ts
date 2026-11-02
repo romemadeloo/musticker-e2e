@@ -2,7 +2,7 @@ import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
 import { appPath } from '../../fixtures/env.js';
-import { authCopy } from '../../fixtures/storefront-data.js';
+import { accountCopy, authCopy } from '../../fixtures/storefront-data.js';
 import { waitForPasswordFormInteractive } from '../../fixtures/hydration.js';
 import { gotoStorefront } from '../../fixtures/navigation.js';
 
@@ -28,7 +28,24 @@ export class AccountProfilePage {
 
   readonly fullNameInput: Locator;
   readonly emailInput: Locator;
+  readonly emailChangeButton: Locator;
   readonly saveButton: Locator;
+
+  readonly photoUploadButton: Locator;
+  readonly photoDeleteButton: Locator;
+  readonly photoInput: Locator;
+
+  readonly emailChangeModal: Locator;
+  readonly emailChangeModalInput: Locator;
+  readonly emailChangeModalConfirm: Locator;
+  readonly emailChangeModalClose: Locator;
+
+  readonly settingsSection: Locator;
+  readonly promotionsToggle: Locator;
+  readonly reviewRemindersToggle: Locator;
+  // Clicking it immediately calls `POST /sys/kr/account-deletion/validate`, which emails the member a
+  // verification code (seen on dev-1, 2026-11-02). Tests check it exists and never click it.
+  readonly withdrawButton: Locator;
 
   readonly passwordSection: Locator;
   readonly currentPasswordInput: Locator;
@@ -46,7 +63,22 @@ export class AccountProfilePage {
 
     this.fullNameInput = page.getByTestId('account-profile-full_name-control');
     this.emailInput = page.getByTestId('account-profile-email-control');
+    this.emailChangeButton = page.getByTestId('account-profile-email-change-button');
     this.saveButton = page.getByTestId('account-profile-save-button');
+
+    this.photoUploadButton = page.getByTestId('account-profile-photo-upload-button');
+    this.photoDeleteButton = page.getByTestId('account-profile-photo-delete-button');
+    this.photoInput = page.getByTestId('account-profile-photo-input');
+
+    this.emailChangeModal = page.getByTestId('account-profile-email-change-modal');
+    this.emailChangeModalInput = page.getByTestId('account-profile-email-change-input-control');
+    this.emailChangeModalConfirm = page.getByTestId('account-profile-email-change-modal-confirm');
+    this.emailChangeModalClose = page.getByTestId('account-profile-email-change-modal-close');
+
+    this.settingsSection = page.getByTestId('account-profile-settings-section');
+    this.promotionsToggle = page.getByTestId('account-profile-toggle-promotions');
+    this.reviewRemindersToggle = page.getByTestId('account-profile-toggle-reviews');
+    this.withdrawButton = page.getByRole('button', { name: accountCopy.profile.withdrawButton, exact: true });
 
     this.passwordSection = page.getByTestId('account-profile-password-section');
     this.currentPasswordInput = page.getByTestId('account-profile-current-password-control');
@@ -118,6 +150,17 @@ export class AccountProfilePage {
     await expect(this.newPasswordInput).toHaveValue('');
     await expect(this.confirmPasswordInput).toHaveValue('');
     await expect(this.passwordSection.getByTestId('ui-form-field-error-message')).toHaveCount(0);
+  }
+
+  async openEmailChange(): Promise<void> {
+    await this.emailChangeButton.click();
+    await expect(this.emailChangeModal).toBeVisible();
+    await expect(this.emailChangeModal).toContainText(accountCopy.profile.emailChangeHeading);
+  }
+
+  async closeEmailChange(): Promise<void> {
+    await this.emailChangeModalClose.click();
+    await expect(this.emailChangeModal).toBeHidden();
   }
 
   async expectMemberSummary(): Promise<void> {
