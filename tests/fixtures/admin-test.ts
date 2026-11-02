@@ -1,4 +1,4 @@
-import type { Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 
 import { AdminApi } from './admin-api.js';
 import {
@@ -8,7 +8,7 @@ import {
   hasAdminSession,
   isAdminSessionValid
 } from './admin-auth.js';
-import { test as e2eTest } from './e2e-test.js';
+import { expect, test as e2eTest } from './e2e-test.js';
 import { adminBaseUrl } from './env.js';
 
 type AdminFixtures = {
@@ -72,3 +72,21 @@ export const test = e2eTest.extend<AdminFixtures>({
 });
 
 export { expect } from './e2e-test.js';
+
+/**
+ * `toContainText` for the admin panel, except that a failure reports only that the text did not
+ * match, never the text itself. A failing `toContainText` prints what it received -- order rows,
+ * dashboard widgets, customers' names and emails -- into the CI log and report, which are public.
+ * Use it wherever the received text is panel content; `message` must not contain customer data.
+ */
+export async function expectPanelText(locator: Locator, expected: string | RegExp, message: string): Promise<void> {
+  await expect
+    .poll(
+      async () => {
+        const text = (await locator.textContent()) ?? '';
+        return typeof expected === 'string' ? text.includes(expected) : expected.test(text);
+      },
+      { message }
+    )
+    .toBe(true);
+}

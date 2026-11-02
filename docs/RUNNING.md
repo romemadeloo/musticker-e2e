@@ -195,6 +195,26 @@ with a message telling you to run `admin:login` again. If the panel shows **Acti
 Detected**, choosing *Logout & Continue* signs the account out everywhere else, including your
 own browser.
 
+**Production.** The read-only admin specs (MS-ADM-003 to 006) also run on production; everything
+that changes data skips there. They need a **dedicated QA staff account** with the lowest role that
+can view orders, never a real staff member's login: the session lives in CI, and one session per
+account would keep signing that person out. Put its credentials in `PRODUCTION_ADMIN_EMAIL` and
+`PRODUCTION_ADMIN_PASSWORD` (the dev pair is never used on production), then:
+
+```bash
+npx cross-env E2E_ENVIRONMENT=production npm run admin:login
+```
+
+```bash
+npm run -s admin:session:export -- production | clip
+```
+
+Paste the result into the `ADMIN_SESSION_PRODUCTION` Actions secret. `manual-playwright.yml`
+restores it for production runs (so the dashboard's production schedules include the admin specs)
+and warns in the run summary when it is missing or rejected. The panel shows real customers' data
+and CI artifacts are public, so admin specs record no screenshots or traces, and checks on panel
+text use `expectPanelText`, which reports a mismatch without printing what it read.
+
 **MS-ADMO-001** takes one order all the way from design upload to order completion.
 The test starts from a paid order the seeded member already placed:
 
