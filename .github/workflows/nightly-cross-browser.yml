@@ -6,9 +6,8 @@ name: Nightly cross-browser
 # a browser-specific regression visible instead of averaged away.
 
 on:
-  schedule:
-    # 02:00 Asia/Manila every day, two hours ahead of the production full suite.
-    - cron: '0 18 * * *'
+  # Manual only. Recurring runs are scheduled from the QA dashboard (Scheduler), which dispatches
+  # manual-playwright.yml so their results are recorded there.
   workflow_dispatch:
 
 permissions:

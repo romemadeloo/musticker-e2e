@@ -1,9 +1,8 @@
 name: Production full suite
 
 on:
-  schedule:
-    # 04:00 Asia/Manila every day.
-    - cron: '0 20 * * *'
+  # Manual only. The daily production run is scheduled from the QA dashboard (Scheduler), which
+  # dispatches manual-playwright.yml so its results are recorded there.
   workflow_dispatch:
     inputs:
       suite:

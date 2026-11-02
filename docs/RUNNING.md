@@ -262,7 +262,7 @@ unverified, and sandbox/destructive E2E still needs its configured prerequisites
 | --- | --- | --- |
 | `pr-checks.yml` | Pull request to an environment branch | Parallel API and quality/critical-UI jobs, separate promotion/affected regression, then aggregate `PR gate` |
 | `smoke.yml` | Branch push, manual, or `storefront-deployed` repository dispatch | API contracts followed by five critical UI checks on the selected target |
-| `production-full-suite.yml` | Daily 20:00 UTC (04:00 Manila / 05:00 KST), manual | Browser-free API stage followed by production-safe UI in 8 shards; no full run on each push |
+| `production-full-suite.yml` | Manual (the daily production run is scheduled from the QA dashboard) | Browser-free API stage followed by production-safe UI in 8 shards; no full run on each push |
 | `release-checks.yml` | Manual, dev-1 through dev-6; defaults to dev-2 | API checks, Chromium/Firefox/WebKit/mobile UI and accessibility, then optional sandbox E2E |
 | `manual-playwright.yml` | Manual | Safe functional/API suites, environment and browser; destructive tests excluded from all selections |
 | `deploy-allure-storage.yml` | Manual | Infrastructure for the Allure report server |
