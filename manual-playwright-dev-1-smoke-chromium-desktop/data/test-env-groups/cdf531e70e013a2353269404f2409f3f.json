@@ -1,0 +1,1 @@
+{"id":"cdf531e70e013a2353269404f2409f3f","fullName":"storefront/api/static-assets-cors.spec.ts:33:7","name":"MS-API-009 /fonts/lettering/NanumGothicBold.woff carries CORS headers for the storefront (gzip encoding)","status":"passed","testResultsByEnv":{"default":"d18809db0eaf915cd388858dc5e556b1"}}

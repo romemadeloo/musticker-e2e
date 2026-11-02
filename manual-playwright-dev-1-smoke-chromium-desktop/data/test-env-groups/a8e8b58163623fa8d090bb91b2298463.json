@@ -1,0 +1,1 @@
+{"id":"a8e8b58163623fa8d090bb91b2298463","fullName":"storefront/api/static-assets-cors.spec.ts:33:7","name":"MS-API-009 /fonts/lettering/segoe-ui.ttf carries CORS headers for the storefront (browser encoding)","status":"passed","testResultsByEnv":{"default":"0548b482a19e3f702ca560046ba9da6e"}}
