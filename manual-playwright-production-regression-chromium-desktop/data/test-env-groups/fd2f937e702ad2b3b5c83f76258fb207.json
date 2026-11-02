@@ -1,0 +1,1 @@
+{"id":"fd2f937e702ad2b3b5c83f76258fb207","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /offers is sent to sign in and back","status":"passed","testResultsByEnv":{"default":"3c1953927f1e98eecbda1b0a3a7211ad"}}

@@ -1,0 +1,55 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: storefront/api/auth-validation.spec.ts >> API auth validation >> MS-API-007 malformed login data returns field-level validation errors
+- Location: tests/e2e/storefront/api/auth-validation.spec.ts:9:3
+
+# Error details
+
+```
+Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 200
+Received: 403
+```
+
+# Test source
+
+```ts
+  1  | import { test, expect } from '../../../fixtures/api-test.js';
+  2  | import { apiPath } from '../../../fixtures/env.js';
+  3  | import { unregisteredLogin } from '../../../fixtures/storefront-data.js';
+  4  | 
+  5  | // These requests deliberately fail authentication; they do not create users or send email.
+  6  | // The deployed API reports both validation and credential rejection as HTTP 200, so checking
+  7  | // status alone would miss a broken backend. Verified on production on 2026-10-23.
+  8  | test.describe('API auth validation', { tag: ['@api', '@regression', '@production'] }, () => {
+  9  |   test('MS-API-007 malformed login data returns field-level validation errors', async ({ request }) => {
+  10 |     const response = await request.post(apiPath('/sys/kr/auth/login'), {
+  11 |       data: { email: 'not-an-email', password: '', remember_me: true }
+  12 |     });
+> 13 |     expect(response.status()).toBe(200);
+     |                               ^ Error: expect(received).toBe(expected) // Object.is equality
+  14 |     expect(await response.json()).toMatchObject({
+  15 |       success: false,
+  16 |       data: { email: expect.any(Array), password: expect.any(Array) }
+  17 |     });
+  18 |     expect((await request.get(apiPath('/sys/kr/user/me'))).status()).toBe(401);
+  19 |   });
+  20 | 
+  21 |   test('MS-API-008 invalid credentials return an explicit rejection without authenticating', async ({ request }) => {
+  22 |     const response = await request.post(apiPath('/sys/kr/auth/login'), {
+  23 |       data: { ...unregisteredLogin, remember_me: true }
+  24 |     });
+  25 |     expect(response.status()).toBe(200);
+  26 |     expect(await response.json()).toMatchObject({ success: false, data: { code: 'invalid_credentials' } });
+  27 |     expect((await request.get(apiPath('/sys/kr/user/me'))).status()).toBe(401);
+  28 |   });
+  29 | });
+  30 | 
+```
