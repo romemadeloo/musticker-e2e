@@ -121,16 +121,6 @@ jobs:
           node scripts/ci/admin-session.mjs check dev-1 \
             https://shared-dev-static-api.musticker.com/index.php https://shared-dev-static-admin.musticker.com
 
-      # Production's read-only admin specs (MS-ADM-003 to 006) use the dedicated QA staff account's
-      # session. Without the secret, or with an expired session, they skip and the summary warns.
-      - name: Restore and check the production admin session
-        if: ${{ inputs.environment == 'production' }}
-        env:
-          ADMIN_SESSION_PRODUCTION: ${{ secrets.ADMIN_SESSION_PRODUCTION }}
-        run: |
-          node scripts/ci/admin-session.mjs restore production
-          node scripts/ci/admin-session.mjs check production https://api.musticker.com/index.php https://admin-panel.musticker.com
-
       - name: Run selected suite
         shell: bash
         env:

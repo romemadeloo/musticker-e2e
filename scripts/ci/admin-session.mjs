@@ -13,10 +13,6 @@
  *   node scripts/ci/admin-session.mjs restore dev-1           # CI: ADMIN_SESSION_DEV1 -> .auth/
  *   node scripts/ci/admin-session.mjs check dev-1 <api base> <admin origin>
  *
- * `production` works the same way (ADMIN_SESSION_PRODUCTION). It must be a dedicated QA staff account
- * with the lowest role that can view orders: the session lives in CI, and one session per account
- * means a shared login would keep signing a real staff member out.
- *
  * `check` never fails the job: an expired session makes every admin spec skip, which is not a
  * product failure, but it must not go unnoticed either -- so it raises a GitHub warning and a step
  * summary line instead. Nothing here prints the session itself except `export`, on request.
@@ -29,8 +25,8 @@ import { URL } from 'node:url';
 
 const [command, environment, apiBase, adminOrigin] = process.argv.slice(2);
 
-if (!/^(dev-[1-6]|production)$/.test(environment ?? '')) {
-  console.error('Usage: admin-session.mjs export|restore|check dev-N|production [api base] [admin origin]');
+if (!/^dev-[1-6]$/.test(environment ?? '')) {
+  console.error('Usage: admin-session.mjs export|restore|check dev-N [api base] [admin origin]');
   process.exit(2);
 }
 
@@ -76,8 +72,7 @@ if (command === 'export') {
   const body = response ? await response.json().catch(() => ({})) : {};
 
   if (response?.ok && body.success === true) {
-    // dev_admin_token on the dev servers; matched by suffix so production's name is found too.
-    const token = state.cookies.find((c) => /admin_token$/.test(c.name));
+    const token = state.cookies.find((c) => c.name === 'dev_admin_token');
     const days = token?.expires > 0 ? Math.floor((token.expires * 1000 - Date.now()) / 86_400_000) : undefined;
     console.log(`Admin session for ${environment} is valid${days === undefined ? '' : ` (about ${days} day(s) left)`}.`);
     if (days !== undefined && days <= 1) report(`The session expires within a day. Refresh ${secretName} soon.`);

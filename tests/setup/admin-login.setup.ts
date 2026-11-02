@@ -11,8 +11,6 @@ import { waitForNuxtHydration } from '../fixtures/hydration.js';
  *
  * A browser window opens on the panel's login page. With ADMIN_EMAIL and ADMIN_PASSWORD in .env the
  * form is filled and submitted for you; otherwise sign in yourself, with "Keep me signed in" ticked.
- * Production uses PRODUCTION_ADMIN_EMAIL and PRODUCTION_ADMIN_PASSWORD instead, never the dev pair: it
- * must be the dedicated QA staff account, not whichever login the dev servers use.
  * Either way the verification code goes to sales@musticker.com and has to be typed in by a person --
  * nothing here reads that inbox. Once the dashboard loads, the session is saved to
  * .auth/admin-<environment>.json (gitignored).
@@ -26,9 +24,8 @@ test('capture an admin panel session', async ({ page }) => {
 
   await page.goto(`${baseURL}/`);
 
-  const production = activeEnvironment === 'production';
-  const email = (production ? process.env.PRODUCTION_ADMIN_EMAIL : process.env.ADMIN_EMAIL)?.trim();
-  const password = production ? process.env.PRODUCTION_ADMIN_PASSWORD : process.env.ADMIN_PASSWORD;
+  const email = process.env.ADMIN_EMAIL?.trim();
+  const password = process.env.ADMIN_PASSWORD;
 
   if (email && password) {
     const emailInput = page.getByPlaceholder('Enter your email');

@@ -1,21 +1,19 @@
 import { adminSections } from '../../../fixtures/admin-data.js';
-import { expect, expectPanelText, test } from '../../../fixtures/admin-test.js';
+import { expect, test } from '../../../fixtures/admin-test.js';
 import { activeEnvironment } from '../../../fixtures/env.js';
 import { AdminOrderDetailPage } from '../../../pom/admin/admin-order-detail-page.js';
 import { AdminOrdersPage } from '../../../pom/admin/admin-orders-page.js';
 
 // The panel shows real customers' names and emails, and CI artifacts are public -- see adminPage.
-// For the same reason, checks on panel text use expectPanelText, which never prints what it read.
 test.use({ screenshot: 'off', trace: 'off' });
 
 /**
  * The admin panel's pages and the numbers on them, against the admin API that feeds them. Explored
  * by hand on dev-1, 2026-10-27, which is where every expectation here was read.
  *
- * Read-only apart from MS-ADM-007, which flips an order's priority star and flips it back and skips
- * on production. Runs on production with the dedicated QA account's session (ADMIN_SESSION_PRODUCTION).
+ * Read-only apart from MS-ADM-007, which flips an order's priority star and flips it back.
  */
-test.describe('Admin panel', { tag: ['@admin', '@regression', '@production'] }, () => {
+test.describe('Admin panel', { tag: ['@admin', '@regression'] }, () => {
   for (const { path, heading } of adminSections) {
     test(`MS-ADM-003 ${path} opens on "${heading}"`, async ({ adminPage }) => {
       await adminPage.goto(path);
@@ -53,7 +51,7 @@ test.describe('Admin panel', { tag: ['@admin', '@regression', '@production'] }, 
     test.skip(expected.length === 0, `${tab.name} holds no orders on this server`);
 
     await expect(orders.visibleRows()).toHaveCount(expected.length);
-    await expectPanelText(orders.visibleRows().first(), expected[0], 'the first row is the first order the API lists');
+    await expect(orders.visibleRows().first()).toContainText(expected[0]);
   });
 
   test('MS-ADM-005 customer segments add up and match the dashboard', async ({ adminPage, adminApi }) => {
@@ -68,7 +66,7 @@ test.describe('Admin panel', { tag: ['@admin', '@regression', '@production'] }, 
     await expect(main.getByText(new RegExp(`Showing 1-\\d+ of ${segments.all} entries`))).toBeVisible();
 
     await adminPage.goto('/dashboard');
-    await expectPanelText(adminPage.locator('main'), new RegExp(`Total Customers\\s*${segments.all}\\b`), 'dashboard Total Customers matches All');
+    await expect(adminPage.locator('main')).toContainText(new RegExp(`Total Customers\\s*${segments.all}\\b`));
   });
 
   test('MS-ADM-006 searching an invoice number lists that order alone and opens it', async ({ adminPage, adminApi }) => {
@@ -79,11 +77,11 @@ test.describe('Admin panel', { tag: ['@admin', '@regression', '@production'] }, 
     await orders.goto();
     await orders.search(order.order_number);
     await expect(orders.visibleRows()).toHaveCount(1);
-    await expectPanelText(orders.visibleRows(), order.customer_details.email, "the row shows the order's customer email");
+    await expect(orders.visibleRows()).toContainText(order.customer_details.email);
 
     await orders.visibleRows().getByText(order.order_number, { exact: true }).click();
     await expect(adminPage, 'the detail page is the searched order').toHaveURL(new RegExp(`/orders/${order.id}$`));
-    await expectPanelText(new AdminOrderDetailPage(adminPage).title, order.order_number, 'the detail title is the searched order');
+    await expect(new AdminOrderDetailPage(adminPage).title).toContainText(order.order_number);
   });
 
   test('MS-ADM-007 the priority star is saved on the order and can be cleared', async ({ adminPage, adminApi }) => {
