@@ -61,6 +61,9 @@ spec (tests/e2e/…)  → imports { test, expect } from fixtures/e2e-test.ts (or
   `test-results/self-heal-report.md`. Fix `storefront-data.ts`, then confirm with `SELF_HEAL=off`.
 - Created accounts are recorded in `.auth/runs/<run-id>/created-accounts.jsonl` and deleted by
   `tests/setup/global-teardown.ts` when `TEST_DATA_USER_DELETE_ENDPOINT` is set.
+- The QA dashboard (Next.js + Supabase on Vercel) lives in its own repository, `qa-test-dashboard`.
+  `tests/reporters/dashboard-reporter.ts` feeds it and is a no-op without `DASHBOARD_URL`; its **Run tests** and
+  scheduler dispatch `manual-playwright.yml`, whose `suite` options the dashboard's `lib/constants.ts` mirrors.
 - Admin order journeys (`tests/e2e/admin/orders/order-lifecycle.ts`) drive customer `page` and staff
   `adminPage` together and verify each hand-off in admin UI, customer UI, and the admin API activity log.
 
