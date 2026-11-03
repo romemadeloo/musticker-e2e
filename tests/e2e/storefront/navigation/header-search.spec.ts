@@ -16,7 +16,7 @@ test.describe('Header search', { tag: ['@regression', '@production', '@discovery
     await search.expectNoResultsHidden();
   });
 
-  test('MS-NAV-010 selecting a search result opens the product and closes search', async ({ page }) => {
+  test('MS-NAV-010 selecting a search result opens the product and closes search', { tag: '@smoke' }, async ({ page }) => {
     const home = new HomeV2Page(page);
     await home.goto();
     const search = await home.header.openSearch();

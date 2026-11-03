@@ -16,7 +16,7 @@ test.describe('Product config', { tag: ['@regression', '@production', '@purchasi
     allowTransientProductPageFailures: true
   });
 
-  test('MS-CFG-001 die-cut sticker supports size and quantity selection', { tag: '@critical' }, async ({ page }) => {
+  test('MS-CFG-001 die-cut sticker supports size and quantity selection', { tag: ['@critical', '@smoke'] }, async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = v2Products.dieCutSticker;
 

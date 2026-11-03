@@ -2,10 +2,10 @@ import { test } from '../../../fixtures/e2e-test.js';
 import { ko } from '../../../fixtures/storefront-data.js';
 import { FaqV2Page } from '../../../pom/storefront/faq-page.js';
 
-test.describe('FAQ', { tag: ['@smoke', '@regression', '@production'] }, () => {
+test.describe('FAQ', { tag: ['@regression', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });
 
-  test('MS-DSC-004 FAQ topics and accordions are usable', async ({ page }) => {
+  test('MS-DSC-004 FAQ topics and accordions are usable', { tag: '@smoke' }, async ({ page }) => {
     const faq = new FaqV2Page(page);
 
     await faq.goto();

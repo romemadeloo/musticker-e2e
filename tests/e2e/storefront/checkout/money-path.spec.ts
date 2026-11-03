@@ -28,7 +28,7 @@ test.describe('Money path', { tag: ['@regression', '@production', '@purchasing']
     allowGuestCheckoutBootstrap401: true
   });
 
-  test('MS-CHK-004 the quoted price survives product page, cart, and checkout unchanged', async ({ page }) => {
+  test('MS-CHK-004 the quoted price survives product page, cart, and checkout unchanged', { tag: '@smoke' }, async ({ page }) => {
     const data = v2Products.dieCutSticker;
     const product = new ProductV2Page(page);
 

@@ -18,7 +18,7 @@ test.describe('Checkout page', { tag: ['@regression', '@production'] }, () => {
     allowGuestCheckoutBootstrap401: true
   });
 
-  test('MS-CHK-002 checkout page renders shipping, payment, and order summary without submitting', async ({ page }) => {
+  test('MS-CHK-002 checkout page renders shipping, payment, and order summary without submitting', { tag: '@smoke' }, async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = v2Products.dieCutSticker;
 

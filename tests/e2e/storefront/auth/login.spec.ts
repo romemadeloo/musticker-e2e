@@ -99,7 +99,7 @@ test.describe('Login', { tag: ['@auth', '@production'] }, () => {
     await expect(page.getByTestId('auth-register-page')).toBeVisible();
   });
 
-  test('MS-AUTH-009 seeded member can log in @credentialed', async ({ page }) => {
+  test('MS-AUTH-009 seeded member can log in @credentialed', { tag: '@smoke' }, async ({ page }) => {
     test.skip(!env.AUTH_TEST_EMAIL || !env.AUTH_TEST_PASSWORD, 'Set AUTH_TEST_EMAIL and AUTH_TEST_PASSWORD to run.');
 
     const login = new LoginPage(page);

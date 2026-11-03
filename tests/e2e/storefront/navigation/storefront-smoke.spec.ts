@@ -5,10 +5,10 @@ import { expectHeadingOrHeal } from '../../../fixtures/self-heal.js';
 import { categoryProducts, ko } from '../../../fixtures/storefront-data.js';
 import { HomeV2Page } from '../../../pom/storefront/home-page.js';
 
-test.describe('Storefront smoke', { tag: ['@smoke', '@production'] }, () => {
+test.describe('Storefront smoke', { tag: ['@regression', '@production'] }, () => {
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });
 
-  test('MS-NAV-001 homepage loads with critical public content', { tag: '@critical' }, async ({ page }) => {
+  test('MS-NAV-001 homepage loads with critical public content', { tag: ['@critical', '@smoke'] }, async ({ page }) => {
     const home = new HomeV2Page(page);
 
     await home.goto();
@@ -19,7 +19,7 @@ test.describe('Storefront smoke', { tag: ['@smoke', '@production'] }, () => {
   // 2026-10-14). The menu is checked by its links, not its labels: it still uses the names from
   // before the 2026-09-24 rename (키스컷, 아트지 롤, 시트 스티커 -- see MUS-QA-016), and which side is
   // right is product's call.
-  test('MS-NAV-002 header navigation opens each category product menu', async ({ page }) => {
+  test('MS-NAV-002 header navigation opens each category product menu', { tag: '@smoke' }, async ({ page }) => {
     const home = new HomeV2Page(page);
     const categories = [
       { name: ko.stickers, path: './stickers', products: categoryProducts.stickers },
@@ -41,7 +41,7 @@ test.describe('Storefront smoke', { tag: ['@smoke', '@production'] }, () => {
     await expectHeadingOrHeal(page, firstRoll.name, `product heading ${firstRoll.path}`);
   });
 
-  test('MS-NAV-003 header search opens and finds hologram sticker content', { tag: '@critical' }, async ({ page }) => {
+  test('MS-NAV-003 header search opens and finds hologram sticker content', { tag: ['@critical', '@smoke'] }, async ({ page }) => {
     const home = new HomeV2Page(page);
 
     await home.goto();
@@ -50,7 +50,7 @@ test.describe('Storefront smoke', { tag: ['@smoke', '@production'] }, () => {
     await expect(page.getByRole('dialog').getByText(/\ud640\ub85c\uadf8\ub7a8/).first()).toBeVisible();
   });
 
-  test('MS-NAV-004 empty cart opens without broken state', { tag: '@critical' }, async ({ page }) => {
+  test('MS-NAV-004 empty cart opens without broken state', { tag: ['@critical', '@smoke'] }, async ({ page }) => {
     const home = new HomeV2Page(page);
 
     await home.goto();
@@ -59,7 +59,7 @@ test.describe('Storefront smoke', { tag: ['@smoke', '@production'] }, () => {
     await cart.expectEmpty();
   });
 
-  test('MS-NAV-005 account icon routes anonymous users to authentication', async ({ page }) => {
+  test('MS-NAV-005 account icon routes anonymous users to authentication', { tag: '@smoke' }, async ({ page }) => {
     const home = new HomeV2Page(page);
 
     await home.goto();

@@ -5,7 +5,7 @@ import { CategoryV2Page } from '../../../pom/storefront/category-page.js';
 test.describe('Category discovery', { tag: ['@regression', '@production', '@discovery'] }, () => {
   test.use({ allowGuestUserMe401: true, allowKnownNuxtPayloadFailures: true });
 
-  test('MS-DSC-001 sticker category lists expected product links', async ({ page }) => {
+  test('MS-DSC-001 sticker category lists expected product links', { tag: '@smoke' }, async ({ page }) => {
     const category = new CategoryV2Page(page);
 
     await category.goto('./stickers', ko.stickers);
