@@ -1,1 +1,1 @@
-{"id":"58936f6b95679feae566850f161b9ecd","fullName":"storefront/configuration/sticker-catalog-configurator.spec.ts:24:5","name":"MS-CFG-017 홀로그램 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"e21080a2260e8562ae1108229c5db0de"}}
+{"id":"58936f6b95679feae566850f161b9ecd","fullName":"storefront/configuration/sticker-catalog-configurator.spec.ts:24:5","name":"MS-CFG-017 홀로그램 스티커 supports size and quantity selection through to cart","status":"failed","testResultsByEnv":{"default":"507ea20aa38fc5a54776a1057d0d2499"}}

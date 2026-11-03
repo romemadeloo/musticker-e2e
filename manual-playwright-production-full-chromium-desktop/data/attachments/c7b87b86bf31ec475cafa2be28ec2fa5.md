@@ -1,0 +1,601 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: storefront/navigation/footer.spec.ts >> Footer >> MS-NAV-016 footer shows contact, social and business registration details
+- Location: tests/e2e/storefront/navigation/footer.spec.ts:73:3
+
+# Error details
+
+```
+Error: expect(locator).toHaveAttribute(expected) failed
+
+Locator: getByRole('contentinfo').getByRole('link', { name: 'instagram icon', exact: true })
+Expected: "https://www.instagram.com/musticker_official/"
+Timeout: 10000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toHaveAttribute" with timeout 10000ms
+  - waiting for getByRole('contentinfo').getByRole('link', { name: 'instagram icon', exact: true })
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - link "Musticker" [ref=e7] [cursor=pointer]:
+          - /url: /kr
+          - img "musticker logo" [ref=e8]
+        - generic [ref=e9]:
+          - button "공지사항 열기" [ref=e11] [cursor=pointer]:
+            - img [ref=e13]
+          - button "layout.header.search" [ref=e15] [cursor=pointer]:
+            - img [ref=e16]
+          - button "장바구니" [ref=e19] [cursor=pointer]:
+            - img [ref=e20]
+          - button "계정" [ref=e23] [cursor=pointer]:
+            - img [ref=e25]
+      - navigation "Primary":
+        - link "스티커" [ref=e27] [cursor=pointer]:
+          - /url: javascript:;
+        - link "롤스티커" [ref=e28] [cursor=pointer]:
+          - /url: javascript:;
+        - link "판스티커" [ref=e29] [cursor=pointer]:
+          - /url: javascript:;
+  - main [ref=e30]:
+    - main [ref=e31]:
+      - generic [ref=e33]:
+        - generic:
+          - img "스티커ㅋㅋㅋ,"
+        - generic [ref=e34]:
+          - generic [ref=e35]:
+            - heading "스티커ㅋㅋㅋ, 이유가 있구나" [level=1] [ref=e36]:
+              - text: 스티커ㅋㅋㅋ,
+              - generic [ref=e37]: 이유가 있구나
+            - paragraph [ref=e38]: 빠른데, 퀄리티까지 미쳤다
+          - button "빠른 주문" [ref=e39] [cursor=pointer]:
+            - generic [ref=e40]: 빠른 주문
+      - generic [ref=e41]:
+        - generic [ref=e43]:
+          - link "스티커" [ref=e44] [cursor=pointer]:
+            - /url: /kr/stickers/die-cut-sticker
+            - img [ref=e46]
+            - paragraph [ref=e47]: 스티커
+          - link "롤스티커" [ref=e48] [cursor=pointer]:
+            - /url: /kr/roll-stickers/die-cut-roll
+            - img [ref=e50]
+            - paragraph [ref=e51]: 롤스티커
+          - link "판스티커" [ref=e52] [cursor=pointer]:
+            - /url: /kr/stickers/sticker-sheet
+            - img [ref=e54]
+            - paragraph [ref=e55]: 판스티커
+          - link "홀로그램" [ref=e56] [cursor=pointer]:
+            - /url: /kr/stickers/hologram-sticker
+            - img [ref=e58]
+            - paragraph [ref=e59]: 홀로그램
+          - link "글자 커팅 스티커" [ref=e60] [cursor=pointer]:
+            - /url: /kr/stickers/vinyl-lettering
+            - img [ref=e62]
+            - paragraph [ref=e63]: 글자 커팅 스티커
+        - generic [ref=e65]:
+          - dialog "급해서 맡겼는데, 퀄리티 때문에 기억나는 스티커" [ref=e67]:
+            - generic [ref=e68]:
+              - button "음소거 해제" [ref=e70] [cursor=pointer]:
+                - img [ref=e71]
+              - generic:
+                - slider "재생 위치"
+                - button "전체화면":
+                  - img
+          - generic [ref=e73]:
+            - heading "급해서 맡겼는데, 퀄리티 때문에 기억나는 스티커" [level=2] [ref=e74]:
+              - text: 급해서 맡겼는데,
+              - text: 퀄리티 때문에 기억나는 스티커
+            - paragraph [ref=e75]: 파일만 첨부하면 시안이 전달되고, 승인 즉시 제작이 시작됩니다. 급한 작업이어도 색감·라인·마감까지 정교해 “여기 또 써야겠다”는 말이 나올 거예요. 우리는 빨리 만드는 게 아니라, 빠르게 ‘잘’ 만드는 것을 목표로 합니다.
+        - region "고객 리뷰 캐러셀" [ref=e76]:
+          - generic [ref=e77]:
+            - generic [ref=e78]:
+              - heading "사진 후기 280개, 만족도는 이미 증명됐어요" [level=2] [ref=e79]:
+                - text: 사진 후기 280개,
+                - text: 만족도는 이미 증명됐어요
+              - generic [ref=e80]:
+                - button "이전 리뷰로 이동" [disabled] [ref=e81]:
+                  - img [ref=e82]
+                  - generic [ref=e84]: 이전 리뷰로 이동
+                - button "다음 리뷰로 이동" [ref=e85] [cursor=pointer]:
+                  - img [ref=e86]
+                  - generic [ref=e88]: 다음 리뷰로 이동
+            - region "고객 리뷰 캐러셀" [ref=e89]:
+              - generic [ref=e90]:
+                - group "Review 1 of 16" [ref=e91] [cursor=pointer]:
+                  - generic [ref=e92]:
+                    - img "이종****" [ref=e93]
+                    - img "AI-generated image" [ref=e94]
+                  - generic [ref=e95]:
+                    - generic [ref=e96]:
+                      - heading "이종****" [level=3] [ref=e98]
+                      - paragraph [ref=e99]: 주문 과정이 정말 간편해서 좋았고 배송도 빠르게 도착했습니다. 인쇄 품질이 매우 선명하고 시안과 거의 똑같이 나와서 놀랐으며 소재도 튼튼해서 가격 대비 정말 만족스럽습니다.
+                    - generic [ref=e100]:
+                      - img [ref=e101]
+                      - img [ref=e103]
+                      - img [ref=e105]
+                      - img [ref=e107]
+                      - img [ref=e109]
+                      - generic [ref=e111]: 2026-11-04
+                - group "Review 2 of 16" [ref=e112] [cursor=pointer]:
+                  - img "김은****" [ref=e114]
+                  - generic [ref=e115]:
+                    - generic [ref=e116]:
+                      - heading "김은****" [level=3] [ref=e118]
+                      - paragraph [ref=e119]: 샘플로 했는데 맘에 들어요 가격은 조금 있기는 한데 컬리티가 괜찮은것 같아요. 다르게 작업 하고 나면 다시 의뢰하겠습니다.
+                    - generic [ref=e120]:
+                      - img [ref=e121]
+                      - img [ref=e123]
+                      - img [ref=e125]
+                      - img [ref=e127]
+                      - img [ref=e129]
+                      - generic [ref=e131]: 2026-11-02
+                - group "Review 3 of 16" [ref=e132] [cursor=pointer]:
+                  - generic [ref=e133]:
+                    - img "김형****" [ref=e134]
+                    - img "AI-generated image" [ref=e135]
+                  - generic [ref=e136]:
+                    - generic [ref=e137]:
+                      - heading "김형****" [level=3] [ref=e139]
+                      - paragraph [ref=e140]: 화면에서 보던 시안이랑 실제 결과물이 거의 똑같이 나와서 정말 마음에 들어요. 배송도 생각보다 훨씬 빠르게 도착했어요.
+                    - generic [ref=e141]:
+                      - img [ref=e142]
+                      - img [ref=e144]
+                      - img [ref=e146]
+                      - img [ref=e148]
+                      - img [ref=e150]
+                      - generic [ref=e152]: 2026-11-02
+                - group "Review 4 of 16" [ref=e153] [cursor=pointer]:
+                  - generic [ref=e154]:
+                    - img "ju****" [ref=e155]
+                    - img "AI-generated image" [ref=e156]
+                  - generic [ref=e157]:
+                    - generic [ref=e158]:
+                      - heading "ju****" [level=3] [ref=e160]
+                      - paragraph [ref=e161]: 선택한 사이즈로 안나오고 중구난방에 자유형을 선택했지만 모두 사각으로 나왔습니다. 너무 불만족 스럽습니다
+                    - generic [ref=e162]:
+                      - img [ref=e163]
+                      - generic [ref=e165]: 2026-11-02
+                - group "Review 5 of 16" [ref=e166] [cursor=pointer]:
+                  - generic [ref=e167]:
+                    - img "이종****" [ref=e168]
+                    - img "AI-generated image" [ref=e169]
+                  - generic [ref=e170]:
+                    - generic [ref=e171]:
+                      - heading "이종****" [level=3] [ref=e173]
+                      - paragraph [ref=e174]: 주문 과정도 간편하고 배송도 정말 빨라서 좋았습니다. 인쇄 품질이 매우 선명하고 튼튼한 소재라 화면으로 보던 시안과 똑같이 나와서 아주 만족스럽습니다. 가격 대비 품질이 훌륭해서 다음에도 꼭 다시 이용하고 싶습니다.
+                    - generic [ref=e175]:
+                      - img [ref=e176]
+                      - img [ref=e178]
+                      - img [ref=e180]
+                      - img [ref=e182]
+                      - img [ref=e184]
+                      - generic [ref=e186]: 2026-11-02
+                - group "Review 6 of 16" [ref=e187] [cursor=pointer]:
+                  - img "줄자" [ref=e189]
+                  - generic [ref=e190]:
+                    - generic [ref=e191]:
+                      - heading "줄자" [level=3] [ref=e193]
+                      - paragraph [ref=e194]: 시스템이 주문하기 너무 편하게 잘 되어 있고 스티커 품질도 아주 좋아요!
+                    - generic [ref=e195]:
+                      - img [ref=e196]
+                      - img [ref=e198]
+                      - img [ref=e200]
+                      - img [ref=e202]
+                      - img [ref=e204]
+                      - generic [ref=e206]: 2026-10-31
+                - group "Review 7 of 16" [ref=e207] [cursor=pointer]:
+                  - img "탁하****" [ref=e209]
+                  - generic [ref=e210]:
+                    - generic [ref=e211]:
+                      - heading "탁하****" [level=3] [ref=e213]
+                      - paragraph [ref=e214]: 스티커 소량 주문할 수 있어서 넘 좋았고 배송도 빨라서 맘에 들어요🤭 앞으로 스티커 주문할 일 있으면 애용하겠습니다!
+                    - generic [ref=e215]:
+                      - img [ref=e216]
+                      - img [ref=e218]
+                      - img [ref=e220]
+                      - img [ref=e222]
+                      - img [ref=e224]
+                      - generic [ref=e226]: 2026-10-31
+                - group "Review 8 of 16" [ref=e227] [cursor=pointer]:
+                  - generic [ref=e228]:
+                    - img "여일****" [ref=e229]
+                    - img "AI-generated image" [ref=e230]
+                  - generic [ref=e231]:
+                    - generic [ref=e232]:
+                      - heading "여일****" [level=3] [ref=e234]
+                      - paragraph [ref=e235]: 주문 과정도 간편하고 배송도 정말 빨라서 좋았습니다. 인쇄 품질이 선명하고 튼튼해서 시안 그대로 완벽하게 나왔네요. 가격 대비 만족도도 아주 높아서 다음에도 또 이용하고 싶습니다.
+                    - generic [ref=e236]:
+                      - img [ref=e237]
+                      - img [ref=e239]
+                      - img [ref=e241]
+                      - img [ref=e243]
+                      - img [ref=e245]
+                      - generic [ref=e247]: 2026-10-30
+                - group "Review 9 of 16" [ref=e248] [cursor=pointer]:
+                  - img "신다****" [ref=e250]
+                  - generic [ref=e251]:
+                    - generic [ref=e252]:
+                      - heading "신다****" [level=3] [ref=e254]
+                      - paragraph [ref=e255]: 처음 주문하는 거라 조금 걱정했는데 걱정과 달리 예쁘고 선명하게 잘 뽑아주셔서 감사합니다! 몇장 더 주셔서 감동받았어요 다음에도 또 주문할게요☺️
+                    - generic [ref=e256]:
+                      - img [ref=e257]
+                      - img [ref=e259]
+                      - img [ref=e261]
+                      - img [ref=e263]
+                      - img [ref=e265]
+                      - generic [ref=e267]: 2026-10-30
+                - group "Review 10 of 16" [ref=e268] [cursor=pointer]:
+                  - img "정우****" [ref=e270]
+                  - generic [ref=e271]:
+                    - generic [ref=e272]:
+                      - heading "정우****" [level=3] [ref=e274]
+                      - paragraph [ref=e275]: 일단 네이버에 스트커제작이라고 검색하니 너무 많이 나오는데 몇개 열어보다가 MUSTICKER사이트가 디자인도 좋고 주문방식도 나름 체계적인듯하여 여기로 정하고 주문했지요~ 채팅창에 이거저거 많이 물어보기도 했는데 친절하게 하나하나 잘 응대해주시기도 하고^^ 회사로고스티거좀 만들어서 여기저기 사용할 목적이였는데 원단재질이 뭔지 몰라 좀 걱정을 했는데 막 쓰기에는 너무 과한^^ 너무 좋은 원단이네요~ 잘 사용하겠습니다. 수고하시고 번창하세요~
+                    - generic [ref=e276]:
+                      - img [ref=e277]
+                      - img [ref=e279]
+                      - img [ref=e281]
+                      - img [ref=e283]
+                      - img [ref=e285]
+                      - generic [ref=e287]: 2026-10-29
+                - group "Review 11 of 16" [ref=e288] [cursor=pointer]:
+                  - img "이혜****" [ref=e290]
+                  - generic [ref=e291]:
+                    - generic [ref=e292]:
+                      - heading "이혜****" [level=3] [ref=e294]
+                      - paragraph [ref=e295]: 너무 너무 좋았어요! 배송 빠른거 최고!
+                    - generic [ref=e296]:
+                      - img [ref=e297]
+                      - img [ref=e299]
+                      - img [ref=e301]
+                      - img [ref=e303]
+                      - img [ref=e305]
+                      - generic [ref=e307]: 2026-10-28
+                - group "Review 12 of 16" [ref=e308] [cursor=pointer]:
+                  - img "이혜****" [ref=e310]
+                  - generic [ref=e311]:
+                    - generic [ref=e312]:
+                      - heading "이혜****" [level=3] [ref=e314]
+                      - paragraph [ref=e315]: 완전 대박 빠르고 예뻐요! 덕분에 급한 것! 잘 끝냈습니다
+                    - generic [ref=e316]:
+                      - img [ref=e317]
+                      - img [ref=e319]
+                      - img [ref=e321]
+                      - img [ref=e323]
+                      - img [ref=e325]
+                      - generic [ref=e327]: 2026-10-28
+                - group "Review 13 of 16" [ref=e328] [cursor=pointer]:
+                  - img "Hw****" [ref=e330]
+                  - generic [ref=e331]:
+                    - generic [ref=e332]:
+                      - heading "Hw****" [level=3] [ref=e334]
+                      - paragraph [ref=e335]: 빠르고 정확하고 제품의 질도 마음에 들어요~ 감사합니다 😊
+                    - generic [ref=e336]:
+                      - img [ref=e337]
+                      - img [ref=e339]
+                      - img [ref=e341]
+                      - img [ref=e343]
+                      - img [ref=e345]
+                      - generic [ref=e347]: 2026-10-27
+                - group "Review 14 of 16" [ref=e348] [cursor=pointer]:
+                  - img "이지****" [ref=e350]
+                  - generic [ref=e351]:
+                    - generic [ref=e352]:
+                      - heading "이지****" [level=3] [ref=e354]
+                      - paragraph [ref=e355]: 너무 좋아용 ㅎㅎ
+                    - generic [ref=e356]:
+                      - img [ref=e357]
+                      - img [ref=e359]
+                      - img [ref=e361]
+                      - img [ref=e363]
+                      - img [ref=e365]
+                      - generic [ref=e367]: 2026-10-26
+                - group "Review 15 of 16" [ref=e368] [cursor=pointer]:
+                  - img "dk****" [ref=e370]
+                  - generic [ref=e371]:
+                    - generic [ref=e372]:
+                      - heading "dk****" [level=3] [ref=e374]
+                      - paragraph [ref=e375]: 너무 마음에 들어었요 행사 전에 준비해야 되다보니 급했는데 빠르게 제작배송이 되어 너무 감사했습니다.
+                    - generic [ref=e376]:
+                      - img [ref=e377]
+                      - img [ref=e379]
+                      - img [ref=e381]
+                      - img [ref=e383]
+                      - img [ref=e385]
+                      - generic [ref=e387]: 2026-10-26
+                - group "Review 16 of 16" [ref=e388] [cursor=pointer]:
+                  - img "최은****" [ref=e390]
+                  - generic [ref=e391]:
+                    - generic [ref=e392]:
+                      - heading "최은****" [level=3] [ref=e394]
+                      - paragraph [ref=e395]: 채팅도 친절하시고 주문제작 진행도 매끄러워서 정말 만족합니다 우선 타사 스티커들 보다 접착력도 매우 우수합니다!! 스티커 두께도 적당해서 여기저기 붙이기 좋슴니다
+                    - generic [ref=e396]:
+                      - img [ref=e397]
+                      - img [ref=e399]
+                      - img [ref=e401]
+                      - img [ref=e403]
+                      - img [ref=e405]
+                      - generic [ref=e407]: 2026-10-26
+        - generic [ref=e409]:
+          - article [ref=e410]:
+            - img "100% 품질 보장" [ref=e412]
+            - generic [ref=e413]:
+              - heading "100% 품질 보장" [level=3] [ref=e414]
+              - paragraph [ref=e415]: 문제가 생기면 변명하지 않습니다 재인쇄 또는 환불까지 끝까지 책임집니다
+          - article [ref=e416]:
+            - img "오늘 제작 · 내일 발송" [ref=e418]
+            - generic [ref=e419]:
+              - heading "오늘 제작 · 내일 발송" [level=3] [ref=e420]
+              - paragraph [ref=e421]: 디자인 승인 후 바로 제작이 시작되며, 승인이 빠를수록 다음 날 바로 출고됩니다
+          - article [ref=e422]:
+            - img "5만원 이상 무료배송" [ref=e424]
+            - generic [ref=e425]:
+              - heading "5만원 이상 무료배송" [level=3] [ref=e426]
+              - paragraph [ref=e427]: 기본 배송비는 3,000원이며, 5만원 이상 주문 시 무료배송입니다
+    - navigation "네이버 톡톡으로 문의하기" [ref=e428]:
+      - link "카카오채널로 문의하기" [ref=e429] [cursor=pointer]:
+        - /url: https://pf.kakao.com/_nJxnTX/chat
+        - generic:
+          - generic:
+            - generic:
+              - img
+            - paragraph: 카카오채널로 문의하기
+        - img [ref=e431]
+      - link "네이버 톡톡 으로 문의하기" [ref=e432] [cursor=pointer]:
+        - /url: https://talk.naver.com/ct/w2luxqo
+        - generic:
+          - generic:
+            - generic:
+              - img
+            - paragraph: 네이버 톡톡 으로 문의하기
+        - img [ref=e434]
+      - button "이메일로 문의하기" [ref=e435] [cursor=pointer]:
+        - generic:
+          - generic:
+            - generic:
+              - img
+            - paragraph: 이메일로 문의하기
+        - img [ref=e437]
+  - contentinfo [ref=e438]:
+    - generic [ref=e441]:
+      - heading "처음 주문해도 걱정할 필요 없어요" [level=2] [ref=e442]
+      - generic [ref=e443]:
+        - button "제작 문의하기" [ref=e444] [cursor=pointer]:
+          - generic [ref=e445]: 제작 문의하기
+        - button "바로 주문하기" [ref=e446] [cursor=pointer]:
+          - generic [ref=e447]: 바로 주문하기
+    - generic [ref=e450]:
+      - generic [ref=e451]:
+        - generic [ref=e452]:
+          - generic [ref=e453]:
+            - paragraph [ref=e454]: 제품
+            - list [ref=e455]:
+              - listitem [ref=e456]:
+                - link "스티커" [ref=e457] [cursor=pointer]:
+                  - /url: /kr/stickers
+              - listitem [ref=e458]:
+                - link "롤스티커" [ref=e459] [cursor=pointer]:
+                  - /url: /kr/roll-stickers
+              - listitem [ref=e460]:
+                - link "판스티커" [ref=e461] [cursor=pointer]:
+                  - /url: /kr/sheet-stickers
+              - listitem [ref=e462]:
+                - link "홀로그램 스티커" [ref=e463] [cursor=pointer]:
+                  - /url: /kr/stickers/hologram-sticker
+              - listitem [ref=e464]:
+                - link "글자 커팅 스티커" [ref=e465] [cursor=pointer]:
+                  - /url: /kr/stickers/vinyl-lettering
+          - generic [ref=e466]:
+            - paragraph [ref=e467]: 주문 안내
+            - list [ref=e468]:
+              - listitem [ref=e469]:
+                - link "주문 방법" [ref=e470] [cursor=pointer]:
+                  - /url: /kr/faq?topic=order
+              - listitem [ref=e471]:
+                - link "파일 가이드" [ref=e472] [cursor=pointer]:
+                  - /url: /kr/faq?topic=artwork
+              - listitem [ref=e473]:
+                - link "배송 안내" [ref=e474] [cursor=pointer]:
+                  - /url: /kr/faq?topic=order&question=shippingStart
+              - listitem [ref=e475]:
+                - link "재인쇄ㆍ환불안내" [ref=e476] [cursor=pointer]:
+                  - /url: /kr/faq?topic=refund
+              - listitem [ref=e477]:
+                - link "자주 묻는 질문" [ref=e478] [cursor=pointer]:
+                  - /url: /kr/faq
+          - generic [ref=e479]:
+            - paragraph [ref=e480]: 혜택·지원
+            - list [ref=e481]:
+              - listitem [ref=e482]:
+                - link "학교·공공기관 주문" [ref=e483] [cursor=pointer]:
+                  - /url: /kr/institutions
+              - listitem [ref=e484]:
+                - link "대량주문·기업 견적" [ref=e485] [cursor=pointer]:
+                  - /url: /kr/business
+              - listitem [ref=e486]:
+                - link "제휴·파트너십 문의" [ref=e487] [cursor=pointer]:
+                  - /url: /kr/partnership
+          - generic [ref=e488]:
+            - paragraph [ref=e489]: 회사
+            - list [ref=e490]:
+              - listitem [ref=e491]:
+                - link "브랜드 소개" [ref=e492] [cursor=pointer]:
+                  - /url: /kr/about
+              - listitem [ref=e493]:
+                - link "공지사항" [ref=e494] [cursor=pointer]:
+                  - /url: /kr/announcements
+              - listitem [ref=e495]:
+                - link "인재채용" [ref=e496] [cursor=pointer]:
+                  - /url: /kr/careers
+              - listitem [ref=e497]:
+                - button "고객리뷰" [ref=e498] [cursor=pointer]
+        - generic [ref=e499]:
+          - generic [ref=e500]:
+            - img "musticker logo" [ref=e501]
+            - generic [ref=e502]: / 머스티커
+          - generic [ref=e503]:
+            - paragraph [ref=e504]: 고객센터
+            - link "1899-5529" [ref=e505] [cursor=pointer]:
+              - /url: tel:1899-5529
+            - generic [ref=e506]:
+              - paragraph [ref=e507]: 평일 09:00 – 18:00 · 토·일·공휴일 휴무
+              - paragraph [ref=e508]:
+                - generic [ref=e509]: 구매 문의
+                - link "sales@musticker.com" [ref=e510] [cursor=pointer]:
+                  - /url: mailto:sales@musticker.com
+          - generic [ref=e511]:
+            - link "Instagram" [ref=e512] [cursor=pointer]:
+              - /url: https://www.instagram.com/musticker_official/
+            - link "Naver Blog" [ref=e514] [cursor=pointer]:
+              - /url: https://blog.naver.com/musticker
+            - link "KakaoTalk Channel" [ref=e516] [cursor=pointer]:
+              - /url: https://pf.kakao.com/_nJxnTX/chat
+      - generic [ref=e518]:
+        - separator [ref=e519]
+        - generic [ref=e520]:
+          - generic [ref=e521]:
+            - paragraph [ref=e522]: (주)글로픽스 · 대표 여일석 · 사업자번호 877-88-03313 · 통신판매업신고 2026-부산해운대-0792호
+            - paragraph [ref=e523]: 부산광역시 해운대구 해운대해변로 203 오션타워 1014호 · 호스팅 Amazon Web Services
+            - paragraph [ref=e524]:
+              - link "이용약관" [ref=e525] [cursor=pointer]:
+                - /url: /kr/terms-of-use
+              - text: ·
+              - link "개인정보처리방침" [ref=e526] [cursor=pointer]:
+                - /url: /kr/privacy-policy
+              - text: ·
+              - button "사업자정보확인" [ref=e527] [cursor=pointer]
+              - text: ·
+              - link "오픈소스고지" [ref=e528] [cursor=pointer]:
+                - /url: /kr/open-source-licenses
+          - paragraph [ref=e529]: © 2026 GLOPHICS Corp. All rights reserved.
+```
+
+# Test source
+
+```ts
+  78  |     for (const social of footerSocialLinks) {
+  79  |       await this.expectLinkTarget(this.link(social.name), social.href, true);
+  80  |     }
+  81  |   }
+  82  | 
+  83  |   async expectBusinessDetails(): Promise<void> {
+  84  |     for (const detail of [
+  85  |       footerBusiness.company,
+  86  |       footerBusiness.representative,
+  87  |       footerBusiness.registration,
+  88  |       footerBusiness.mailOrderNumber,
+  89  |       footerBusiness.address
+  90  |     ]) {
+  91  |       await expect(this.root).toContainText(detail);
+  92  |     }
+  93  |     await expect(this.root.getByText(footerBusiness.copyright)).toBeVisible();
+  94  |   }
+  95  | 
+  96  |   /**
+  97  |    * Opens the FTC registration lookup and returns its tab. The government page itself is stubbed:
+  98  |    * what the footer owns is the URL it opens, and a third-party site's uptime is not this suite's to
+  99  |    * test.
+  100 |    */
+  101 |   async openBusinessInfo(): Promise<Page> {
+  102 |     await this.page.context().route(`${footerBusiness.ftcLookupUrl}**`, (route) =>
+  103 |       route.fulfill({ contentType: 'text/html; charset=utf-8', body: '<title>FTC lookup (stubbed)</title>' })
+  104 |     );
+  105 |     await waitForNuxtHydration(this.page);
+  106 | 
+  107 |     const [tab] = await Promise.all([
+  108 |       this.page.waitForEvent('popup'),
+  109 |       this.root.getByRole('button', { name: footerBusiness.businessInfoButton, exact: true }).click()
+  110 |     ]);
+  111 |     await tab.waitForURL((url) => url.href !== 'about:blank', { waitUntil: 'domcontentloaded' });
+  112 |     return tab;
+  113 |   }
+  114 | 
+  115 |   /** 고객리뷰 is a button, not a link: on home it scrolls, elsewhere it opens home at #reviews. */
+  116 |   async openReviews(): Promise<void> {
+  117 |     await waitForNuxtHydration(this.page);
+  118 |     await this.root.getByRole('button', { name: footerReviews.button, exact: true }).click();
+  119 |     await expect.poll(() => currentPath(this.page)).toBe(appPath());
+  120 |     await expect(this.page.getByRole('heading', { name: footerReviews.sectionHeading })).toBeInViewport();
+  121 |   }
+  122 | 
+  123 |   async expectCtaBand(): Promise<void> {
+  124 |     await expect(this.root.getByRole('heading', { level: 2, name: footerCta.heading })).toBeVisible();
+  125 |     await expect(this.ctaButton(footerCta.inquiry)).toBeVisible();
+  126 |     await expect(this.ctaButton(footerCta.order)).toBeVisible();
+  127 |   }
+  128 | 
+  129 |   async expectNoCtaBand(): Promise<void> {
+  130 |     await expect(this.root.getByRole('heading', { name: footerCta.heading })).toHaveCount(0);
+  131 |     await expect(this.ctaButton(footerCta.order)).toHaveCount(0);
+  132 |   }
+  133 | 
+  134 |   async orderNow(): Promise<void> {
+  135 |     await waitForNuxtHydration(this.page);
+  136 |     await this.ctaButton(footerCta.order).click();
+  137 |     await expect.poll(() => currentPath(this.page)).toBe(appPath(footerCta.orderPath));
+  138 |     await expect(this.page.getByRole('heading', { level: 1, name: footerCta.orderHeading })).toBeVisible();
+  139 |   }
+  140 | 
+  141 |   /**
+  142 |    * Opens the inquiry form. It has no dialog role, accessible name or test id (MUS-QA-026), so it is
+  143 |    * found by its CSS class -- the documented last resort.
+  144 |    */
+  145 |   async openInquiry(): Promise<Locator> {
+  146 |     await waitForNuxtHydration(this.page);
+  147 |     const form = this.page.locator('.inquiry-modal');
+  148 |     await this.ctaButton(footerCta.inquiry).click();
+  149 |     await expect(form).toBeVisible();
+  150 |     await expect(form.getByRole('heading', { name: footerCta.inquiryHeading, exact: true })).toBeVisible();
+  151 |     return form;
+  152 |   }
+  153 | 
+  154 |   async cancelInquiry(form: Locator): Promise<void> {
+  155 |     await form.getByRole('button', { name: footerCta.inquiryCancel, exact: true }).click();
+  156 |     await expect(form).toBeHidden();
+  157 |   }
+  158 | 
+  159 |   /**
+  160 |    * What an accessible modal would offer: a named dialog that takes focus, closes on Escape and
+  161 |    * hands focus back to its trigger. Bounded short because MS-NAV-019 expects this to fail today.
+  162 |    */
+  163 |   async expectInquiryIsAccessibleDialog(): Promise<void> {
+  164 |     const dialog = this.page.getByRole('dialog', { name: footerCta.inquiryHeading });
+  165 |     await expect(dialog, 'the form must be exposed as a named dialog').toBeVisible({ timeout: 3_000 });
+  166 |     await expect(dialog.locator(':focus'), 'focus must move into the dialog').toHaveCount(1, { timeout: 3_000 });
+  167 | 
+  168 |     await this.page.keyboard.press('Escape');
+  169 |     await expect(dialog).toBeHidden({ timeout: 3_000 });
+  170 |     await expect(this.ctaButton(footerCta.inquiry), 'focus must return to the button that opened it').toBeFocused();
+  171 |   }
+  172 | 
+  173 |   private ctaButton(name: string): Locator {
+  174 |     return this.root.getByRole('button', { name, exact: true });
+  175 |   }
+  176 | 
+  177 |   private async expectLinkTarget(link: Locator, href: string, newTab: boolean): Promise<void> {
+> 178 |     await expect(link).toHaveAttribute('href', href);
+      |                        ^ Error: expect(locator).toHaveAttribute(expected) failed
+  179 | 
+  180 |     if (newTab) {
+  181 |       await expect(link).toHaveAttribute('target', '_blank');
+  182 |       await expect(link).toHaveAttribute('rel', NEW_TAB_REL);
+  183 |     } else {
+  184 |       await expect(link).not.toHaveAttribute('target', '_blank');
+  185 |     }
+  186 |   }
+  187 | }
+  188 | 
+```
