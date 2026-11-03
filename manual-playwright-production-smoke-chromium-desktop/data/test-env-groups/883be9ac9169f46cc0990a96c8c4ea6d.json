@@ -1,1 +1,1 @@
-{"id":"883be9ac9169f46cc0990a96c8c4ea6d","fullName":"admin/api/admin-access.spec.ts:29:5","name":"MS-ADM-001 anonymous GET /sys/kr/holiday/all is refused","status":"passed","testResultsByEnv":{"default":"b67b0e5368d43c690db9604872f5e11d"}}
+{"id":"883be9ac9169f46cc0990a96c8c4ea6d","fullName":"admin/api/admin-access.spec.ts:29:5","name":"MS-ADM-001 anonymous GET /sys/kr/holiday/all is refused","status":"passed","testResultsByEnv":{"default":"93cd3d4ad2330cf94ceac7589ad270f8"}}
