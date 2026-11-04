@@ -1,5 +1,5 @@
 import { test as base, expect } from '@playwright/test';
-import type { Request } from '@playwright/test';
+import type { JSHandle, Request } from '@playwright/test';
 
 import { DEV_API_HOST, DEV_STOREFRONT_HOST } from './hosts.js';
 import { applyInternalOriginHeader } from './internal-origin.js';
@@ -111,22 +111,66 @@ function isSupersededPricingRequest(text: string): boolean {
 // goto to the checkout aborted the product page's manifest fetch.
 // Neither message names a request, so each is only forgiven when an aborted first-party request of
 // its own kind was seen close to it; a fetch that failed for any other reason still fails the run.
+// Firefox also reports a Nuxt chunk a navigation or reload cut off, in one of two wordings
+// (MS-CHK-002 and MS-CRT-003 on production, 2026-11-04). Both name the chunk, so they are only
+// forgiven when that same chunk's request was aborted. The same reload pauses the product page's
+// videos mid-load ("All candidate resources failed to load"); that warning names no file, so it is
+// forgiven only next to an aborted chunk -- the sign the page was being torn down. The videos
+// themselves answered 206 on the same page. A navigation that cuts off an image download makes
+// Firefox call the image "corrupt or truncated"; that names the image, so it pairs with that image's
+// aborted request (studio-demo-baby-cut.png in MS-CHK-002, 2026-11-04: the file itself is a valid PNG).
 const ABORTED_FETCH_MATCH_WINDOW_MS = 1_000;
 
-export type AbortedFetchKind = 'api' | 'appManifest';
+export type AbortedFetchKind = 'api' | 'appManifest' | 'appChunk' | 'appImage';
+
+const APP_CHUNK_URL = `https://${DEV_STOREFRONT_HOST}/_nuxt/[A-Za-z0-9_-]+\\.js`;
+const APP_IMAGE_URL = `https://${DEV_STOREFRONT_HOST}/[A-Za-z0-9_/.-]+\\.(?:png|jpe?g|webp|gif|svg)`;
+
+export function abortedAppChunkUrl(text: string): string | undefined {
+  const match =
+    new RegExp(`^TypeError: error loading dynamically imported module: (${APP_CHUNK_URL})$`).exec(text) ??
+    new RegExp(
+      `^\\[JavaScript Warning: "Loading failed for the module with source “(${APP_CHUNK_URL})”\\." \\{file: "${APP_CHUNK_URL}" line: 0\\}\\]$`
+    ).exec(text);
+  return match?.[1];
+}
+
+export function abortedAppImageUrl(text: string): string | undefined {
+  return new RegExp(`^\\[JavaScript Error: "Image corrupt or truncated\\." \\{file: "(${APP_IMAGE_URL})" line: 0\\}\\]$`).exec(text)?.[1];
+}
 
 export function abortedFetchConsoleKind(text: string): AbortedFetchKind | undefined {
   if (/^(?:Pricing request failed! )?TypeError: Failed to fetch$/.test(text)) return 'api';
+  // Firefox's wording for the same cancelled fetch, after any of the storefront's "<X> request failed!"
+  // prefixes (Sheet previews, Featured; MS-CRT-003 on production, 2026-11-04).
+  if (/^(?:[A-Z][A-Za-z ]* request failed! )?AbortError: The operation was aborted\.$/.test(text)) return 'api';
   if (text === '[NUXT_E5002]') return 'appManifest';
+  if (abortedAppChunkUrl(text)) return 'appChunk';
+  if (abortedAppImageUrl(text)) return 'appImage';
+  if (
+    new RegExp(
+      `^\\[JavaScript Warning: "All candidate resources failed to load\\. Media load paused\\." \\{file: "https://${DEV_STOREFRONT_HOST}/kr(?:/[^"]*)?" line: 0\\}\\]$`
+    ).test(text)
+  ) {
+    return 'appChunk';
+  }
   return undefined;
 }
 
 // Chromium, Firefox and WebKit each word a cancelled request differently.
 function abortedRequestKind(request: Request): AbortedFetchKind | undefined {
-  if (
-    !['fetch', 'xhr'].includes(request.resourceType()) ||
-    !['net::ERR_ABORTED', 'NS_BINDING_ABORTED', 'cancelled'].includes(request.failure()?.errorText ?? '')
-  ) {
+  if (!['net::ERR_ABORTED', 'NS_BINDING_ABORTED', 'cancelled'].includes(request.failure()?.errorText ?? '')) {
+    return undefined;
+  }
+  // Firefox types a cut-off chunk as "script" after a navigation and "other" (a module preload) after
+  // a reload.
+  if (['script', 'other'].includes(request.resourceType())) {
+    return new RegExp(`^${APP_CHUNK_URL}$`).test(request.url()) ? 'appChunk' : undefined;
+  }
+  if (request.resourceType() === 'image') {
+    return new RegExp(`^${APP_IMAGE_URL}(?:\\?|$)`).test(request.url()) ? 'appImage' : undefined;
+  }
+  if (!['fetch', 'xhr'].includes(request.resourceType())) {
     return undefined;
   }
   if (new RegExp(`^https://${DEV_API_HOST}/`, 'i').test(request.url())) return 'api';
@@ -253,6 +297,27 @@ export function isBenignFirefoxIllustrationPreloadWarning(text: string): boolean
   return new RegExp(
     `^\\[JavaScript Warning: "The resource at “https://${DEV_STOREFRONT_HOST}/illustrations/products/[a-z0-9/-]+\\.svg” preloaded with link preload was not used within a few seconds\\. Make sure all attributes of the preload tag are set correctly\\." \\{file: "https://${DEV_STOREFRONT_HOST}/kr/[a-z0-9/-]+" line: 0\\}\\]$`
   ).test(text);
+}
+
+// Firefox warns about Google Analytics on every storefront page: gtag rewrites its own _ga cookie's
+// expiry, and reads layout before the page's stylesheets are in. Both come from the analytics tag,
+// not the storefront, and Chromium and WebKit stay silent (seen on production, 2026-11-04).
+export function isBenignFirefoxAnalyticsWarning(text: string): boolean {
+  return (
+    new RegExp(
+      `^\\[JavaScript Warning: "The value of the attribute “expires” for the cookie “_ga(?:_[A-Z0-9]+)?” has been overwritten\\." \\{file: "https://${DEV_STOREFRONT_HOST}/kr(?:/[^"]*)?" line: 0\\}\\]$`
+    ).test(text) ||
+    /^\[JavaScript Warning: "Layout was forced before the page was fully loaded\. If stylesheets are not yet loaded this may cause a flash of unstyled content\." \{file: "https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=G-[A-Z0-9]+" line: \d+\}\]$/.test(text)
+  );
+}
+
+// Firefox prints a logged Error object as the bare word "Error", where Chromium and WebKit print its
+// name and message. This rebuilds the Chromium form ("FetchError: [GET] ...") so the same filters
+// apply and a failure report says what actually went wrong.
+function describeConsoleArg(arg: JSHandle): Promise<string | null> {
+  return arg
+    .evaluate((value: unknown) => (value instanceof Error ? `${value.name}: ${value.message}` : String(value)))
+    .catch(() => null);
 }
 
 // The design worker uses its lightweight model when Firefox has no WebGPU adapter. The workflow
@@ -435,7 +500,8 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
       allowPostLogout401,
       allowStudioModelLoadNoise,
       allowKnownArtworkReminderFailure,
-      allowNavigationAbortedFetches
+      allowNavigationAbortedFetches,
+      browserName
     },
     use,
     testInfo
@@ -476,12 +542,12 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
     });
     // The console message and the request failure arrive in either order, so they are paired up
     // after the test rather than as they come in.
-    const abortedFetches: Array<{ kind: AbortedFetchKind; at: number }> = [];
-    const abortedFetchConsoleErrors: Array<{ kind: AbortedFetchKind; entry: string; at: number }> = [];
+    const abortedFetches: Array<{ kind: AbortedFetchKind; url: string; at: number }> = [];
+    const abortedFetchConsoleErrors: Array<{ kind: AbortedFetchKind; url?: string; entry: string; at: number }> = [];
     page.on('requestfailed', request => {
       const kind = abortedRequestKind(request);
       if (kind) {
-        abortedFetches.push({ kind, at: Date.now() });
+        abortedFetches.push({ kind, url: request.url().split('?')[0], at: Date.now() });
       }
     });
     let hadSupersededPricingRequest = false;
@@ -492,6 +558,24 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
     // The reminder's two console errors are only forgiven after its 500 has been seen, so the
     // generic "Critical Server Error" text still fails a test when anything else causes it.
     let seenArtworkReminderFailure = false;
+    // Firefox messages being re-read from their arguments; settled before the verdict.
+    const pendingConsoleChecks: Promise<void>[] = [];
+
+    const recordConsoleFailure = (type: string, text: string, at: number) => {
+      if (allowKnownPriceWarnings && isSupersededPricingRequest(text)) {
+        hadSupersededPricingRequest = true;
+        return;
+      }
+
+      const abortedKind = allowNavigationAbortedFetches ? abortedFetchConsoleKind(text) : undefined;
+      if (abortedKind) {
+        const url = abortedAppChunkUrl(text) ?? abortedAppImageUrl(text);
+        abortedFetchConsoleErrors.push({ kind: abortedKind, url, entry: `[${type}] ${text}`, at });
+        return;
+      }
+
+      consoleFailures.push(`[${type}] ${text}`);
+    };
 
     page.on('console', (message) => {
       if (!['error', 'warning'].includes(message.type())) {
@@ -573,6 +657,7 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
           isBenignPretendardPreloadWarning(text) ||
           isBenignNuxtPreloadWarning(text) ||
           isBenignFirefoxIllustrationPreloadWarning(text) ||
+          isBenignFirefoxAnalyticsWarning(text) ||
           isBenignWorkerModelFallbackWarning(text))
       ) {
         return;
@@ -582,13 +667,20 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
         return;
       }
 
-      const abortedKind = allowNavigationAbortedFetches ? abortedFetchConsoleKind(text) : undefined;
-      if (abortedKind) {
-        abortedFetchConsoleErrors.push({ kind: abortedKind, entry: `[${message.type()}] ${text}`, at: Date.now() });
+      const at = Date.now();
+      if (browserName === 'firefox' && /(?:^| )Error$/.test(text)) {
+        // Started now, before a navigation can destroy the page the arguments live in.
+        const parts = Promise.all(message.args().map(describeConsoleArg));
+        pendingConsoleChecks.push(
+          parts.then((described) => {
+            const full = described.length && described.every((part) => part !== null) ? described.join(' ').trim() : text;
+            recordConsoleFailure(message.type(), full, at);
+          })
+        );
         return;
       }
 
-      consoleFailures.push(`[${message.type()}] ${text}`);
+      recordConsoleFailure(message.type(), text, at);
     });
 
     page.on('response', (response) => {
@@ -642,14 +734,20 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
 
     await applyInternalOriginHeader(page);
     await use(page);
+    await Promise.all(pendingConsoleChecks);
 
     // gotoStorefront() retries past WAF 403s, but the listeners above have already recorded each
     // blocked attempt by the time it does. Forgive exactly as many as it navigated past -- a 403
     // that nothing retried still fails the run.
     const throttleBlocks = retriedThrottleBlockCount(page);
 
-    for (const { kind, entry, at } of abortedFetchConsoleErrors) {
-      if (!abortedFetches.some((aborted) => aborted.kind === kind && Math.abs(aborted.at - at) <= ABORTED_FETCH_MATCH_WINDOW_MS)) {
+    for (const { kind, url, entry, at } of abortedFetchConsoleErrors) {
+      if (
+        !abortedFetches.some(
+          (aborted) =>
+            aborted.kind === kind && (url === undefined || aborted.url === url) && Math.abs(aborted.at - at) <= ABORTED_FETCH_MATCH_WINDOW_MS
+        )
+      ) {
         consoleFailures.push(entry);
       }
     }

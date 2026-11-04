@@ -1,7 +1,10 @@
 import { test, expect } from '@playwright/test';
 
 import {
+  abortedAppChunkUrl,
+  abortedAppImageUrl,
   abortedFetchConsoleKind,
+  isBenignFirefoxAnalyticsWarning,
   isBenignNuxtPreloadWarning,
   isBenignFirefoxIllustrationPreloadWarning,
   isBenignPretendardMetadataWarning,
@@ -69,6 +72,62 @@ test('only a bare "Failed to fetch" or NUXT_E5002 is a candidate for the navigat
   expect(abortedFetchConsoleKind('Order failed! TypeError: Failed to fetch')).toBeUndefined();
   expect(abortedFetchConsoleKind('TypeError: NetworkError when attempting to fetch resource.')).toBeUndefined();
   expect(abortedFetchConsoleKind('[NUXT_E5002] something else')).toBeUndefined();
+});
+
+test('Firefox AbortError wording is a candidate for the same API-abort allowance', () => {
+  expect(abortedFetchConsoleKind('Sheet previews request failed! AbortError: The operation was aborted.')).toBe('api');
+  expect(abortedFetchConsoleKind('Featured request failed! AbortError: The operation was aborted.')).toBe('api');
+  expect(abortedFetchConsoleKind('AbortError: The operation was aborted.')).toBe('api');
+  expect(abortedFetchConsoleKind('Order failed! AbortError: The operation was aborted.')).toBeUndefined();
+  expect(abortedFetchConsoleKind('Featured request failed! AbortError: something else')).toBeUndefined();
+});
+
+test('a Firefox chunk-load failure is a candidate only for a first-party Nuxt chunk', () => {
+  const failure = (url: string) => `TypeError: error loading dynamically imported module: ${url}`;
+  expect(abortedFetchConsoleKind(failure(`${storefront}/_nuxt/BLd0ibfu.js`))).toBe('appChunk');
+  expect(abortedFetchConsoleKind(failure('https://www.musticker.com/_nuxt/Bh9r5cVs.js'))).toBe('appChunk');
+  expect(abortedFetchConsoleKind(failure(`${storefront}/_nuxt/style.css`))).toBeUndefined();
+  expect(abortedFetchConsoleKind(failure('https://external.example/_nuxt/BLd0ibfu.js'))).toBeUndefined();
+  expect(abortedFetchConsoleKind(failure(`${storefront}/_nuxt/BLd0ibfu.js`.replace('musticker.com', 'musticker.com.evil.net')))).toBeUndefined();
+  expect(abortedFetchConsoleKind(`TypeError: something else: ${storefront}/_nuxt/BLd0ibfu.js`)).toBeUndefined();
+  expect(abortedAppChunkUrl(failure(`${storefront}/_nuxt/BLd0ibfu.js`))).toBe(`${storefront}/_nuxt/BLd0ibfu.js`);
+
+  const reloadWarning = (url: string) =>
+    `[JavaScript Warning: "Loading failed for the module with source “${url}”." {file: "https://www.musticker.com/_nuxt/CmHcF95e.js" line: 0}]`;
+  expect(abortedFetchConsoleKind(reloadWarning('https://www.musticker.com/_nuxt/CyjtuxxQ.js'))).toBe('appChunk');
+  expect(abortedAppChunkUrl(reloadWarning('https://www.musticker.com/_nuxt/CyjtuxxQ.js'))).toBe('https://www.musticker.com/_nuxt/CyjtuxxQ.js');
+  expect(abortedFetchConsoleKind(reloadWarning('https://external.example/_nuxt/CyjtuxxQ.js'))).toBeUndefined();
+
+  // Names no file, so it pairs with any aborted chunk rather than a specific one.
+  const mediaPaused = (file: string) =>
+    `[JavaScript Warning: "All candidate resources failed to load. Media load paused." {file: "${file}" line: 0}]`;
+  expect(abortedFetchConsoleKind(mediaPaused('https://www.musticker.com/kr/stickers/die-cut-sticker'))).toBe('appChunk');
+  expect(abortedAppChunkUrl(mediaPaused('https://www.musticker.com/kr/stickers/die-cut-sticker'))).toBeUndefined();
+  expect(abortedFetchConsoleKind(mediaPaused('https://external.example/kr/stickers/die-cut-sticker'))).toBeUndefined();
+});
+
+test('a Firefox truncated-image error pairs only with that first-party image', () => {
+  const truncated = (file: string) => `[JavaScript Error: "Image corrupt or truncated." {file: "${file}" line: 0}]`;
+  const image = 'https://www.musticker.com/illustrations/upload-modal/studio-demo-baby-cut.png';
+  expect(abortedFetchConsoleKind(truncated(image))).toBe('appImage');
+  expect(abortedAppImageUrl(truncated(image))).toBe(image);
+  expect(abortedFetchConsoleKind(truncated('https://external.example/illustrations/x.png'))).toBeUndefined();
+  expect(abortedFetchConsoleKind(truncated(image).replace('corrupt or truncated', 'decode failed'))).toBeUndefined();
+});
+
+test('Firefox analytics warnings cover only the _ga cookie and the gtag script', () => {
+  const cookie = (name: string, file: string) =>
+    `[JavaScript Warning: "The value of the attribute “expires” for the cookie “${name}” has been overwritten." {file: "${file}" line: 0}]`;
+  expect(isBenignFirefoxAnalyticsWarning(cookie('_ga_13EV953YXC', 'https://www.musticker.com/kr/faq'))).toBe(true);
+  expect(isBenignFirefoxAnalyticsWarning(cookie('_ga', `${storefront}/kr`))).toBe(true);
+  expect(isBenignFirefoxAnalyticsWarning(cookie('session', 'https://www.musticker.com/kr'))).toBe(false);
+  expect(isBenignFirefoxAnalyticsWarning(cookie('_ga_13EV953YXC', 'https://external.example/kr'))).toBe(false);
+
+  const layout = (file: string) =>
+    `[JavaScript Warning: "Layout was forced before the page was fully loaded. If stylesheets are not yet loaded this may cause a flash of unstyled content." {file: "${file}" line: 1065}]`;
+  expect(isBenignFirefoxAnalyticsWarning(layout('https://www.googletagmanager.com/gtag/js?id=G-13EV953YXC'))).toBe(true);
+  expect(isBenignFirefoxAnalyticsWarning(layout('https://www.musticker.com/_nuxt/BLd0ibfu.js'))).toBe(false);
+  expect(isBenignFirefoxAnalyticsWarning(layout('https://www.googletagmanager.com.evil.net/gtag/js?id=G-1'))).toBe(false);
 });
 
 test('worker model fallback warning does not cover other WebGPU failures', () => {
