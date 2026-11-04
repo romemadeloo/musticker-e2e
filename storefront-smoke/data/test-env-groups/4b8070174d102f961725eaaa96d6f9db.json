@@ -1,1 +1,1 @@
-{"id":"4b8070174d102f961725eaaa96d6f9db","fullName":"storefront/auth/login.spec.ts:23:3","name":"MS-AUTH-002 member login form exposes expected controls","status":"passed","testResultsByEnv":{"default":"a13085f6c2d58f725c523e7b64a2958c"}}
+{"id":"4b8070174d102f961725eaaa96d6f9db","fullName":"storefront/auth/login.spec.ts:23:3","name":"MS-AUTH-002 member login form exposes expected controls","status":"passed","testResultsByEnv":{"default":"3c82f0a39170960df6275bedc1d0efc4"}}
