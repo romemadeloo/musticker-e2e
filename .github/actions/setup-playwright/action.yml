@@ -50,7 +50,8 @@ runs:
         version="$(node -p "require('@playwright/test/package.json').version")"
 
         echo "list=$browsers" >> "$GITHUB_OUTPUT"
-        echo "key=playwright-${{ runner.os }}-$version-${browsers// /-}" >> "$GITHUB_OUTPUT"
+        # ImageOS (ubuntu24, ubuntu26, ...) keeps browsers built for one runner image off another.
+        echo "key=playwright-${{ runner.os }}-${ImageOS:-unknown}-$version-${browsers// /-}" >> "$GITHUB_OUTPUT"
 
     - name: Restore Playwright browsers
       id: browser_cache

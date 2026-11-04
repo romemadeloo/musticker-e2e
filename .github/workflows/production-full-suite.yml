@@ -73,7 +73,7 @@ env:
 jobs:
   static-quality:
     name: Lint, type check, and discover tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
 
     steps:
@@ -112,7 +112,7 @@ jobs:
   plan:
     name: Plan shards
     needs: static-quality
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     outputs:
       shards: ${{ steps.plan.outputs.shards }}
@@ -143,7 +143,7 @@ jobs:
   production-tests:
     name: ${{ needs.plan.outputs.suite }} shard ${{ matrix.shard }}/${{ needs.plan.outputs.total }}
     needs: plan
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     strategy:
       fail-fast: false
@@ -200,7 +200,7 @@ jobs:
     name: Merge shard reports
     needs: [plan, production-tests]
     if: ${{ always() && needs.plan.result == 'success' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     outputs:
       allure_results_found: ${{ steps.merge.outputs.allure_results_found }}
@@ -235,7 +235,7 @@ jobs:
     name: Publish Allure report with history
     needs: [plan, merge-reports]
     if: ${{ always() && github.ref == 'refs/heads/production' && needs.merge-reports.outputs.allure_results_found == 'true' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     concurrency:
       group: allure-pages

@@ -39,7 +39,7 @@ env:
 jobs:
   lint-typecheck-smoke:
     name: Lint, type check, and smoke
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     outputs:
       allure_results_found: ${{ steps.test_artifacts.outputs.allure_results_found }}
@@ -77,7 +77,7 @@ jobs:
 
   api-contracts:
     name: API contracts (no browser)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v5
@@ -94,7 +94,7 @@ jobs:
 
   promotion-validation:
     name: Reviewed promotion and affected regression
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v5
@@ -127,7 +127,7 @@ jobs:
   # suite five times over; the smoke job above covers fixtures.
   stress-changed-specs:
     name: Stress changed specs (5x, no retries)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v5
@@ -163,7 +163,7 @@ jobs:
     name: PR gate
     needs: [lint-typecheck-smoke, api-contracts, promotion-validation, stress-changed-specs]
     if: ${{ always() }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - name: Require all checks to pass
@@ -183,7 +183,7 @@ jobs:
     name: Publish Allure report with history
     needs: lint-typecheck-smoke
     if: ${{ always() && github.base_ref == 'production' && needs['lint-typecheck-smoke'].outputs.allure_results_found == 'true' && github.event.pull_request.head.repo.full_name == github.repository }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     concurrency:
       group: allure-pages

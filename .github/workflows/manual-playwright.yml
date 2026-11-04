@@ -96,7 +96,7 @@ env:
 jobs:
   playwright:
     name: ${{ inputs.suite }} on ${{ inputs.environment }} (${{ inputs.browser_project }})
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 90
     outputs:
       allure_results_found: ${{ steps.test_artifacts.outputs.allure_results_found }}
@@ -207,7 +207,7 @@ jobs:
     name: Publish Allure report with history
     needs: playwright
     if: ${{ always() && github.ref == 'refs/heads/production' && needs.playwright.outputs.allure_results_found == 'true' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     concurrency:
       group: allure-pages
