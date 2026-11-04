@@ -1,1 +1,1 @@
-{"id":"1daacaa865633deacfd75880c5c8807e","fullName":"storefront/checkout/checkout-page.spec.ts:66:5","name":"MS-CHK-007 payment options are a single choice that starts on Npay","status":"broken","testResultsByEnv":{"default":"47c5ea93ec5f32cdea63047c9ef2eeb3"}}
+{"id":"1daacaa865633deacfd75880c5c8807e","fullName":"storefront/checkout/checkout-page.spec.ts:66:5","name":"MS-CHK-007 payment options are a single choice that starts on Npay","status":"passed","testResultsByEnv":{"default":"02c517c0a00b54d4580d2ba4c5ef765e"}}

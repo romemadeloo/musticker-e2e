@@ -1,1 +1,1 @@
-{"id":"553041070c71c8c50a93f54d7cf4843d","fullName":"storefront/account/profile.spec.ts:21:3","name":"MS-ACC-008 the profile shows the signed-in member's name and locked email","status":"passed","testResultsByEnv":{"default":"bf74599c2427183010f2937daa91e9f9"}}
+{"id":"553041070c71c8c50a93f54d7cf4843d","fullName":"storefront/account/profile.spec.ts:21:3","name":"MS-ACC-008 the profile shows the signed-in member's name and locked email","status":"passed","testResultsByEnv":{"default":"a6ddc096d9e4c238a932395ab63e3dab"}}

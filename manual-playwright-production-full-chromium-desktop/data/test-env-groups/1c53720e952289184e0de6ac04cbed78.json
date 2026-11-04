@@ -1,1 +1,1 @@
-{"id":"1c53720e952289184e0de6ac04cbed78","fullName":"storefront/navigation/storefront-smoke.spec.ts:70:3","name":"MS-NAV-006 footer legal and support links are reachable","status":"failed","testResultsByEnv":{"default":"dee64b1f9dba74592ab1bfe77a0a3e0b"}}
+{"id":"1c53720e952289184e0de6ac04cbed78","fullName":"storefront/navigation/storefront-smoke.spec.ts:70:3","name":"MS-NAV-006 footer legal and support links are reachable","status":"passed","testResultsByEnv":{"default":"f6b6fe86ec5ddf6a01f858c7e36de992"}}

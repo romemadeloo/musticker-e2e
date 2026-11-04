@@ -1,1 +1,1 @@
-{"id":"34001af18638b64c83a9eba6e54548f5","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-DSC-007 catalog page renders without error: ./roll-stickers/square-roll","status":"passed","testResultsByEnv":{"default":"bd7b754e2b72e66902f2d59611141ccb"}}
+{"id":"34001af18638b64c83a9eba6e54548f5","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-DSC-007 catalog page renders without error: ./roll-stickers/square-roll","status":"failed","testResultsByEnv":{"default":"7eb190ad4251f0e5b9e615f6a8399d3f"}}
