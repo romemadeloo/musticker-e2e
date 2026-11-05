@@ -239,7 +239,10 @@ export default class DashboardReporter implements Reporter {
       return JSON.parse(await request(`${this.url}/api/ingest/runs`, this.token!, JSON.stringify(body))) as T;
     } catch (error) {
       this.enabled = false;
-      console.warn(`Dashboard reporter disabled for this run: ${error instanceof Error ? error.message : String(error)}`);
+      const message = `Dashboard reporter disabled for this run: ${error instanceof Error ? error.message : String(error)}`;
+      console.warn(message);
+      // Also as an Actions annotation: it shows on the run page, where the job log needs a sign-in.
+      if (process.env.GITHUB_ACTIONS) console.log(`::warning title=Dashboard reporter::${message.replace(/\r?\n/g, ' ')}`);
       return null;
     }
   }
