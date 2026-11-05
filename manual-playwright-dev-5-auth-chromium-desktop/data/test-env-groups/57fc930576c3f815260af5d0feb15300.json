@@ -1,0 +1,1 @@
+{"id":"57fc930576c3f815260af5d0feb15300","fullName":"storefront/auth/change-password.spec.ts:75:5","name":"MS-AUTH-025 a new password below the policy is rejected @validation","status":"passed","testResultsByEnv":{"default":"c06d693714e43f02b3a992cf501dc984"}}
