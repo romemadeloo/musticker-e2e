@@ -1,1 +1,1 @@
-{"id":"70c4cfa41fb1c2de392392f7c7a694a1","fullName":"storefront/account/coupons.spec.ts:39:3","name":"MS-ACC-019 쿠폰 등록 refuses a blank and an unknown code and leaves the coupons unchanged","status":"passed","testResultsByEnv":{"default":"a03176c835149a713d6555dc855b6e66"}}
+{"id":"70c4cfa41fb1c2de392392f7c7a694a1","fullName":"storefront/account/coupons.spec.ts:39:3","name":"MS-ACC-019 쿠폰 등록 refuses a blank and an unknown code and leaves the coupons unchanged","status":"passed","testResultsByEnv":{"default":"543ec9e4ca42b706370791f916966033"}}

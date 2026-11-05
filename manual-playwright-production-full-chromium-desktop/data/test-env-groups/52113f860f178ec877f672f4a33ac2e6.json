@@ -1,1 +1,1 @@
-{"id":"52113f860f178ec877f672f4a33ac2e6","fullName":"storefront/discovery/public-content.spec.ts:17:5","name":"MS-DSC-013 footer privacy link renders its public content","status":"failed","testResultsByEnv":{"default":"62834d7d284ec06b423612445ff700b8"}}
+{"id":"52113f860f178ec877f672f4a33ac2e6","fullName":"storefront/discovery/public-content.spec.ts:17:5","name":"MS-DSC-013 footer privacy link renders its public content","status":"passed","testResultsByEnv":{"default":"8b9087201897c3e29010268c4940a863"}}

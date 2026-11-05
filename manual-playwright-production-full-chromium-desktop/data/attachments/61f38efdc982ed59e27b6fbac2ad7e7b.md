@@ -1,0 +1,249 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: storefront/navigation/storefront-smoke.spec.ts >> Storefront smoke >> MS-NAV-005 account icon routes anonymous users to authentication
+- Location: tests/e2e/storefront/navigation/storefront-smoke.spec.ts:62:3
+
+# Error details
+
+```
+Error: expect(locator).toBeVisible() failed
+
+Locator: getByTestId('app-header-search-button')
+Expected: visible
+Timeout: 10000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toBeVisible" with timeout 10000ms
+  - waiting for getByTestId('app-header-search-button')
+
+```
+
+```
+Error: Unexpected browser console errors or warnings
+
+expect(received).toEqual(expected) // deep equality
+
+- Expected  -  1
++ Received  + 42
+
+- Array []
++ Array [
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] Access to fetch at 'https://api.musticker.com/index.php/sys/kr/review/public-reviews?skip=0&take=16&with_image=true' from origin 'https://www.musticker.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
++   "[error] Failed to load resource: net::ERR_FAILED",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] TypeError: Failed to fetch dynamically imported module: https://www.musticker.com/_nuxt/B4jF6Qch.js",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] TypeError: Failed to fetch dynamically imported module: https://www.musticker.com/_nuxt/Ny9rJUm-.js",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] TypeError: Failed to fetch dynamically imported module: https://www.musticker.com/_nuxt/yTjfVkLh.js",
++   "[error] Access to fetch at 'https://api.musticker.com/index.php/sys/kr/review/public-reviews?skip=0&take=16&with_image=true' from origin 'https://www.musticker.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
++   "[error] Failed to load resource: net::ERR_FAILED",
++   "[error] Failed to load resource: the server responded with a status of 403 ()",
++   "[error] [NUXT_E5002]",
++ ]
+```
+
+```
+Error: Unexpected failed HTTP responses
+
+expect(received).toEqual(expected) // deep equality
+
+- Expected  -  1
++ Received  + 34
+
+- Array []
++ Array [
++   "403 https://www.musticker.com/_nuxt/MuHomePage.s-e5IBsO.css",
++   "403 https://www.musticker.com/_nuxt/MuViewer.CA0FtUqA.css",
++   "403 https://www.musticker.com/_nuxt/Index.BNEtDl6l.css",
++   "403 https://www.musticker.com/_nuxt/Index.Cmaa1aiU.css",
++   "403 https://www.musticker.com/_nuxt/Index.BVD4jmjt.css",
++   "403 https://www.musticker.com/_nuxt/Index.DwURnCjZ.css",
++   "403 https://www.musticker.com/_nuxt/Index.B6s1Qp_q.css",
++   "403 https://www.musticker.com/_nuxt/AuthLoginForgotPasswordModal.Dt_hrAzc.css",
++   "403 https://www.musticker.com/_nuxt/Index.DY1_XsRa.css",
++   "403 https://www.musticker.com/_nuxt/AuthResetPasswordModal.CZFTAehV.css",
++   "403 https://www.musticker.com/_nuxt/Index.W2ZHFq8C.css",
++   "403 https://www.musticker.com/_nuxt/Index.ChrrPd1V.css",
++   "403 https://www.musticker.com/_nuxt/SkipModal.Dk595E_Q.css",
++   "403 https://www.musticker.com/_nuxt/DonePopover.LVvu8SeB.css",
++   "403 https://www.musticker.com/_nuxt/CR0QRQHj.js",
++   "403 https://www.musticker.com/icons/sprite.svg?v=1788835890778",
++   "403 https://www.musticker.com/_nuxt/MuLinearWrapper.hzlFqJwh.css",
++   "403 https://www.musticker.com/_nuxt/MuInput.D2nmhofs.css",
++   "403 https://www.musticker.com/_nuxt/MuFileInput.D9Gj0pq2.css",
++   "403 https://www.musticker.com/_nuxt/InquiryModal.BNgxatOq.css",
++   "403 https://www.musticker.com/_nuxt/MuTextarea.B6t9ungw.css",
++   "403 https://www.musticker.com/_nuxt/MuOption.dKZ6TuRf.css",
++   "403 https://www.musticker.com/_nuxt/GiftAnimation.DtWNas0o.css",
++   "403 https://www.musticker.com/_nuxt/Card.BGe_udBI.css",
++   "403 https://www.musticker.com/_nuxt/MuModal.CWx5YNqc.css",
++   "403 https://www.musticker.com/illustrations/under-construction/bg-page.png",
++   "403 https://www.musticker.com/logos/full/colored/musticker.svg",
++   "403 https://www.musticker.com/_nuxt/ChallengeCompletedModal.DlemBqHg.css",
++   "403 https://www.musticker.com/_nuxt/B4jF6Qch.js",
++   "403 https://www.musticker.com/_nuxt/Ny9rJUm-.js",
++   "403 https://www.musticker.com/_nuxt/yTjfVkLh.js",
++   "403 https://www.musticker.com/_nuxt/builds/meta/6b471710-4b54-443f-a19f-51f75fbda60d.json",
++ ]
+```
+
+# Page snapshot
+
+```yaml
+- main [ref=e3]:
+  - img "musticker logo" [ref=e4]
+  - paragraph [ref=e5]: "500"
+  - heading "앗! 문제가 발생했습니다." [level=1] [ref=e6]
+  - paragraph [ref=e7]: 일시적인 오류로 페이지를 표시할 수 없습니다. 잠시 후 다시 시도해 주세요.
+  - button "홈으로 돌아가기" [ref=e8] [cursor=pointer]:
+    - img [ref=e9]
+    - generic [ref=e10]: 홈으로 돌아가기
+```
+
+# Test source
+
+```ts
+  672 |         // Started now, before a navigation can destroy the page the arguments live in.
+  673 |         const parts = Promise.all(message.args().map(describeConsoleArg));
+  674 |         pendingConsoleChecks.push(
+  675 |           parts.then((described) => {
+  676 |             const full = described.length && described.every((part) => part !== null) ? described.join(' ').trim() : text;
+  677 |             recordConsoleFailure(message.type(), full, at);
+  678 |           })
+  679 |         );
+  680 |         return;
+  681 |       }
+  682 | 
+  683 |       recordConsoleFailure(message.type(), text, at);
+  684 |     });
+  685 | 
+  686 |     page.on('response', (response) => {
+  687 |       const status = response.status();
+  688 |       if (status < 400) {
+  689 |         return;
+  690 |       }
+  691 | 
+  692 |       const url = response.url();
+  693 |       if (allowGuestUserMe401 && isExpectedGuestUserMe401(status, url)) {
+  694 |         return;
+  695 |       }
+  696 | 
+  697 |       if (allowExpectedAuthFailures && isExpectedAuthFailure(status, url)) {
+  698 |         return;
+  699 |       }
+  700 | 
+  701 |       if (allowKnownNuxtPayloadFailures && isKnownNuxtPayloadFailure(status, url)) {
+  702 |         return;
+  703 |       }
+  704 | 
+  705 |       if (allowTransientProductPageFailures && isTransientProductPageServerFailure(status, url)) {
+  706 |         pendingTransientProductPageFailures += 1;
+  707 |         return;
+  708 |       }
+  709 | 
+  710 |       if (allowExpectedNotFound && isExpectedStorefrontNotFound(status, url)) {
+  711 |         pendingExpectedNotFoundResponses += 1;
+  712 |         return;
+  713 |       }
+  714 | 
+  715 |       if (allowGuestCheckoutBootstrap401 && isExpectedGuestCheckoutBootstrap401(status, url)) {
+  716 |         return;
+  717 |       }
+  718 | 
+  719 |       if (allowPostLogout401 && isPostLogoutMemberDataUnauthorized(status, url)) {
+  720 |         return;
+  721 |       }
+  722 | 
+  723 |       if (allowStudioModelLoadNoise && isStudioModelMissingTokenizerConfig(status, url)) {
+  724 |         return;
+  725 |       }
+  726 | 
+  727 |       if (allowKnownArtworkReminderFailure && isArtworkReminderServerFailure(status, url)) {
+  728 |         seenArtworkReminderFailure = true;
+  729 |         return;
+  730 |       }
+  731 | 
+  732 |       responseFailures.push(`${status} ${url}`);
+  733 |     });
+  734 | 
+  735 |     await applyInternalOriginHeader(page);
+  736 |     await use(page);
+  737 |     await Promise.all(pendingConsoleChecks);
+  738 | 
+  739 |     // gotoStorefront() retries past WAF 403s, but the listeners above have already recorded each
+  740 |     // blocked attempt by the time it does. Forgive exactly as many as it navigated past -- a 403
+  741 |     // that nothing retried still fails the run.
+  742 |     const throttleBlocks = retriedThrottleBlockCount(page);
+  743 | 
+  744 |     for (const { kind, url, entry, at } of abortedFetchConsoleErrors) {
+  745 |       if (
+  746 |         !abortedFetches.some(
+  747 |           (aborted) =>
+  748 |             aborted.kind === kind && (url === undefined || aborted.url === url) && Math.abs(aborted.at - at) <= ABORTED_FETCH_MATCH_WINDOW_MS
+  749 |         )
+  750 |       ) {
+  751 |         consoleFailures.push(entry);
+  752 |       }
+  753 |     }
+  754 | 
+  755 |     if (consoleFailures.length || responseFailures.length || testInfo.status !== testInfo.expectedStatus) {
+  756 |       await testInfo.attach('browser-diagnostics.json', {
+  757 |         body: JSON.stringify({ networkFailures, consoleSources }), contentType: 'application/json'
+  758 |       });
+  759 |     }
+  760 | 
+  761 |     expect
+  762 |       .soft(
+  763 |         dropForgiven(consoleFailures, throttleBlocks, isThrottleBlockConsoleFailure),
+  764 |         'Unexpected browser console errors or warnings'
+  765 |       )
+  766 |       .toEqual([]);
+  767 |     expect
+  768 |       .soft(
+  769 |         dropForgiven(responseFailures, throttleBlocks, isThrottleBlockResponseFailure),
+  770 |         'Unexpected failed HTTP responses'
+  771 |       )
+> 772 |       .toEqual([]);
+      |        ^ Error: Unexpected failed HTTP responses
+  773 |   }
+  774 | });
+  775 | 
+  776 | export { expect };
+  777 | 
+```
