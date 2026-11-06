@@ -1,1 +1,1 @@
-{"id":"205f43cc9b97bf87639fd7c5efaabe5c","fullName":"storefront/ux/accessibility.spec.ts:10:3","name":"MS-UX-001 core controls are named and keyboard reachable","status":"passed","testResultsByEnv":{"default":"0950fe2af3ff2850d9d6316987b16cde"}}
+{"id":"205f43cc9b97bf87639fd7c5efaabe5c","fullName":"storefront/ux/accessibility.spec.ts:10:3","name":"MS-UX-001 core controls are named and keyboard reachable","status":"failed","testResultsByEnv":{"default":"328d28732ad9bca5877ea1d022119e47"}}
