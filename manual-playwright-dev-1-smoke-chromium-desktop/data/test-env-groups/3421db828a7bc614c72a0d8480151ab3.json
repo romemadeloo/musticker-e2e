@@ -1,0 +1,1 @@
+{"id":"3421db828a7bc614c72a0d8480151ab3","fullName":"storefront/checkout/money-path.spec.ts:31:3","name":"MS-CHK-004 the quoted price survives product page, cart, and checkout unchanged","status":"broken","testResultsByEnv":{"default":"89033d295c2e1d1e6faf074b6a8160db"}}
