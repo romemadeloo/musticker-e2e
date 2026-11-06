@@ -44,6 +44,17 @@ on:
           - webkit-desktop
           - chromium-mobile
           - all-desktop
+      workers:
+        description: Browsers one runner drives at once. auto is 1 on production (WAF) and 2 elsewhere.
+        required: false
+        default: auto
+        type: choice
+        options:
+          - auto
+          - '1'
+          - '2'
+          - '3'
+          - '4'
       custom_grep:
         description: 'Required only when suite is custom-grep. Example: @cart|@validation'
         required: false
@@ -73,7 +84,9 @@ env:
   # counts requests per egress IP, and two workers on one runner kept it refusing the configurator
   # pages for longer than the whole retry ladder (dashboard regression runs, 2026-10-30 and
   # 2026-11-01: every failure a 403 with the internal-origin key attached). Empty keeps the default.
-  PW_WORKERS: ${{ inputs.environment == 'production' && '1' || '' }}
+  # A number picked in the workers input (or the dashboard's Run tests) overrides both.
+  PW_WORKERS: >-
+    ${{ inputs.workers != '' && inputs.workers != 'auto' && inputs.workers || (inputs.environment == 'production' && '1' || '') }}
   E2E_ENVIRONMENT: ${{ inputs.environment }}
   E2E_BROWSER_PROJECT: ${{ inputs.browser_project }}
   # QA dashboard (qa-test-dashboard repo). Unset secrets leave tests/reporters/dashboard-reporter.ts a no-op.
