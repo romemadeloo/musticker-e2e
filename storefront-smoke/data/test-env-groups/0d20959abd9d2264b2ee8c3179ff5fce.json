@@ -1,1 +1,1 @@
-{"id":"0d20959abd9d2264b2ee8c3179ff5fce","fullName":"storefront/api/auth-validation.spec.ts:9:3","name":"MS-API-007 malformed login data returns field-level validation errors","status":"passed","testResultsByEnv":{"default":"d97bf0f1d1af4115e1ad2aa820d84aae"}}
+{"id":"0d20959abd9d2264b2ee8c3179ff5fce","fullName":"storefront/api/auth-validation.spec.ts:9:3","name":"MS-API-007 malformed login data returns field-level validation errors","status":"passed","testResultsByEnv":{"default":"c53fd329184b55854d6676ec9a6e0469"}}
