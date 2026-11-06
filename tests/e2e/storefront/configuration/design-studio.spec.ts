@@ -5,9 +5,9 @@ import { v2Products } from '../../../fixtures/storefront-data.js';
 import { studioPrice } from '../../../pom/storefront/design-studio.js';
 import { ProductV2Page } from '../../../pom/storefront/product-page.js';
 
-// 200x200: about 57dpi at 75mm, which the studio refuses to print.
+// 200x200: about 73dpi at 70mm, which the studio refuses to print.
 const lowResolutionDesign = fileURLToPath(new URL('../../../fixtures/files/qa-proof.png', import.meta.url));
-// 1,200x1,200 with a transparent background: about 400dpi at 75mm.
+// 1,200x1,200 with a transparent background: about 435dpi at 70mm.
 const printQualityDesign = fileURLToPath(new URL('../../../fixtures/files/studio-design.png', import.meta.url));
 
 /**
@@ -54,7 +54,7 @@ test.describe('Design studio', { tag: ['@regression', '@production', '@purchasin
     await product.selectQuantity(data.quantity);
 
     const studio = await product.openStudio();
-    await studio.expectSize(75, 75);
+    await studio.expectSize(70, 70);
     await studio.expectQuantity(data.quantity);
     // Polled: the studio first renders the configurator's undiscounted price and applies its 5%
     // discount a moment later, so a single read can catch the pre-discount value.

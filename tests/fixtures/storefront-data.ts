@@ -39,7 +39,9 @@ export const ko = {
   minimumTwoPerSheetError: /한 시트에 최소 2개의 스티커/,
   minimumSizeError: '가로 또는 세로 크기는 최소 10×10mm 이상이어야 합니다.',
   customQuantity: '\uc6d0\ud558\ub294 \uc218\ub7c9 \uc785\ub825',
-  medium75: '\uc911\ud615 75x75',
+  // \uc911\ud615 read 75x75 until 2026-11-06, when the square die-cut presets moved to 30/70/100/130 on
+  // production and dev-1 alike.
+  medium70: '\uc911\ud615 70x70',
   transparent: '\ud22c\uba85',
   faqHero: '\ub3c4\uc6c0\uc774 \ud544\uc694\ud558\uc2e0\uac00\uc694?',
   faqSearchPlaceholder: '\uad81\uae08\ud55c \uc0ac\ud56d\uc744 \uc785\ub825\ud574\uc8fc\uc138\uc694.',
@@ -393,13 +395,13 @@ export const v2Products = {
   dieCutSticker: {
     path: './stickers/die-cut-sticker',
     heading: categoryLinks.stickers[0],
-    size: ko.medium75,
+    size: ko.medium70,
     quantity: 100
   },
   dieCutRoll: {
     path: './roll-stickers/die-cut-roll',
     heading: categoryLinks.rollStickers[0],
-    size: ko.medium75,
+    size: ko.medium70,
     quantity: 300
   },
   dieCutSheet: {
@@ -446,33 +448,33 @@ export const catalogPaths = [
 // v2Products.dieCutSticker (./stickers/die-cut-sticker) only by heading/size-label/price. Verified
 // live against the dev storefront on 2026-08-13: none of these expose a material selector.
 export const dieCutShapeStickers = [
-  { path: './stickers/hologram-sticker', heading: '홀로그램 스티커', size: ko.medium75, quantity: 100 },
+  { path: './stickers/hologram-sticker', heading: '홀로그램 스티커', size: ko.medium70, quantity: 100 },
   { path: './stickers/circle-sticker', heading: '원형 스티커', size: '중형 60x60', quantity: 100 },
   { path: './stickers/rectangle-sticker', heading: '직사각형 스티커', size: '중형 75x50', quantity: 100 },
-  { path: './stickers/square-sticker', heading: '정사각형 스티커', size: ko.medium75, quantity: 100 },
+  { path: './stickers/square-sticker', heading: '정사각형 스티커', size: ko.medium70, quantity: 100 },
   { path: './stickers/oval-sticker', heading: '타원형 스티커', size: '중형 75x50', quantity: 100 },
-  { path: './stickers/rounded-sticker', heading: '둥근 사각 스티커', size: ko.medium75, quantity: 100 },
-  { path: './stickers/kiss-cut-sticker', heading: '도무송 스티커', size: ko.medium75, quantity: 100 },
-  { path: './stickers/clear-sticker', heading: '투명 스티커', size: ko.medium75, quantity: 100 }
+  { path: './stickers/rounded-sticker', heading: '둥근 사각 스티커', size: ko.medium70, quantity: 100 },
+  { path: './stickers/kiss-cut-sticker', heading: '도무송 스티커', size: ko.medium70, quantity: 100 },
+  { path: './stickers/clear-sticker', heading: '투명 스티커', size: ko.medium70, quantity: 100 }
 ] as const;
 
 // Plain size+quantity die-cut roll variants under ./roll-stickers/, same shape as
 // v2Products.dieCutRoll (./roll-stickers/die-cut-roll). Verified live against the dev storefront on
 // 2026-08-13: none expose a material selector or sheet-size controls.
 export const dieCutRollStickers = [
-  { path: './roll-stickers/clear-roll', heading: '투명 롤 스티커', size: ko.medium75, quantity: 100 },
+  { path: './roll-stickers/clear-roll', heading: '투명 롤 스티커', size: ko.medium70, quantity: 100 },
   { path: './roll-stickers/circle-roll', heading: '원형 롤 스티커', size: '중형 60x60', quantity: 100 },
-  { path: './roll-stickers/square-roll', heading: '정사각형 롤 스티커', size: ko.medium75, quantity: 100 },
+  { path: './roll-stickers/square-roll', heading: '정사각형 롤 스티커', size: ko.medium70, quantity: 100 },
   { path: './roll-stickers/rectangle-roll', heading: '직사각형 롤 스티커', size: '중형 75x50', quantity: 100 },
   // The H1 read 둥근 사각형 롤 스티커 until early October 2026; it now matches the card and cart line.
   {
     path: './roll-stickers/rounded-roll',
     heading: '둥근 사각 롤 스티커',
-    size: ko.medium75,
+    size: ko.medium70,
     quantity: 100
   },
   { path: './roll-stickers/oval-roll', heading: '타원형 롤 스티커', size: '중형 75x50', quantity: 100 },
-  { path: './roll-stickers/paper-roll', heading: '종이 롤 스티커', size: ko.medium75, quantity: 100 }
+  { path: './roll-stickers/paper-roll', heading: '종이 롤 스티커', size: ko.medium70, quantity: 100 }
 ] as const;
 
 // Sheet-template flow (material + sheet size + quantity) like v2Products.dieCutSheet, but a
@@ -507,7 +509,7 @@ export const transferStickerProduct = {
   // matching the category card and the cart line.
   heading: '풀 컬러 레터링 스티커',
   colorLabel: ko.fullColor,
-  size: ko.medium75,
+  size: ko.medium70,
   quantity: 1
 } as const;
 

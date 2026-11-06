@@ -47,8 +47,8 @@ test.describe('Money path', { tag: ['@regression', '@production', '@purchasing']
     await drawer.expectVisible();
     await drawer.expectLineItem({
       productName: data.heading,
-      widthMm: 75,
-      heightMm: 75,
+      widthMm: 70,
+      heightMm: 70,
       quantity: data.quantity
     });
     expect(parseWon(await drawer.captureTotal()), 'cart drawer total must equal the quoted price').toBe(quotedPrice);
