@@ -1,1 +1,1 @@
-{"id":"f17d572d0f5dbfdf81210dcbf44b2f79","fullName":"storefront/discovery/faq.spec.ts:16:3","name":"MS-DSC-005 FAQ search filters and resets content","status":"passed","testResultsByEnv":{"default":"a050261703ff295386f0c7ce73d4b1b3"}}
+{"id":"f17d572d0f5dbfdf81210dcbf44b2f79","fullName":"storefront/discovery/faq.spec.ts:16:3","name":"MS-DSC-005 FAQ search filters and resets content","status":"failed","testResultsByEnv":{"default":"903650ff6ffeabe8c92b68bd1760f008"}}
