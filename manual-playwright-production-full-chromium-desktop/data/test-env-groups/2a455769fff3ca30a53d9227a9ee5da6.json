@@ -1,1 +1,1 @@
-{"id":"2a455769fff3ca30a53d9227a9ee5da6","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /dashboard is sent to sign in and back","status":"failed","testResultsByEnv":{"default":"c5f2557213b91f4aa2c573f898366b08"}}
+{"id":"2a455769fff3ca30a53d9227a9ee5da6","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /dashboard is sent to sign in and back","status":"failed","testResultsByEnv":{"default":"edb817326ef7b38f5f9a87a7956a2ef5"}}

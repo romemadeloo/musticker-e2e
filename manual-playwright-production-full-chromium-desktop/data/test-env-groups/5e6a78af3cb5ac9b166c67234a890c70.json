@@ -1,1 +1,1 @@
-{"id":"5e6a78af3cb5ac9b166c67234a890c70","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /static-reviews is sent to sign in and back","status":"passed","testResultsByEnv":{"default":"a961d08d5f082b41497e89f78510a8d6"}}
+{"id":"5e6a78af3cb5ac9b166c67234a890c70","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /static-reviews is sent to sign in and back","status":"passed","testResultsByEnv":{"default":"d28e29e991e1826a3f11d46ccb8b2c04"}}
