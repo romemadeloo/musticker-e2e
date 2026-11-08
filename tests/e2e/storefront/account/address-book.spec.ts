@@ -20,6 +20,9 @@ test.describe('Address book', { tag: ['@regression', '@production', '@auth', '@c
 
   test.skip(!hasMemberCredentials(), SKIP_WITHOUT_MEMBER_CREDENTIALS);
 
+  // Only shipping addresses carry a phone and a street address. The book also lists 위탁배송 sender
+  // ("drop") addresses, which hold just a sender name and label -- production, 2026-11-09:
+  // "test tests 집" -- so those are only required to show something.
   test('MS-ACC-012 saved addresses show a name, phone and address, with one marked 기본 배송', async ({ page }) => {
     const addressBook = new AccountAddressBookPage(page);
     await addressBook.goto();
@@ -29,16 +32,21 @@ test.describe('Address book', { tag: ['@regression', '@production', '@auth', '@c
 
     const cards = addressBook.addressCards();
     for (let index = 0; index < count; index += 1) {
-      const card = cards.nth(index);
-      await expect(card, `address card ${index} shows no phone number`).toContainText(/\d{2,3}-?\d{3,4}-?\d{4}/);
-      // A Korean street address carries a 5-digit postcode. The card runs it straight into the next
-      // line's text ("… 7 05315Rome Inc."), so digit lookarounds rather than word boundaries.
-      await expect(card, `address card ${index} shows no postcode`).toContainText(/(?<!\d)\d{5}(?!\d)/);
+      await expect(cards.nth(index), `address card ${index} is empty`).toHaveText(/\S/);
     }
 
     const shipping = await addressBook.shippingCards().count();
-    test.skip(shipping === 0, 'MS-ACC-012 checks the default only among shipping addresses, and there are none.');
-    await expect(addressBook.shippingCards().filter({ hasText: copy.defaultBadge })).toHaveCount(1);
+    test.skip(shipping === 0, 'MS-ACC-012 checks phone, postcode and the default only among shipping addresses, and there are none.');
+
+    const shippingCards = addressBook.shippingCards();
+    for (let index = 0; index < shipping; index += 1) {
+      const card = shippingCards.nth(index);
+      await expect(card, `shipping address ${index} shows no phone number`).toContainText(/\d{2,3}-?\d{3,4}-?\d{4}/);
+      // A Korean street address carries a 5-digit postcode. The card runs it straight into the next
+      // line's text ("… 7 05315Rome Inc."), so digit lookarounds rather than word boundaries.
+      await expect(card, `shipping address ${index} shows no postcode`).toContainText(/(?<!\d)\d{5}(?!\d)/);
+    }
+    await expect(shippingCards.filter({ hasText: copy.defaultBadge })).toHaveCount(1);
   });
 
   test('MS-ACC-013 새 주소 추가 opens the address form, and 취소 closes it without adding anything', async ({ page }) => {

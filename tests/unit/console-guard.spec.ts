@@ -4,6 +4,7 @@ import {
   abortedAppChunkUrl,
   abortedAppImageUrl,
   abortedFetchConsoleKind,
+  failedResourceConsoleStatus,
   isBenignFirefoxAnalyticsWarning,
   isBenignNuxtPreloadWarning,
   isBenignFirefoxIllustrationPreloadWarning,
@@ -128,6 +129,13 @@ test('Firefox analytics warnings cover only the _ga cookie and the gtag script',
   expect(isBenignFirefoxAnalyticsWarning(layout('https://www.googletagmanager.com/gtag/js?id=G-13EV953YXC'))).toBe(true);
   expect(isBenignFirefoxAnalyticsWarning(layout('https://www.musticker.com/_nuxt/BLd0ibfu.js'))).toBe(false);
   expect(isBenignFirefoxAnalyticsWarning(layout('https://www.googletagmanager.com.evil.net/gtag/js?id=G-1'))).toBe(false);
+});
+
+test('only the exact Chromium failed-resource echo yields a status to pair', () => {
+  expect(failedResourceConsoleStatus('Failed to load resource: the server responded with a status of 401 ()')).toBe(401);
+  expect(failedResourceConsoleStatus('Failed to load resource: the server responded with a status of 422 ()')).toBe(422);
+  expect(failedResourceConsoleStatus('Failed to load resource: net::ERR_FAILED')).toBeUndefined();
+  expect(failedResourceConsoleStatus('Failed to load resource: the server responded with a status of 401 () extra')).toBeUndefined();
 });
 
 test('worker model fallback warning does not cover other WebGPU failures', () => {

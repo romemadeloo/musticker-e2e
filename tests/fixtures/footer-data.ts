@@ -89,8 +89,10 @@ export const footerBusiness = {
 } as const;
 
 export const footerSocialLinks = [
-  // The accessible name comes from the icon's alt text.
-  { name: 'instagram icon', href: 'https://www.instagram.com/musticker_official/' },
+  // Named by aria-label. Production, 2026-11-09: the Instagram link was renamed from its icon's alt
+  // text ("instagram icon") and a Naver Blog link was added.
+  { name: 'Instagram', href: 'https://www.instagram.com/musticker_official/' },
+  { name: 'Naver Blog', href: 'https://blog.naver.com/musticker' },
   { name: 'KakaoTalk Channel', href: 'https://pf.kakao.com/_nJxnTX/chat' }
 ] as const;
 

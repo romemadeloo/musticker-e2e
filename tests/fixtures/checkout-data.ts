@@ -55,7 +55,12 @@ export const checkoutCopy = {
 export const checkoutInfoTips = [
   { about: 'email', title: '이메일 인증 및 업데이트', text: '계정 보유 여부를 확인하고 주문 업데이트를 보내는 데 사용됩니다.' },
   { about: 'road address', title: '도로명 주소', text: '주소 찾기를 이용해 주소를 검색해 주세요.' },
-  { about: 'consignment', title: '위탁배송 이용하기', text: '머스티커가 제작, 포장, 배송까지 대신 진행합니다.' }
+  // Reworded on production by 2026-11-09 (was: 머스티커가 제작, 포장, 배송까지 대신 진행합니다.).
+  {
+    about: 'consignment',
+    title: '위탁배송 이용하기',
+    text: '보내는 사람의 이름을 별도로 설정하여, 머스티커 대신 원하는 상호명이나 성함으로 상품을 발송할 수 있습니다.'
+  }
 ] as const;
 
 export const checkoutShippingFeeTip = {

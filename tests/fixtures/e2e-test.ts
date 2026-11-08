@@ -83,8 +83,12 @@ function isPostLogoutMemberDataUnauthorized(status: number, url: string): boolea
   return status === 401 && /\/sys\/kr\/(?:cart\/(?:calculate|get)|profile\/overview)(?:\?|$)/i.test(url);
 }
 
+function isExpectedAuthFailureStatus(status: number): boolean {
+  return [400, 401, 403, 404, 422].includes(status);
+}
+
 function isExpectedAuthFailure(status: number, url: string): boolean {
-  if (![400, 401, 403, 404, 422].includes(status)) {
+  if (!isExpectedAuthFailureStatus(status)) {
     return false;
   }
 
@@ -231,6 +235,15 @@ function isNuxtPageNotFoundError(text: string): boolean {
 
 function isNotFoundResourceConsoleError(text: string): boolean {
   return text === 'Failed to load resource: the server responded with a status of 404 ()';
+}
+
+// Chromium sometimes echoes a refused request to the console as well. For a response that
+// isExpectedAuthFailure() already forgave, the echo is the same event, so it is forgiven one for one
+// by status after the test; any echo left over still fails. MS-ADM-002 on production (2026-11-09):
+// the admin panel's /auth/admin/me 401 was echoed on one attempt and not the next.
+export function failedResourceConsoleStatus(text: string): number | undefined {
+  const match = /^Failed to load resource: the server responded with a status of (\d{3}) \(\)$/.exec(text);
+  return match ? Number(match[1]) : undefined;
 }
 
 // MUS-QA-025: after a member pays, the confirmation page asks the API to send the artwork reminder
@@ -555,6 +568,9 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
     let pendingTransientApiNetworkFailures = 0;
     let pendingTransientProductPageFailures = 0;
     let pendingExpectedNotFoundResponses = 0;
+    // Statuses of the responses isExpectedAuthFailure() forgave, and the console echoes awaiting one.
+    const forgivenAuthFailureStatuses: number[] = [];
+    const expectedAuthFailureEchoes: Array<{ status: number; entry: string }> = [];
     // The reminder's two console errors are only forgiven after its 500 has been seen, so the
     // generic "Critical Server Error" text still fails a test when anything else causes it.
     let seenArtworkReminderFailure = false;
@@ -602,6 +618,12 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
       }
 
       if (allowKnownArtworkReminderFailure && seenArtworkReminderFailure && isArtworkReminderConsoleError(text)) {
+        return;
+      }
+
+      const failedStatus = allowExpectedAuthFailures ? failedResourceConsoleStatus(text) : undefined;
+      if (failedStatus !== undefined && isExpectedAuthFailureStatus(failedStatus)) {
+        expectedAuthFailureEchoes.push({ status: failedStatus, entry: `[${message.type()}] ${text}` });
         return;
       }
 
@@ -695,6 +717,7 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
       }
 
       if (allowExpectedAuthFailures && isExpectedAuthFailure(status, url)) {
+        forgivenAuthFailureStatuses.push(status);
         return;
       }
 
@@ -740,6 +763,12 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
     // blocked attempt by the time it does. Forgive exactly as many as it navigated past -- a 403
     // that nothing retried still fails the run.
     const throttleBlocks = retriedThrottleBlockCount(page);
+
+    for (const { status, entry } of expectedAuthFailureEchoes) {
+      const forgiven = forgivenAuthFailureStatuses.indexOf(status);
+      if (forgiven === -1) consoleFailures.push(entry);
+      else forgivenAuthFailureStatuses.splice(forgiven, 1);
+    }
 
     for (const { kind, url, entry, at } of abortedFetchConsoleErrors) {
       if (
