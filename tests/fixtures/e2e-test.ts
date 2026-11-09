@@ -621,12 +621,6 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
         return;
       }
 
-      const failedStatus = allowExpectedAuthFailures ? failedResourceConsoleStatus(text) : undefined;
-      if (failedStatus !== undefined && isExpectedAuthFailureStatus(failedStatus)) {
-        expectedAuthFailureEchoes.push({ status: failedStatus, entry: `[${message.type()}] ${text}` });
-        return;
-      }
-
       if (allowTransientApiCorsFailures && isTransientApiCorsFailure(text)) {
         pendingTransientApiNetworkFailures += 1;
         return;
@@ -686,6 +680,14 @@ export const test = base.extend<GuardOptions & SessionOptions, SessionWorkerFixt
       }
 
       if (isKnownConsoleMessage(text, guardOptions)) {
+        return;
+      }
+
+      // After the filters above, so an echo another option already forgives (allowGuestUserMe401
+      // forgives any 401 echo) is never held back waiting for a pair it cannot get.
+      const failedStatus = allowExpectedAuthFailures ? failedResourceConsoleStatus(text) : undefined;
+      if (failedStatus !== undefined && isExpectedAuthFailureStatus(failedStatus)) {
+        expectedAuthFailureEchoes.push({ status: failedStatus, entry: `[${message.type()}] ${text}` });
         return;
       }
 
