@@ -1,1 +1,1 @@
-{"id":"8af3801acbeb0ead80bb5d8ee630b099","fullName":"storefront/auth/login.spec.ts:13:3","name":"MS-AUTH-001 account navigation opens login","status":"passed","testResultsByEnv":{"default":"c9dca4bb83b6067e7b5dc1735e030aff"}}
+{"id":"8af3801acbeb0ead80bb5d8ee630b099","fullName":"storefront/auth/login.spec.ts:13:3","name":"MS-AUTH-001 account navigation opens login","status":"failed","testResultsByEnv":{"default":"3edce174d3ed8b8c806318cfd5159444"}}

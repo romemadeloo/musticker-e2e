@@ -1,1 +1,1 @@
-{"id":"a24a00a5e715c2bcb16c499d9aa89ea4","fullName":"storefront/checkout/checkout-page.spec.ts:88:5","name":"MS-CHK-009 the address search fills the postal code and road address, which stay read-only","status":"passed","testResultsByEnv":{"default":"4db85a284fe9d1f82a6673b20dfc8190"}}
+{"id":"a24a00a5e715c2bcb16c499d9aa89ea4","fullName":"storefront/checkout/checkout-page.spec.ts:88:5","name":"MS-CHK-009 the address search fills the postal code and road address, which stay read-only","status":"broken","testResultsByEnv":{"default":"fd36401689dfa1991bcf3d08f40f9206"}}

@@ -1,1 +1,1 @@
-{"id":"2168b818b38eca6511d39b63aadeb4a9","fullName":"storefront/discovery/public-content.spec.ts:17:5","name":"MS-DSC-012 footer terms link renders its public content","status":"passed","testResultsByEnv":{"default":"8cd24eda9532f615535a88687435ebe9"}}
+{"id":"2168b818b38eca6511d39b63aadeb4a9","fullName":"storefront/discovery/public-content.spec.ts:17:5","name":"MS-DSC-012 footer terms link renders its public content","status":"failed","testResultsByEnv":{"default":"f31360238c89fa5e1383b228a7d8761f"}}

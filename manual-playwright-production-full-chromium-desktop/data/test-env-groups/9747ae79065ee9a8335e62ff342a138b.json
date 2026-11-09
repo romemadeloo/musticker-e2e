@@ -1,1 +1,1 @@
-{"id":"9747ae79065ee9a8335e62ff342a138b","fullName":"storefront/navigation/footer.spec.ts:51:3","name":"MS-NAV-014 footer support and company links open their pages in a new tab","status":"passed","testResultsByEnv":{"default":"befb79055fe72899d791244be19fee1a"}}
+{"id":"9747ae79065ee9a8335e62ff342a138b","fullName":"storefront/navigation/footer.spec.ts:51:3","name":"MS-NAV-014 footer support and company links open their pages in a new tab","status":"failed","testResultsByEnv":{"default":"b4ee650f7a8ce0bfc30a25f7cda068b2"}}
