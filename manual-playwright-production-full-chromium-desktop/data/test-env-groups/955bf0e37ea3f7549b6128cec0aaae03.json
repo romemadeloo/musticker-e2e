@@ -1,1 +1,1 @@
-{"id":"955bf0e37ea3f7549b6128cec0aaae03","fullName":"storefront/account/profile.spec.ts:53:3","name":"MS-ACC-010 이메일 변경 opens its own dialog and closing it leaves the email as it was","status":"passed","testResultsByEnv":{"default":"cf9b66414d5712c31de172120310907e"}}
+{"id":"955bf0e37ea3f7549b6128cec0aaae03","fullName":"storefront/account/profile.spec.ts:53:3","name":"MS-ACC-010 이메일 변경 opens its own dialog and closing it leaves the email as it was","status":"passed","testResultsByEnv":{"default":"e4ba1311423462c55e82fed23c318ebe"}}

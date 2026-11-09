@@ -1,1 +1,1 @@
-{"id":"5f88dfd7f61ec9fc19f4466b1fa5b494","fullName":"admin/marketing/holidays.spec.ts:83:3","name":"MS-ADM-011 saving a blank holiday says which fields are missing","status":"skipped","testResultsByEnv":{"default":"cd2a5c5d77afe2155435363885c2b5a0"}}
+{"id":"5f88dfd7f61ec9fc19f4466b1fa5b494","fullName":"admin/marketing/holidays.spec.ts:83:3","name":"MS-ADM-011 saving a blank holiday says which fields are missing","status":"skipped","testResultsByEnv":{"default":"80d5cdc5c2d363cfea5a50fd4fa106f2"}}
