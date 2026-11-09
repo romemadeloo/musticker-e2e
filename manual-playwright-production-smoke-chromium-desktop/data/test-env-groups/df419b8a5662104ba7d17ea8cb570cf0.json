@@ -1,1 +1,1 @@
-{"id":"df419b8a5662104ba7d17ea8cb570cf0","fullName":"storefront/auth/login.spec.ts:102:3","name":"MS-AUTH-009 seeded member can log in @credentialed","status":"failed","testResultsByEnv":{"default":"c45ccce34d14488dfc9197463231e246"}}
+{"id":"df419b8a5662104ba7d17ea8cb570cf0","fullName":"storefront/auth/login.spec.ts:102:3","name":"MS-AUTH-009 seeded member can log in @credentialed","status":"passed","testResultsByEnv":{"default":"4c7a7e76373e43caf4dc0ee05474b2f4"}}
