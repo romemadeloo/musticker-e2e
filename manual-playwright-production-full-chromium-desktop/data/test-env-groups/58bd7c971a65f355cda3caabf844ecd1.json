@@ -1,1 +1,1 @@
-{"id":"58bd7c971a65f355cda3caabf844ecd1","fullName":"storefront/checkout/checkout-page.spec.ts:121:5","name":"MS-CHK-012 checkout info tips explain email, address, 위탁배송 and the shipping fee","status":"passed","testResultsByEnv":{"default":"9070eb5da53e50f8290b7dac7344ed25"}}
+{"id":"58bd7c971a65f355cda3caabf844ecd1","fullName":"storefront/checkout/checkout-page.spec.ts:121:5","name":"MS-CHK-012 checkout info tips explain email, address, 위탁배송 and the shipping fee","status":"failed","testResultsByEnv":{"default":"52b6666dc317b1af4a2cac30d774f88a"}}

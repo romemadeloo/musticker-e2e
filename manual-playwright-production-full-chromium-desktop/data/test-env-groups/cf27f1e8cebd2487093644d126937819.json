@@ -1,1 +1,1 @@
-{"id":"cf27f1e8cebd2487093644d126937819","fullName":"storefront/account/points.spec.ts:67:3","name":"MS-ACC-017 전체 보기 opens the quest list with the same progress as the 챌린지 card","status":"passed","testResultsByEnv":{"default":"698869b255853e528c9a67f863758075"}}
+{"id":"cf27f1e8cebd2487093644d126937819","fullName":"storefront/account/points.spec.ts:67:3","name":"MS-ACC-017 전체 보기 opens the quest list with the same progress as the 챌린지 card","status":"passed","testResultsByEnv":{"default":"11ae6537f4a039c90bf24c382aeedfb9"}}

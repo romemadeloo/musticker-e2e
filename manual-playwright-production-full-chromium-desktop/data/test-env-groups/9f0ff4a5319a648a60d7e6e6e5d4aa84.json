@@ -1,1 +1,1 @@
-{"id":"9f0ff4a5319a648a60d7e6e6e5d4aa84","fullName":"storefront/navigation/footer.spec.ts:36:3","name":"MS-NAV-013 footer product links open their category and product pages, each keeping the footer","status":"passed","testResultsByEnv":{"default":"d91707ffea79539201651bc74c0e56af"}}
+{"id":"9f0ff4a5319a648a60d7e6e6e5d4aa84","fullName":"storefront/navigation/footer.spec.ts:36:3","name":"MS-NAV-013 footer product links open their category and product pages, each keeping the footer","status":"passed","testResultsByEnv":{"default":"71805e8e925692f7822ef3e9c9413092"}}

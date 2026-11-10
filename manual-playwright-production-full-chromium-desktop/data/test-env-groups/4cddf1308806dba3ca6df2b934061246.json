@@ -1,1 +1,1 @@
-{"id":"4cddf1308806dba3ca6df2b934061246","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /security-logs is sent to sign in and back","status":"passed","testResultsByEnv":{"default":"17974b7ec4db22d31012e4385b0744a7"}}
+{"id":"4cddf1308806dba3ca6df2b934061246","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /security-logs is sent to sign in and back","status":"passed","testResultsByEnv":{"default":"08daa9db3c77eec195bce33c12b3536a"}}
