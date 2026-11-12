@@ -1,1 +1,1 @@
-{"id":"ac95d9076d80d1a5f8064c4d347b3d74","fullName":"storefront/security/internal-origin-scope.spec.ts:30:3","name":"MS-SEC-002 third-party and look-alike hosts are out of scope","status":"passed","testResultsByEnv":{"default":"b48c7cc3a7f9ce3ec60178475e2e5e20"}}
+{"id":"ac95d9076d80d1a5f8064c4d347b3d74","fullName":"storefront/security/internal-origin-scope.spec.ts:30:3","name":"MS-SEC-002 third-party and look-alike hosts are out of scope","status":"passed","testResultsByEnv":{"default":"c659fb4af8410fd53e146c8daebb9c62"}}

@@ -1,1 +1,1 @@
-{"id":"a1f5a7a45912d4f03f173a757fb7caa3","fullName":"storefront/security/mail-tm.spec.ts:58:3","name":"MS-SEC-007 a message with only a copyright year has no OTP and says so","status":"passed","testResultsByEnv":{"default":"38a24aa0a8908de81962d42233f170ec"}}
+{"id":"a1f5a7a45912d4f03f173a757fb7caa3","fullName":"storefront/security/mail-tm.spec.ts:58:3","name":"MS-SEC-007 a message with only a copyright year has no OTP and says so","status":"passed","testResultsByEnv":{"default":"ae87f69a1641c9ca0b863e672063c390"}}

@@ -1,1 +1,1 @@
-{"id":"e0e9d180e4633e5bf35b43e51fd3a0eb","fullName":"storefront/cart/cart-lifecycle.spec.ts:115:5","name":"MS-CRT-004 the cart page confirms a removal before acting on it","status":"passed","testResultsByEnv":{"default":"479ba9376c16e7964b3ab3a8180f93e3"}}
+{"id":"e0e9d180e4633e5bf35b43e51fd3a0eb","fullName":"storefront/cart/cart-lifecycle.spec.ts:115:5","name":"MS-CRT-004 the cart page confirms a removal before acting on it","status":"passed","testResultsByEnv":{"default":"18c78d91a0f5596500923cd877e6d776"}}

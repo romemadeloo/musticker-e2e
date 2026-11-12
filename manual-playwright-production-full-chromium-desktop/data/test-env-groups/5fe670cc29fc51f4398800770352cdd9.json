@@ -1,1 +1,1 @@
-{"id":"5fe670cc29fc51f4398800770352cdd9","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /holidays is sent to sign in and back","status":"passed","testResultsByEnv":{"default":"bd16ad6dfc82794cffd81731a6e02722"}}
+{"id":"5fe670cc29fc51f4398800770352cdd9","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /holidays is sent to sign in and back","status":"passed","testResultsByEnv":{"default":"08d93ef188d5a202ce1b4c0f80432f1d"}}

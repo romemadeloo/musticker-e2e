@@ -1,1 +1,1 @@
-{"id":"fc0faa4f30ac4b7f14f6a76d4b448608","fullName":"storefront/configuration/product-config.spec.ts:65:3","name":"MS-CFG-005 product trust and delivery promises are visible","status":"failed","testResultsByEnv":{"default":"622ad09c52fd9899c9f7716ac3987eea"}}
+{"id":"fc0faa4f30ac4b7f14f6a76d4b448608","fullName":"storefront/configuration/product-config.spec.ts:65:3","name":"MS-CFG-005 product trust and delivery promises are visible","status":"passed","testResultsByEnv":{"default":"8954956263c3a76277ff494006388c34"}}
