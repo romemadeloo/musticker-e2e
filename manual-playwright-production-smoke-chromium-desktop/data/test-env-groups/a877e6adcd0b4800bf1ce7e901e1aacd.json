@@ -1,1 +1,1 @@
-{"id":"a877e6adcd0b4800bf1ce7e901e1aacd","fullName":"storefront/navigation/storefront-smoke.spec.ts:53:3","name":"MS-NAV-004 empty cart opens without broken state","status":"passed","testResultsByEnv":{"default":"f2065cda836ab5ae4d0e4b96020497d3"}}
+{"id":"a877e6adcd0b4800bf1ce7e901e1aacd","fullName":"storefront/navigation/storefront-smoke.spec.ts:53:3","name":"MS-NAV-004 empty cart opens without broken state","status":"passed","testResultsByEnv":{"default":"97a530fd21c96081841e0b0b45d2e1bb"}}
