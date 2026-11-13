@@ -1,1 +1,1 @@
-{"id":"9d602a85f4fd70f20d8913f84c3bfaec","fullName":"storefront/ux/error-pages.spec.ts:18:3","name":"MS-UX-003 unknown route serves the 404 page with a working way back home","status":"failed","testResultsByEnv":{"default":"167d1159a906ce16425879062b50ebcd"}}
+{"id":"9d602a85f4fd70f20d8913f84c3bfaec","fullName":"storefront/ux/error-pages.spec.ts:18:3","name":"MS-UX-003 unknown route serves the 404 page with a working way back home","status":"passed","testResultsByEnv":{"default":"8d95a30da51fce04b9b0f8ad018ae8b8"}}

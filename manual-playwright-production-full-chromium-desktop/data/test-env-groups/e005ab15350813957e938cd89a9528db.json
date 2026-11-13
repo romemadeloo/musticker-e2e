@@ -1,1 +1,1 @@
-{"id":"e005ab15350813957e938cd89a9528db","fullName":"storefront/discovery/category-discovery.spec.ts:24:3","name":"MS-DSC-003 sheet sticker category lists expected product links","status":"failed","testResultsByEnv":{"default":"1ac73e6a52149715f357474ad3abf010"}}
+{"id":"e005ab15350813957e938cd89a9528db","fullName":"storefront/discovery/category-discovery.spec.ts:24:3","name":"MS-DSC-003 sheet sticker category lists expected product links","status":"passed","testResultsByEnv":{"default":"077f002716e63ccc39c0d2b69567c043"}}

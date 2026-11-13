@@ -1,1 +1,1 @@
-{"id":"5ef595a87fcfe6e37c31edcf5f684094","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /shipping-methods is sent to sign in and back","status":"passed","testResultsByEnv":{"default":"0ed5f1109279fcee4fc276db5969fec4"}}
+{"id":"5ef595a87fcfe6e37c31edcf5f684094","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /shipping-methods is sent to sign in and back","status":"passed","testResultsByEnv":{"default":"8535fb2741fdb94e47a75fe3570b22b8"}}

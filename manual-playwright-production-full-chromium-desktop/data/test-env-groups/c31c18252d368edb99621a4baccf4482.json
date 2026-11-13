@@ -1,0 +1,1 @@
+{"id":"c31c18252d368edb99621a4baccf4482","fullName":"storefront/inquiry/partner-inquiry.spec.ts:30:5","name":"MS-INQ-004 대량주문·기업 견적: the hero CTA brings the quote form into view, and a blank submit flags every required field without sending","status":"passed","testResultsByEnv":{"default":"57e7b50e7424c8827ecf33cfd152e8f0"}}

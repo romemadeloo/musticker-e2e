@@ -1,0 +1,1 @@
+{"id":"a15bfe9b137a4d5131b73cc90ac74fac","fullName":"storefront/inquiry/partner-inquiry.spec.ts:100:3","name":"MS-INQ-009 제휴: the optional website must be an http(s) address, and a valid one clears the error","status":"passed","testResultsByEnv":{"default":"953e12e5aac24686457621b3ea7a92a6"}}
