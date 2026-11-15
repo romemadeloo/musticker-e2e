@@ -1,1 +1,1 @@
-{"id":"f70cf456c86a6998df46e1fd2ed62bea","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-DSC-007 catalog page renders without error: ./stickers/oval-sticker","status":"passed","testResultsByEnv":{"default":"600429e0df7c8818063815973e4c4881"}}
+{"id":"f70cf456c86a6998df46e1fd2ed62bea","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-DSC-007 catalog page renders without error: ./stickers/oval-sticker","status":"passed","testResultsByEnv":{"default":"0c267974b1a7daaafca3595074f2e31a"}}

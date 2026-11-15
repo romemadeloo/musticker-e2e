@@ -1,1 +1,1 @@
-{"id":"48b50bc44222c50d4a2b823ea46d9564","fullName":"storefront/checkout/money-path.spec.ts:110:3","name":"MS-CHK-006 an order at or above the free-shipping threshold ships free","status":"passed","testResultsByEnv":{"default":"7c6fd51e349ecc2a0ec34a3c9b7f6c75"}}
+{"id":"48b50bc44222c50d4a2b823ea46d9564","fullName":"storefront/checkout/money-path.spec.ts:110:3","name":"MS-CHK-006 an order at or above the free-shipping threshold ships free","status":"passed","testResultsByEnv":{"default":"1cf0720304b6f8aab023227599d99edf"}}

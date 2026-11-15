@@ -1,1 +1,1 @@
-{"id":"a88f18f709f3a4f2661523be5ca8495d","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-DSC-007 catalog page renders without error: ./stickers/transfer-sticker","status":"passed","testResultsByEnv":{"default":"e1bd5e46faf5419962af0fde802f2678"}}
+{"id":"a88f18f709f3a4f2661523be5ca8495d","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-DSC-007 catalog page renders without error: ./stickers/transfer-sticker","status":"passed","testResultsByEnv":{"default":"eaad32b9c0e270e92cf5131c1c2845d1"}}

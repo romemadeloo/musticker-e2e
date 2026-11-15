@@ -1,1 +1,1 @@
-{"id":"eb4a9a2061287279fd34369e0e9d5cc6","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-DSC-007 catalog page renders without error: ./stickers/rectangle-sticker","status":"passed","testResultsByEnv":{"default":"253072819fd96be794c7aedb4e8b3ebb"}}
+{"id":"eb4a9a2061287279fd34369e0e9d5cc6","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-DSC-007 catalog page renders without error: ./stickers/rectangle-sticker","status":"passed","testResultsByEnv":{"default":"214fecc23d49331c815b06f998d55aaf"}}

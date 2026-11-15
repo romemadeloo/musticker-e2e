@@ -1,1 +1,1 @@
-{"id":"c47fd4b798c1747c2235a19319999da2","fullName":"storefront/api/authorization.spec.ts:12:5","name":"MS-API-005 anonymous requests cannot read saved addresses","status":"passed","testResultsByEnv":{"default":"0f17d7e1bc86882f16c770ab9e81f3b8"}}
+{"id":"c47fd4b798c1747c2235a19319999da2","fullName":"storefront/api/authorization.spec.ts:12:5","name":"MS-API-005 anonymous requests cannot read saved addresses","status":"passed","testResultsByEnv":{"default":"ba5f8467f726d4490f053969e5741854"}}

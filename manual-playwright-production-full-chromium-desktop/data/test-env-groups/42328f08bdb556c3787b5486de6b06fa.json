@@ -1,1 +1,1 @@
-{"id":"42328f08bdb556c3787b5486de6b06fa","fullName":"storefront/configuration/design-studio.spec.ts:72:3","name":"MS-CFG-028 the studio refuses a low-resolution design and accepts a print-quality one","status":"passed","testResultsByEnv":{"default":"30b8254185edd1f13f9bf907da705b59"}}
+{"id":"42328f08bdb556c3787b5486de6b06fa","fullName":"storefront/configuration/design-studio.spec.ts:72:3","name":"MS-CFG-028 the studio refuses a low-resolution design and accepts a print-quality one","status":"broken","testResultsByEnv":{"default":"f401898810c4afd72ca8d2de3c06a721"}}
