@@ -1,1 +1,1 @@
-{"id":"b61eacef53734d4846718d9cbfb83df1","fullName":"storefront/discovery/public-content.spec.ts:17:5","name":"MS-DSC-014 footer licenses link renders its public content","status":"passed","testResultsByEnv":{"default":"ced906dd004938316ed4abe79da709f8"}}
+{"id":"b61eacef53734d4846718d9cbfb83df1","fullName":"storefront/discovery/public-content.spec.ts:17:5","name":"MS-DSC-014 footer licenses link renders its public content","status":"failed","testResultsByEnv":{"default":"05c3ad2ca49832468542356864e0d504"}}

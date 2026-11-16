@@ -1,1 +1,1 @@
-{"id":"70f131fc2e9b568c8169619ad0342cf6","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-DSC-007 catalog page renders without error: ./sheet-stickers/rounded-sheet","status":"passed","testResultsByEnv":{"default":"62d3f55cd91705d6fd0b7a06ce87848a"}}
+{"id":"70f131fc2e9b568c8169619ad0342cf6","fullName":"storefront/discovery/catalog-crawl.spec.ts:13:5","name":"MS-DSC-007 catalog page renders without error: ./sheet-stickers/rounded-sheet","status":"passed","testResultsByEnv":{"default":"f6debf03595f6b1678554e0a35ba8da2"}}
