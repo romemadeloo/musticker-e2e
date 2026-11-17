@@ -1,1 +1,1 @@
-{"id":"a5d19aa83da260a4ccb501d1e54f2048","fullName":"storefront/inquiry/partner-inquiry.spec.ts:44:3","name":"MS-INQ-007 기업 견적: a malformed email is refused and the phone boxes keep only digits","status":"passed","testResultsByEnv":{"default":"78ca439d8af38eb32d5e72ddd84bf189"}}
+{"id":"a5d19aa83da260a4ccb501d1e54f2048","fullName":"storefront/inquiry/partner-inquiry.spec.ts:44:3","name":"MS-INQ-007 기업 견적: a malformed email is refused and the phone boxes keep only digits","status":"passed","testResultsByEnv":{"default":"4e5dede7664c0f3a0dd1bb89588e31d1"}}

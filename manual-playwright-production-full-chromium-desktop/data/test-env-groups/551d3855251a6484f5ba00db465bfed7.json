@@ -1,1 +1,1 @@
-{"id":"551d3855251a6484f5ba00db465bfed7","fullName":"storefront/account/coupons.spec.ts:23:3","name":"MS-ACC-018 each coupon shows a distinct code and how often it can be used","status":"skipped","testResultsByEnv":{"default":"1f16173e7ee3a8cba415c83bcfd48f80"}}
+{"id":"551d3855251a6484f5ba00db465bfed7","fullName":"storefront/account/coupons.spec.ts:23:3","name":"MS-ACC-018 each coupon shows a distinct code and how often it can be used","status":"skipped","testResultsByEnv":{"default":"6902056b0a207c88e3fc6fec3380f784"}}
