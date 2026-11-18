@@ -1,1 +1,1 @@
-{"id":"b73b7c1d2cfb4878d0e2e1d7bdb7df9d","fullName":"storefront/api/public-api.spec.ts:9:3","name":"MS-API-001 navigation categories API returns public category data","status":"passed","testResultsByEnv":{"default":"6cd196ce28043c5986977af4b8ead10d"}}
+{"id":"b73b7c1d2cfb4878d0e2e1d7bdb7df9d","fullName":"storefront/api/public-api.spec.ts:9:3","name":"MS-API-001 navigation categories API returns public category data","status":"passed","testResultsByEnv":{"default":"61ed67d04cc7e39edb269263fae272a7"}}
