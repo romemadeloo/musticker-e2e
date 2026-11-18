@@ -1,1 +1,1 @@
-{"id":"a8503a5178e6d98d7354068246ac489e","fullName":"storefront/auth/registration.spec.ts:105:3","name":"MS-AUTH-018 login entry is reachable from register","status":"passed","testResultsByEnv":{"default":"39175d3f3d468f7d4060435e149b88bc"}}
+{"id":"a8503a5178e6d98d7354068246ac489e","fullName":"storefront/auth/registration.spec.ts:105:3","name":"MS-AUTH-018 login entry is reachable from register","status":"passed","testResultsByEnv":{"default":"739c0b70bc051d42b71b4d50851e9481"}}

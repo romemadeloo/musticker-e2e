@@ -1,1 +1,1 @@
-{"id":"85efa9bdebd29666e0d8779ae87760a6","fullName":"storefront/cart/cart-lifecycle.spec.ts:68:5","name":"MS-CRT-002 two distinct products become two lines whose prices sum to the cart total","status":"passed","testResultsByEnv":{"default":"1aea08e297e2551533ec667ec726f298"}}
+{"id":"85efa9bdebd29666e0d8779ae87760a6","fullName":"storefront/cart/cart-lifecycle.spec.ts:68:5","name":"MS-CRT-002 two distinct products become two lines whose prices sum to the cart total","status":"passed","testResultsByEnv":{"default":"b351adfe6a382c255bc7a4e51e209388"}}

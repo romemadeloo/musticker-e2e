@@ -1,0 +1,4 @@
+[self-heal] checkout payment option #1: expected "Npay", found "네이버페이 최대 5%적립"
+[self-heal] checkout payment option #1: expected "Npay", found "네이버페이 최대 5%적립"
+[self-heal] checkout payment option #1: expected "Npay", found "네이버페이 최대 5%적립"
+[self-heal] checkout payment option #1: expected "Npay", found "네이버페이 최대 5%적립"

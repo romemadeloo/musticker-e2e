@@ -1,1 +1,1 @@
-{"id":"aacbd2bb8077401b3f498842e4b1d550","fullName":"storefront/account/address-book.spec.ts:26:3","name":"MS-ACC-012 saved addresses show a name, phone and address, with one marked 기본 배송","status":"passed","testResultsByEnv":{"default":"d23355c8374410bbd82769970484848c"}}
+{"id":"aacbd2bb8077401b3f498842e4b1d550","fullName":"storefront/account/address-book.spec.ts:26:3","name":"MS-ACC-012 saved addresses show a name, phone and address, with one marked 기본 배송","status":"passed","testResultsByEnv":{"default":"15c0ab1bb74d04e3ef8bcb49bd8becbd"}}

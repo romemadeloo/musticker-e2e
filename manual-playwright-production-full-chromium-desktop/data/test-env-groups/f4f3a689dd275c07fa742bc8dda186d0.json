@@ -1,1 +1,1 @@
-{"id":"f4f3a689dd275c07fa742bc8dda186d0","fullName":"storefront/auth/registration.spec.ts:58:3","name":"MS-AUTH-015 password below the stated policy is rejected @validation","status":"passed","testResultsByEnv":{"default":"bbd24313ffe7122f50c4ecf84e2a0c8f"}}
+{"id":"f4f3a689dd275c07fa742bc8dda186d0","fullName":"storefront/auth/registration.spec.ts:58:3","name":"MS-AUTH-015 password below the stated policy is rejected @validation","status":"passed","testResultsByEnv":{"default":"eafcb4e606e881358851c3fff4df0487"}}
