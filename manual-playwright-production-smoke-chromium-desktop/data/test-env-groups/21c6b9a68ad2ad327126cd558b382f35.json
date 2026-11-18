@@ -1,1 +1,1 @@
-{"id":"21c6b9a68ad2ad327126cd558b382f35","fullName":"storefront/navigation/storefront-smoke.spec.ts:62:3","name":"MS-NAV-005 account icon routes anonymous users to authentication","status":"passed","testResultsByEnv":{"default":"c68f1510a999f1f84f3e7e8ed808f59f"}}
+{"id":"21c6b9a68ad2ad327126cd558b382f35","fullName":"storefront/navigation/storefront-smoke.spec.ts:62:3","name":"MS-NAV-005 account icon routes anonymous users to authentication","status":"passed","testResultsByEnv":{"default":"876333a8a6b6a4c9ba9918c460298287"}}
