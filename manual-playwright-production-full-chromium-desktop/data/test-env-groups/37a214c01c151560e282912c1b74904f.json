@@ -1,1 +1,1 @@
-{"id":"37a214c01c151560e282912c1b74904f","fullName":"admin/panel/admin-panel.spec.ts:18:5","name":"MS-ADM-003 /shipping-methods/express-shipping opens on \"Express Shipping\"","status":"skipped","testResultsByEnv":{"default":"404c0c271b591263139fce7cb1286e82"}}
+{"id":"37a214c01c151560e282912c1b74904f","fullName":"admin/panel/admin-panel.spec.ts:18:5","name":"MS-ADM-003 /shipping-methods/express-shipping opens on \"Express Shipping\"","status":"skipped","testResultsByEnv":{"default":"bae169aac4279e0a8fd2a6a8ef47592c"}}
