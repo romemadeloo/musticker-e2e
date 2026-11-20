@@ -1,1 +1,1 @@
-{"id":"c8a3561b8bcfaae9620c5c3efe4a3f1f","fullName":"storefront/checkout/checkout-page.spec.ts:110:5","name":"MS-CHK-011 위탁배송 adds a sender name and company block that unticking removes","status":"passed","testResultsByEnv":{"default":"8b272338e1f660e1b76ca3f451bd5137"}}
+{"id":"c8a3561b8bcfaae9620c5c3efe4a3f1f","fullName":"storefront/checkout/checkout-page.spec.ts:110:5","name":"MS-CHK-011 위탁배송 adds a sender name and company block that unticking removes","status":"passed","testResultsByEnv":{"default":"6863aa34b721b48cab1cef503fc956f8"}}

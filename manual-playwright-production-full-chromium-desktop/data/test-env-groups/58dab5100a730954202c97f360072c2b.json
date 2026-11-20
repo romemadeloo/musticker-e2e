@@ -1,1 +1,1 @@
-{"id":"58dab5100a730954202c97f360072c2b","fullName":"storefront/auth/guest-order-lookup.spec.ts:50:3","name":"MS-AUTH-031 blank guest lookup is blocked before the endpoint is called @validation","status":"failed","testResultsByEnv":{"default":"1862a4a6aca2ecef4bee39e4e67980ff"}}
+{"id":"58dab5100a730954202c97f360072c2b","fullName":"storefront/auth/guest-order-lookup.spec.ts:50:3","name":"MS-AUTH-031 blank guest lookup is blocked before the endpoint is called @validation","status":"passed","testResultsByEnv":{"default":"2519d697c3e900bbc18b899d2cc94087"}}

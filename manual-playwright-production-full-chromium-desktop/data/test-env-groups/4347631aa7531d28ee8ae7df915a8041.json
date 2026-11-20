@@ -1,1 +1,1 @@
-{"id":"4347631aa7531d28ee8ae7df915a8041","fullName":"storefront/cart/cart-lifecycle.spec.ts:137:5","name":"MS-CRT-006 an empty cart page offers a way back into the catalog","status":"passed","testResultsByEnv":{"default":"20ffcfb22aa26d55c8751d5a3b8e39c5"}}
+{"id":"4347631aa7531d28ee8ae7df915a8041","fullName":"storefront/cart/cart-lifecycle.spec.ts:137:5","name":"MS-CRT-006 an empty cart page offers a way back into the catalog","status":"passed","testResultsByEnv":{"default":"9ae51bd5558c7fe8c94e422a74ff7298"}}

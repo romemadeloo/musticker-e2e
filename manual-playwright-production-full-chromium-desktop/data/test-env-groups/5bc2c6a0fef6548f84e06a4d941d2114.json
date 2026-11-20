@@ -1,1 +1,1 @@
-{"id":"5bc2c6a0fef6548f84e06a4d941d2114","fullName":"storefront/api/auth-validation.spec.ts:21:3","name":"MS-API-008 invalid credentials return an explicit rejection without authenticating","status":"passed","testResultsByEnv":{"default":"564c1e9e7885be1b871aa57177ef35a2"}}
+{"id":"5bc2c6a0fef6548f84e06a4d941d2114","fullName":"storefront/api/auth-validation.spec.ts:21:3","name":"MS-API-008 invalid credentials return an explicit rejection without authenticating","status":"passed","testResultsByEnv":{"default":"5a5a7f6e6616cfb0e85c45eac70a4760"}}
