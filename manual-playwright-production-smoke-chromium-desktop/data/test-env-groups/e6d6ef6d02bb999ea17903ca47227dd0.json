@@ -1,1 +1,1 @@
-{"id":"e6d6ef6d02bb999ea17903ca47227dd0","fullName":"storefront/auth/registration.spec.ts:25:3","name":"MS-AUTH-012 register form exposes expected controls @smoke","status":"passed","testResultsByEnv":{"default":"afe66553ed21ca77745914dbe8fa0ce0"}}
+{"id":"e6d6ef6d02bb999ea17903ca47227dd0","fullName":"storefront/auth/registration.spec.ts:25:3","name":"MS-AUTH-012 register form exposes expected controls @smoke","status":"passed","testResultsByEnv":{"default":"afe7f229e72bd58f2835bbfe3e840b33"}}
