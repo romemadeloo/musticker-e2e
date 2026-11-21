@@ -1,1 +1,1 @@
-{"id":"32457dfdc688e65899871e0e40d0aae1","fullName":"storefront/api/authorization.spec.ts:12:5","name":"MS-API-004 anonymous requests cannot read profile overview","status":"passed","testResultsByEnv":{"default":"6ff6c8a678332188f6228b37f6ff0473"}}
+{"id":"32457dfdc688e65899871e0e40d0aae1","fullName":"storefront/api/authorization.spec.ts:12:5","name":"MS-API-004 anonymous requests cannot read profile overview","status":"passed","testResultsByEnv":{"default":"8bb008e349a85a98371d4728e4763647"}}
