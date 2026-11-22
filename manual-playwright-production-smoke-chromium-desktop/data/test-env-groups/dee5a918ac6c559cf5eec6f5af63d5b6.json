@@ -1,1 +1,1 @@
-{"id":"dee5a918ac6c559cf5eec6f5af63d5b6","fullName":"storefront/discovery/faq.spec.ts:8:3","name":"MS-DSC-004 FAQ topics and accordions are usable","status":"passed","testResultsByEnv":{"default":"6c551ff57f6fd1e4a41cca401de3f295"}}
+{"id":"dee5a918ac6c559cf5eec6f5af63d5b6","fullName":"storefront/discovery/faq.spec.ts:8:3","name":"MS-DSC-004 FAQ topics and accordions are usable","status":"failed","testResultsByEnv":{"default":"27567c195749dd8eb0dafd7ab27142b9"}}
