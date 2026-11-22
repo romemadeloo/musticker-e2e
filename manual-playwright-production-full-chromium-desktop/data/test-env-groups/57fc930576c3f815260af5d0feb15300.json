@@ -1,1 +1,1 @@
-{"id":"57fc930576c3f815260af5d0feb15300","fullName":"storefront/auth/change-password.spec.ts:75:5","name":"MS-AUTH-025 a new password below the policy is rejected @validation","status":"passed","testResultsByEnv":{"default":"97465acc191d8a15ab3a913125d71dbc"}}
+{"id":"57fc930576c3f815260af5d0feb15300","fullName":"storefront/auth/change-password.spec.ts:75:5","name":"MS-AUTH-025 a new password below the policy is rejected @validation","status":"failed","testResultsByEnv":{"default":"654b37acb549049f7ebc6182fb670360"}}

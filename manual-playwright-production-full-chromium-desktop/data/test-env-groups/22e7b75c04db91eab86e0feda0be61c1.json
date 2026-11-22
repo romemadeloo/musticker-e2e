@@ -1,1 +1,1 @@
-{"id":"22e7b75c04db91eab86e0feda0be61c1","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /seo is sent to sign in and back","status":"passed","testResultsByEnv":{"default":"8fa14fcfb054db39db75ac537dd72d43"}}
+{"id":"22e7b75c04db91eab86e0feda0be61c1","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /seo is sent to sign in and back","status":"passed","testResultsByEnv":{"default":"93ff5e0c81e9f65b60dea3160af96c6f"}}

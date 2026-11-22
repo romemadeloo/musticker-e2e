@@ -1,1 +1,1 @@
-{"id":"b6a9a452169a33fe4a4d27b8a22b33bb","fullName":"storefront/navigation/footer.spec.ts:82:3","name":"MS-NAV-017 footer 사업자정보확인 opens the FTC lookup for the registration number it shows","status":"passed","testResultsByEnv":{"default":"2aa7b7b123cb8db30f65fab87dfa2bb9"}}
+{"id":"b6a9a452169a33fe4a4d27b8a22b33bb","fullName":"storefront/navigation/footer.spec.ts:82:3","name":"MS-NAV-017 footer 사업자정보확인 opens the FTC lookup for the registration number it shows","status":"passed","testResultsByEnv":{"default":"fca65b1f46b00eccfd453c36b7bc929a"}}
