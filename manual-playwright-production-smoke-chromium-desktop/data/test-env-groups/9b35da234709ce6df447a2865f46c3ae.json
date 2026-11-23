@@ -1,1 +1,1 @@
-{"id":"9b35da234709ce6df447a2865f46c3ae","fullName":"storefront/cart/cart-lifecycle.spec.ts:95:5","name":"MS-CRT-003 a guest cart survives a full page reload @smoke","status":"failed","testResultsByEnv":{"default":"3836fe112a8f5252ff10bacde50af540"}}
+{"id":"9b35da234709ce6df447a2865f46c3ae","fullName":"storefront/cart/cart-lifecycle.spec.ts:95:5","name":"MS-CRT-003 a guest cart survives a full page reload @smoke","status":"passed","testResultsByEnv":{"default":"d7961bfc4c159f6b75b3aca670ee0848"}}
