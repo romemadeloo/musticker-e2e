@@ -1,1 +1,1 @@
-{"id":"f4fe841bfaa38c078bc98fee200a5ae9","fullName":"storefront/account/account-menu.spec.ts:21:3","name":"MS-ACC-006 the account menu lists its six sections and each one opens its own page @smoke","status":"passed","testResultsByEnv":{"default":"83b33dd2351be245af1e862310d2eb8a"}}
+{"id":"f4fe841bfaa38c078bc98fee200a5ae9","fullName":"storefront/account/account-menu.spec.ts:21:3","name":"MS-ACC-006 the account menu lists its six sections and each one opens its own page @smoke","status":"passed","testResultsByEnv":{"default":"a9a1554a574c5ad5816ff1c5225a01e1"}}
