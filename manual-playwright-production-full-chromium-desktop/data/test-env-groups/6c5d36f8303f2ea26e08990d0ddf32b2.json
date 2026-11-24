@@ -1,1 +1,1 @@
-{"id":"6c5d36f8303f2ea26e08990d0ddf32b2","fullName":"storefront/navigation/footer.spec.ts:111:3","name":"MS-NAV-019 footer inquiry form is announced as a dialog, takes focus and closes on Escape","status":"passed","testResultsByEnv":{"default":"9543b040bd05739271e12f21b895beda"}}
+{"id":"6c5d36f8303f2ea26e08990d0ddf32b2","fullName":"storefront/navigation/footer.spec.ts:111:3","name":"MS-NAV-019 footer inquiry form is announced as a dialog, takes focus and closes on Escape","status":"passed","testResultsByEnv":{"default":"fd12f1d597cc6ba0b5db926f28ceb55d"}}

@@ -1,1 +1,1 @@
-{"id":"e9476ba8e48b79f1ae46450cc925a88d","fullName":"storefront/configuration/sticker-catalog-configurator.spec.ts:24:5","name":"MS-CFG-017 도무송 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"27487711d84a39ea599e76baa9848bb4"}}
+{"id":"e9476ba8e48b79f1ae46450cc925a88d","fullName":"storefront/configuration/sticker-catalog-configurator.spec.ts:24:5","name":"MS-CFG-017 도무송 스티커 supports size and quantity selection through to cart","status":"passed","testResultsByEnv":{"default":"60ba00461ffb13e5543f102acdf65ada"}}
