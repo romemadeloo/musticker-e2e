@@ -1,1 +1,1 @@
-{"id":"7b4d35cb64b8c5e21c1e43f89d274489","fullName":"storefront/discovery/public-content.spec.ts:9:5","name":"MS-DSC-010 footer shipping link selects its FAQ topic and survives reload","status":"passed","testResultsByEnv":{"default":"929ae0b399c6dee5db30f29ebca0614d"}}
+{"id":"7b4d35cb64b8c5e21c1e43f89d274489","fullName":"storefront/discovery/public-content.spec.ts:9:5","name":"MS-DSC-010 footer shipping link selects its FAQ topic and survives reload","status":"passed","testResultsByEnv":{"default":"b2139df83c135ae0c2c6832a32d041aa"}}

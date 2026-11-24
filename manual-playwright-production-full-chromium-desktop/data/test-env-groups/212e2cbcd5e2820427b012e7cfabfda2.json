@@ -1,1 +1,1 @@
-{"id":"212e2cbcd5e2820427b012e7cfabfda2","fullName":"storefront/security/throttle-detection.spec.ts:72:3","name":"MS-WAF-003 one refused asset is left alone, not relabelled as throttling","status":"passed","testResultsByEnv":{"default":"d6c8e041b9c13d79bf06dc1dca8ef897"}}
+{"id":"212e2cbcd5e2820427b012e7cfabfda2","fullName":"storefront/security/throttle-detection.spec.ts:72:3","name":"MS-WAF-003 one refused asset is left alone, not relabelled as throttling","status":"passed","testResultsByEnv":{"default":"a4aa3a26af47c395fa235931f593fd1a"}}

@@ -1,1 +1,1 @@
-{"id":"bcab2b507aa2be31a671a67996ba2c82","fullName":"admin/panel/admin-panel.spec.ts:26:3","name":"MS-ADM-004 every order status tab shows the count the API holds for it","status":"skipped","testResultsByEnv":{"default":"e05cd8afcbb6426e01581531c128f96a"}}
+{"id":"bcab2b507aa2be31a671a67996ba2c82","fullName":"admin/panel/admin-panel.spec.ts:26:3","name":"MS-ADM-004 every order status tab shows the count the API holds for it","status":"skipped","testResultsByEnv":{"default":"29bed41389ffc773bd6d8aca1b4c483c"}}
