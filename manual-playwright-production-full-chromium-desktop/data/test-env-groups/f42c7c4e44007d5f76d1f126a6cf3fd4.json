@@ -1,1 +1,1 @@
-{"id":"f42c7c4e44007d5f76d1f126a6cf3fd4","fullName":"storefront/checkout/checkout-page.spec.ts:77:5","name":"MS-CHK-008 무통장 입금 asks for the depositor name only while it is selected","status":"failed","testResultsByEnv":{"default":"96cdc4a79b9dc3612972c21d30307915"}}
+{"id":"f42c7c4e44007d5f76d1f126a6cf3fd4","fullName":"storefront/checkout/checkout-page.spec.ts:77:5","name":"MS-CHK-008 무통장 입금 asks for the depositor name only while it is selected","status":"passed","testResultsByEnv":{"default":"b437f1f2ac088f1f501ce36736d234d4"}}

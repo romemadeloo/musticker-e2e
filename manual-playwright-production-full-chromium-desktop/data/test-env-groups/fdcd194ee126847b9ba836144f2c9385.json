@@ -1,1 +1,1 @@
-{"id":"fdcd194ee126847b9ba836144f2c9385","fullName":"storefront/checkout/checkout-page.spec.ts:135:5","name":"MS-CHK-013 로그인 opens sign-in over the checkout, and 주문 요약 수정 returns to the cart","status":"passed","testResultsByEnv":{"default":"fe7e7d65166d49af1699d47a4cbb40ce"}}
+{"id":"fdcd194ee126847b9ba836144f2c9385","fullName":"storefront/checkout/checkout-page.spec.ts:135:5","name":"MS-CHK-013 로그인 opens sign-in over the checkout, and 주문 요약 수정 returns to the cart","status":"passed","testResultsByEnv":{"default":"356a22037f1e2744458615016fbb8793"}}

@@ -1,1 +1,1 @@
-{"id":"f67d6e0665eaf7d6d3d8e715b98efeff","fullName":"storefront/configuration/product-config.spec.ts:73:3","name":"MS-CFG-006 product review carousel is usable","status":"passed","testResultsByEnv":{"default":"fe19aec5763677234f142479e3797691"}}
+{"id":"f67d6e0665eaf7d6d3d8e715b98efeff","fullName":"storefront/configuration/product-config.spec.ts:73:3","name":"MS-CFG-006 product review carousel is usable","status":"failed","testResultsByEnv":{"default":"5771a4eb93992704f00ab9ac02228c09"}}
