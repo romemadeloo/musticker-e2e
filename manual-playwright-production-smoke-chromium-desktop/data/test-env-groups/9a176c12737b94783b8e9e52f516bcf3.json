@@ -1,1 +1,1 @@
-{"id":"9a176c12737b94783b8e9e52f516bcf3","fullName":"storefront/configuration/product-config.spec.ts:19:3","name":"MS-CFG-001 die-cut sticker supports size and quantity selection","status":"passed","testResultsByEnv":{"default":"a2158f6de05dbf5a3c4bb0e4c013ae35"}}
+{"id":"9a176c12737b94783b8e9e52f516bcf3","fullName":"storefront/configuration/product-config.spec.ts:19:3","name":"MS-CFG-001 die-cut sticker supports size and quantity selection","status":"failed","testResultsByEnv":{"default":"b0f44e8fad0884ab6d352cc893817938"}}
