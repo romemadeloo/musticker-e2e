@@ -1,1 +1,1 @@
-{"id":"8b528ec3aa2a502eb16e8042b0725a4e","fullName":"storefront/navigation/header-search.spec.ts:19:3","name":"MS-NAV-010 selecting a search result opens the product and closes search","status":"passed","testResultsByEnv":{"default":"ee5318db2b3ec7387a131a7f407cd136"}}
+{"id":"8b528ec3aa2a502eb16e8042b0725a4e","fullName":"storefront/navigation/header-search.spec.ts:19:3","name":"MS-NAV-010 selecting a search result opens the product and closes search","status":"passed","testResultsByEnv":{"default":"614b6f1c7165c2b74f276967f7825f4d"}}
