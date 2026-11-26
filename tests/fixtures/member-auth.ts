@@ -62,7 +62,11 @@ export async function seedMemberStorageState(): Promise<MemberStorageState> {
         // Rejected as a required field if omitted, and `true` is what the form sends when the
         // shopper leaves 로그인 상태 유지 ticked -- which is what keeps the cookie usable for a run.
         remember_me: true
-      }
+      },
+      // Retries a dropped connection only (ECONNRESET, reported as "socket hang up"), never an
+      // answered request: the production API reset one of these logins mid-run on 2026-11-26
+      // (MS-AUTH-032), with the WAF key present and no 403.
+      maxRetries: 2
     });
 
     // The endpoint reports a refused login as HTTP 200 with `success: false`,
