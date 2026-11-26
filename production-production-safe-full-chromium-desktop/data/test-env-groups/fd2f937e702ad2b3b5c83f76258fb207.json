@@ -1,1 +1,1 @@
-{"id":"fd2f937e702ad2b3b5c83f76258fb207","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /offers is sent to sign in and back","status":"passed","testResultsByEnv":{"default":"2ee8fd793225dc188abbf65a4def8482"}}
+{"id":"fd2f937e702ad2b3b5c83f76258fb207","fullName":"admin/panel/admin-auth-guard.spec.ts:18:5","name":"MS-ADM-002 an anonymous visitor to /offers is sent to sign in and back","status":"passed","testResultsByEnv":{"default":"432f699a3830f2bdf472f61ac000a209"}}

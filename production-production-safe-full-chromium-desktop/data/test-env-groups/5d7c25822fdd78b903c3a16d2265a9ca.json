@@ -1,1 +1,1 @@
-{"id":"5d7c25822fdd78b903c3a16d2265a9ca","fullName":"storefront/account/points.spec.ts:39:3","name":"MS-ACC-016 the 적립 and 차감 filters show only credits and only debits","status":"passed","testResultsByEnv":{"default":"182892eb7bbb470eb2c8a837a547d971"}}
+{"id":"5d7c25822fdd78b903c3a16d2265a9ca","fullName":"storefront/account/points.spec.ts:39:3","name":"MS-ACC-016 the 적립 and 차감 filters show only credits and only debits","status":"passed","testResultsByEnv":{"default":"166b39c9f692782e1c5bee9a6d61d0b7"}}
