@@ -1,1 +1,1 @@
-{"id":"6dfef55aa6007108d6b6814ffe33debc","fullName":"storefront/navigation/footer.spec.ts:26:3","name":"MS-NAV-012 footer columns list their links in order, and new-tab links open without an opener","status":"passed","testResultsByEnv":{"default":"35f66e5bb02a57204c5ddb22d47f955b"}}
+{"id":"6dfef55aa6007108d6b6814ffe33debc","fullName":"storefront/navigation/footer.spec.ts:26:3","name":"MS-NAV-012 footer columns list their links in order, and new-tab links open without an opener","status":"passed","testResultsByEnv":{"default":"09789679be41093e2927600d1f602f88"}}

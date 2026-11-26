@@ -1,1 +1,1 @@
-{"id":"8b60e7a3a80d7f5e7f4d4468899f9e8c","fullName":"storefront/checkout/checkout-page.spec.ts:96:5","name":"MS-CHK-010 일반 배송 promises a delivery window after today and charges the fee the summary shows","status":"passed","testResultsByEnv":{"default":"1a3e42426034a844bb913d584db0498e"}}
+{"id":"8b60e7a3a80d7f5e7f4d4468899f9e8c","fullName":"storefront/checkout/checkout-page.spec.ts:96:5","name":"MS-CHK-010 일반 배송 promises a delivery window after today and charges the fee the summary shows","status":"passed","testResultsByEnv":{"default":"f43d900d84329704500a81e086adc83e"}}
