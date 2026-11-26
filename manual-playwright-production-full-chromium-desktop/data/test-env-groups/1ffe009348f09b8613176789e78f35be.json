@@ -1,1 +1,1 @@
-{"id":"1ffe009348f09b8613176789e78f35be","fullName":"storefront/account/address-book.spec.ts:52:3","name":"MS-ACC-013 새 주소 추가 opens the address form, and 취소 closes it without adding anything","status":"passed","testResultsByEnv":{"default":"21d724f8d9d0bde01f5c895445b7bedb"}}
+{"id":"1ffe009348f09b8613176789e78f35be","fullName":"storefront/account/address-book.spec.ts:52:3","name":"MS-ACC-013 새 주소 추가 opens the address form, and 취소 closes it without adding anything","status":"passed","testResultsByEnv":{"default":"b1aa2772a283495baef77ce4b44e6f4e"}}

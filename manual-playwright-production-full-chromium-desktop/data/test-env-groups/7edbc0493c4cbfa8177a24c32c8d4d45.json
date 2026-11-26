@@ -1,1 +1,0 @@
-{"id":"7edbc0493c4cbfa8177a24c32c8d4d45","fullName":"storefront/sheet-size-rules/sheet-sticker-size-rules.spec.ts:45:5","name":"MS-SHT-001 둥근 사각 판스티커 rejects a custom size that fits only one sticker per sheet","status":"passed","testResultsByEnv":{"default":"bc57487cbe22c60a254c0d3e78eb5d1e"}}

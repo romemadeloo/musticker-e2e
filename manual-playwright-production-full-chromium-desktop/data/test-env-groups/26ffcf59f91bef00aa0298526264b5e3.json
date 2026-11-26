@@ -1,1 +1,1 @@
-{"id":"26ffcf59f91bef00aa0298526264b5e3","fullName":"storefront/auth/login.spec.ts:40:3","name":"MS-AUTH-004 malformed email is rejected without starting an auth session @validation","status":"passed","testResultsByEnv":{"default":"6555e519b596becbed77cc157cea7e45"}}
+{"id":"26ffcf59f91bef00aa0298526264b5e3","fullName":"storefront/auth/login.spec.ts:40:3","name":"MS-AUTH-004 malformed email is rejected without starting an auth session @validation","status":"passed","testResultsByEnv":{"default":"14b610366109d38de7c1d0c73293a659"}}

@@ -1,1 +1,1 @@
-{"id":"ee4400e70df363af44022aecdd662253","fullName":"storefront/account/points.spec.ts:20:3","name":"MS-ACC-015 the points page shows the tier, the balance and a dated, signed ledger","status":"passed","testResultsByEnv":{"default":"6ba236e7296c674aeef3faacf5e47bda"}}
+{"id":"ee4400e70df363af44022aecdd662253","fullName":"storefront/account/points.spec.ts:20:3","name":"MS-ACC-015 the points page shows the tier, the balance and a dated, signed ledger","status":"passed","testResultsByEnv":{"default":"280824e147241d960967f1151c49ac12"}}
