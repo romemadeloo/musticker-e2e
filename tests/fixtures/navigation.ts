@@ -1,9 +1,8 @@
 import { test } from '@playwright/test';
 import type { Page, Response } from '@playwright/test';
 
-import { internalOriginKey } from './env.js';
+import { internalOriginHeader, internalOriginKey } from './env.js';
 import { DEV_STOREFRONT_HOST } from './hosts.js';
-import { INTERNAL_ORIGIN_HEADER } from './internal-origin.js';
 
 // The storefront sits behind a WAF that rate-limits our single CI egress IP under full-suite load:
 // the document request comes back as a bare nginx 403 Forbidden page instead of the app, in
@@ -204,12 +203,12 @@ async function describeExhaustedRetries(
     // visible in a published report: traces are off whenever the key is in play, precisely so the
     // key cannot leak into one, so the lines above are this run's only account of what went out.
     key
-      ? 'An x-internal-origin key was configured for this run. If the header reached the refused ' +
+      ? `A WAF key was configured for this run, sent as ${internalOriginHeader()}. If the header reached the refused ` +
         'request above and it was refused anyway, the exemption is not being honoured, and that is ' +
         'a question for whoever owns the rule rather than a test fix. If the header was absent, it ' +
         'never reached the wire and the fault is ours: see applyInternalOriginHeader in ' +
         'tests/fixtures/internal-origin.ts.'
-      : 'No x-internal-origin key was sent for this run, so the WAF exemption was never in play. ' +
+      : 'No WAF key was sent for this run, so the WAF exemption was never in play. ' +
         'Check that INTERNAL_ORIGIN_KEY (production) or DEV_INTERNAL_ORIGIN_KEY (dev-*) is ' +
         'set for this job; env.ts picks by target environment.',
     '',
@@ -220,7 +219,7 @@ async function describeExhaustedRetries(
 
 // Response headers that name the box which refused us. A bare origin nginx, a CDN edge and a WAF
 // appliance all answer 403 with a body worth nothing, and only these separate them -- which is what
-// decides whether the x-internal-origin exemption was ever evaluated at all.
+// decides whether the WAF-key exemption was ever evaluated at all.
 const refusalHeaderNames = [
   'server',
   'via',
@@ -257,7 +256,7 @@ async function describeRefusal(refused: Response | null): Promise<string[]> {
 
   return [
     `Refused ${refused.status()} ${refused.url()}`,
-    `  x-internal-origin on that request: ${await describeSentOriginHeader(refused)}`,
+    `  ${internalOriginHeader()} on that request: ${await describeSentOriginHeader(refused)}`,
     `  answered by: ${named.length > 0 ? named.join(', ') : '(no identifying response headers)'}`,
     `  body: ${await describeRefusalBody(refused)}`
   ];
@@ -265,7 +264,7 @@ async function describeRefusal(refused: Response | null): Promise<string[]> {
 
 async function describeSentOriginHeader(refused: Response): Promise<string> {
   try {
-    const value = (await refused.request().allHeaders())[INTERNAL_ORIGIN_HEADER];
+    const value = (await refused.request().allHeaders())[internalOriginHeader()];
 
     return value ? `present (${value.length} chars)` : 'absent';
   } catch {

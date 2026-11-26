@@ -1,9 +1,7 @@
 import type { Page } from '@playwright/test';
 
-import { internalOriginKey } from './env.js';
+import { internalOriginHeader, internalOriginKey } from './env.js';
 import { isMustickerHost } from './hosts.js';
-
-export const INTERNAL_ORIGIN_HEADER = 'x-internal-origin';
 
 /**
  * Sends the WAF exemption key on every musticker.com request the browser makes.
@@ -22,6 +20,7 @@ export const INTERNAL_ORIGIN_HEADER = 'x-internal-origin';
  */
 export async function applyInternalOriginHeader(page: Page): Promise<void> {
   const key = internalOriginKey();
+  const header = internalOriginHeader();
 
   if (!key) {
     return;
@@ -36,7 +35,7 @@ export async function applyInternalOriginHeader(page: Page): Promise<void> {
       // incomplete copy would silently drop headers the browser had already put on the request.
       const headers = await route.request().allHeaders();
 
-      await route.continue({ headers: { ...headers, [INTERNAL_ORIGIN_HEADER]: key } });
+      await route.continue({ headers: { ...headers, [header]: key } });
     }
   );
 }

@@ -1,7 +1,7 @@
 import { request } from '@playwright/test';
 import { mkdirSync, writeFileSync, appendFileSync } from 'node:fs';
 import { randomUUID } from 'node:crypto';
-import { activeEnvironment, env, internalOriginKey, apiPath } from '../fixtures/env.js';
+import { activeEnvironment, env, internalOriginHeader, internalOriginKey, apiPath } from '../fixtures/env.js';
 import { checkReadiness } from '../fixtures/readiness.js';
 import type { ReadinessResult, ReadinessTarget } from '../fixtures/readiness.js';
 
@@ -20,7 +20,7 @@ export default async function globalReadiness() {
     }
     // Separate contexts prevent cookies from one origin affecting the other check.
     const client = await request.newContext({ extraHTTPHeaders: {
-      ...(key ? { 'x-internal-origin': key } : {}),
+      ...(key ? { [internalOriginHeader()]: key } : {}),
       ...(target.name === 'api' ? { Origin: new URL(env.BASE_URL).origin, Accept: 'application/json' } : {})
     } });
     try {

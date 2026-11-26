@@ -9,7 +9,7 @@
 // while also matching `foomusticker.com`, a domain anyone can register.
 import { test, expect } from '@playwright/test';
 
-import { internalOriginKeyVarFor } from '../../../fixtures/env.js';
+import { internalOriginHeaderFor, internalOriginKeyVarFor } from '../../../fixtures/env.js';
 import { isMustickerHost } from '../../../fixtures/hosts.js';
 
 test.describe('Internal origin scope', { tag: ['@security'] }, () => {
@@ -54,6 +54,9 @@ test.describe('Internal origin scope', { tag: ['@security'] }, () => {
   // the run would look completely normal while doing it -- so the mapping is pinned here.
   test('MS-SEC-003 each environment resolves to its own key', () => {
     expect(internalOriginKeyVarFor('production')).toBe('INTERNAL_ORIGIN_KEY');
+    // Each WAF matches its own header name; the right key under the wrong name is still a 403.
+    expect(internalOriginHeaderFor('production')).toBe('x-waf-ci-key');
+    expect(internalOriginHeaderFor('dev-1')).toBe('x-internal-origin');
 
     for (const environment of [
       'dev-1',

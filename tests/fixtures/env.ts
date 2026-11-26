@@ -10,8 +10,8 @@ export const env = {
   AUTH_TEST_PASSWORD: process.env.AUTH_TEST_PASSWORD,
   // WAF exemption keys issued by the site owner -- production and the dev-* dev servers
   // sit behind separate WAFs with separate keys. Read these through internalOriginKey() rather than
-  // directly; see the note there. Sent as the x-internal-origin header on first-party requests
-  // only -- tests/fixtures/internal-origin.ts.
+  // directly; see the note there. Sent on first-party requests only, under the header name
+  // internalOriginHeader() picks -- tests/fixtures/internal-origin.ts.
   // Trimmed because these arrive by copy-paste into a secrets UI, where a trailing newline or
   // space is easy to include and impossible to see. An HTTP header value carries that whitespace
   // verbatim, so an otherwise-correct key gets refused and looks exactly like a wrong one.
@@ -41,6 +41,25 @@ export function internalOriginKeyVarFor(
   }
 
   return environment?.startsWith('dev-') ? 'DEV_INTERNAL_ORIGIN_KEY' : undefined;
+}
+
+/**
+ * Which request header carries the key for a given environment.
+ *
+ * The two WAFs were set up separately and match different header names: production's rule (the
+ * `musticker/waf-ci-key` exemption, 2026-11) checks `x-waf-ci-key`, while the dev servers' rule
+ * checks `x-internal-origin`. Sending a correct key under the wrong name is refused exactly like a
+ * wrong key -- production 403'd from awselb with the header present until this was split.
+ */
+export function internalOriginHeaderFor(
+  environment: EnvironmentName | undefined
+): 'x-waf-ci-key' | 'x-internal-origin' {
+  return environment === 'production' ? 'x-waf-ci-key' : 'x-internal-origin';
+}
+
+/** The header name for the environment this run is pointed at; see internalOriginHeaderFor(). */
+export function internalOriginHeader(): string {
+  return internalOriginHeaderFor(activeEnvironment);
 }
 
 /**
