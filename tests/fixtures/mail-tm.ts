@@ -109,7 +109,7 @@ export function mailTmBody(message: MailTmMessage): string {
 }
 
 /** The inbox's newest page (30 messages), as summaries without the body. */
-async function listMailTmMessages(account: MailTmAccount): Promise<MailTmMessage[]> {
+export async function listMailTmMessages(account: MailTmAccount): Promise<MailTmMessage[]> {
   const page = await mailTmFetch<{ 'hydra:member': MailTmMessage[] }>('/messages', {
     headers: { Authorization: `Bearer ${account.token}` }
   });

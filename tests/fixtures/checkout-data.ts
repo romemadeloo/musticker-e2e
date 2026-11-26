@@ -7,7 +7,9 @@
  * self-heal annotation rather than failing on the copy.
  */
 export const checkoutPaymentMethods = [
-  { name: 'Npay', group: '간편결제' },
+  // Production renamed Npay to "네이버페이 최대 5%적립" by 2026-11-26 (self-heal report, MS-CHK-007);
+  // the locator matches the name as a prefix, so the 적립 promo text after it is not part of the data.
+  { name: '네이버페이', group: '간편결제' },
   { name: '카카오페이', group: '간편결제' },
   { name: '토스페이', group: '간편결제' },
   { name: '페이코', group: '간편결제' },
@@ -21,7 +23,7 @@ export type CheckoutPaymentMethod = (typeof checkoutPaymentMethods)[number]['nam
 
 export const checkoutCopy = {
   paymentHeading: '결제 수단',
-  defaultPaymentMethod: 'Npay' as CheckoutPaymentMethod,
+  defaultPaymentMethod: '네이버페이' as CheckoutPaymentMethod,
   // Shown only while 무통장 입금 is selected.
   depositorLabel: '입금자명',
   depositorNote: '안내: 무통장 입금은 입금 확인 및 처리까지 영업일 기준 1~2일이 소요될 수 있습니다.',

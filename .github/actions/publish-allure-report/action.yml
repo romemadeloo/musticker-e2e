@@ -392,15 +392,33 @@ runs:
         include-hidden-files: true
         path: ${{ inputs.pages_dir }}
 
+    # deploy-pages looks the artifact up by listing this run's artifacts, and that listing lags behind
+    # a large upload: with the site at ~470 MB it answered "Found 2 artifact(s)" and "No artifacts
+    # named github-pages" right after upload-pages-artifact had finalized it, failing most hourly
+    # publishes on 2026-11-25/26 while an occasional one went through. Nothing is deployed when the
+    # lookup fails, so a single delayed retry is safe.
     - name: Deploy to GitHub Pages
       id: deploy_pages
+      continue-on-error: true
+      uses: actions/deploy-pages@v5
+
+    - name: Wait for the Pages artifact to be listed
+      if: ${{ steps.deploy_pages.outcome == 'failure' }}
+      shell: bash
+      run: |
+        echo "::warning::deploy-pages could not find the github-pages artifact yet; retrying in 30s."
+        sleep 30
+
+    - name: Deploy to GitHub Pages (retry)
+      id: deploy_pages_retry
+      if: ${{ steps.deploy_pages.outcome == 'failure' }}
       uses: actions/deploy-pages@v5
 
     - name: Resolve report URL
       id: report_url
       shell: bash
       env:
-        DEPLOYED_PAGE_URL: ${{ steps.deploy_pages.outputs.page_url }}
+        DEPLOYED_PAGE_URL: ${{ steps.deploy_pages.outputs.page_url || steps.deploy_pages_retry.outputs.page_url }}
         REPORT_SLUG: ${{ inputs.report_slug }}
       run: |
         set -euo pipefail

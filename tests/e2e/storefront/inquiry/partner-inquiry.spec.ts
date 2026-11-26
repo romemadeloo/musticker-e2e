@@ -71,24 +71,29 @@ test.describe('Partner inquiry', { tag: ['@regression', '@validation', '@product
     await inquiry.goto();
     await expect(payment).toHaveText(institutionPaymentMethods.default);
 
-    const menu = await inquiry.openSelect(institutionPaymentMethods.label);
-    await expect(menu.getByRole('option')).toHaveText([
-      ...institutionPaymentMethods.selectable,
-      ...institutionPaymentMethods.comingSoon.map((name) => new RegExp(`^${escapeRegExp(name)}\\s*${institutionPaymentMethods.comingSoonBadge}$`))
-    ]);
+    // Each step reopens the menu if a late layout shift closed it; see withOpenSelect.
+    await inquiry.withOpenSelect(institutionPaymentMethods.label, async (menu) => {
+      await expect(menu.getByRole('option')).toHaveText([
+        ...institutionPaymentMethods.selectable,
+        ...institutionPaymentMethods.comingSoon.map((name) => new RegExp(`^${escapeRegExp(name)}\\s*${institutionPaymentMethods.comingSoonBadge}$`))
+      ], { timeout: 2_000 });
+    });
 
     for (const name of institutionPaymentMethods.comingSoon) {
-      const option = menu.getByRole('option', { name: new RegExp(escapeRegExp(name)) });
+      await inquiry.withOpenSelect(institutionPaymentMethods.label, async (menu) => {
+        const option = menu.getByRole('option', { name: new RegExp(escapeRegExp(name)) });
 
-      await expect(option).toHaveAttribute('aria-disabled', 'true');
-      // Dispatched, because click() would wait for the option to become enabled; the point is that a
-      // click which does land changes nothing.
-      await option.dispatchEvent('click');
+        await expect(option).toHaveAttribute('aria-disabled', 'true', { timeout: 2_000 });
+        // Dispatched, because click() would wait for the option to become enabled; the point is that a
+        // click which does land changes nothing.
+        await option.dispatchEvent('click', undefined, { timeout: 2_000 });
+      });
       await expect(payment).toHaveText(institutionPaymentMethods.default);
     }
 
-    await inquiry.openSelect(institutionPaymentMethods.label);
-    await menu.getByRole('option', { name: institutionPaymentMethods.card.label, exact: true }).click();
+    await inquiry.withOpenSelect(institutionPaymentMethods.label, async (menu) => {
+      await menu.getByRole('option', { name: institutionPaymentMethods.card.label, exact: true }).click({ timeout: 2_000 });
+    });
 
     await expect(payment).toHaveText(institutionPaymentMethods.card.label);
     await expect(payment).toHaveAttribute('aria-expanded', 'false');

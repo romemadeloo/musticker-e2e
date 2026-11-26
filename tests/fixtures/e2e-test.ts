@@ -267,8 +267,12 @@ function isTransientProductPageServerFailure(status: number, url: string): boole
 }
 
 // Any first-party host: dev-1 logs the same unused-preload warning as production (2026-10-14).
+// Product hero thumbnails on the static host joined the illustrations on 2026-11-26
+// (static.musticker.com/prod/images/products/die-cut-sticker/hero/die-cut-sticker-thumbnail.webp,
+// logged on the login page in MS-AUTH-010). Same Chrome advisory about the storefront's preload
+// list, not a failure of anything the page shows.
 function isBenignUnusedPreloadWarning(text: string): boolean {
-  return /The resource https:\/\/[\w.-]*musticker\.com\/illustrations\/products\/.* was preloaded using link preload but not used within a few seconds/i.test(
+  return /The resource https:\/\/[\w.-]*musticker\.com\/(?:illustrations\/products\/.*|(?:[a-z0-9-]+\/)?images\/products\/[a-z0-9-]+\/hero\/[\w.-]+) was preloaded using link preload but not used within a few seconds/i.test(
     text
   );
 }

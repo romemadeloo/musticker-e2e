@@ -163,14 +163,26 @@ export class CartV2Page {
     await expect.poll(() => this.captureTotal(), { timeout: 15_000 }).not.toBe(totalBefore);
   }
 
-  async changeQuantityViaRowSelect(productName: string, quantityLabel: string): Promise<void> {
+  /**
+   * Sets a row's sheet count through the quantity menu's 직접 입력 entry. The menu used to list the
+   * quantity tiers; on production it now offers only the current quantity and 직접 입력 (2026-11-26),
+   * which turns into a text box that applies on Enter. Waits for the cart total to move, so a typed
+   * quantity that needs a separate confirm step fails here.
+   */
+  async changeQuantityViaCustomEntry(productName: string, sheets: number): Promise<void> {
+    const row = this.row(productName);
     const totalBefore = await this.captureTotal();
-    await this.row(productName).locator('button.cart-qty-select-trigger').click();
+    await row.locator('button.cart-qty-select-trigger').click();
 
     const listbox = this.page.getByRole('listbox').last();
     await expect(listbox).toBeVisible();
-    await listbox.getByText(new RegExp(`^${escapeRegExp(quantityLabel)}`)).first().click();
+    await listbox.getByText(cartCopy.customQuantityOption, { exact: true }).click();
 
+    const input = row.getByRole('textbox', { name: cartCopy.customQuantityInput });
+    await input.fill(String(sheets));
+    await input.press('Enter');
+
+    await expect(row.getByRole('button', { name: cartCopy.sheetQuantity(sheets), exact: true })).toBeVisible();
     await expect.poll(() => this.captureTotal(), { timeout: 15_000 }).not.toBe(totalBefore);
   }
 

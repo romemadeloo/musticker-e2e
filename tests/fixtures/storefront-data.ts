@@ -118,7 +118,12 @@ export const cartCopy = {
   emptyDrawer: '현재 장바구니가 비어 있습니다.',
   checkoutFromCart: '주문하기',
   // The full cart page confirms every removal through a modal rather than deleting straight away.
-  removeConfirmHeading: '장바구니에서 이 상품을 삭제하시겠습니까?'
+  removeConfirmHeading: '장바구니에서 이 상품을 삭제하시겠습니까?',
+  // The row quantity menu on production lists only the current quantity and 직접 입력 (2026-11-26);
+  // 직접 입력 swaps the menu for a "수량 입력" text box, and Enter applies the typed sheet count.
+  customQuantityOption: '직접 입력',
+  customQuantityInput: '수량 입력',
+  sheetQuantity: (sheets: number) => `${sheets}시트`
 } as const;
 
 // The member account shell (/kr/account/*): the summary strip and the six-section menu every account

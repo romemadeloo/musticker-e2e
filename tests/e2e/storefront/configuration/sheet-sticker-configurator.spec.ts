@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url';
 
 import { expect, test } from '../../../fixtures/e2e-test.js';
-import { cartLineName, ko, sheetStickerConfiguratorProducts } from '../../../fixtures/storefront-data.js';
+import { cartCopy, cartLineName, ko, sheetStickerConfiguratorProducts } from '../../../fixtures/storefront-data.js';
 import { CartDrawer } from '../../../pom/storefront/cart-drawer.js';
 import { CartV2Page } from '../../../pom/storefront/cart-page.js';
 import { ProductV2Page } from '../../../pom/storefront/product-page.js';
@@ -162,6 +162,8 @@ test.describe('Sheet sticker configurator', {
     await cart.expectRowContainsText(data.heading, ko.hologram);
   });
 
+  // The row menu no longer lists quantity tiers (production, 2026-11-26), so the quantity is typed
+  // through its 직접 입력 entry; the point of the case -- no separate confirm step -- is unchanged.
   test('MS-CFG-014 circle sheet sticker: full cart page row quantity select updates price without a separate confirm step', async ({ page }) => {
     const product = new ProductV2Page(page);
     const data = sheetStickerConfiguratorProducts[0];
@@ -174,8 +176,8 @@ test.describe('Sheet sticker configurator', {
     await drawer.viewCart();
 
     const cart = new CartV2Page(page);
-    await cart.changeQuantityViaRowSelect(data.heading, '500시트');
-    await cart.expectRowContainsText(data.heading, '500시트');
+    await cart.changeQuantityViaCustomEntry(data.heading, 500);
+    await cart.expectRowContainsText(data.heading, cartCopy.sheetQuantity(500));
   });
 
   for (const data of sheetStickerConfiguratorProducts) {

@@ -84,6 +84,19 @@ export class PartnerInquiryV2Page {
     return this.page.getByRole('listbox');
   }
 
+  /**
+   * Opens a custom select and runs `action` against its menu, reopening and retrying the pair if the
+   * menu closes in between. openSelect() alone only proves the menu was open at one instant; the
+   * same late layout shift can close it again before the next assertion, which left MS-INQ-008
+   * looking at an empty listbox for 10s (production, 2026-11-26). Keep the timeouts inside `action`
+   * short so a closed menu fails fast and gets reopened.
+   */
+  async withOpenSelect(label: string, action: (menu: Locator) => Promise<void>): Promise<void> {
+    await expect(async () => {
+      await action(await this.openSelect(label));
+    }).toPass({ timeout: 30_000 });
+  }
+
   field(key: string): Locator {
     return this.form.getByTestId(`partner-inquiry-field-${key}`);
   }

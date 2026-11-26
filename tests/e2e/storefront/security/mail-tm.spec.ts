@@ -10,7 +10,7 @@
 // fixture would attach storefront headers (the internal-origin key among them) to a third-party host.
 import { test, expect } from '@playwright/test';
 
-import { createMailTmAccount, extractOtpCode, waitForMailTmMessage } from '../../../fixtures/mail-tm.js';
+import { createMailTmAccount, extractOtpCode, listMailTmMessages, waitForMailTmMessage } from '../../../fixtures/mail-tm.js';
 
 const MAIL_TM_BASE_URL = 'https://api.mail.tm';
 
@@ -35,8 +35,10 @@ test.describe('mail.tm inbox generator', { tag: ['@security'] }, () => {
       expect(me.ok(), 'the token must authorize the account it was issued for').toBe(true);
       expect((await me.json()).address).toBe(account.address);
 
-      const messages = await request.get(`${MAIL_TM_BASE_URL}/messages`, { headers: auth });
-      expect((await messages.json())['hydra:member']).toEqual([]);
+      // Through the fixture rather than a raw request: it backs off on mail.tm's shared 429 rate
+      // limit, whose empty body a raw .json() reported as "Unexpected end of JSON input" (2026-11-26).
+      const messages = await listMailTmMessages(account);
+      expect(messages).toEqual([]);
 
       // An empty inbox must time out with the fixture's own message, not hang or return a stray mail.
       await expect(waitForMailTmMessage(account, () => true, 1_000)).rejects.toThrow(/Timed out after 1000ms/);
