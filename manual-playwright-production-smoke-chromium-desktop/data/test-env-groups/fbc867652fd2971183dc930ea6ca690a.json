@@ -1,1 +1,1 @@
-{"id":"fbc867652fd2971183dc930ea6ca690a","fullName":"admin/api/admin-access.spec.ts:29:5","name":"MS-ADM-001 anonymous GET /sys/kr/orders/admin/list/count is refused","status":"passed","testResultsByEnv":{"default":"452451583dc6e414a1f7ed3f425fd953"}}
+{"id":"fbc867652fd2971183dc930ea6ca690a","fullName":"admin/api/admin-access.spec.ts:29:5","name":"MS-ADM-001 anonymous GET /sys/kr/orders/admin/list/count is refused","status":"passed","testResultsByEnv":{"default":"447788be01c3f3ec0280ee7f2ae1d677"}}
