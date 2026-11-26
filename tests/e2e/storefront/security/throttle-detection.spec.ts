@@ -10,7 +10,7 @@
 import { test, expect } from '@playwright/test';
 
 import { appPath } from '../../../fixtures/env.js';
-import { gotoStorefront, throttleRetryAttempts } from '../../../fixtures/navigation.js';
+import { gotoStorefront, retriedThrottleBlockCount, throttleRetryAttempts } from '../../../fixtures/navigation.js';
 
 // The shell the WAF lets through: a 200 document whose assets are then refused.
 const shellHtml = `<!doctype html>
@@ -94,5 +94,51 @@ test.describe('Throttle detection', { tag: ['@security'] }, () => {
 
     expect(response?.status()).toBe(200);
     expect(documentRequests, 'a single refused asset must not trigger the retry ladder').toBe(1);
+  });
+
+  test('MS-WAF-004 a 502 on the _nuxt chunks is reloaded past, and only the reloaded attempt is forgiven', async ({ page }) => {
+    // The 2026-11-26 production shape: the document loads, its chunks answer 502 once, then recover.
+    let documentRequests = 0;
+
+    await page.route('**/*', async (route) => {
+      if (route.request().resourceType() === 'document') {
+        documentRequests += 1;
+        await route.fulfill({ status: 200, contentType: 'text/html', body: shellHtml });
+        return;
+      }
+
+      const failing = documentRequests === 1 && route.request().url().endsWith('.js');
+      await route.fulfill({ status: failing ? 502 : 200, contentType: 'text/plain', body: '' });
+    });
+
+    const response = await gotoStorefront(page, appPath('./auth/register'));
+
+    expect(response?.status()).toBe(200);
+    expect(documentRequests, 'a page whose chunks 502 must be reloaded').toBe(2);
+    expect(retriedThrottleBlockCount(page), 'exactly the three 502 chunks of the first load are forgiven').toBe(3);
+  });
+
+  test('MS-WAF-005 chunks that keep answering 502 are handed back for the guard to report', async ({ page }) => {
+    // A real outage, not a blip: after its short reload budget the helper returns the page rather
+    // than retrying on, and the last attempt's 502s stay unforgiven.
+    let documentRequests = 0;
+
+    await page.route('**/*', async (route) => {
+      if (route.request().resourceType() === 'document') {
+        documentRequests += 1;
+        await route.fulfill({ status: 200, contentType: 'text/html', body: shellHtml });
+        return;
+      }
+
+      const isChunk = route.request().url().endsWith('.js');
+      await route.fulfill({ status: isChunk ? 502 : 200, contentType: 'text/plain', body: '' });
+    });
+
+    const response = await gotoStorefront(page, appPath('./auth/register'));
+
+    expect(response?.status()).toBe(200);
+    expect(documentRequests, 'one load plus two reloads, then give up').toBe(3);
+    // Two reloaded attempts x three chunks; the third attempt's three 502s are left to fail the test.
+    expect(retriedThrottleBlockCount(page)).toBe(6);
   });
 });

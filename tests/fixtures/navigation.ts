@@ -45,6 +45,24 @@ const subresourceBlockThreshold = 3;
 
 const storefrontUrlPattern = new RegExp(`^https://${DEV_STOREFRONT_HOST}/`, 'i');
 
+// A different failure with the same shape: the document answers 200 but the storefront's own server
+// answers 502 for its _nuxt chunks, so Nuxt never mounts. Seen on production 2026-11-26 (MS-AUTH-019
+// on /kr/auth/register, six chunks 502 at once, clean on the next load). Unlike a WAF block there is
+// no window to wait out, so it gets a short, separate budget of reloads; if the chunks still fail
+// after it, the failures are left for the guard to report as the outage they are.
+const gatewayRetryDelaysMs = [2_000, 5_000];
+const storefrontChunkPattern = new RegExp(`^https://${DEV_STOREFRONT_HOST}/_nuxt/`, 'i');
+
+export function isTransientChunkFailureResponse(status: number, url: string): boolean {
+  return [502, 503, 504].includes(status) && storefrontChunkPattern.test(url);
+}
+
+// The console line the browser logs for each of those chunks. It names no URL, so the guard can
+// only forgive it by count, alongside the response entries that do.
+export function isTransientChunkFailureConsoleError(text: string): boolean {
+  return /^Failed to load resource: the server responded with a status of 50[234]\b/.test(text);
+}
+
 // 403s this helper deliberately navigated past, per page. The guard in e2e-test.ts records every
 // failed response as it happens -- before this helper has seen the status -- so it cannot skip them
 // at listen time; it subtracts them at assertion time instead. Keyed weakly so nothing outlives the
@@ -98,14 +116,18 @@ export async function gotoStorefront(
   // Kept alongside the count so an exhausted ladder can report what the refusal actually looked like
   // on the wire, in the shape where the document answered 200 and its assets did not.
   let lastBlockedSubresource: Response | null = null;
+  let failedChunks = 0;
 
   const countBlockedSubresource = (response: Response): void => {
-    if (
-      response.request().resourceType() !== 'document' &&
-      isThrottleBlockResponse(response.status(), response.url())
-    ) {
+    if (response.request().resourceType() === 'document') {
+      return;
+    }
+
+    if (isThrottleBlockResponse(response.status(), response.url())) {
       blockedSubresources += 1;
       lastBlockedSubresource = response;
+    } else if (isTransientChunkFailureResponse(response.status(), response.url())) {
+      failedChunks += 1;
     }
   };
 
@@ -114,17 +136,25 @@ export async function gotoStorefront(
   try {
     let response = await page.goto(path, options);
     let attempts = 1;
+    let gatewayRetries = 0;
 
     for (const delayMs of throttleRetryDelaysMs) {
-      if (!isAttemptBlocked(response, blockedSubresources)) {
+      if (isAttemptBlocked(response, blockedSubresources)) {
+        countThrottleBlocks(page, blockedRequestCount(response, blockedSubresources));
+        await waitOutBlock(delayMs);
+      } else if (failedChunks > 0 && gatewayRetries < gatewayRetryDelaysMs.length) {
+        // Counted into the same forgiveness budget: each is one response entry and one console line
+        // the guard recorded for an attempt this helper reloaded past.
+        countThrottleBlocks(page, failedChunks);
+        await waitOutBlock(gatewayRetryDelaysMs[gatewayRetries]);
+        gatewayRetries += 1;
+      } else {
         return response;
       }
 
-      countThrottleBlocks(page, blockedRequestCount(response, blockedSubresources));
-      await waitOutBlock(delayMs);
-
       blockedSubresources = 0;
       lastBlockedSubresource = null;
+      failedChunks = 0;
       response = await page.goto(path, options);
       attempts += 1;
     }

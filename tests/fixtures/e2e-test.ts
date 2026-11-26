@@ -8,6 +8,8 @@ import type { MemberStorageState } from './member-auth.js';
 import {
   isThrottleBlockConsoleError,
   isThrottleBlockResponse,
+  isTransientChunkFailureConsoleError,
+  isTransientChunkFailureResponse,
   retriedThrottleBlockCount
 } from './navigation.js';
 
@@ -432,14 +434,19 @@ function isKnownConsoleMessage(text: string, options: GuardOptions): boolean {
 
 // The guard stores console failures as "[error] <text>" and response failures as "<status> <url>";
 // unwrap each back to the shape the navigation.ts predicates expect.
+// Covers both shapes gotoStorefront() reloads past: WAF 403s and 502/503/504 on _nuxt chunks.
 function isThrottleBlockConsoleFailure(entry: string): boolean {
-  return isThrottleBlockConsoleError(entry.replace(/^\[(?:error|warning)\] /, ''));
+  const text = entry.replace(/^\[(?:error|warning)\] /, '');
+
+  return isThrottleBlockConsoleError(text) || isTransientChunkFailureConsoleError(text);
 }
 
 function isThrottleBlockResponseFailure(entry: string): boolean {
   const [, status, url] = entry.match(/^(\d{3}) (\S+)$/) ?? [];
 
-  return status && url ? isThrottleBlockResponse(Number(status), url) : false;
+  return status && url
+    ? isThrottleBlockResponse(Number(status), url) || isTransientChunkFailureResponse(Number(status), url)
+    : false;
 }
 
 // Removes up to `limit` entries that the navigation retry already accounted for, keeping every
