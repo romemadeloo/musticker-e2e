@@ -1,1 +1,1 @@
-{"id":"cf5edc186ced06cae7621a853ba8f84c","fullName":"storefront/account/profile.spec.ts:38:3","name":"MS-ACC-009 변경사항 저장 turns on only once the name has been edited","status":"passed","testResultsByEnv":{"default":"a96d603a40b7a74492c87c353a5798a2"}}
+{"id":"cf5edc186ced06cae7621a853ba8f84c","fullName":"storefront/account/profile.spec.ts:38:3","name":"MS-ACC-009 변경사항 저장 turns on only once the name has been edited","status":"passed","testResultsByEnv":{"default":"244d02966d4b0cbf3f5a5e694d54cd07"}}
