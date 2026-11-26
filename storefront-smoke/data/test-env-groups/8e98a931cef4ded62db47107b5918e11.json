@@ -1,1 +1,1 @@
-{"id":"8e98a931cef4ded62db47107b5918e11","fullName":"storefront/api/authorization.spec.ts:12:5","name":"MS-API-006 anonymous requests cannot read points balance","status":"passed","testResultsByEnv":{"default":"a18eb415ca60d1910b28206aad9efb6e"}}
+{"id":"8e98a931cef4ded62db47107b5918e11","fullName":"storefront/api/authorization.spec.ts:12:5","name":"MS-API-006 anonymous requests cannot read points balance","status":"passed","testResultsByEnv":{"default":"aa6a3fb182c8a49214224e30f0dc3532"}}
