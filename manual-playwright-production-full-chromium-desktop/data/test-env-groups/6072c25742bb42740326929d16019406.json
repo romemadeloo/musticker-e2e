@@ -1,1 +1,1 @@
-{"id":"6072c25742bb42740326929d16019406","fullName":"storefront/security/throttle-detection.spec.ts:53:3","name":"MS-WAF-002 a clean page is returned untouched","status":"passed","testResultsByEnv":{"default":"88b97accc1b09a11f2c47cd4c2c21f21"}}
+{"id":"6072c25742bb42740326929d16019406","fullName":"storefront/security/throttle-detection.spec.ts:53:3","name":"MS-WAF-002 a clean page is returned untouched","status":"passed","testResultsByEnv":{"default":"734721c13a1a8b25365f2b22d50ea566"}}
