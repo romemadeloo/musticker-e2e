@@ -1,1 +1,1 @@
-{"id":"db7251d961d8d850feacf88cfc30df2c","fullName":"storefront/discovery/category-discovery.spec.ts:8:3","name":"MS-DSC-001 sticker category lists expected product links","status":"failed","testResultsByEnv":{"default":"69a8da417b13697861b83c3839c184bc"}}
+{"id":"db7251d961d8d850feacf88cfc30df2c","fullName":"storefront/discovery/category-discovery.spec.ts:8:3","name":"MS-DSC-001 sticker category lists expected product links","status":"passed","testResultsByEnv":{"default":"fc28fa3660b5ad05c1ca7b72387ac1fc"}}
